@@ -1,6 +1,9 @@
 # Bleeding edge Django
 django
 
+# Quick and small memcached client for Python
+pylibmc
+
 # Configuration
 django-configurations
 django-secure
@@ -27,5 +30,8 @@ pytz
 Jinja2
 jingo
 jingo-markdown
+
+# django-storages is a collection of custom storage backends for Django
+# django-storages
 
 # Your custom requirements go here
