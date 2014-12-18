@@ -85,4 +85,4 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.display_name
 
     def __unicode__(self):
-        return u"%s's profile" % self.display_name
+        return "%s's profile" % self.display_name
