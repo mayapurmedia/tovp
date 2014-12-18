@@ -12,7 +12,6 @@ before_script:
   - psql -c 'create database tovp;' -U postgres
   - python manage.py syncdb --noinput
   - python manage.py migrate --noinput
-script: coverage run --source=tovp manage.py test
 install:
   - pip install -q Django==$DJANGO
   - pip install -r requirements/test.txt
@@ -21,4 +20,6 @@ after_success:
   - pip install coveralls
   - coveralls
 # command to run tests
-script: python manage.py test
+script:
+  - python manage.py test
+  - coverage run --source=tovp manage.py test
