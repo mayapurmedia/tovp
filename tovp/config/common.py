@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Django settings for tovp project.
+Django settings for TOVP project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/dev/topics/settings/

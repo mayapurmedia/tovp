@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# tovp documentation build configuration file, created by
+# TOVP documentation build configuration file, created by
 # sphinx-quickstart.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -41,7 +41,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'tovp'
+project = u'TOVP'
 copyright = u'2014, Prahlad Nrsimha Das (Petr Vacha) - Mayapur Media'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -186,7 +186,7 @@ latex_elements = {
 latex_documents = [
     ('index',
      'tovp.tex',
-     u'tovp Documentation',
+     u'TOVP Documentation',
      u'Prahlad Nrsimha Das (Petr Vacha) - Mayapur Media', 'manual'),
 ]
 
@@ -216,7 +216,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'tovp', u'tovp Documentation',
+    ('index', 'tovp', u'TOVP Documentation',
      [u'Prahlad Nrsimha Das (Petr Vacha) - Mayapur Media'], 1)
 ]
 
@@ -230,8 +230,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    ('index', 'tovp', u'tovp Documentation',
-     u'Prahlad Nrsimha Das (Petr Vacha) - Mayapur Media', 'tovp',
+    ('index', 'tovp', u'TOVP Documentation',
+     u'Prahlad Nrsimha Das (Petr Vacha) - Mayapur Media', 'TOVP',
      'Temple Of The Vedic Planetarium Fundraising Website', 'Miscellaneous'),
 ]
 
