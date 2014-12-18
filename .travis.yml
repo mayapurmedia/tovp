@@ -7,6 +7,7 @@ python:
 env:
   global:
     - DATABASE_URL="postgres://postgres@localhost/tovp"
+    - DJANGO_CONFIGURATION=Travis
   matrix:
     - DJANGO=1.7.1
 # command to install dependencies
