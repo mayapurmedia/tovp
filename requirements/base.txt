@@ -1,0 +1,31 @@
+# Bleeding edge Django
+django
+
+# Configuration
+django-configurations
+django-secure
+django-cache-url
+dj-database-url
+
+# Forms
+django-braces
+
+# Models
+django-model-utils
+
+# For the persistance stores
+psycopg2
+
+# Unicode slugification
+unicode-slugify
+django-autoslug
+
+# Time zones support
+pytz
+
+# Jinja2
+Jinja2
+jingo
+jingo-markdown
+
+# Your custom requirements go here

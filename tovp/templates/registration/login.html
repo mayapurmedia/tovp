@@ -1,0 +1,37 @@
+{% extends 'content-area.html' %}
+{% set body_class = "login" %}
+
+{% set content_title = "Login" %}
+{% block javascript_head %}
+    {{ super() }}
+{% endblock %}
+
+{% block page_content %}
+<form class="form-normal" action="" method="post">{{ csrf() }}
+    {% if form.errors %}
+        <p class="has-error">Your username and password didn't match. Please try again.</p>
+    {% endif %}
+
+    {% for field_name in ['username', 'password'] %}
+    <div class="row">
+        <div class="col-ms-8 col-sm-6 form-group{{' has-error' if form[field_name].errors }}">
+            <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
+            {{form[field_name]|addcss('form-control')}}
+            {% if form[field_name].help_text %}
+            {{ form[field_name].errors|safe }}
+                <div class="help-text">            
+                    {{ form[field_name].help_text }}
+                </div>
+            {% endif %}
+        </div>        
+    </div>
+    {% endfor %}
+
+    <input type="hidden" name="next" value="{{ next }}" />
+    <p class="footer-submit">
+      <input class="btn btn-lg btn-success" type="submit" value="Log In" />
+      <a href="{{ url('users:password_reset') }}" class="plain-link"><span>Forgot Password?</span></a>
+    </p>
+</form>
+
+{% endblock %}
