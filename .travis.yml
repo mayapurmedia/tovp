@@ -7,19 +7,18 @@ env:
     - DJANGO_CONFIGURATION=Travis
   matrix:
     - DJANGO=1.7.1
-# command to install dependencies
+install:
+  - pip install -q Django==$DJANGO
+  - pip install -r requirements/test.txt
 before_script:
   - psql -c 'create database tovp;' -U postgres
   - python manage.py syncdb --noinput
   - python manage.py migrate --noinput
-install:
-  - pip install -q Django==$DJANGO
-  - pip install -r requirements/test.txt
+  - flake8 --ignore=E501 tovp
 after_success:
   # Report coverage results to coveralls.io
   - pip install coveralls
   - coveralls
-# command to run tests
 script:
   - python manage.py test
   - coverage run --source=tovp manage.py test
