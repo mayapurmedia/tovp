@@ -1,9 +1,6 @@
 # Bleeding edge Django
 django
 
-# Quick and small memcached client for Python
-pylibmc
-
 # Configuration
 django-configurations
 django-secure
