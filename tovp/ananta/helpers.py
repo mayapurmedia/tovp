@@ -149,5 +149,3 @@ def reqarg_multi(url, dictionary):
             _data.append((key, item))
 
     return Markup(urlunparse([parsed.scheme, parsed.netloc, parsed.path, parsed.params, urlencode(_data), parsed.fragment]))
-
-

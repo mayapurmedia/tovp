@@ -39,18 +39,20 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email', 'display_name']
 
-    username = models.CharField('username', max_length=60, unique=True,
+    username = models.CharField(
+        'username', max_length=60, unique=True,
         help_text='Required. 30 characters or fewer. Letters, digits and '
-                    '@/./+/-/_ only.',
+                  '@/./+/-/_ only.',
         validators=[
             validators.RegexValidator(r'^[\w.@+-]+$', 'Enter a valid username.', 'invalid')
         ])
     email = models.EmailField(blank=True)
     display_name = models.CharField(max_length=200)
 
-    is_active = models.BooleanField('active', default=True,
-        help_text='Designates whether this user should be treated as '
-                    'active. Unselect this instead of deleting accounts.')
+    is_active = models.BooleanField(
+        'active', default=True,
+        help_text='Designates whether this user should be treated as active. '
+                  'Unselect this instead of deleting accounts.')
 
     is_staff = models.BooleanField('staff status', default=False, help_text='Designates whether the user can log into this admin site.')
 
