@@ -1,6 +1,6 @@
 import re
 
-from urllib.parse import urlparse, parse_qs, urlunparse
+from urllib.parse import urlparse, parse_qs, urlunparse, urlencode
 from jingo import register
 from jinja2 import Markup
 from django.forms import CheckboxInput
