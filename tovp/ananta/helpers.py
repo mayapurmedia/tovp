@@ -7,6 +7,8 @@ from django.forms import CheckboxInput
 from django.contrib.staticfiles.storage import staticfiles_storage
 # from django.utils.encoding import smart_unicode
 from django.utils.html import strip_tags
+
+from num2words import num2words as _num2words
 from markdown import markdown
 
 
@@ -100,6 +102,11 @@ def FormatWithCommas(value, format='%i'):
 @register.filter
 def datetimeformat(value, format='%b %d %Y'):
     return value.strftime(format)
+
+
+@register.filter
+def num2words(value):
+    return _num2words(value)
 
 
 @register.filter

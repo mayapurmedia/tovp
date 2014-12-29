@@ -32,3 +32,4 @@ jingo-markdown
 # django-storages
 
 # Your custom requirements go here
+num2words
