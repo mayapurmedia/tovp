@@ -1,4 +1,5 @@
 import re
+import datetime
 
 from urllib.parse import urlparse, parse_qs, urlunparse, urlencode
 from jingo import register
@@ -7,15 +8,23 @@ from django.forms import CheckboxInput
 from django.contrib.staticfiles.storage import staticfiles_storage
 # from django.utils.encoding import smart_unicode
 from django.utils.html import strip_tags
+from django.utils.timesince import timesince
 
 from num2words import num2words as _num2words
 from markdown import markdown
+
+
+register.filter(timesince)
 
 
 @register.function
 def static(path):
     return staticfiles_storage.url(path)
 
+
+@register.function
+def now():
+    return datetime.date.today().strftime("%d %B %Y")
 
 @register.function
 def active_link_class(request, pattern):
