@@ -33,3 +33,5 @@ jingo-markdown
 
 # Your custom requirements go here
 num2words
+
+django_countries

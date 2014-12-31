@@ -1,0 +1,70 @@
+{% extends 'content-area.html' %}
+{% set page_title = object.name %}
+{% set body_class = "person-detail" %}
+
+{% macro print_field(label, value) -%}
+    <div class="field-label">{{ label }}</div>
+    <div class="field-value">{{ value or 'N/A' }}</div>
+{%- endmacro %}
+
+
+{% block page_content %}
+
+<div class="row">
+    {% set field_label = 'TOVP Contact ID' %}
+    {% set field_name = 'pk' %}
+    <div class="{% if user.has_perm('contacts.change_person') %} col-xs-9 col-ms-10 col-sm-11{% else %}col-xs-12{% endif %}">
+        <h1>{{ object.full_name }}</h1>
+    </div>
+    {% if user.has_perm('contacts.change_person') %} 
+        <div class="col-xs-3 col-ms-2 col-sm-1">
+            <a href="{{ url('contacts:person:update', object.pk) }}" class="btn btn-lg btn-warning">Edit</a>
+        </div>
+    {% endif %}
+
+    {% set field_label = 'Initiated Name' %}
+    {% set field_name = 'initiated_name' %}
+    <div class="col-xs-12">
+        {{ print_field(field_label, object[field_name])}}
+    </div>
+    {% set field_label = 'Email' %}
+    {% set field_name = 'email' %}
+    <div class="col-xs-12 col-sm-6">
+        {{ print_field(field_label, object[field_name])}}
+    </div>
+    {% set field_label = 'Phone Number' %}
+    {% set field_name = 'phone_number' %}
+    <div class="col-xs-12 col-sm-6">
+        {{ print_field(field_label, object[field_name])}}
+    </div>
+    {% set field_label = 'Note' %}
+    {% set field_name = 'note' %}
+    {% if object[field_name] %}
+    <div class="col-xs-12">
+        {{ print_field(field_label, object[field_name])}}
+    </div>
+    {% endif %}
+    {% set field_label = 'Address' %}
+    {% set field_name = 'address' %}
+    {% if object.full_address() %}
+    <div class="col-xs-12">
+        <div class="field-label">{{ field_label }}</div>
+        <div class="field-value">
+            {% for line in object.full_address() %}
+            {{ line }}<br/>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    {% set field_label = 'PAN Card Number' %}
+    {% set field_name = 'pan_card_number' %}
+    {% if object[field_name] %}
+    <div class="col-xs-12">
+        {{ print_field(field_label, object[field_name])}}
+    </div>
+    {% endif %}
+</div>
+
+
+{% endblock %}
+

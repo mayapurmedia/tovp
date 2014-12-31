@@ -47,6 +47,7 @@ class Common(Configuration):
     LOCAL_APPS = (
         'ananta',
         'users',  # custom users app
+        'contacts',
         'theme',
         # Your stuff: custom apps go here
     )
