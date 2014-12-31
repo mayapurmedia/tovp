@@ -3,6 +3,10 @@ TOVP
 
 Temple Of The Vedic Planetarium Fundraising Website
 
+[![Build Status](https://travis-ci.org/mayapurmedia/tovp.svg?branch=master)](https://travis-ci.org/mayapurmedia/tovp)
+[![Coverage Status](https://coveralls.io/repos/mayapurmedia/tovp/badge.png?branch=master)](https://coveralls.io/r/mayapurmedia/tovp?branch=master)
+[![Django Version]](http://img.shields.io/badge/django-v1.7.1-blue.svg)
+[![License]](http://img.shields.io/badge/license-MIT-green.svg)
 
 Settings
 ------------
