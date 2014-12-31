@@ -26,6 +26,7 @@ def static(path):
 def now():
     return datetime.date.today().strftime("%d %B %Y")
 
+
 @register.function
 def active_link_class(request, pattern):
     if re.search(pattern, request.path):
