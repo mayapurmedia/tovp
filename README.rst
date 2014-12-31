@@ -5,8 +5,8 @@ Temple Of The Vedic Planetarium Fundraising Website
 
 .. image:: https://travis-ci.org/mayapurmedia/tovp.svg?branch=master
     :target: https://travis-ci.org/mayapurmedia/tovp
-.. image:: https://travis-ci.org/mayapurmedia/tovp.svg?branch=master
-    :target: https://travis-ci.org/mayapurmedia/tovp
+.. image:: https://coveralls.io/repos/mayapurmedia/tovp/badge.png?branch=master
+    :target: https://coveralls.io/r/mayapurmedia/tovp?branch=master
 .. image:: http://img.shields.io/badge/django-v1.7.1-blue.svg
 .. image:: http://img.shields.io/badge/license-MIT-green.svg
 
