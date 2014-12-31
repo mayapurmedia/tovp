@@ -1,0 +1,75 @@
+{% extends 'content-area.html' %}
+{% set page_title = object.name %}
+{% set body_class = "person-detail" %}
+
+{% macro print_field(label, value) -%}
+    <div class="field-label">{{ label }}</div>
+    <div class="field-value">{{ value or 'N/A' }}</div>
+{%- endmacro %}
+
+
+{% block page_content %}
+
+<div class="row">
+    {% set field_label = 'TOVP Contribution ID' %}
+    {% set field_name = 'pk' %}
+    <div class="{% if user.has_perm('contributions.change_contribution') %} col-xs-9 col-ms-10 col-sm-11{% else %}col-xs-12{% endif %}">
+        <h1>Contribution #{{ object.pk }}</h1>
+    </div>
+    {% if user.has_perm('contacts.change_person') %} 
+        <div class="col-xs-3 col-ms-2 col-sm-1">
+            <a href="{{ url('contributions:update', object.person.pk, object.pk) }}" class="btn btn-lg btn-warning">Edit</a>
+        </div>
+    {% endif %}
+
+    {% set field_label = 'Donnor' %}
+    {% set field_name = 'person' %}
+    <div class="col-xs-12 col-ms-8 col-sm-8">
+        <div class="field-label">{{ field_label }}</div>
+        <div class="field-value">
+            <a href="{{ object[field_name].get_absolute_url() }}">{{ object[field_name].full_name }}</a>
+        </div>
+    </div>
+    {% set field_label = 'Status' %}
+    {% set field_name = 'status' %}
+    {% if object[field_name] %}
+    <div class="col-xs-12 col-ms-4 col-sm-4">
+        {{ print_field(field_label, object.get_status_display()) }}
+    </div>
+    {% endif %}
+    {% set field_label = 'Amount' %}
+    {% set field_name = 'amount' %}
+    <div class="col-xs-12 col-ms-8 col-sm-8">
+        <div class="field-label">{{ field_label }}</div>
+        <div class="field-value">
+            {{ object[field_name] }} {{ object.get_currency_display() }}
+        </div>
+    </div>
+    {% set field_label = 'Dated' %}
+    {% set field_name = 'dated' %}
+    {% if object[field_name] %}
+    <div class="col-xs-12 col-ms-4 col-sm-4">
+        {{ print_field(field_label, object[field_name])}}
+    </div>
+    {% endif %}
+    {% set field_label = 'Payment Method' %}
+    {% set field_name = 'payment_method' %}
+    <div class="col-xs-12 col-sm-6">
+        {{ print_field(field_label, object.get_payment_method_display()) }}
+    </div>
+    {% set field_label = 'Transaction ID' %}
+    {% set field_name = 'transaction_id' %}
+    {% if object[field_name] %}
+    <div class="col-xs-12">
+        {{ print_field(field_label, object[field_name])}}
+    </div>
+    {% endif %}
+    <div class="col-xs-12">
+        <a href="{{ url('contributions:donor_letter', object.pk) }}" target="_blank" class="btn btn-lg btn-success">Print Donor Letter</a>
+        <a href="{{ url('contributions:donor_receipt', object.pk) }}" target="_blank" class="btn btn-lg btn-success">Print Receipt</a>
+    </div>
+</div>
+
+
+{% endblock %}
+

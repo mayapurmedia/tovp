@@ -1,0 +1,74 @@
+{% extends 'print-base.html' %}
+{% set body_class = "person-detail" %}
+{% set page_content = "Donor Letter" %}
+
+{% macro print_field(label, value) -%}
+    <div class="field-label">{{ label }}</div>
+    <div class="field-value">{{ value or 'N/A' }}</div>
+{%- endmacro %}
+
+
+{% block page_content %}
+<style>
+.align-right { text-align: right; }
+.align-center { text-align: center; }
+</style>
+<div class="row">
+    <div class="col-xs-12">
+        <h1>Donation {% if object.status == 'completed' %}Permanent{% else %}Temporary{% endif %} Receipt</h1>
+    </div>
+
+    <div class="col-xs-12">
+        <div class="row">
+            <div class="col-xs-6">
+                By <br/>ISKCON Mayapur</br>Nadia, WB
+            </div>
+            <div class="col-xs-6 align-right">
+                Date: {{ now() }}
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <br/><br/><br/>
+        <p><strong>Amount:</strong> {{ object.amount }} {{ object.currency }} ({{ object.amount|num2words }} {{ object.currency_words}})</p>
+        <p><strong>Payment method:</strong> {{ object.get_payment_method_display() }}</p>
+        <p><strong>Dated:</strong> {{ object.dated|datetimeformat('%d %B %Y') }}</p>
+    </div>
+    <div class="col-xs-8">
+        <strong>Donor name:</strong><br/> {{ object.person.full_name }}<br/>
+        <strong>Address:</strong><br/>
+            {% for line in object.person.address() %}
+            {{ line }}<br/>
+            {% endfor %}
+    </div>
+    <div class="col-xs-4 align-right">
+        {% if object.person.pan_card_number %}
+        <strong>PAN Card Number:</strong><br/>
+        {{object.person.pan_card_number}}<br/>
+        {% endif %}
+        {% if object.person.phone_number %}
+        <strong>Phone Number:</strong><br/>
+        {{object.person.phone_number }}<br/>
+        {% endif %}
+        {% if object.person.email %}
+        <strong>Email:</strong><br/>
+        {{object.person.email}}<br/>
+        {% endif %}
+    </div>
+    <div class="col-xs-12 align-right"
+        {% if object.person.pan_card_number %}
+        <br/><br/><br/>
+        <strong>*** 80G STAMP HERE ***</strong><br/><br/><br/>
+        {% endif %}
+    </div>
+    <div class="col-xs-12 align-center">
+        Temple Of The Vedic Planetarium<br/>
+        Project of the International Society of Krishna Consciousness<br/>
+        Founder Acarya His Divine Grace A.C. Bhaktivedanta Swami Prabhupada
+    </div>
+
+</div>
+
+
+{% endblock %}
+

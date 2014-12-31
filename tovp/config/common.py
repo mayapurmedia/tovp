@@ -41,6 +41,7 @@ class Common(Configuration):
     THIRD_PARTY_APPS = (
         'jingo_markdown',
         'jingo_paginator',
+        'datetimewidget',
     )
 
     # Apps specific for this project go here.
@@ -48,6 +49,7 @@ class Common(Configuration):
         'ananta',
         'users',  # custom users app
         'contacts',
+        'contributions',
         'theme',
         # Your stuff: custom apps go here
     )
@@ -145,7 +147,7 @@ class Common(Configuration):
     USE_L10N = True
 
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#use-tz
-    USE_TZ = True
+    USE_TZ = None
     # END GENERAL CONFIGURATION
 
     # TEMPLATE CONFIGURATION
