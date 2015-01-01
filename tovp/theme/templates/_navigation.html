@@ -1,0 +1,33 @@
+<header id="header" class="header header--fixed hide-from-print" role="banner">
+<div class="navbar navbar-main-menu navbar-default xnavbar-inverse navbar-static-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-menu .navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">TOVP Database</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          <li class="{{ active_link_class(request, "^/$") }}"><a href="/">Home</a></li>
+          <li class="dropdown">
+            <a href="/" class="dropdown-toggle{{ active_link_class(request, "^/contacts/") }}" data-toggle="dropdown" role="button" aria-expanded="false">Contacts <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="{{ url('contacts:index') }}">Search Contacts</a></li>
+                <li><a href="{{ url('contacts:person:create') }}">Create Person</a></li>
+            </ul>
+          </li>
+          <li><a href="{{ url('contributions:index') }}">Contributions</a></li>
+{% if user.is_authenticated() %}
+          <li><a href="{{ url('users:logout') }}">Logout ({{ user }})</a></li>
+{% endif %}
+          {# <li class="{{ active_link_class(request, "^/search/") }}"><a href="/">Search</a></li> #}
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+</div>
+
+</header>
