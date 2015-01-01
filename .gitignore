@@ -55,3 +55,6 @@ target/
 
 # Rope
 .ropeproject
+
+# CodeKit
+config.codekit
