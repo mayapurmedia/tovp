@@ -1,7 +1,9 @@
 TOVP
 ==============================
 
-Temple Of The Vedic Planetarium Fundraising Website
+Temple Of The Vedic Planetarium Fundraising Website.
+
+**Project is in early stage of development, not ready for production at this time!**
 
 .. image:: https://travis-ci.org/mayapurmedia/tovp.svg?branch=master
     :target: https://travis-ci.org/mayapurmedia/tovp
