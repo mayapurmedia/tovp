@@ -9,7 +9,7 @@ class UserModelTests(TestCase):
         self.admin_user = User.objects.create_superuser(
             'admin', 'admin@test.com', 'Administrator', self.password)
         self.user = User.objects.create_user('user', 'user@test.com',
-                                        'Normal User', self.password)
+                                             'Normal User', self.password)
 
     def test_create_superuser(self):
         self.assertEqual(self.admin_user.is_superuser, True)
