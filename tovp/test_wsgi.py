@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.core.handlers.wsgi import WSGIHandler
 
-from .wsgi import application
+from wsgi import application
 
 
 class WSGITestCase(TestCase):
