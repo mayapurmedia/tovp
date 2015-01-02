@@ -12,8 +12,8 @@ install:
   - pip install -r requirements/test.txt
 before_script:
   - psql -c 'create database tovp;' -U postgres
-  - python manage.py syncdb --noinput
-  - python manage.py migrate --noinput
+  - python tovp/manage.py syncdb --noinput
+  - python tovp/manage.py migrate --noinput
   - flake8 --ignore=E501 tovp
 after_success:
   # Report coverage results to coveralls.io
