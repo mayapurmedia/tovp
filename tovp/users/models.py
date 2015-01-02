@@ -17,6 +17,7 @@ class UserManager(BaseUserManager):
         if not username:
             raise ValueError('The given username must be set')
         email = self.normalize_email(email)
+        display_name = display_name or ''
         user = self.model(username=username, email=email, display_name=display_name,
                           is_staff=is_staff, is_active=True,
                           is_superuser=is_superuser, last_login=now,
@@ -47,7 +48,7 @@ class User(AbstractBaseUser, PermissionsMixin):
             validators.RegexValidator(r'^[\w.@+-]+$', 'Enter a valid username.', 'invalid')
         ])
     email = models.EmailField(blank=True)
-    display_name = models.CharField(max_length=200)
+    display_name = models.CharField(max_length=200, blank=True)
 
     is_active = models.BooleanField(
         'active', default=True,
@@ -68,7 +69,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         if self.display_name:
             return self.display_name
         else:
-            return self.user.username
+            return self.username
 
     def get_link(self, css_class=None):
         if css_class:
@@ -81,10 +82,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         return ('users:detail', None, {'username': self.username})
 
     def get_full_name(self):
-        return self.display_name
+        return self.get_name()
 
     def get_short_name(self):
-        return self.display_name
-
-    def __unicode__(self):
-        return "%s's profile" % self.display_name
+        return self.get_name()
