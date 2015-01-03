@@ -1,7 +1,9 @@
 from urllib.parse import quote
-from django.test import TestCase, Client
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
+from django.test.utils import setup_test_environment
+setup_test_environment()
+from django.test import TestCase, Client
 
 from ..models import User
 
@@ -9,6 +11,7 @@ from ..models import User
 class UserViewsTests(TestCase):
     def setUp(self):
         self.password = 'mypassword'
+
         self.admin_user = User.objects.create_superuser(
             'admin', 'admin@test.com', 'Administrator', self.password)
         self.user = User.objects.create_user('normal-user', 'user@test.com',
@@ -152,10 +155,5 @@ class UserViewsTests(TestCase):
             follow=True,
         )
 
-        # trying to debug why there is issue on Travis with error:
-        # AssertionError: Response did not use any contexts to render the response
-        print('***************************')
-        print(response.context)
-        print('***************************')
         self.assertFormError(response, 'form', 'email',
                              'This email is already registered.')
