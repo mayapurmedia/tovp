@@ -100,10 +100,6 @@ class UserViewsTests(TestCase):
             follow=True,
         )
 
-        print('***************************')
-        print(response.context)
-        print('***************************')
-
         # Check if view got redirected to user profile
         self.assertRedirects(
             response,
@@ -138,6 +134,8 @@ class UserViewsTests(TestCase):
             follow=True,
         )
 
+        # For following to work properly TEMPLATE_DEBUG has to be True if using
+        # jingo. (more info in config/travis.py)
         self.assertFormError(response, 'form', 'password2',
                              'Passwords do not match.')
 
