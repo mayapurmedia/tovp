@@ -45,12 +45,13 @@ class UserViewsTests(TestCase):
             status_code=302,
             target_status_code=200)
 
-    def test_user_update_view(self):
-        # from ..views import UserUpdateView
+    def test_user_update_view_change_fields(self):
+        """
+        Checks if all fields are saved when changed.
+        """
         client = Client()
         client.login(username=self.user.username, password=self.password)
 
-        # response = client.get(reverse('users:update'))
         response = client.post(
             reverse('users:update'),
             {
@@ -61,7 +62,6 @@ class UserViewsTests(TestCase):
             },
             follow=True,
         )
-        # self.assertEqual(response.status_code, 200)
 
         # Check if view got redirected to user profile
         self.assertRedirects(
@@ -82,3 +82,75 @@ class UserViewsTests(TestCase):
 
         # Check if new email got saved
         self.assertEqual(updated_user.email, 'newmail@test.com')
+
+    def test_user_update_view_no_changes(self):
+        """
+        Checks if fields stay same when we don't change values.
+        """
+        client = Client()
+        client.login(username=self.user.username, password=self.password)
+
+        response = client.post(
+            reverse('users:update'),
+            {
+                'username': 'normal-user',
+                'email': 'user@test.com',
+            },
+            follow=True,
+        )
+
+        # Check if view got redirected to user profile
+        self.assertRedirects(
+            response,
+            reverse('users:detail', kwargs={'username': 'normal-user'}),
+            status_code=302,
+            target_status_code=200)
+
+        # load user
+        updated_user = User.objects.get(username='normal-user')
+
+        # Check if email is still same
+        self.assertEqual(updated_user.email, 'user@test.com')
+
+        # Check if password is still same
+        self.assertEqual(updated_user.check_password('mypassword'), True)
+
+    def test_user_update_view_not_matching_password(self):
+        """
+        Checks if two different password will raise error.
+        """
+        client = Client()
+        client.login(username=self.user.username, password=self.password)
+
+        response = client.post(
+            reverse('users:update'),
+            {
+                'username': 'normal-user',
+                'email': 'user@test.com',
+                'password1': 'mynewpassword',
+                'password2': 'mynewpassword-not-same',
+            },
+            follow=True,
+        )
+
+        self.assertFormError(response, 'form', 'password2',
+                             'Passwords do not match.')
+
+    def test_user_update_view_already_registered_email(self):
+        """
+        Checks if already registered email by different user will raise error.
+        """
+        client = Client()
+        client.login(username=self.user.username, password=self.password)
+
+        response = client.post(
+            reverse('users:update'),
+            {
+                'username': 'normal-user',
+                'email': 'admin@test.com',
+            },
+            follow=True,
+        )
+
+        self.assertFormError(response, 'form', 'email',
+                             'This email is already registered.')
