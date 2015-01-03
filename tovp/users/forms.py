@@ -29,7 +29,7 @@ class UserUpdateForm(forms.ModelForm):
         except User.DoesNotExist:
             return email
         else:
-            raise forms.ValidationError('This email is already registered')
+            raise forms.ValidationError('This email is already registered.')
 
     def clean_password2(self):
         if 'password1' in self.cleaned_data:
