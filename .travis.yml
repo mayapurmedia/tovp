@@ -20,5 +20,4 @@ after_success:
   - pip install coveralls
   - coveralls
 script:
-  - cd tovp;python manage.py test
   - cd tovp;coverage run --source=. manage.py test
