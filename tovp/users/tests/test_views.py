@@ -1,8 +1,6 @@
 from urllib.parse import quote
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
-from django.test.utils import setup_test_environment
-setup_test_environment()
 from django.test import TestCase, Client
 
 from ..models import User
