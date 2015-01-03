@@ -66,12 +66,16 @@ class UserListView(LoginRequiredMixin, ListView):
 
 
 def logged_in_message(sender, user, request, **kwargs):
-    messages.success(request, "Welcome, %s! You have been successfully logged in." % user.display_name)
+    messages.success(
+        request,
+        "Welcome, %s! You have been successfully logged in." % user.display_name,
+        fail_silently=True)
 
 user_logged_in.connect(logged_in_message)
 
 
 def logged_out_message(sender, user, request, **kwargs):
-    messages.success(request, "You have been successfully logged out.")
+    messages.success(request, "You have been successfully logged out.",
+                     fail_silently=True)
 
 user_logged_out.connect(logged_out_message)
