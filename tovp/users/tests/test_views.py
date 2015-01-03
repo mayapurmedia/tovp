@@ -152,5 +152,10 @@ class UserViewsTests(TestCase):
             follow=True,
         )
 
+        # trying to debug why there is issue on Travis with error:
+        # AssertionError: Response did not use any contexts to render the response
+        print('***************************')
+        print(response.context)
+        print('***************************')
         self.assertFormError(response, 'form', 'email',
                              'This email is already registered.')
