@@ -100,6 +100,10 @@ class UserViewsTests(TestCase):
             follow=True,
         )
 
+        print('***************************')
+        print(response.context)
+        print('***************************')
+
         # Check if view got redirected to user profile
         self.assertRedirects(
             response,
