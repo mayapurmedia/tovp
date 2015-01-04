@@ -42,11 +42,14 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     username = models.CharField(
         'username', max_length=60, unique=True,
-        help_text='Required. 30 characters or fewer. Letters, digits and '
+        help_text='Required. 60 characters or fewer. Letters, digits and '
                   '@/./+/-/_ only.',
         validators=[
             validators.RegexValidator(r'^[\w.@+-]+$', 'Enter a valid username.', 'invalid')
-        ])
+        ],
+        error_messages={
+            'unique': "A user with that username already exists.",
+        })
     email = models.EmailField(blank=True)
     display_name = models.CharField(max_length=200, blank=True)
 
