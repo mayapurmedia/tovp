@@ -23,8 +23,8 @@ def static(path):
 
 
 @register.function
-def now():
-    return datetime.date.today().strftime("%d %B %Y")
+def now(format="%d %B %Y"):
+    return datetime.date.today().strftime(format)
 
 
 @register.function
