@@ -51,45 +51,45 @@ re_digits_nondigits = re.compile(r'\d+|\D+')
 
 
 @register.filter
-def FormatWithCommas(value, format='%i'):
+def format_with_commas(value, format='%i'):
     """
-    >>> FormatWithCommas('%.4f', .1234)
+    >>> format_with_commas('%.4f', .1234)
     '0.1234'
-    >>> FormatWithCommas('%i', 100)
+    >>> format_with_commas('%i', 100)
     '100'
-    >>> FormatWithCommas('%.4f', 234.5678)
+    >>> format_with_commas('%.4f', 234.5678)
     '234.5678'
-    >>> FormatWithCommas('$%.4f', 234.5678)
+    >>> format_with_commas('$%.4f', 234.5678)
     '$234.5678'
-    >>> FormatWithCommas('%i', 1000)
+    >>> format_with_commas('%i', 1000)
     '1,000'
-    >>> FormatWithCommas('%.4f', 1234.5678)
+    >>> format_with_commas('%.4f', 1234.5678)
     '1,234.5678'
-    >>> FormatWithCommas('$%.4f', 1234.5678)
+    >>> format_with_commas('$%.4f', 1234.5678)
     '$1,234.5678'
-    >>> FormatWithCommas('%i', 1000000)
+    >>> format_with_commas('%i', 1000000)
     '1,000,000'
-    >>> FormatWithCommas('%.4f', 1234567.5678)
+    >>> format_with_commas('%.4f', 1234567.5678)
     '1,234,567.5678'
-    >>> FormatWithCommas('$%.4f', 1234567.5678)
+    >>> format_with_commas('$%.4f', 1234567.5678)
     '$1,234,567.5678'
-    >>> FormatWithCommas('%i', -100)
+    >>> format_with_commas('%i', -100)
     '-100'
-    >>> FormatWithCommas('%.4f', -234.5678)
+    >>> format_with_commas('%.4f', -234.5678)
     '-234.5678'
-    >>> FormatWithCommas('$%.4f', -234.5678)
+    >>> format_with_commas('$%.4f', -234.5678)
     '$-234.5678'
-    >>> FormatWithCommas('%i', -1000)
+    >>> format_with_commas('%i', -1000)
     '-1,000'
-    >>> FormatWithCommas('%.4f', -1234.5678)
+    >>> format_with_commas('%.4f', -1234.5678)
     '-1,234.5678'
-    >>> FormatWithCommas('$%.4f', -1234.5678)
+    >>> format_with_commas('$%.4f', -1234.5678)
     '$-1,234.5678'
-    >>> FormatWithCommas('%i', -1000000)
+    >>> format_with_commas('%i', -1000000)
     '-1,000,000'
-    >>> FormatWithCommas('%.4f', -1234567.5678)
+    >>> format_with_commas('%.4f', -1234567.5678)
     '-1,234,567.5678'
-    >>> FormatWithCommas('$%.4f', -1234567.5678)
+    >>> format_with_commas('$%.4f', -1234567.5678)
     '$-1,234,567.5678'
     """
     def _commafy(s):
