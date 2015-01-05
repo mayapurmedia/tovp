@@ -27,11 +27,11 @@
                 {{ form.non_field_errors() }}
             </p>
         {% endif %}
-        {{form.person|addcss('hide')}}
+        {{form.person|add_css('hide')}}
             {% set field_name = 'amount' %}
             <div class="col-ms-6 col-sm-6 col-lg-4 form-group{{' has-error' if form[field_name].errors }}">
                 <label class="control-label" for="id_{{ field_name }}">{{ form[field_name].label }}</label>
-                {{form[field_name]|addcss('form-control')}}
+                {{form[field_name]|add_css('form-control')}}
                 {{ form[field_name].errors|safe }}
                 {% if form[field_name].help_text %}
                     <div class="help-text">
@@ -42,7 +42,7 @@
             {% set field_name = 'currency' %}
             <div class="col-ms-6 col-sm-6 col-lg-4 form-group{{' has-error' if form[field_name].errors }}">
                 <label class="control-label" for="id_{{ field_name }}">{{ form[field_name].label }}</label>
-                {{form[field_name]|addcss('form-control')}}
+                {{form[field_name]|add_css('form-control')}}
                 {{ form[field_name].errors|safe }}
                 {% if form[field_name].help_text %}
                     <div class="help-text">
@@ -53,7 +53,7 @@
             {% set field_name = 'payment_method' %}
             <div class="col-xs-12 col-sm-12 col-lg-8 form-group{{' has-error' if form[field_name].errors }}">
                 <label class="control-label" for="id_{{ field_name }}">{{ form[field_name].label }}</label>
-                {{form[field_name]|addcss('form-control')}}
+                {{form[field_name]|add_css('form-control')}}
                 {{ form[field_name].errors|safe }}
                 {% if form[field_name].help_text %}
                     <div class="help-text">
@@ -66,7 +66,7 @@
             {% set field_name = 'transaction_id' %}
             <div class="field_id_{{ field_name }} col-xs-12 col-sm-12 col-lg-8 form-group{{' has-error' if form[field_name].errors }}">
                 <label class="control-label" for="id_{{ field_name }}">{{ form[field_name].label }}</label>
-                {{form[field_name]|addcss('form-control')}}
+                {{form[field_name]|add_css('form-control')}}
                 {{ form[field_name].errors|safe }}
                 {% if form[field_name].help_text %}
                     <div class="help-text">
@@ -79,7 +79,7 @@
             {% set field_name = 'dated' %}
             <div class="col-xs-12 col-ms-12 col-sm-6 col-lg-4 form-group{{' has-error' if form[field_name].errors }}">
                 <label class="control-label" for="id_{{ field_name }}">{{ form[field_name].label }}</label>
-                {{form[field_name]|addcss('form-control')}}
+                {{form[field_name]|add_css('form-control')}}
                 {{ form[field_name].errors|safe }}
                 {% if form[field_name].help_text %}
                     <div class="help-text">
@@ -90,7 +90,7 @@
             {% set field_name = 'status' %}
             <div class="col-xs-12 col-ms-12 col-sm-6 col-lg-4 form-group{{' has-error' if form[field_name].errors }}">
                 <label class="control-label" for="id_{{ field_name }}">{{ form[field_name].label }}</label>
-                {{form[field_name]|addcss('form-control')}}
+                {{form[field_name]|add_css('form-control')}}
                 {{ form[field_name].errors|safe }}
                 {% if form[field_name].help_text %}
                     <div class="help-text">
