@@ -4,9 +4,7 @@ import datetime
 from urllib.parse import urlparse, parse_qs, urlunparse, urlencode
 from jingo import register
 from jinja2 import Markup
-from django.forms import CheckboxInput
 from django.contrib.staticfiles.storage import staticfiles_storage
-# from django.utils.encoding import smart_unicode
 from django.utils.html import strip_tags
 from django.utils.timesince import timesince
 
@@ -136,7 +134,9 @@ def reqarg(url, name, value=None):
         for item in value:
             _data.append((key, item))
 
-    return Markup(urlunparse([parsed.scheme, parsed.netloc, parsed.path, parsed.params, urlencode(_data), parsed.fragment]))
+    return Markup(urlunparse([parsed.scheme, parsed.netloc, parsed.path,
+                              parsed.params, urlencode(_data),
+                              parsed.fragment]))
 
 
 @register.filter
@@ -157,4 +157,6 @@ def reqarg_multi(url, dictionary):
         for item in value:
             _data.append((key, item))
 
-    return Markup(urlunparse([parsed.scheme, parsed.netloc, parsed.path, parsed.params, urlencode(_data), parsed.fragment]))
+    return Markup(urlunparse([parsed.scheme, parsed.netloc, parsed.path,
+                              parsed.params, urlencode(_data),
+                              parsed.fragment]))
