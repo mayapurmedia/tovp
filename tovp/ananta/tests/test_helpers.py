@@ -1,5 +1,6 @@
 import datetime
 
+from django import forms
 from django.test import TestCase
 from django.http import HttpRequest
 from jinja2 import Markup
@@ -62,3 +63,21 @@ class AnantaHelpersTests(TestCase):
         self.assertEqual('2001', datetimeformat(test_date, '%Y'))
         self.assertEqual('2001-01-31', datetimeformat(test_date, '%Y-%m-%d'))
         self.assertEqual('22:10:33', datetimeformat(test_date, '%H:%M:%S'))
+
+    def test_add_css(self):
+        class TestForm(forms.Form):
+            char_field = forms.CharField(max_length=14)
+            boolean_field = forms.BooleanField(required=False)
+
+        form = TestForm()
+        from ..helpers import add_css
+
+        self.assertEqual(
+            form['boolean_field'].as_widget(),
+            '<input id="id_boolean_field" name="boolean_field" '
+            'type="checkbox" />')
+
+        self.assertEqual(
+            add_css(form['boolean_field'], 'test-class'),
+            '<input class="test-class" id="id_boolean_field" '
+            'name="boolean_field" type="checkbox" />')
