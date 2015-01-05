@@ -6,7 +6,7 @@ from django.http import HttpRequest
 from jinja2 import Markup
 
 from ..helpers import (now, active_link_class, format_with_commas,
-                       datetimeformat, add_css)
+                       datetimeformat, add_css, num2words, makeplain)
 
 
 class AnantaHelpersTests(TestCase):
@@ -81,3 +81,20 @@ class AnantaHelpersTests(TestCase):
             add_css(form['boolean_field'], 'test-class'),
             '<input class="test-class" id="id_boolean_field" '
             'name="boolean_field" type="checkbox" />')
+
+    def test_num2words(self):
+        self.assertEqual(num2words(1), 'one')
+        self.assertEqual(num2words(2), 'two')
+        self.assertEqual(num2words(30), 'thirty')
+        self.assertEqual(num2words(444), 'four hundred and forty-four')
+
+    def test_makeplain(self):
+        text = (
+            'Text for testing <strong>makeplain</strong> filter. It should be '
+            'able to strip tags and trim your <em>text</em>. When text is too '
+            'long it will trim and add <span class="test">...</span>.'
+        )
+        expected_text = (
+            'Text for testing makeplain filter. It should be able to stri...'
+        )
+        self.assertEqual(makeplain(text, 65, 60), expected_text)
