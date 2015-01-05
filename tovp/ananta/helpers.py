@@ -34,14 +34,6 @@ def active_link_class(request, pattern):
     return ''
 
 
-@register.filter
-def is_choice_field(value):
-    try:
-        return isinstance(value.field.widget, CheckboxInput)
-    except AttributeError:
-        pass
-
-
 @register.filter()
 def addcss(field, css_class, *args, **kwargs):
     return field.as_widget(attrs={"class": css_class})
