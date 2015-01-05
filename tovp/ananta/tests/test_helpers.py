@@ -5,7 +5,8 @@ from django.test import TestCase
 from django.http import HttpRequest
 from jinja2 import Markup
 
-from ..helpers import now, active_link_class, format_with_commas, datetimeformat
+from ..helpers import (now, active_link_class, format_with_commas,
+                       datetimeformat, add_css)
 
 
 class AnantaHelpersTests(TestCase):
@@ -70,7 +71,6 @@ class AnantaHelpersTests(TestCase):
             boolean_field = forms.BooleanField(required=False)
 
         form = TestForm()
-        from ..helpers import add_css
 
         self.assertEqual(
             form['boolean_field'].as_widget(),
