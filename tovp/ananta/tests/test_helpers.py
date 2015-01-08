@@ -6,7 +6,8 @@ from django.http import HttpRequest
 from jinja2 import Markup
 
 from ..helpers import (now, active_link_class, format_with_commas,
-                       datetimeformat, add_css, num2words, makeplain)
+                       datetimeformat, add_css, num2words, makeplain,
+                       update_url_query)
 
 
 class AnantaHelpersTests(TestCase):
@@ -98,3 +99,30 @@ class AnantaHelpersTests(TestCase):
             'Text for testing makeplain filter. It should be able to stri...'
         )
         self.assertEqual(makeplain(text, 65, 60), expected_text)
+
+    def test_update_url_query(self):
+        self.assertEqual(update_url_query('/test', {'arg1': 108}),
+                         '/test?arg1=108')
+        self.assertEqual(update_url_query('/test?arg1=108', {'arg1': 'changed'}),
+                         '/test?arg1=changed')
+        self.assertEqual(update_url_query('/test?arg1=108', {'arg1': None}),
+                         '/test')
+
+        # test with multiple arguments
+        self.assertEqual(update_url_query('/test?arg2=64', {'arg1': 108}),
+                         '/test?arg1=108&arg2=64')
+        self.assertEqual(update_url_query('/test?arg2=64&arg1=108',
+                                          {'arg1': 'changed'}),
+                         '/test?arg1=changed&arg2=64')
+        self.assertEqual(update_url_query('/test?arg2=64&arg1=108',
+                                          {'arg1': None}),
+                         '/test?arg2=64')
+
+        self.assertEqual(update_url_query('/test', {'arg1': 4, 'arg2': 6}),
+                         '/test?arg1=4&arg2=6')
+        self.assertEqual(update_url_query('/test?arg2=64&arg1=108',
+                                          {'arg1': 'changed', 'arg2': 'also'}),
+                         '/test?arg1=changed&arg2=also')
+        self.assertEqual(update_url_query('/test?arg2=64&arg1=108',
+                                          {'arg1': None, 'arg2': None}),
+                         '/test')
