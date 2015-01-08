@@ -118,29 +118,7 @@ def makeplain(value, trim_if=160, trim_on=150):
 
 
 @register.filter
-def reqarg(url, name, value=None):
-    parsed = urlparse(url)
-    data = parse_qs(parsed.query)
-    if value is not None:
-        data.update({
-            name: [value],
-        })
-    else:
-        if name in data:
-            del data[name]
-
-    _data = []
-    for key, value in data.items():
-        for item in value:
-            _data.append((key, item))
-
-    return Markup(urlunparse([parsed.scheme, parsed.netloc, parsed.path,
-                              parsed.params, urlencode(_data),
-                              parsed.fragment]))
-
-
-@register.filter
-def reqarg_multi(url, dictionary):
+def update_url_query(url, dictionary):
     parsed = urlparse(url)
     data = parse_qs(parsed.query)
     for name, value in dictionary.items():
@@ -153,10 +131,10 @@ def reqarg_multi(url, dictionary):
                 del data[name]
 
     _data = []
-    for key, value in data.items():
+    for key, value in sorted(data.items()):
         for item in value:
             _data.append((key, item))
 
-    return Markup(urlunparse([parsed.scheme, parsed.netloc, parsed.path,
-                              parsed.params, urlencode(_data),
-                              parsed.fragment]))
+    return urlunparse([parsed.scheme, parsed.netloc, parsed.path,
+                       parsed.params, urlencode(_data),
+                       parsed.fragment])

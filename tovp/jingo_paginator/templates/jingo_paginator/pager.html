@@ -2,7 +2,7 @@
 <div class="{{ align }} pagination-mini">
     <ul class="pagination">
         {% if pager.has_previous() %}
-            <li><a href="?page={{ pager.previous_page_number() }}">« Previous</a></li>
+        <li><a href="{{ request.get_full_path()|update_url_query({'page': pager.previous_page_number()}) }}">« Previous</a></li>
         {% endif %}
 
         <li>
@@ -11,7 +11,7 @@
             </span>
         </li>
         {% if pager.has_next() %}
-          <li><a href="{{ request.get_full_path()|reqarg("page", pager.next_page_number()) }}">Next »</a></li>
+          <li><a href="{{ request.get_full_path()|update_url_query({'page': pager.next_page_number()}) }}">Next »</a></li>
         {% endif %}
     </ul>
 </div>
