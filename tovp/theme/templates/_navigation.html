@@ -17,7 +17,7 @@
             <a href="/" class="dropdown-toggle{{ active_link_class(request, "^/contacts/") }}" data-toggle="dropdown" role="button" aria-expanded="false">Contacts <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
                 <li><a href="{{ url('contacts:index') }}">Search Contacts</a></li>
-                <li><a href="{{ url('contacts:person:create') }}">Create Person</a></li>
+                <li><a href="{{ url('contacts:person:create') }}">Add new person</a></li>
             </ul>
           </li>
           <li><a href="{{ url('contributions:index') }}">Contributions</a></li>
