@@ -334,7 +334,8 @@ class Person(TimeStampedModel):
 
     @property
     def name(self):
-        return self.join_fields(('first_name', 'last_name'), separator=u" ")
+        return self.join_fields(('first_name', 'middle_name', 'last_name'),
+                                separator=u" ")
 
     @permalink
     def get_absolute_url(self):
