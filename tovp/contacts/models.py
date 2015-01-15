@@ -313,14 +313,11 @@ class Person(TimeStampedModel):
         Return the non-empty components of the address, but merging the
         title, first_name and last_name into a address field.
         """
-        fields = [self.address, self.city, self.state, self.postcode]
+        fields = [self.address, self.city, self.state, self.postcode,
+                  self.country.name]
         if include_full_name:
             fields = [self.full_name] + fields
         fields = [f.strip() for f in fields if f]
-        try:
-            fields.append(self.country.name)
-        except exceptions.ObjectDoesNotExist:
-            pass
         return fields
 
     @property
