@@ -338,5 +338,5 @@ class Person(TimeStampedModel):
     def get_absolute_url(self):
         return ('contacts:person:detail', None, {'pk': self.pk})
 
-    def __unicode__(self):
-        return self.salutation()
+    def __str__(self):
+        return self.name
