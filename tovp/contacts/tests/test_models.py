@@ -24,3 +24,28 @@ class PersonModelTests(TestCase):
 
     def test_full_name(self):
         self.assertEqual(self.person.full_name, 'Dr Jay Sri Narasimhadeva')
+
+    def test_full_address(self):
+        self.assertEqual(
+            self.person.full_address(), [
+                'Govinda Street 108',
+                'Sridham Mayapur',
+                'West Bengal',
+                '741313',
+                'India'])
+        self.assertEqual(
+            self.person.full_address(include_full_name=True), [
+                'Dr Jay Sri Narasimhadeva',
+                'Govinda Street 108',
+                'Sridham Mayapur',
+                'West Bengal',
+                '741313',
+                'India'])
+        # testing without country
+        self.person.country = None
+        self.assertEqual(
+            self.person.full_address(), [
+                'Govinda Street 108',
+                'Sridham Mayapur',
+                'West Bengal',
+                '741313'])
