@@ -81,18 +81,6 @@ class Contribution(TimeStampedModel):
         }
         return CURRENCY_CHOICES[self.currency]
 
-    def next(self):
-        obj = Contribution.objects.filter(pk__gt=self.pk)[0:1]
-        if len(obj):
-            return obj[0]
-        return ''
-
-    def prev(self):
-        obj = Contribution.objects.filter(pk__lt=self.pk).order_by('-pk')[0:1]
-        if len(obj):
-            return obj[0]
-        return ''
-
     @permalink
     def get_absolute_url(self):
         return ('contributions:detail', None, {
