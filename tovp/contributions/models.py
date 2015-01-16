@@ -100,7 +100,7 @@ class Contribution(TimeStampedModel):
         field_values.append(self.get_status_display())
         return ' - '.join(filter(bool, field_values))
 
-    def __unicode__(self):
+    def __str__(self):
         field_values = (
             self.person.full_name,
             self.amount,
