@@ -20,7 +20,7 @@
                 <li><a href="{{ url('contacts:person:create') }}">Add new person</a></li>
             </ul>
           </li>
-          <li><a href="{{ url('contributions:index') }}">Contributions</a></li>
+          <li><a href="{{ url('contributions:contribution:index') }}">Contributions</a></li>
 {% if user.is_authenticated() %}
           <li><a href="{{ url('users:logout') }}">Logout ({{ user }})</a></li>
 {% endif %}

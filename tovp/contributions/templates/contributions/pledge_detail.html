@@ -1,0 +1,79 @@
+{% extends 'content-area.html' %}
+{% set page_title = object.name %}
+{% set body_class = "pledge-detail" %}
+
+{% macro print_field(label, value) -%}
+    <div class="field-label">{{ label }}</div>
+    <div class="field-value">{{ value or 'N/A' }}</div>
+{%- endmacro %}
+
+
+{% block page_content %}
+
+<div class="row">
+    {% set field_label = 'TOVP Contribution ID' %}
+    {% set field_name = 'pk' %}
+    <div class="{% if user.has_perm('contributions.change_contribution') %} col-xs-9 col-ms-10 col-sm-11{% else %}col-xs-12{% endif %}">
+        <h1>Pledge #{{ object.pk }}</h1>
+    </div>
+    {% if user.has_perm('contacts.change_person') %} 
+        <div class="col-xs-3 col-ms-2 col-sm-1">
+            <a href="{{ url('contributions:pledge:update', object.person.pk, object.pk) }}" class="btn btn-lg btn-warning">Edit</a>
+        </div>
+    {% endif %}
+
+    {% set field_label = 'Donnor' %}
+    {% set field_name = 'person' %}
+    <div class="col-xs-12 col-ms-8 col-sm-8">
+        <div class="field-label">{{ field_label }}</div>
+        <div class="field-value">
+            <a href="{{ object[field_name].get_absolute_url() }}">{{ object[field_name].full_name }}</a>
+        </div>
+    </div>
+    {% set field_label = 'Status' %}
+    {% set field_name = 'status' %}
+    {% if object[field_name] %}
+    <div class="col-xs-12 col-ms-4 col-sm-4">
+        {{ print_field(field_label, object.get_status_display()) }}
+    </div>
+    {% endif %}
+    {% set field_label = 'Amount' %}
+    {% set field_name = 'amount' %}
+    <div class="col-xs-12 col-ms-8 col-sm-8">
+        <div class="field-label">{{ field_label }}</div>
+        <div class="field-value">
+            {{ object[field_name] }} {{ object.get_currency_display() }}
+        </div>
+    </div>
+    {% set field_label = 'Payments Start Date' %}
+    {% set field_name = 'payments_start_date' %}
+    {% if object[field_name] %}
+    <div class="col-xs-12 col-ms-8 col-sm-8">
+        <div class="field-label">{{ field_label }}</div>
+        <div class="field-value">
+            {{ object.payments_start_date|datetimeformat('%B %-d, %Y') }}
+        </div>
+    </div>
+    {% endif %}
+    {% set field_label = 'Interval' %}
+    {% set field_name = 'interval' %}
+    {% if object[field_name] %}
+    <div class="col-xs-12 col-ms-4 col-sm-4">
+        <div class="field-label">{{ field_label }}</div>
+        <div class="field-value">
+            {{ object.get_interval_display() }}
+        </div>
+    </div>
+    {% endif %}
+    {% set field_label = 'Progress' %}
+    <div class="col-xs-12 col-ms-4 col-sm-4">
+        <div class="field-label">{{ field_label }}</div>
+        <div class="field-value">
+            {{ object.progress }}%
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+

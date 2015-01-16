@@ -36,3 +36,4 @@ num2words
 
 django_countries
 django-datetime-widget
+python-dateutil

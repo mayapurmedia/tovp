@@ -3,14 +3,10 @@
 # from django.core.urlresolvers import reverse
 
 # view imports
-from django.views.generic import DetailView
-# from django.views.generic import RedirectView
-from django.views.generic import UpdateView
-from django.views.generic import ListView
-from django.views.generic.edit import CreateView
-
+from django.views.generic import DetailView, UpdateView, ListView
+from django.views.generic.edit import CreateView, DeleteView
 from django.utils.translation import ugettext as _
-# from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404
 
 # Will be used for logged in and logged out messages
 # from django.contrib import messages
@@ -18,8 +14,53 @@ from django.utils.translation import ugettext as _
 # Only authenticated users can access views using this.
 from braces.views import LoginRequiredMixin
 
-from .forms import ContributionForm
-from .models import Contribution
+from .forms import PledgeForm, ContributionForm
+from .models import Pledge, Contribution
+
+
+class PledgeListView(LoginRequiredMixin, ListView):
+    model = Pledge
+
+
+class PledgeDetailView(LoginRequiredMixin, DetailView):
+    model = Pledge
+
+
+class PledgeCreateView(LoginRequiredMixin, CreateView):
+    model = Pledge
+    template_name = 'contributions/pledge_form.html'
+    form_class = PledgeForm
+
+    def get_initial(self):
+        initial = super(PledgeCreateView, self).get_initial()
+        initial = initial.copy()
+        initial['person'] = self.kwargs.get('person_id')
+        return initial
+
+    def get_context_data(self, **kwargs):
+        context = super(PledgeCreateView, self).get_context_data(**kwargs)
+        context['content_title'] = _("Add new pledge")
+        return context
+
+
+class PledgeUpdateView(LoginRequiredMixin, UpdateView):
+    model = Pledge
+    template_name = 'contributions/pledge_form.html'
+    form_class = PledgeForm
+
+    def get_context_data(self, **kwargs):
+        context = super(PledgeUpdateView, self).get_context_data(**kwargs)
+        context['content_title'] = _("Edit pledge")
+        return context
+
+
+class PledgeDeleteView(DeleteView):
+    model = Pledge
+    success_message = "%(pk)s was deleted successfully"
+
+    def get_success_url(self):
+        item = get_object_or_404(Pledge, pk=self.kwargs['pk'])
+        return item.person.get_absolute_url()
 
 
 class ContributionListView(LoginRequiredMixin, ListView):
