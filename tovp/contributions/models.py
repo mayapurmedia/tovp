@@ -89,15 +89,16 @@ class Contribution(TimeStampedModel):
                                related_name='contributions')
     amount = models.DecimalField(_('Amount'), max_digits=20, decimal_places=2)
     CURRENCY_CHOICES = (
-        (u'INR', _('₹')),
-        (u'USD', _('$')),
-        (u'EUR', _('€')),
+        ('INR', _('₹')),
+        ('USD', _('$')),
+        ('EUR', _('€')),
     )
     currency = models.CharField(
-        "Currency", max_length=6, choices=CURRENCY_CHOICES)
+        "Currency", max_length=6, choices=CURRENCY_CHOICES, default="INR")
     PAYMENT_METHOD_CHOICES = (
         (u'cash', _('Cash')),
-        (u'ccdc', _('Credit/Debit Card')),
+        (u'ccdcsl', _('Credit/Debit Card Swipe Local')),
+        (u'ccdcsf', _('Credit/Debit Card Swipe Foreign')),
         (u'neft', _('NEFT')),
         (u'cheque', _('Cheque')),
     )
@@ -136,8 +137,8 @@ class Contribution(TimeStampedModel):
 
         # transaction id is required for cheque or credit/debit cards payments
         if not self.transaction_id:
-            if self.payment_method in ['cheque', 'ccdc']:
-                if self.payment_method == 'ccdc':
+            if self.payment_method in ['cheque', 'ccdcsl', 'ccdcsf']:
+                if self.payment_method in ['ccdcsl', 'ccdcsf']:
                     msg = _("You have to fill Transaction ID for Credit/Debit "
                             "card payment.")
                     errors['transaction_id'] = [msg]
