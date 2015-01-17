@@ -21,13 +21,13 @@
 
     <form action="" enctype="multipart/form-data" method="post">{{ csrf() }}
         <div class="row">
-        {{ form.media }}
-        {% if form.non_field_errors() %}
-            <p class="tooltip error">
-                {{ form.non_field_errors() }}
-            </p>
-        {% endif %}
-        {{form.person|add_css('hide')}}
+            {{ form.media }}
+            {% if form.non_field_errors() %}
+                <p class="tooltip error">
+                    {{ form.non_field_errors() }}
+                </p>
+            {% endif %}
+            {{ form.person }}
             {% set field_name = 'amount' %}
             <div class="col-ms-6 col-sm-6 col-lg-4 form-group{{' has-error' if form[field_name].errors }}">
                 <label class="control-label" for="id_{{ field_name }}">{{ form[field_name].label }}</label>
