@@ -43,7 +43,7 @@
     <div class="col-xs-8">
         <strong>Donor name:</strong><br/> {{ object.person.full_name }}<br/>
         <strong>Address:</strong><br/>
-            {% for line in object.person.address() %}
+            {% for line in object.person.full_address() %}
             {{ line }}<br/>
             {% endfor %}
     </div>
