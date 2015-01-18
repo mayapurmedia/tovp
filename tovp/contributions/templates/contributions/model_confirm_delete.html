@@ -1,0 +1,15 @@
+{% extends 'content-area.html' %}
+{% set page_title = object.name %}
+{% set body_class = "confirm-delete" %}
+
+
+{% block page_content %}
+
+<form action="" method="post">{{ csrf() }}
+    <p>Are you sure you want to delete {{ object }}?</p>
+    <input class="btn btn-danger" type="submit" value="Delete" /> 
+    <a id="go-to-ride" class="btn" href="{{ url('contributions:pledge:detail', object.person.pk, object.pk) }}">Cancel</a>
+</form>
+
+{% endblock %}
+

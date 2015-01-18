@@ -107,3 +107,13 @@ class ContributionUpdateView(LoginRequiredMixin, UpdateView):
         context = super(ContributionUpdateView, self).get_context_data(**kwargs)
         context['content_title'] = _("Edit contribution")
         return context
+
+
+class ContributionDeleteView(DeleteView):
+    model = Contribution
+    success_message = "%(pk)s was deleted successfully"
+    template_name = 'contributions/model_confirm_delete.html'
+
+    def get_success_url(self):
+        item = get_object_or_404(Contribution, pk=self.kwargs['pk'])
+        return item.person.get_absolute_url()

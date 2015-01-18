@@ -65,6 +65,11 @@ contributions = patterns(
         view=views.DonorInvoiceDetailView.as_view(),
         name='donor_receipt',
     ),
+    url(
+        regex=r'^delete/(?P<pk>\d+)/$',
+        view=views.ContributionDeleteView.as_view(),
+        name="delete",
+    ),
 )
 
 
