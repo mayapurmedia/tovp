@@ -130,10 +130,18 @@ class Contribution(TimeStampedModel):
         _('Transaction ID or Cheque No'), max_length=100, blank=True,
         help_text=_('Transaction ID of this contribution or cheque number.'))
 
+    bank = models.CharField(
+        _('Bank'), max_length=100, blank=True,
+        help_text=_('Write bank name (and possible branch or location) for cheque'))
+
     dated = models.DateField(
         _("Dated"), null=True, blank=True,
-        help_text=_('Enter date of the transaction (e.g. date on the cheque, '
-                    'date when credit card was charged)')
+        help_text=_('Enter date on the cheque')
+    )
+    cleared_on = models.DateField(
+        _("Cleared On"), null=True, blank=True,
+        help_text=_('Enter date when transaction was completed '
+                    '(money came to TOVP)')
     )
     STATUS_CHOICES = (
         (u'pending', _('Pending')),
@@ -156,9 +164,9 @@ class Contribution(TimeStampedModel):
             if self.__dict__[field]:
                 self.__dict__[field] = self.__dict__[field].strip()
 
-        if self.status == 'completed' and not self.dated:
+        if self.status == 'completed' and not self.cleared_on:
             msg = _("There must be date for completed transaction")
-            errors['dated'] = [msg]
+            errors['cleared_on'] = [msg]
 
         # transaction id is required for cheque or credit/debit cards payments
         if not self.transaction_id:

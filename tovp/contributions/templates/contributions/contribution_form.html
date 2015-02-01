@@ -92,6 +92,17 @@
         </div>
         <div class="row">
             {% set field_name = 'dated' %}
+            <div class="field_id_{{ field_name }} col-xs-12 col-ms-12 col-sm-6 col-lg-4 form-group{{' has-error' if form[field_name].errors }}">
+                <label class="control-label" for="id_{{ field_name }}">{{ form[field_name].label }}</label>
+                {{form[field_name]|add_css('form-control')}}
+                {{ form[field_name].errors|safe }}
+                {% if form[field_name].help_text %}
+                    <div class="help-text">
+                        {{ form[field_name].help_text }}
+                    </div>
+                {% endif %}
+            </div>
+            {% set field_name = 'cleared_on' %}
             <div class="col-xs-12 col-ms-12 col-sm-6 col-lg-4 form-group{{' has-error' if form[field_name].errors }}">
                 <label class="control-label" for="id_{{ field_name }}">{{ form[field_name].label }}</label>
                 {{form[field_name]|add_css('form-control')}}
@@ -134,18 +145,63 @@ $(document).ready(function() {
     var $aerialTr = $('#id_A').closest('tr').hide();
     var $groundSprayTr = $('#id_B').closest('tr').hide();
 
-    if ($('#id_payment_method').val() == 'cashl' | $('#id_payment_method').val() == 'cashf' | $('#id_payment_method').val() == 'neftl' | $('#id_payment_method').val() == 'neftf') {
+    if (
+        $('#id_payment_method').val() == 'cashl' | 
+        $('#id_payment_method').val() == 'cashf' | 
+        $('#id_payment_method').val() == 'neftl' | 
+        $('#id_payment_method').val() == 'neftf'
+       ) {
         $('.field_id_transaction_id').hide();
+    }
+
+    if (
+        $('#id_payment_method').val() == 'cashl' | 
+        $('#id_payment_method').val() == 'cashf' | 
+        $('#id_payment_method').val() == 'neftl' | 
+        $('#id_payment_method').val() == 'neftf' | 
+        $('#id_payment_method').val() == 'ccdcsl' | 
+        $('#id_payment_method').val() == 'ccdcsf'
+       ) {
+        $('.field_id_dated').hide();
     }
 
     $('#id_payment_method').change(function() {
         var selectedValue = $(this).val();
-        if(selectedValue  === 'cashl' | selectedValue === 'cashf' | selectedValue  === 'neftl' | selectedValue === 'neftf') {
+        if (
+            selectedValue  === 'cashl' | 
+            selectedValue === 'cashf'
+           ) {
             $('#id_status').val('completed');
+        }
+        if (
+            selectedValue  === 'cashl' | 
+            selectedValue === 'cashf' | 
+            selectedValue  === 'neftl' | 
+            selectedValue === 'neftf'
+           ) {
             $('.field_id_transaction_id').slideUp();
-        } else if (selectedValue === 'B') {
-        } else {
+        }
+        if (
+            selectedValue  === 'cashl' | 
+            selectedValue === 'cashf' | 
+            selectedValue  === 'neftl' | 
+            selectedValue === 'neftf'
+           ) {
+            $('.field_id_dated').slideUp();
+        }
+        if (
+            selectedValue  === 'chequel' | 
+            selectedValue  === 'chequef' | 
+            selectedValue  === 'ccdcsl' | 
+            selectedValue === 'ccdcsf'
+           ) {
             $('.field_id_transaction_id').slideDown();
+        }
+        if (
+            selectedValue  === 'chequel' | 
+            selectedValue === 'chequef'
+           ) {
+            $('.field_id_dated').slideDown();
         }
     });
 });

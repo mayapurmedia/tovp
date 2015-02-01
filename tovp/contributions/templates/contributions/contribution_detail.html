@@ -58,6 +58,13 @@
         {{ print_field(field_label, object[field_name])}}
     </div>
     {% endif %}
+    {% set field_label = 'Cleared On' %}
+    {% set field_name = 'cleared_on' %}
+    {% if object[field_name] %}
+    <div class="col-xs-12 col-ms-4 col-sm-4">
+        {{ print_field(field_label, object[field_name])}}
+    </div>
+    {% endif %}
     {% set field_label = 'Payment Method' %}
     {% set field_name = 'payment_method' %}
     <div class="col-xs-12 col-sm-6">
