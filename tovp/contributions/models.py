@@ -120,11 +120,11 @@ class Contribution(TimeStampedModel):
         (u'ccdcsf', _('Credit/Debit Card Swipe Foreign')),
         (u'neftl', _('NEFT (Indian)')),
         (u'neftf', _('NEFT (Foreign)')),
-        (u'chequl', _('Cheque (Indian)')),
-        (u'chequf', _('Cheque (Foreign)')),
+        (u'chequel', _('Cheque (Indian)')),
+        (u'chequef', _('Cheque (Foreign)')),
     )
     payment_method = models.CharField(
-        "Payment Method", max_length=6, choices=PAYMENT_METHOD_CHOICES)
+        "Payment Method", max_length=16, choices=PAYMENT_METHOD_CHOICES)
 
     transaction_id = models.CharField(
         _('Transaction ID or Cheque No'), max_length=100, blank=True,
