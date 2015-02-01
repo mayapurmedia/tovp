@@ -14,10 +14,8 @@ framework.
 
 """
 import os
-import sys
 import site
-#import newrelic.agent
-import subprocess
+# import newrelic.agent
 
 # activates virtualenv
 site.addsitedir(
