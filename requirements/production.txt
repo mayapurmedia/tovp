@@ -7,4 +7,4 @@ gunicorn
 # Quick and small memcached client for Python
 # will need to have installed libmemcached-dev
 # sudo apt-get install libmemcached-dev
-pylibmc
+# pylibmc
