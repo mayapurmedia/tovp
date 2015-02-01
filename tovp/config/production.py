@@ -61,6 +61,9 @@ class Production(Common):
     # STATIC_URL = 'https://s3.amazonaws.com/%s/' % AWS_STORAGE_BUCKET_NAME
     # END STORAGE CONFIGURATION
 
+    STATIC_ROOT = values.Value()
+    STATIC_URL = values.Value()
+
     # # EMAIL
     # DEFAULT_FROM_EMAIL = values.Value('TOVP <noreply@donate.tovp.org>')
     # EMAIL_HOST = values.Value('smtp.sendgrid.com')
