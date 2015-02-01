@@ -149,21 +149,31 @@
         <div class="col-xs-2 item-value">
             {{ object.transaction_id }}
         </div>
+        {% if object.cleared_on %}
         <div class="col-xs-2 col-custom-2-5 item-name">Transaction Date:</div>
         <div class="col-xs-3 item-value">
-            {{ object.dated|datetimeformat }}
+            {{ object.cleared_on|datetimeformat }}
         </div>
+        {% endif %}
     {% endif %}
 
-    {% if object.payment_method in ['cccccdcsl', 'ccccccdcsf'] %}
-        <div class="col-xs-2 col-custom-2-5 item-name">Transaction ID:</div>
+    {% if object.payment_method in ['chequel', 'chequef'] %}
+        <div class="col-xs-3 col-custom-2-5 item-name">Transaction ID:</div>
         <div class="col-xs-2 item-value">
             {{ object.transaction_id }}
         </div>
-        <div class="col-xs-2 col-custom-2-5 item-name">Transaction Date:</div>
+        {% if object.dated %}
+        <div class="col-xs-3 col-custom-2-5 item-name">Transaction Date:</div>
         <div class="col-xs-3 item-value">
             {{ object.dated|datetimeformat }}
         </div>
+        {% endif %}
+        {% if object.cleared_on %}
+        <div class="col-xs-3 col-custom-2-5 item-name">Cleared On:</div>
+        <div class="col-xs-4 item-value">
+            {{ object.cleared_on|datetimeformat }}
+        </div>
+        {% endif %}
     {% endif %}
 
 </div>
