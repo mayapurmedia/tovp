@@ -60,7 +60,7 @@ class AnantaHelpersTests(TestCase):
         test_date = datetime.datetime(2001, 1, 31, 22, 10, 33)
 
         # test default filter
-        self.assertEqual('Jan 31 2001', datetimeformat(test_date))
+        self.assertEqual('31 January 2001', datetimeformat(test_date))
         # use custom filters
         self.assertEqual('2001', datetimeformat(test_date, '%Y'))
         self.assertEqual('2001-01-31', datetimeformat(test_date, '%Y-%m-%d'))
