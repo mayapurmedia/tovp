@@ -86,6 +86,11 @@ class ContributionCreateView(LoginRequiredMixin, CreateView):
     template_name = 'contributions/contribution_form.html'
     form_class = ContributionForm
 
+    def get_form_kwargs(self):
+        kwargs = super(ContributionCreateView, self).get_form_kwargs()
+        kwargs['person'] = self.kwargs.get('person_id')
+        return kwargs
+
     def get_initial(self):
         initial = super(ContributionCreateView, self).get_initial()
         initial = initial.copy()
@@ -102,6 +107,11 @@ class ContributionUpdateView(LoginRequiredMixin, UpdateView):
     model = Contribution
     template_name = 'contributions/contribution_form.html'
     form_class = ContributionForm
+
+    def get_form_kwargs(self):
+        kwargs = super(ContributionUpdateView, self).get_form_kwargs()
+        kwargs['person'] = self.kwargs.get('person_id')
+        return kwargs
 
     def get_context_data(self, **kwargs):
         context = super(ContributionUpdateView, self).get_context_data(**kwargs)

@@ -10,7 +10,6 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import os
 from os.path import join, dirname
 
 import django_cache_url
@@ -42,6 +41,7 @@ class Common(Configuration):
         'jingo_markdown',
         'jingo_paginator',
         'datetimewidget',
+        'django_extensions',
     )
 
     # Apps specific for this project go here.
@@ -50,6 +50,7 @@ class Common(Configuration):
         'users',  # custom users app
         'contacts',
         'contributions',
+        'promotions',
         'theme',
         # Your stuff: custom apps go here
     )

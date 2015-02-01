@@ -22,5 +22,7 @@ urlpatterns = patterns('',
 
     # Your stuff: custom urls go here
     url(r'^contacts/', include("contacts.urls", namespace="contacts")),
-    url(r'^contributions/', include("contributions.urls", namespace="contributions")),
+    url(r'^promotions/', include("promotions.urls", namespace="promotions")),
+    url(r'^contributions/', include("contributions.urls",
+                                    namespace="contributions")),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

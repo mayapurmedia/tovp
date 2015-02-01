@@ -14,7 +14,8 @@ from django.utils.translation import ugettext as _
 # Only authenticated users can access views using this.
 from braces.views import LoginRequiredMixin
 
-# Import the customized Person model
+from promotions.models import promotions
+
 from .models import Person
 from .forms import PersonForm
 
@@ -25,6 +26,20 @@ class PersonListView(LoginRequiredMixin, ListView):
 
 class PersonDetailView(LoginRequiredMixin, DetailView):
     model = Person
+
+    def get_context_data(self, **kwargs):
+        context = super(PersonDetailView, self).get_context_data(**kwargs)
+        ballance = self.get_object().get_ballance()
+        promotions_eligible = []
+        promotions_not_eligible = []
+        for promotion in promotions:
+            if promotion.is_eligible(ballance):
+                promotions_eligible.append(promotion)
+            else:
+                promotions_not_eligible.append(promotion)
+        context['eligible_promotions'] = promotions_eligible
+        context['not_eligible_promotions'] = promotions_not_eligible
+        return context
 
 
 class PersonCreateView(LoginRequiredMixin, CreateView):

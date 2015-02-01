@@ -9,6 +9,8 @@ from django_countries.fields import CountryField
 
 from model_utils.models import TimeStampedModel
 
+from django.db.models.loading import get_model
+
 
 class Person(TimeStampedModel):
     # title of the person
@@ -337,6 +339,57 @@ class Person(TimeStampedModel):
     @permalink
     def get_absolute_url(self):
         return ('contacts:person:detail', None, {'pk': self.pk})
+
+    cache_assigned_promotions = None
+
+    def assigned_promotions(self):
+        """
+        Returns all promotions (e.g. Golden Brick, Silver Coin) for person
+        """
+        if not self.cache_assigned_promotions:
+            from promotions.models import promotions
+            assigned_promotions = []
+            for promotion_class in promotions:
+                for promotion in promotion_class.objects.all(). \
+                        filter(pledge__person=self):
+                    assigned_promotions.append(promotion)
+            self.cache_assigned_promotions = assigned_promotions
+        return self.cache_assigned_promotions
+
+    cache_ballance = None
+
+    def get_ballance(self):
+        """
+        Calculates what person pledged to pay and what he already paid
+        """
+        # if we are calling this method in same request it will use cached
+        # values instead of going through al pledges again
+        if not self.cache_ballance:
+            ballance = {
+                'USD': {'pledged': 0,
+                        'paid': 0,
+                        'used': 0,
+                        'available': 0},
+                'INR': {'pledged': 0,
+                        'paid': 0,
+                        'used': 0,
+                        'available': 0},
+            }
+            Pledge = get_model(app_label='contributions', model_name='Pledge')
+            for pledge in Pledge.objects.all().filter(person=self):
+                ballance[pledge.currency]['pledged'] += pledge.amount
+                ballance[pledge.currency]['paid'] += pledge.amount_paid or 0
+            for promotion in self.assigned_promotions():
+                if promotion.pledge.currency == 'INR':
+                    ballance['INR']['used'] += promotion.amount_rs
+                if promotion.pledge.currency == 'USD':
+                    ballance['USD']['used'] += promotion.amount_usd
+            # calculate unused ballance for each currency
+            for currency in ballance:
+                ballance[currency]['available'] = \
+                    ballance[currency]['pledged'] - ballance[currency]['used']
+            self.cache_ballance = ballance
+        return self.cache_ballance
 
     def __str__(self):
         return self.name
