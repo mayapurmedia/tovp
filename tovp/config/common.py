@@ -41,7 +41,7 @@ class Common(Configuration):
         'jingo_markdown',
         'jingo_paginator',
         'datetimewidget',
-        'django_extensions',
+        # 'django_extensions',
     )
 
     # Apps specific for this project go here.
