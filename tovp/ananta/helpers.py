@@ -100,7 +100,17 @@ def format_with_commas(value, format='%i'):
 
 
 @register.filter
-def datetimeformat(value, format='%b %d %Y'):
+def format_for_india(value):
+    """
+    >>> format_for_india(.1234)
+    '0.1234'
+    """
+    return re.sub(r"(?<=\d)(?=(\d{2}){0,2}\d{3}(\d{7})*(?!\d))", ",",
+                  str(value))
+
+
+@register.filter
+def datetimeformat(value, format='%d %B %Y'):
     return value.strftime(format)
 
 
