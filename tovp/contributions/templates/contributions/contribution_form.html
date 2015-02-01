@@ -113,6 +113,17 @@
                     </div>
                 {% endif %}
             </div>
+            {% set field_name = 'bank' %}
+            <div class="field_id_{{ field_name }} col-xs-12 col-ms-12 col-sm-6 col-lg-4 form-group{{' has-error' if form[field_name].errors }}">
+                <label class="control-label" for="id_{{ field_name }}">{{ form[field_name].label }}</label>
+                {{form[field_name]|add_css('form-control')}}
+                {{ form[field_name].errors|safe }}
+                {% if form[field_name].help_text %}
+                    <div class="help-text">
+                        {{ form[field_name].help_text }}
+                    </div>
+                {% endif %}
+            </div>
             {% set field_name = 'status' %}
             <div class="col-xs-12 col-ms-12 col-sm-6 col-lg-4 form-group{{' has-error' if form[field_name].errors }}">
                 <label class="control-label" for="id_{{ field_name }}">{{ form[field_name].label }}</label>
@@ -191,6 +202,16 @@ $(document).ready(function() {
         $('.field_id_dated').hide();
     }
 
+    if (
+        $('#id_payment_method').val() == 'cashl' | 
+        $('#id_payment_method').val() == 'cashf' | 
+        $('#id_payment_method').val() == 'neftl' | 
+        $('#id_payment_method').val() == 'neftf' | 
+        $('#id_payment_method').val() == 'ccdcsl' | 
+        $('#id_payment_method').val() == 'ccdcsf'
+       ) {
+        $('.field_id_bank').hide();
+    }
     $('#id_payment_method').change(function() {
         var selectedValue = $(this).val();
         if (
@@ -216,6 +237,16 @@ $(document).ready(function() {
             $('.field_id_dated').slideUp();
         }
         if (
+            selectedValue  === 'ccdcsl' | 
+            selectedValue === 'ccdcsf' | 
+            selectedValue  === 'cashl' | 
+            selectedValue === 'cashf' | 
+            selectedValue  === 'neftl' | 
+            selectedValue === 'neftf'
+           ) {
+            $('.field_id_bank').slideUp();
+        }
+        if (
             selectedValue  === 'chequel' | 
             selectedValue  === 'chequef' | 
             selectedValue  === 'ccdcsl' | 
@@ -228,6 +259,7 @@ $(document).ready(function() {
             selectedValue === 'chequef'
            ) {
             $('.field_id_dated').slideDown();
+            $('.field_id_bank').slideDown();
         }
     });
 });
