@@ -132,7 +132,8 @@ class Contribution(TimeStampedModel):
 
     bank = models.CharField(
         _('Bank'), max_length=100, blank=True,
-        help_text=_('Write bank name (and possible branch or location) for cheque'))
+        help_text=_('Write bank name (and possible branch or location) '
+                    'for cheque'))
 
     dated = models.DateField(
         _("Dated"), null=True, blank=True,
@@ -151,6 +152,14 @@ class Contribution(TimeStampedModel):
     status = models.CharField("Status", max_length=30, choices=STATUS_CHOICES)
 
     status_changed = MonitorField(monitor='status')
+
+    book_number = models.CharField(
+        _('Book Number'), max_length=20, blank=True,
+        help_text=_('Enter if you are entering contribution from book'))
+
+    slip_number = models.CharField(
+        _('Slip Number'), max_length=20, blank=True,
+        help_text=_('Enter if you are entering contribution from slip'))
 
     def __init__(self, *args, **kwargs):
         super(Contribution, self).__init__(*args, **kwargs)

@@ -28,6 +28,29 @@
             <a href="{{ object[field_name].get_absolute_url() }}">{{ object[field_name] }}</a>
         </div>
     </div>
+
+    {% if object.book_number %}
+    {% set field_label = 'Book Number' %}
+    {% set field_name = 'book_number' %}
+    <div class="col-xs-6 col-ms-6 col-sm-6">
+        <div class="field-label">{{ field_label }}</div>
+        <div class="field-value">
+            {{ object[field_name] }}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if object.slip_number %}
+    {% set field_label = 'Slip Number' %}
+    {% set field_name = 'slip_number' %}
+    <div class="col-xs-6 col-ms-6 col-sm-6">
+        <div class="field-label">{{ field_label }}</div>
+        <div class="field-value">
+            {{ object[field_name] }}
+        </div>
+    </div>
+    {% endif %}
+
     {% set field_label = 'Donnor' %}
     {% set field_name = 'person' %}
     <div class="col-xs-12">
