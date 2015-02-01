@@ -45,6 +45,13 @@
             {{ object[field_name] }} {{ object.get_currency_display() }}
         </div>
     </div>
+    {% set field_label = 'Progress' %}
+    <div class="col-xs-12 col-ms-4 col-sm-4">
+        <div class="field-label">{{ field_label }}</div>
+        <div class="field-value">
+            {{ '%.2f' % object.progress }}%
+        </div>
+    </div>
     {% set field_label = 'Payments Start Date' %}
     {% set field_name = 'payments_start_date' %}
     {% if object[field_name] %}
@@ -65,13 +72,6 @@
         </div>
     </div>
     {% endif %}
-    {% set field_label = 'Progress' %}
-    <div class="col-xs-12 col-ms-4 col-sm-4">
-        <div class="field-label">{{ field_label }}</div>
-        <div class="field-value">
-            {{ object.progress }}%
-        </div>
-    </div>
 </div>
 
 
