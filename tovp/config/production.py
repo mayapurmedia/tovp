@@ -72,14 +72,14 @@ class Production(Common):
     # SERVER_EMAIL = EMAIL_HOST_USER
     # # END EMAIL
 
-    # TEMPLATE CONFIGURATION
-    # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
-    TEMPLATE_LOADERS = (
-        ('django.template.loaders.cached.Loader', (
-            'django.template.loaders.filesystem.Loader',
-            'django.template.loaders.app_directories.Loader',
-        )),
-    )
-    # END TEMPLATE CONFIGURATION
+    # # TEMPLATE CONFIGURATION
+    # # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
+    # TEMPLATE_LOADERS = (
+    #     ('django.template.loaders.cached.Loader', (
+    #         'django.template.loaders.filesystem.Loader',
+    #         'django.template.loaders.app_directories.Loader',
+    #     )),
+    # )
+    # # END TEMPLATE CONFIGURATION
 
     # Your production stuff: Below this line define 3rd party libary settings
