@@ -149,6 +149,33 @@
                 {% endif %}
             </div>
         </div>
+        <div class="row">
+            <div class="col-xs-12">
+                Fill following in case you want to use on receipts person's address in India instead of his main address:
+            </div>
+            {% set field_name = 'indian_name' %}
+            <div class="col-xs-12 col-sm-6 form-group{{' has-error' if form[field_name].errors }}">
+                <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
+                {{form[field_name]|add_css('form-control')}}
+                {{ form[field_name].errors|safe }}
+                {% if form[field_name].help_text %}
+                    <div class="help-text">
+                        {{ form[field_name].help_text }}
+                    </div>
+                {% endif %}
+            </div>
+            {% set field_name = 'indian_address' %}
+            <div class="col-xs-12 col-sm-6 form-group{{' has-error' if form[field_name].errors }}">
+                <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
+                {{form[field_name]|add_css('form-control')}}
+                {{ form[field_name].errors|safe }}
+                {% if form[field_name].help_text %}
+                    <div class="help-text">
+                        {{ form[field_name].help_text }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
         <input class="btn btn-lg btn-success" type="submit" value="Save" /> 
     </form>
 

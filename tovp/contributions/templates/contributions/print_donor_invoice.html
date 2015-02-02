@@ -109,14 +109,30 @@
     </div>
     <div class="col-xs-12 item">
         <span class="item-name">Received with thanks from: </span>
-        <span class="item-value">{{ object.person.full_name }}</span>
+        <span class="item-value">
+            {% if object.person.indian_address %}
+                {% if object.person.indian_name %}
+                    {{ object.person.indian_name }}
+                {% elif object.person.initiated_name %}
+                    {{ object.person.initiated_name }}
+                {% else %}
+                    {{ object.person.name }}
+                {% endif %}
+            {% else %}
+                {{ object.person.name }}
+            {% endif %}
+        </span>
     </div>
 
     <div class="col-xs-1 item-name">Address:</div>
     <div class="col-xs-11 item-value">
-        {% for line in object.person.full_address() %}
-        {{ line }}{% if not loop.last %}, {% endif %}
-        {% endfor %}
+        {% if object.person.indian_address %}
+            {{ object.person.indian_address }}
+        {% else %}
+            {% for line in object.person.full_address() %}
+            {{ line }}{% if not loop.last %}, {% endif %}
+            {% endfor %}
+        {% endif %}
     </div>
 
     <div class="col-xs-1 item-name">Amount:</div>
