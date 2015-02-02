@@ -161,6 +161,13 @@ class Contribution(TimeStampedModel):
         _('Slip Number'), max_length=20, blank=True,
         help_text=_('Enter if you are entering contribution from slip'))
 
+    overwrite_name = models.CharField(
+        _("Name who pays on behalf of main contact"), max_length=255,
+        blank=True)
+    overwrite_address = models.CharField(
+        _("Address who pays on behalf of main contact"), max_length=255,
+        blank=True)
+
     def __init__(self, *args, **kwargs):
         super(Contribution, self).__init__(*args, **kwargs)
         self._original_pledge = self.pledge
@@ -211,7 +218,7 @@ class Contribution(TimeStampedModel):
         ]
         if show_name:
             field_values.append(self.person.full_name)
-        field_values.append(str(self.dated))
+        # field_values.append(str(self.dated))
         field_values.append(str(self.amount))
         field_values.append(self.currency)
         field_values.append('(%s)' % self.get_payment_method_display())

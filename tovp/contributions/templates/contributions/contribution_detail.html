@@ -100,6 +100,20 @@
         {{ print_field(field_label, object[field_name])}}
     </div>
     {% endif %}
+    {% set field_label = 'Overwrite Name' %}
+    {% set field_name = 'overwrite_name' %}
+    {% if object[field_name] %}
+    <div class="col-xs-12 col-sm-4">
+        {{ print_field(field_label, object[field_name]) }}
+    </div>
+    {% endif %}
+    {% set field_label = 'Overwrite Address' %}
+    {% set field_name = 'overwrite_address' %}
+    {% if object[field_name] %}
+    <div class="col-xs-12 col-sm-8">
+        {{ print_field(field_label, object[field_name]) }}
+    </div>
+    {% endif %}
     <div class="col-xs-12">
         <a href="{{ url('contributions:contribution:donor_letter', object.pk) }}" target="_blank" class="btn btn-lg btn-success">Print Donor Letter</a>
         <a href="{{ url('contributions:contribution:donor_receipt', object.pk) }}" target="_blank" class="btn btn-lg btn-success">Print Receipt</a>

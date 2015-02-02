@@ -247,10 +247,6 @@ class Person(TimeStampedModel):
         help_text=_('Required for Indian citizens. Enter your PAN card number.')
     )
 
-    indian_name = models.CharField(max_length=255, blank=True)
-    indian_address = models.CharField(
-        _("Indian Address"), max_length=255, blank=True)
-
     def clean(self):
         # Strip all whitespace
         for field in ['first_name', 'middle_name', 'last_name',

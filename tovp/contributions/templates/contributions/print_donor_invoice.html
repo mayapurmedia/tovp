@@ -110,9 +110,9 @@
     <div class="col-xs-12 item">
         <span class="item-name">Received with thanks from: </span>
         <span class="item-value">
-            {% if object.person.indian_address %}
-                {% if object.person.indian_name %}
-                    {{ object.person.indian_name }}
+            {% if object.overwrite_address %}
+                {% if object.overwrite_name %}
+                    {{ object.overwrite_name }}
                 {% elif object.person.initiated_name %}
                     {{ object.person.initiated_name }}
                 {% else %}
@@ -126,8 +126,8 @@
 
     <div class="col-xs-1 item-name">Address:</div>
     <div class="col-xs-11 item-value">
-        {% if object.person.indian_address %}
-            {{ object.person.indian_address }}
+        {% if object.overwrite_address %}
+            {{ object.overwrite_address }}
         {% else %}
             {% for line in object.person.full_address() %}
             {{ line }}{% if not loop.last %}, {% endif %}
@@ -186,7 +186,7 @@
         {% endif %}
         {% if object.cleared_on %}
         <div class="col-xs-3 col-custom-2-5 item-name">Cleared On:</div>
-        <div class="col-xs-4 item-value">
+        <div class="col-xs-2 item-value">
             {{ object.cleared_on|datetimeformat }}
         </div>
         {% endif %}
