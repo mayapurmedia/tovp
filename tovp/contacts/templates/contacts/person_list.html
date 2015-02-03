@@ -3,7 +3,7 @@
 
 {% block page_content %}
     {# Paginate objects list and set result as paginated_list #}
-    {% set paginated_list = paginate_list(request, object_list, 10) %}
+    {% set paginated_list = paginate_list(request, object_list, 100) %}
     {# Print pager for pagination #}
     {# Go through objects and print them #}
     {% if paginated_list %}
