@@ -212,6 +212,18 @@ class Contribution(TimeStampedModel):
             'person_id': self.person.pk,
             'pk': self.pk})
 
+    def next(self):
+        obj = Contribution.objects.filter(pk__gt=self.pk)[0:1]
+        if len(obj):
+            return obj[0]
+        return ''
+
+    def prev(self):
+        obj = Contribution.objects.filter(pk__lt=self.pk).order_by('-pk')[0:1]
+        if len(obj):
+            return obj[0]
+        return ''
+
     def info(self, show_name=None):
         field_values = [
             '#' + str(self.pk),
