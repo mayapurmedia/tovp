@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 
-from model_utils.models import TimeStampedModel
+from model_utils.models import TimeStampedModel, MonitorField
 
 from contributions.models import Pledge
 
@@ -31,7 +31,27 @@ class BasePromotion(TimeStampedModel):
         abstract = True
 
 
-class BaseBrick(BasePromotion):
+class CertificateGivenMixin(models.Model):
+    certificate_given = models.BooleanField(
+        default=False, db_index=True,
+        help_text='Has certificate for this promotion been given?')
+    certificate_given_date = MonitorField(monitor='certificate_given')
+
+    class Meta:
+        abstract = True
+
+
+class CoinGivenMixin(models.Model):
+    coin_given = models.BooleanField(
+        default=False, db_index=True,
+        help_text='Has coin for this promotion been given?')
+    coin_given_date = MonitorField(monitor='coin_given')
+
+    class Meta:
+        abstract = True
+
+
+class BaseBrick(CertificateGivenMixin, CoinGivenMixin, BasePromotion):
     name_on_brick = models.TextField(
         _("Name on the brick"), max_length=100, blank=True,
         help_text=_("Enter name which will be on the brick. Maximum 100 "
@@ -46,7 +66,7 @@ class BaseBrick(BasePromotion):
         abstract = True
 
 
-class BaseCoin(BasePromotion):
+class BaseCoin(CertificateGivenMixin, CoinGivenMixin, BasePromotion):
     class Meta:
         abstract = True
 
@@ -111,7 +131,7 @@ class PlatinumCoin(BaseCoin):
                        kwargs={'person_id': person_id})
 
 
-class SquareFeet(BasePromotion):
+class SquareFeet(CertificateGivenMixin, BasePromotion):
     amount_rs = 7000
     amount_usd = 150
 
@@ -121,7 +141,7 @@ class SquareFeet(BasePromotion):
                        kwargs={'person_id': person_id})
 
 
-class SquareMeter(BasePromotion):
+class SquareMeter(CertificateGivenMixin, BasePromotion):
     amount_rs = 70000
     amount_usd = 1500
 

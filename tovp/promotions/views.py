@@ -62,7 +62,7 @@ class RadhaMadhavaBrickCreateView(BaseBrickCreateView):
 
 
 class BaseCoinCreateView(BasePromotionCreateView):
-    pass
+    template_name = 'promotions/coin_form.html'
 
 
 class SilverCoinCreateView(BaseCoinCreateView):
@@ -81,11 +81,13 @@ class PlatinumCoinCreateView(BaseCoinCreateView):
 
 
 class SquareFeetCreateView(BasePromotionCreateView):
+    template_name = 'promotions/square_feet_form.html'
     model = SquareFeet
     form_class = SquareFeetForm
 
 
 class SquareMeterCreateView(BasePromotionCreateView):
+    template_name = 'promotions/square_feet_form.html'
     model = SquareMeter
     form_class = SquareMeterForm
 

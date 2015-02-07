@@ -16,7 +16,8 @@ class PromotionForm(forms.ModelForm):
 
 class BaseBrickForm(PromotionForm):
     class Meta():
-        exclude = ('status_changed',)
+        exclude = ('status_changed', 'certificate_given_date',
+                   'coin_given_date')
         widgets = {
             'name_on_brick': forms.Textarea(attrs={'rows': 2}),
         }
@@ -39,7 +40,7 @@ class RadhaMadhavaBrickForm(BaseBrickForm):
 
 class BaseCoinForm(PromotionForm):
     class Meta:
-        exclude = []
+        exclude = ['certificate_given_date', 'coin_given_date']
 
 
 class SilverCoinForm(BaseCoinForm):
@@ -65,11 +66,13 @@ class BaseGeneralPromotionForm(PromotionForm):
 class SquareFeetForm(BaseGeneralPromotionForm):
     class Meta(BaseCoinForm.Meta):
         model = SquareFeet
+        exclude = ['certificate_given_date']
 
 
 class SquareMeterForm(BaseGeneralPromotionForm):
     class Meta(BaseCoinForm.Meta):
         model = SquareMeter
+        exclude = ['certificate_given_date']
 
 
 class TrusteeForm(BaseGeneralPromotionForm):
