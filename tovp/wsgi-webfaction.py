@@ -16,6 +16,8 @@ framework.
 import os
 import site
 # import newrelic.agent
+from configurations.wsgi import get_wsgi_application
+
 
 # activates virtualenv
 site.addsitedir(
@@ -42,7 +44,6 @@ os.environ.setdefault("DJANGO_CONFIGURATION", "Production")
 # This application object is used by any WSGI server configured to use this
 # file. This includes Django's development server, if the WSGI_APPLICATION
 # setting points here.
-from configurations.wsgi import get_wsgi_application
 application = get_wsgi_application()
 
 # **new relic
