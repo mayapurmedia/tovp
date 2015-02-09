@@ -101,8 +101,8 @@ class Pledge(TimeStampedModel):
 
 
 class Contribution(TimeStampedModel):
-    pledge = models.ForeignKey(Pledge, verbose_name="Pledge", blank=True,
-                               null=True, related_name='contributions')
+    pledge = models.ForeignKey(Pledge, verbose_name="Pledge",
+                               related_name='contributions')
     person = models.ForeignKey(Person, verbose_name="Person", blank=True,
                                related_name='contributions')
     amount = models.DecimalField(_('Amount'), max_digits=20, decimal_places=2)
