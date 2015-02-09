@@ -14,7 +14,7 @@ before_script:
   - psql -c 'create database tovp;' -U postgres
   - python tovp/manage.py syncdb --noinput
   - python tovp/manage.py migrate --noinput
-  - flake8 --ignore=E501 tovp
+  - flake8 --ignore=E501,E402 tovp
 after_success:
   # Report coverage results to coveralls.io
   - pip install coveralls
