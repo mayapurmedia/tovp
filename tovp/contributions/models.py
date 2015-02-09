@@ -172,6 +172,8 @@ class Contribution(TimeStampedModel):
         super(Contribution, self).__init__(*args, **kwargs)
         if self.pk:
             self._original_pledge = self.pledge
+        else:
+            self._original_pledge = None
 
     def clean(self):
         errors = {}
