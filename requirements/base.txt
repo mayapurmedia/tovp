@@ -37,3 +37,6 @@ num2words
 django_countries
 django-datetime-widget
 python-dateutil
+
+# Automatically update author info
+django-audit-log

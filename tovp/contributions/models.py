@@ -6,11 +6,12 @@ from django.core import exceptions
 from model_utils.fields import MonitorField
 from model_utils.models import TimeStampedModel
 # from dateutil import relativedelta
+from audit_log.models import AuthStampedModel
 
 from contacts.models import Person
 
 
-class Pledge(TimeStampedModel):
+class Pledge(TimeStampedModel, AuthStampedModel):
     person = models.ForeignKey(Person, verbose_name="Person", blank=True,
                                related_name='pledges')
     amount = models.DecimalField(_('Amount'), max_digits=20, decimal_places=2)
@@ -100,7 +101,7 @@ class Pledge(TimeStampedModel):
             progress=self.progress)
 
 
-class Contribution(TimeStampedModel):
+class Contribution(TimeStampedModel, AuthStampedModel):
     pledge = models.ForeignKey(Pledge, verbose_name="Pledge",
                                related_name='contributions')
     person = models.ForeignKey(Person, verbose_name="Person", blank=True,
