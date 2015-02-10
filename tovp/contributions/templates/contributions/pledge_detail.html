@@ -72,8 +72,10 @@
         </div>
     </div>
     {% endif %}
+    <div class="col-xs-12">
+        <a href="{{ url('contributions:contribution:create', object.person.pk, object.pk) }}" class="btn btn-lg btn-success">Add new contribution</a>
+    </div>
 </div>
-
 
 {% endblock %}
 

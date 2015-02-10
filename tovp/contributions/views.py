@@ -94,7 +94,8 @@ class ContributionCreateView(LoginRequiredMixin, CreateView):
     def get_initial(self):
         initial = super(ContributionCreateView, self).get_initial()
         initial = initial.copy()
-        initial['person'] = self.kwargs.get('person_id')  # self.request.user.pk
+        initial['person'] = self.kwargs.get('person_id')
+        initial['pledge'] = self.kwargs.get('pledge_id')
         return initial
 
     def get_context_data(self, **kwargs):

@@ -50,6 +50,12 @@ contributions = patterns(
         view=views.ContributionCreateView.as_view(),
         name='create',
     ),
+    # create new contribution with auto filled pledge
+    url(
+        regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
+        view=views.ContributionCreateView.as_view(),
+        name='create',
+    ),
     url(
         regex=r'^(?P<person_id>\d+)/(?P<pk>\d+)/edit$',
         view=views.ContributionUpdateView.as_view(),
