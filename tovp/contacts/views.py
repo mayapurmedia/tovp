@@ -15,6 +15,7 @@ from django.utils.translation import ugettext as _
 from braces.views import LoginRequiredMixin
 
 from promotions.models import promotions
+from ananta.models import RevisionCommentMixin
 
 from .models import Person
 from .forms import PersonForm
@@ -53,7 +54,7 @@ class PersonCreateView(LoginRequiredMixin, CreateView):
         return context
 
 
-class PersonUpdateView(LoginRequiredMixin, UpdateView):
+class PersonUpdateView(RevisionCommentMixin, LoginRequiredMixin, UpdateView):
     model = Person
     template_name = 'contacts/person_form.html'
     form_class = PersonForm

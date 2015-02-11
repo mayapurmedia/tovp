@@ -14,6 +14,8 @@ from django.shortcuts import get_object_or_404
 # Only authenticated users can access views using this.
 from braces.views import LoginRequiredMixin
 
+from ananta.models import RevisionCommentMixin
+
 from .forms import PledgeForm, ContributionForm
 from .models import Pledge, Contribution
 
@@ -43,7 +45,7 @@ class PledgeCreateView(LoginRequiredMixin, CreateView):
         return context
 
 
-class PledgeUpdateView(LoginRequiredMixin, UpdateView):
+class PledgeUpdateView(RevisionCommentMixin, LoginRequiredMixin, UpdateView):
     model = Pledge
     template_name = 'contributions/pledge_form.html'
     form_class = PledgeForm
@@ -104,7 +106,7 @@ class ContributionCreateView(LoginRequiredMixin, CreateView):
         return context
 
 
-class ContributionUpdateView(LoginRequiredMixin, UpdateView):
+class ContributionUpdateView(RevisionCommentMixin, LoginRequiredMixin, UpdateView):
     model = Contribution
     template_name = 'contributions/contribution_form.html'
     form_class = ContributionForm
