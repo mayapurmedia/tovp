@@ -40,3 +40,7 @@ python-dateutil
 
 # Automatically update author info
 django-audit-log
+
+# Add support for reversions of models
+django-reversion
+django-reversion-compare

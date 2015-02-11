@@ -41,6 +41,8 @@ class Common(Configuration):
         'jingo_markdown',
         'jingo_paginator',
         'datetimewidget',
+        'reversion',
+        'reversion_compare',
         # 'django_extensions',
     )
 
@@ -190,6 +192,8 @@ class Common(Configuration):
         'django_extensions',
         'haystack_panel',
         'admin_doc',
+        'reversion',
+        'reversion-compare',
     ]
 
     JINJA_CONFIG = {
