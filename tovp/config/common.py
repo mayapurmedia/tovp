@@ -72,6 +72,7 @@ class Common(Configuration):
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
         'audit_log.middleware.UserLoggingMiddleware',
+        'reversion.middleware.RevisionMiddleware',
     )
     # END MIDDLEWARE CONFIGURATION
 
