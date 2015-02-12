@@ -244,6 +244,7 @@ class Common(Configuration):
 
     # # AUTHENTICATION CONFIGURATION
     AUTHENTICATION_BACKENDS = (
+        "users.backends.CaseInsensitiveModelBackend",
         "django.contrib.auth.backends.ModelBackend",
     )
 
