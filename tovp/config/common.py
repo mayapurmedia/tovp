@@ -10,12 +10,24 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+from os import environ
 from os.path import join, dirname
+
+from django.core.exceptions import ImproperlyConfigured
 
 import django_cache_url
 from configurations import Configuration, values
 
 BASE_DIR = dirname(dirname(__file__))
+
+
+def get_env_variable(var_name):
+    """ Get the environment variable or return exception """
+    try:
+        return environ[var_name]
+    except KeyError:
+        error_msg = "Set the %s environment variable" % var_name
+        raise ImproperlyConfigured(error_msg)
 
 
 class Common(Configuration):
@@ -296,14 +308,12 @@ class Common(Configuration):
     ABSOLUTE_DOMAIN = '//donate.tovp.org'
 
     # Your common stuff: Below this line define 3rd party library settings
-    ELASTICSEARCH_SERVER = values.Value('http://11.11.11.1:9988/')
-    ELASTICSEARCH_INDEX_NAME = values.Value('tovp')
     HAYSTACK_CONNECTIONS = {
         'default': {
             'ENGINE': 'haystack.backends.elasticsearch_backend.'
             'ElasticsearchSearchEngine',
-            'URL': str(ELASTICSEARCH_SERVER),
-            'INDEX_NAME': str(ELASTICSEARCH_INDEX_NAME),
+            'URL': get_env_variable('ELASTICSEARCH_SERVER'),
+            'INDEX_NAME': get_env_variable('ELASTICSEARCH_INDEX_NAME'),
         },
     }
     HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
