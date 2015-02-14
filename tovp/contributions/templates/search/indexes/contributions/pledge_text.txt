@@ -1,0 +1,6 @@
+{{ object.amount }}
+{{ object.amount_paid }}
+{{ object.currency }}
+{{ object.payments_start_date }}
+{{ object.interval }}
+{{ object.status }}

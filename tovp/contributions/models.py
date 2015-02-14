@@ -41,7 +41,7 @@ class Pledge(TimeStampedModel, AuthStampedModel):
         help_text=_("Enter planned interval of payments (e.g. 1 month)"),
     )
     STATUS_CHOICES = (
-        (u'pending', _('Pending')),
+        (u'pending', _('Pledged')),
         (u'partial', _('Partially Paid')),
         (u'completed', _('Completed')),
         (u'failed', _('Shadow')),

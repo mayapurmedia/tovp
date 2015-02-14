@@ -13,14 +13,7 @@
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
           <li class="{{ active_link_class(request, "^/$") }}"><a href="/">Home</a></li>
-          <li class="dropdown">
-            <a href="/" class="dropdown-toggle{{ active_link_class(request, "^/contacts/") }}" data-toggle="dropdown" role="button" aria-expanded="false">Contacts <span class="caret"></span></a>
-            <ul class="dropdown-menu" role="menu">
-                <li><a href="{{ url('contacts:index') }}">Search Contacts</a></li>
-                <li><a href="{{ url('contacts:person:create') }}">Add new person</a></li>
-            </ul>
-          </li>
-          <li><a href="{{ url('contributions:contribution:index') }}">Contributions</a></li>
+          <li><a href="{{ url('contacts:person:create') }}">Add new person</a></li>
 {% if user.is_authenticated() %}
           <li><a href="{{ url('users:logout') }}">Logout ({{ user }})</a></li>
 {% endif %}

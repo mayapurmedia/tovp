@@ -43,6 +43,7 @@ class Common(Configuration):
         'datetimewidget',
         'reversion',
         'reversion_compare',
+        'haystack',
         # 'django_extensions',
     )
 
@@ -53,6 +54,7 @@ class Common(Configuration):
         'contacts',
         'contributions',
         'promotions',
+        'search',
         'theme',
         # Your stuff: custom apps go here
     )
@@ -294,3 +296,15 @@ class Common(Configuration):
     ABSOLUTE_DOMAIN = '//donate.tovp.org'
 
     # Your common stuff: Below this line define 3rd party library settings
+    ELASTICSEARCH_SERVER = values.Value('http://11.11.11.1:9988/')
+    ELASTICSEARCH_INDEX_NAME = values.Value('tovp')
+    HAYSTACK_CONNECTIONS = {
+        'default': {
+            'ENGINE': 'haystack.backends.elasticsearch_backend.'
+            'ElasticsearchSearchEngine',
+            'URL': str(ELASTICSEARCH_SERVER),
+            'INDEX_NAME': str(ELASTICSEARCH_INDEX_NAME),
+        },
+    }
+    HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+    HAYSTACK_DEFAULT_OPERATOR = 'AND'
