@@ -9,12 +9,13 @@ from django.utils.translation import ugettext as _
 from django.views.generic.base import TemplateResponseMixin, View
 from django.views.generic.edit import FormMixin
 
+from braces.views import LoginRequiredMixin
 from haystack.query import SearchQuerySet
 
 from .forms import SearchForm
 
 
-class SearchView(TemplateResponseMixin, FormMixin, View):
+class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
     searchqueryset = SearchQuerySet()
     load_all = True
     paginate_by = 36
