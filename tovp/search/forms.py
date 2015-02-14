@@ -20,15 +20,15 @@ class SearchForm(forms.Form):
     email = forms.CharField(required=False, label=_('Email'),
                             widget=forms.TextInput())
     pan_card_number = forms.CharField(required=False, label=_('Pan Card Number'),
-                            widget=forms.TextInput())
+                                      widget=forms.TextInput())
     book_number = forms.CharField(required=False, label=_('Book Number'),
-                            widget=forms.TextInput())
+                                  widget=forms.TextInput())
     slip_number = forms.CharField(required=False, label=_('Slip Number'),
-                            widget=forms.TextInput())
+                                  widget=forms.TextInput())
     transaction_id = forms.CharField(required=False, label=_('Transaction ID'),
-                            widget=forms.TextInput())
+                                     widget=forms.TextInput())
     record_id = forms.CharField(required=False, label=_('Record ID'),
-                            widget=forms.TextInput())
+                                widget=forms.TextInput())
 
     def __init__(self, *args, **kwargs):
         self.searchqueryset = kwargs.pop('searchqueryset', None)

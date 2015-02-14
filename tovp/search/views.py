@@ -139,7 +139,6 @@ class SearchView(TemplateResponseMixin, FormMixin, View):
                 results = results.narrow('%s:"%s"' % (filter_item, self.request.GET[filter_item]))
                 show_selected_filters += 1
 
-
         page_size = self.get_paginate_by()
 
         if page_size:
