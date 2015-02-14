@@ -17,6 +17,7 @@ class PersonIndex(ContentSearchIndexMixin, indexes.SearchIndex,
     last_name = indexes.CharField(model_attr='last_name')
     email = indexes.CharField(model_attr='email')
     phone_number = indexes.CharField(model_attr='phone_number')
+    yatra = indexes.CharField(model_attr='get_yatra_display', faceted=True)
     address = indexes.CharField(model_attr='address')
     city = indexes.CharField(model_attr='city')
     state = indexes.CharField(model_attr='state')
@@ -46,6 +47,8 @@ class PersonSearchIndexMixin(indexes.SearchIndex):
     last_name = indexes.CharField(model_attr='person__last_name')
     email = indexes.CharField(model_attr='person__email')
     phone_number = indexes.CharField(model_attr='person__phone_number')
+    yatra = indexes.CharField(model_attr='person__get_yatra_display',
+                              faceted=True)
     address = indexes.CharField(model_attr='person__address')
     city = indexes.CharField(model_attr='person__city')
     state = indexes.CharField(model_attr='person__state')
@@ -68,6 +71,8 @@ class PledgePersonSearchIndexMixin(indexes.SearchIndex):
     last_name = indexes.CharField(model_attr='pledge__person__last_name')
     email = indexes.CharField(model_attr='pledge__person__email')
     phone_number = indexes.CharField(model_attr='pledge__person__phone_number')
+    yatra = indexes.CharField(model_attr='pledge__person__get_yatra_display',
+                              faceted=True)
     address = indexes.CharField(model_attr='pledge__person__address')
     city = indexes.CharField(model_attr='pledge__person__city')
     state = indexes.CharField(model_attr='pledge__person__state')

@@ -99,14 +99,16 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
             'content_type': 'Content Type', 'currency': 'Currency',
             'promotion_type': 'Promotion Type', 'status': 'Status',
             'payment_method': 'Payment Method', 'interval': 'Interval',
-            'country': 'Country',
+            'country': 'Country', 'yatra': 'Yatra',
         }
 
         narrow_facets = {
             'first': {
                 'title': 'Test 1',
                 'has_results': None,
-                'fields': ('content_type', 'currency', 'status', 'promotion_type', 'payment_method', 'interval', 'country'),
+                'fields': (
+                    'content_type', 'currency', 'status', 'promotion_type',
+                    'payment_method', 'yatra', 'interval', 'country'),
             },
         }
 
@@ -118,6 +120,7 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
             "currency": None,
             "status": None,
             "payment_method": None,
+            "yatra": None,
             "interval": None,
             "country": None,
             "promotion_type": None,

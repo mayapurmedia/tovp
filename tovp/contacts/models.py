@@ -247,6 +247,15 @@ class Person(TimeStampedModel):
         help_text=_('Required for Indian citizens. Enter your PAN card number.')
     )
 
+    YATRA_CHOICES = (
+        ('middle-east', _('Middle East')),
+        ('russia', _('Russia')),
+    )
+    yatra = models.CharField(
+        "Yatra", max_length=100, choices=YATRA_CHOICES, blank=True, null=True,
+        help_text=_('If person belongs to one the of yatras in drowpdown, '
+                    'please choose it'))
+
     def clean(self):
         # Strip all whitespace
         for field in ['first_name', 'middle_name', 'last_name',
