@@ -5,8 +5,12 @@ env:
   global:
     - DATABASE_URL="postgres://postgres@localhost/tovp"
     - DJANGO_CONFIGURATION=Travis
+    - ELASTICSEARCH_SERVER="http://127.0.0.1:9200"
+    - ELASTICSEARCH_INDEX_NAME="nrsimha"
   matrix:
     - DJANGO=1.7.1
+services:
+  - elasticsearch
 install:
   - pip install -q Django==$DJANGO
   - pip install -r requirements/test.txt
