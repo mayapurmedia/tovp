@@ -69,7 +69,7 @@ class Pledge(TimeStampedModel, AuthStampedModel):
             'pk': self.pk})
 
     def info(self):
-        return 'Pledged {amount}{currency} - {progress}% completed'. \
+        return 'Pledged {amount}{currency} - {progress:.2f}% completed'. \
             format(amount=self.amount, currency=self.get_currency_display(),
                    progress=self.progress, status=self.get_status_display())
 
