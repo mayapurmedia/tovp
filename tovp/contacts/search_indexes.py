@@ -17,7 +17,7 @@ class PersonIndex(ContentSearchIndexMixin, indexes.SearchIndex,
     last_name = indexes.CharField(model_attr='last_name')
     email = indexes.CharField(model_attr='email')
     phone_number = indexes.CharField(model_attr='phone_number')
-    yatra = indexes.CharField(model_attr='get_yatra_display', faceted=True)
+    yatra = indexes.CharField(faceted=True)
     address = indexes.CharField(model_attr='address')
     city = indexes.CharField(model_attr='city')
     state = indexes.CharField(model_attr='state')
@@ -29,6 +29,12 @@ class PersonIndex(ContentSearchIndexMixin, indexes.SearchIndex,
         return obj.join_fields(
             ('initiated_name', 'first_name', 'middle_name', 'last_name'),
             separator=" ").replace('.', '. ').replace('-', ' ')
+
+    def prepare_yatra(self, obj):
+        if obj.yatra:
+            return obj.get_yatra_display()
+        else:
+            return 'None'
 
     def get_model(self):
         return Person
@@ -61,6 +67,12 @@ class PersonSearchIndexMixin(indexes.SearchIndex):
             ('initiated_name', 'first_name', 'middle_name', 'last_name'),
             separator=" ").replace('.', '. ').replace('-', ' ')
 
+    def prepare_yatra(self, obj):
+        if obj.person.yatra:
+            return obj.person.get_yatra_display()
+        else:
+            return 'None'
+
 
 class PledgePersonSearchIndexMixin(indexes.SearchIndex):
     full_name = indexes.CharField(model_attr='pledge__person__full_name')
@@ -84,3 +96,9 @@ class PledgePersonSearchIndexMixin(indexes.SearchIndex):
         return obj.pledge.person.join_fields(
             ('initiated_name', 'first_name', 'middle_name', 'last_name'),
             separator=" ").replace('.', '. ').replace('-', ' ')
+
+    def prepare_yatra(self, obj):
+        if obj.pledge.person.yatra:
+            return obj.pledge.person.get_yatra_display()
+        else:
+            return 'None'
