@@ -70,14 +70,24 @@
                 <span class="results-count">Showing {{ page.paginator.count|format_with_commas }} matching results out of {{ total_results_count |format_with_commas }}.</span>
                 {% endif %}
             </div>
-            {% for obj in results %}
+            {% for result in results %}
             <div class="col-xs-12">
-                <div class="person-result">
-                    <div>{{ obj.content_type }}: <a class="object-link" href="{{ obj.absolute_url }}">{{ obj.full_name }}{% if obj.initiated_name %} - {{ obj.initiated_name }}{% endif %}</a></div>
-                    {% if obj.initiated_name %}
-                    <div><a class="object-link" href="{{ obj.absolute_url }}"></a></div>
-                    {% endif %}
-                </div>
+                {% if result.content_type == 'Contact' %}
+                    {% include "search/partials/model_contact.html" %}
+                {% elif result.content_type == 'Pledge' %}
+                    {% include "search/partials/model_pledge.html" %}
+                {% elif result.content_type == 'Contribution' %}
+                    {% include "search/partials/model_contribution.html" %}
+                {% elif result.content_type == 'Promotion' %}
+                    {% include "search/partials/model_promotion.html" %}
+                {% else %}
+                    <div class="person-result">
+                        <div>XXX {{ result.content_type }}: <a class="object-link" href="{{ result.absolute_url }}">{{ result.full_name }}{% if result.initiated_name %} - {{ result.initiated_name }}{% endif %}</a></div>
+                        {% if result.initiated_name %}
+                        <div><a class="object-link" href="{{ result.absolute_url }}"></a></div>
+                        {% endif %}
+                    </div>
+                {% endif %}
             </div>
             {% else %}
             <p>No results found.</p>
@@ -88,6 +98,5 @@
             {% endif %}
         </div>
     </div>
-
 </div>
 {% endblock %}

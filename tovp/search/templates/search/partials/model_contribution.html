@@ -1,0 +1,6 @@
+{% import '_macros.html' as macros %}
+<div class="person-result">
+    <div>{{ result.content_type }}: <a class="object-link" href="{{ result.absolute_url }}">{{ result.full_name }}{% if result.initiated_name %} - {{ result.initiated_name }}{% endif %}</a></div>
+    <div>{{ result.amount }} {{ result.currency }} [{{ result.status }}]</div>
+    <div>{{ result.payment_method }}</div>
+</div>
