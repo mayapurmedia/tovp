@@ -14,13 +14,14 @@ from django.views.generic.edit import CreateView  # , DeleteView
 # Only authenticated users can access views using this.
 from braces.views import LoginRequiredMixin
 
-from .models import (NrsimhaTile, GoldenBrick, RadhaMadhavaBrick,
-                     SilverCoin, GoldCoin, PlatinumCoin,
+from .models import (NrsimhaTile, GoldenBrick, GuruParamparaBrick,
+                     RadhaMadhavaBrick, SilverCoin, GoldCoin, PlatinumCoin,
                      SquareFeet, SquareMeter, Trustee)
 
-from .forms import (NrsimhaTileForm, GoldenBrickForm, RadhaMadhavaBrickForm,
-                    SilverCoinForm, GoldCoinForm, PlatinumCoinForm,
-                    SquareFeetForm, SquareMeterForm, TrusteeForm)
+from .forms import (NrsimhaTileForm, GoldenBrickForm, GuruParamparaBrickForm,
+                    RadhaMadhavaBrickForm, SilverCoinForm, GoldCoinForm,
+                    PlatinumCoinForm, SquareFeetForm, SquareMeterForm,
+                    TrusteeForm)
 
 
 class BasePromotionCreateView(LoginRequiredMixin, CreateView):
@@ -54,6 +55,11 @@ class NrsimhaTileCreateView(BaseBrickCreateView):
 class GoldenBrickCreateView(BaseBrickCreateView):
     model = GoldenBrick
     form_class = GoldenBrickForm
+
+
+class GuruParamparaBrickCreateView(BaseBrickCreateView):
+    model = GuruParamparaBrick
+    form_class = GuruParamparaBrickForm
 
 
 class RadhaMadhavaBrickCreateView(BaseBrickCreateView):

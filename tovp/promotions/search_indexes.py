@@ -3,8 +3,8 @@ from haystack import indexes
 from ananta.search_indexes import ContentSearchIndexMixin
 from contacts.search_indexes import PledgePersonSearchIndexMixin
 
-from .models import (NrsimhaTile, GoldenBrick, RadhaMadhavaBrick,
-                     SilverCoin, GoldCoin, PlatinumCoin,
+from .models import (NrsimhaTile, GoldenBrick, GuruParamparaBrick,
+                     RadhaMadhavaBrick, SilverCoin, GoldCoin, PlatinumCoin,
                      SquareFeet, SquareMeter, Trustee)
 
 
@@ -43,6 +43,10 @@ class NrsimhaTileIndex(BrickIndex, indexes.Indexable):
 
 class GoldenBrickIndex(BrickIndex, indexes.Indexable):
     model = GoldenBrick
+
+
+class GuruParamparaBrickIndex(BrickIndex, indexes.Indexable):
+    model = GuruParamparaBrick
 
 
 class RadhaMadhavaBrickIndex(BrickIndex, indexes.Indexable):

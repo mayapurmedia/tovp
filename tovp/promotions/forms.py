@@ -2,8 +2,8 @@ from django import forms
 
 from contributions.models import Pledge
 
-from .models import (NrsimhaTile, GoldenBrick, RadhaMadhavaBrick,
-                     SilverCoin, GoldCoin, PlatinumCoin,
+from .models import (NrsimhaTile, GoldenBrick, GuruParamparaBrick,
+                     RadhaMadhavaBrick, SilverCoin, GoldCoin, PlatinumCoin,
                      SquareFeet, SquareMeter, Trustee)
 
 
@@ -31,6 +31,11 @@ class NrsimhaTileForm(BaseBrickForm):
 class GoldenBrickForm(BaseBrickForm):
     class Meta(BaseBrickForm.Meta):
         model = GoldenBrick
+
+
+class GuruParamparaBrickForm(BaseBrickForm):
+    class Meta(BaseBrickForm.Meta):
+        model = GuruParamparaBrick
 
 
 class RadhaMadhavaBrickForm(BaseBrickForm):

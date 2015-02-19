@@ -24,6 +24,15 @@ urlpatterns = patterns(
                 name='create'
             ),
         ), namespace="golden_brick")),
+    (r'^guru_parampara_brick/', include(
+        patterns(
+            '',
+            url(
+                regex=r'^(?P<person_id>\d+)/create/$',
+                view=views.GuruParamparaBrickCreateView.as_view(),
+                name='create'
+            ),
+        ), namespace="guru_parampara_brick")),
     (r'^radha_madhava_brick/', include(
         patterns(
             '',

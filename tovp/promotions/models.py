@@ -91,6 +91,16 @@ class GoldenBrick(BaseBrick):
                        kwargs={'person_id': person_id})
 
 
+class GuruParamparaBrick(BaseBrick):
+    amount_rs = 100000
+    amount_usd = 1600
+
+    @classmethod
+    def get_create_url(cls, person_id):
+        return reverse('promotions:guru_parampara_brick:create', None,
+                       kwargs={'person_id': person_id})
+
+
 class RadhaMadhavaBrick(BaseBrick):
     amount_rs = 150000
     amount_usd = 2500
@@ -161,6 +171,6 @@ class Trustee(BasePromotion):
                        kwargs={'person_id': person_id})
 
 
-promotions = [NrsimhaTile, GoldenBrick, RadhaMadhavaBrick,
+promotions = [NrsimhaTile, GoldenBrick, GuruParamparaBrick, RadhaMadhavaBrick,
               SilverCoin, GoldCoin, PlatinumCoin,
               SquareFeet, SquareMeter, Trustee]
