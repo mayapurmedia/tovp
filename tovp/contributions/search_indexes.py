@@ -15,6 +15,7 @@ class PledgeIndex(ContentSearchIndexMixin, PersonSearchIndexMixin,
     currency = indexes.CharField(model_attr='currency', faceted=True)
     payments_start_date = indexes.DateTimeField(
         model_attr='payments_start_date')
+    info = indexes.CharField(model_attr='info')
     interval = indexes.CharField(model_attr='get_interval_display',
                                  faceted=True)
     status = indexes.CharField(model_attr='get_status_display', faceted=True)
