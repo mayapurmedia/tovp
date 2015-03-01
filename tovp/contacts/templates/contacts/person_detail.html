@@ -132,31 +132,35 @@
                             <li>[{{ promotion.pledge.status }}] {{ promotion }}</li>
                             {% endfor %}
                             </ul>
+                        {% else %}
+                            Person don't have any promotions yet.
                         {% endif %}
-                        {% if eligible_promotions %}
-                            <h3>Eligible Promotions</h3>
-                            {% for promotion in eligible_promotions %}
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <a href="{{ promotion.get_create_url(object.pk) }}" class="btn btn-xxmd btn-success">Add</a>
-                                        {{ promotion._meta.verbose_name.title() }}
+                        {% if user.has_perm('promotions.change_nrsimha_tile') %}
+                            {% if eligible_promotions %}
+                                <h3>Eligible Promotions</h3>
+                                {% for promotion in eligible_promotions %}
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <a href="{{ promotion.get_create_url(object.pk) }}" class="btn btn-xxmd btn-success">Add</a>
+                                            {{ promotion._meta.verbose_name.title() }}
+                                        </div>
                                     </div>
-                                </div>
-                            {% endfor %}
-                        {% endif %}
-                        {% if not_eligible_promotions %}
-                            <h3>Need bigger contribution</h3>
-                            {% for promotion in not_eligible_promotions %}
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-6 col-lg-6">
-                                        <a href="{{ promotion.get_create_url(object.pk) }}" class="btn btn-xxmd btn-success">Add</a>
-                                        {{ promotion._meta.verbose_name.title() }}
+                                {% endfor %}
+                            {% endif %}
+                            {% if not_eligible_promotions %}
+                                <h3>Need bigger contribution</h3>
+                                {% for promotion in not_eligible_promotions %}
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-6 col-lg-6">
+                                            <a href="{{ promotion.get_create_url(object.pk) }}" class="btn btn-xxmd btn-success">Add</a>
+                                            {{ promotion._meta.verbose_name.title() }}
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                            {{ promotion|promo_ballance(object.get_ballance()) }}
+                                        </div>
                                     </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                        {{ promotion|promo_ballance(object.get_ballance()) }}
-                                    </div>
-                                </div>
-                            {% endfor %}
+                                {% endfor %}
+                            {% endif %}
                         {% endif %}
                     </div>
                 </div>

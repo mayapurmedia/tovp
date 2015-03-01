@@ -12,7 +12,7 @@ from django.utils.translation import ugettext as _
 # from django.contrib import messages
 
 # Only authenticated users can access views using this.
-from braces.views import LoginRequiredMixin
+from braces.views import LoginRequiredMixin, PermissionRequiredMixin
 
 from promotions.models import promotions
 from ananta.models import RevisionCommentMixin
@@ -43,8 +43,9 @@ class PersonDetailView(LoginRequiredMixin, DetailView):
         return context
 
 
-class PersonCreateView(LoginRequiredMixin, CreateView):
+class PersonCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Person
+    permission_required = "contacts.add_person"
     template_name = 'contacts/person_form.html'
     form_class = PersonForm
 
@@ -54,8 +55,10 @@ class PersonCreateView(LoginRequiredMixin, CreateView):
         return context
 
 
-class PersonUpdateView(RevisionCommentMixin, LoginRequiredMixin, UpdateView):
+class PersonUpdateView(RevisionCommentMixin, LoginRequiredMixin,
+                       PermissionRequiredMixin, UpdateView):
     model = Person
+    permission_required = "contacts.change_person"
     template_name = 'contacts/person_form.html'
     form_class = PersonForm
 

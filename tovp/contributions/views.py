@@ -12,7 +12,7 @@ from django.shortcuts import get_object_or_404
 # from django.contrib import messages
 
 # Only authenticated users can access views using this.
-from braces.views import LoginRequiredMixin
+from braces.views import LoginRequiredMixin, PermissionRequiredMixin
 
 from ananta.models import RevisionCommentMixin
 
@@ -28,8 +28,9 @@ class PledgeDetailView(LoginRequiredMixin, DetailView):
     model = Pledge
 
 
-class PledgeCreateView(LoginRequiredMixin, CreateView):
+class PledgeCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Pledge
+    permission_required = "contributions.add_pledge"
     template_name = 'contributions/pledge_form.html'
     form_class = PledgeForm
 
@@ -45,8 +46,10 @@ class PledgeCreateView(LoginRequiredMixin, CreateView):
         return context
 
 
-class PledgeUpdateView(RevisionCommentMixin, LoginRequiredMixin, UpdateView):
+class PledgeUpdateView(RevisionCommentMixin, LoginRequiredMixin,
+                       PermissionRequiredMixin, UpdateView):
     model = Pledge
+    permission_required = "contributions.change_pledge"
     template_name = 'contributions/pledge_form.html'
     form_class = PledgeForm
 
@@ -56,8 +59,9 @@ class PledgeUpdateView(RevisionCommentMixin, LoginRequiredMixin, UpdateView):
         return context
 
 
-class PledgeDeleteView(DeleteView):
+class PledgeDeleteView(PermissionRequiredMixin, DeleteView):
     model = Pledge
+    permission_required = "contributions.delete_pledge"
     success_message = "%(pk)s was deleted successfully"
 
     def get_success_url(self):
@@ -83,8 +87,10 @@ class DonorInvoiceDetailView(LoginRequiredMixin, DetailView):
     template_name = 'contributions/print_donor_invoice.html'
 
 
-class ContributionCreateView(LoginRequiredMixin, CreateView):
+class ContributionCreateView(LoginRequiredMixin, PermissionRequiredMixin,
+                             CreateView):
     model = Contribution
+    permission_required = "contributions.add_contribution"
     template_name = 'contributions/contribution_form.html'
     form_class = ContributionForm
 
@@ -106,8 +112,10 @@ class ContributionCreateView(LoginRequiredMixin, CreateView):
         return context
 
 
-class ContributionUpdateView(RevisionCommentMixin, LoginRequiredMixin, UpdateView):
+class ContributionUpdateView(RevisionCommentMixin, LoginRequiredMixin,
+                             PermissionRequiredMixin, UpdateView):
     model = Contribution
+    permission_required = "contributions.change_contribution"
     template_name = 'contributions/contribution_form.html'
     form_class = ContributionForm
 
@@ -122,8 +130,9 @@ class ContributionUpdateView(RevisionCommentMixin, LoginRequiredMixin, UpdateVie
         return context
 
 
-class ContributionDeleteView(DeleteView):
+class ContributionDeleteView(PermissionRequiredMixin, DeleteView):
     model = Contribution
+    permission_required = "contributions.delete_contribution"
     success_message = "%(pk)s was deleted successfully"
     template_name = 'contributions/model_confirm_delete.html'
 

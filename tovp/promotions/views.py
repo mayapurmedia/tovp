@@ -12,7 +12,7 @@ from django.views.generic.edit import CreateView  # , DeleteView
 # from django.contrib import messages
 
 # Only authenticated users can access views using this.
-from braces.views import LoginRequiredMixin
+from braces.views import LoginRequiredMixin, PermissionRequiredMixin
 
 from .models import (NrsimhaTile, GoldenBrick, GuruParamparaBrick,
                      RadhaMadhavaBrick, SilverCoin, GoldCoin, PlatinumCoin,
@@ -24,8 +24,10 @@ from .forms import (NrsimhaTileForm, GoldenBrickForm, GuruParamparaBrickForm,
                     TrusteeForm)
 
 
-class BasePromotionCreateView(LoginRequiredMixin, CreateView):
+class BasePromotionCreateView(LoginRequiredMixin, PermissionRequiredMixin,
+                              CreateView):
     template_name = 'promotions/promotion_form.html'
+    permission_required = "promotions.add_nrsimha_tile"
 
     def get_form_kwargs(self):
         kwargs = super(BasePromotionCreateView, self).get_form_kwargs()
@@ -49,11 +51,13 @@ class BaseBrickCreateView(BasePromotionCreateView):
 
 class NrsimhaTileCreateView(BaseBrickCreateView):
     model = NrsimhaTile
+    permission_required = "promotions.add_nrsimha_tile"
     form_class = NrsimhaTileForm
 
 
 class GoldenBrickCreateView(BaseBrickCreateView):
     model = GoldenBrick
+    permission_required = "promotions.add_golden_brick"
     form_class = GoldenBrickForm
 
 
