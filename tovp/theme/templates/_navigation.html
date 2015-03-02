@@ -11,18 +11,18 @@
         <a class="navbar-brand" href="/">TOVP Database</a>
       </div>
       <div class="navbar-collapse collapse">
-        <ul class="nav navbar-nav navbar-right">
-          <li class="{{ active_link_class(request, "^/$") }}"><a href="/">Home</a></li>
-          {% if user.has_perm('contacts.change_person') %}
-          <li><a href="{{ url('contacts:person:create') }}">Add new person</a></li>
-          {% endif %}
-{% if user.is_authenticated() %}
-          <li><a href="{{ url('users:logout') }}">Logout ({{ user }})</a></li>
-{% endif %}
-          {# <li class="{{ active_link_class(request, "^/search/") }}"><a href="/">Search</a></li> #}
-        </ul>
+          <ul class="nav navbar-nav navbar-right">
+              <li class="{{ active_link_class(request, "^/$") }}"><a href="/">Home</a></li>
+              {% if user.has_perm('contacts.change_person') %}
+                  <li><a href="{{ url('contacts:person:create') }}">Add new person</a></li>
+              {% endif %}
+              {% if user.is_authenticated() %}
+                  <li><a href="{{ url('users:logout') }}">Logout ({{ user }})</a></li>
+              {% endif %}
+              {# <li class="{{ active_link_class(request, "^/search/") }}"><a href="/">Search</a></li> #}
+          </ul>
       </div><!--/.nav-collapse -->
-    </div>
+  </div>
 </div>
 
 </header>
