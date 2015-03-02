@@ -145,6 +145,10 @@ class SquareFeet(CertificateGivenMixin, BasePromotion):
     amount_rs = 7000
     amount_usd = 150
 
+    quantity = models.PositiveIntegerField(
+        _('Quantity'), default=1,
+        help_text=_("Enter how many feets you want to add."))
+
     @classmethod
     def get_create_url(cls, person_id):
         return reverse('promotions:square_feet:create', None,
@@ -154,6 +158,10 @@ class SquareFeet(CertificateGivenMixin, BasePromotion):
 class SquareMeter(CertificateGivenMixin, BasePromotion):
     amount_rs = 70000
     amount_usd = 1500
+
+    quantity = models.PositiveIntegerField(
+        _('Quantity'), default=1,
+        help_text=_("Enter how many meters you want to add."))
 
     @classmethod
     def get_create_url(cls, person_id):

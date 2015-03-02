@@ -390,9 +390,17 @@ class Person(TimeStampedModel):
                 ballance[pledge.currency]['paid'] += pledge.amount_paid or 0
             for promotion in self.assigned_promotions():
                 if promotion.pledge.currency == 'INR':
-                    ballance['INR']['used'] += promotion.amount_rs
+                    if hasattr(promotion, 'quantity'):
+                        ballance['INR']['used'] += \
+                            promotion.quantity * promotion.amount_rs
+                    else:
+                        ballance['INR']['used'] += promotion.amount_rs
                 if promotion.pledge.currency == 'USD':
-                    ballance['USD']['used'] += promotion.amount_usd
+                    if hasattr(promotion, 'quantity'):
+                        ballance['USD']['used'] += \
+                            promotion.quantity * promotion.amount_usd
+                    else:
+                        ballance['USD']['used'] += promotion.amount_usd
             # calculate unused ballance for each currency
             for currency in ballance:
                 ballance[currency]['available'] = \
