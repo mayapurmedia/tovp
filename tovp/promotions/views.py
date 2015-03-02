@@ -27,7 +27,7 @@ from .forms import (NrsimhaTileForm, GoldenBrickForm, GuruParamparaBrickForm,
 class BasePromotionCreateView(LoginRequiredMixin, PermissionRequiredMixin,
                               CreateView):
     template_name = 'promotions/promotion_form.html'
-    permission_required = "promotions.add_nrsimha_tile"
+    permission_required = "promotions.add_nrsimhatile"
 
     def get_form_kwargs(self):
         kwargs = super(BasePromotionCreateView, self).get_form_kwargs()

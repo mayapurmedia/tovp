@@ -135,7 +135,7 @@
                         {% else %}
                             Person don't have any promotions yet.
                         {% endif %}
-                        {% if user.has_perm('promotions.change_nrsimha_tile') %}
+                        {% if user.has_perm('promotions.change_nrsimhatile') %}
                             {% if eligible_promotions %}
                                 <h3>Eligible Promotions</h3>
                                 {% for promotion in eligible_promotions %}
