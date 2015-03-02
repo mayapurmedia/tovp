@@ -71,10 +71,12 @@ class PlatinumCoinIndex(PromotionIndexMixin, indexes.Indexable):
 
 class SquareFeetIndex(PromotionIndexMixin, indexes.Indexable):
     model = SquareFeet
+    quantity = indexes.IntegerField(model_attr='quantity')
 
 
 class SquareMeterIndex(PromotionIndexMixin, indexes.Indexable):
     model = SquareMeter
+    quantity = indexes.IntegerField(model_attr='quantity')
 
 
 class TrusteeIndex(PromotionIndexMixin, indexes.Indexable):
