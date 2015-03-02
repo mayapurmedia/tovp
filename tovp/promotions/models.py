@@ -57,6 +57,15 @@ class BaseBrick(CertificateGivenMixin, CoinGivenMixin, BasePromotion):
         help_text=_("Enter name which will be on the brick. Maximum 100 "
                     "characters."))
 
+    BRICK_STATUS_CHOICES = (
+        ('need_to_send', _('Need to send to DC')),
+        ('name_given', _('Name given to DC')),
+        ('brick_made', _('Brick is made')),
+    )
+    brick_status = models.CharField("Brick Status", max_length=100,
+                                    default='need_to_send',
+                                    choices=BRICK_STATUS_CHOICES)
+
     def __str__(self):
         return '{brick_title} ({name})'.format(
             brick_title=self._meta.verbose_name.title(),
