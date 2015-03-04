@@ -51,13 +51,11 @@ class BaseBrickCreateView(BasePromotionCreateView):
 
 class NrsimhaTileCreateView(BaseBrickCreateView):
     model = NrsimhaTile
-    permission_required = "promotions.add_nrsimha_tile"
     form_class = NrsimhaTileForm
 
 
 class GoldenBrickCreateView(BaseBrickCreateView):
     model = GoldenBrick
-    permission_required = "promotions.add_golden_brick"
     form_class = GoldenBrickForm
 
 
