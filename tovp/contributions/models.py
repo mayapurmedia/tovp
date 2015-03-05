@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 from django.db.models import permalink
 from django.utils.translation import ugettext_lazy as _
@@ -26,7 +28,7 @@ class Pledge(TimeStampedModel, AuthStampedModel):
     currency = models.CharField(
         "Currency", max_length=6, choices=CURRENCY_CHOICES, default="INR")
     payments_start_date = models.DateField(
-        _("Payments Start"), null=True, blank=True,
+        _("Payments Start"), null=True, blank=True, default=datetime.now,
         help_text=_('Date of first expected payment for this pledge.'),
     )
     INTERVAL_CHOICES = (
@@ -38,7 +40,8 @@ class Pledge(TimeStampedModel, AuthStampedModel):
     )
     interval = models.CharField(
         _("Payments Interval"), max_length=30, choices=INTERVAL_CHOICES,
-        help_text=_("Enter planned interval of payments (e.g. 1 month)"),
+        default=u'1', help_text=_("Enter planned interval of payments "
+                                  "(e.g. 1 month)"),
     )
     STATUS_CHOICES = (
         (u'pending', _('Pledged')),
