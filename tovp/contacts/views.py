@@ -14,7 +14,6 @@ from django.utils.translation import ugettext as _
 # Only authenticated users can access views using this.
 from braces.views import LoginRequiredMixin, PermissionRequiredMixin
 
-from promotions.models import promotions
 from ananta.models import RevisionCommentMixin
 
 from .models import Person
