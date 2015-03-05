@@ -15,6 +15,7 @@ from django.shortcuts import get_object_or_404
 from braces.views import LoginRequiredMixin, PermissionRequiredMixin
 
 from ananta.models import RevisionCommentMixin
+from promotions.models import promotions
 
 from .forms import PledgeForm, ContributionForm
 from .models import Pledge, Contribution
@@ -26,6 +27,20 @@ class PledgeListView(LoginRequiredMixin, ListView):
 
 class PledgeDetailView(LoginRequiredMixin, DetailView):
     model = Pledge
+
+    def get_context_data(self, **kwargs):
+        context = super(PledgeDetailView, self).get_context_data(**kwargs)
+        ballance = self.get_object().person.get_ballance()
+        promotions_eligible = []
+        promotions_not_eligible = []
+        for promotion in promotions:
+            if promotion.is_eligible(ballance):
+                promotions_eligible.append(promotion)
+            else:
+                promotions_not_eligible.append(promotion)
+        context['eligible_promotions'] = promotions_eligible
+        context['not_eligible_promotions'] = promotions_not_eligible
+        return context
 
 
 class PledgeCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):

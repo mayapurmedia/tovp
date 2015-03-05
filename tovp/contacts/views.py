@@ -28,20 +28,6 @@ class PersonListView(LoginRequiredMixin, ListView):
 class PersonDetailView(LoginRequiredMixin, DetailView):
     model = Person
 
-    def get_context_data(self, **kwargs):
-        context = super(PersonDetailView, self).get_context_data(**kwargs)
-        ballance = self.get_object().get_ballance()
-        promotions_eligible = []
-        promotions_not_eligible = []
-        for promotion in promotions:
-            if promotion.is_eligible(ballance):
-                promotions_eligible.append(promotion)
-            else:
-                promotions_not_eligible.append(promotion)
-        context['eligible_promotions'] = promotions_eligible
-        context['not_eligible_promotions'] = promotions_not_eligible
-        return context
-
 
 class PersonCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Person

@@ -67,9 +67,11 @@ class BaseBrick(CertificateGivenMixin, CoinGivenMixin, BasePromotion):
                                     choices=BRICK_STATUS_CHOICES)
 
     def __str__(self):
-        return '{brick_title} ({name})'.format(
+        return '{brick_title} ({name}) Coin={coin}, Cert={certificate}'.format(
             brick_title=self._meta.verbose_name.title(),
-            name=self.name_on_brick or '*None*')
+            name=self.name_on_brick or '*None*',
+            coin='Yes' if self.coin_given else 'No',
+            certificate='Yes' if self.certificate_given else 'No')
 
     class Meta:
         abstract = True
@@ -79,15 +81,21 @@ class BaseCoin(CertificateGivenMixin, CoinGivenMixin, BasePromotion):
     class Meta:
         abstract = True
 
+    def __str__(self):
+        return '{coin_type} Coin={coin}, Cert={certificate}'.format(
+            coin_type=self._meta.verbose_name.title(),
+            coin='Yes' if self.coin_given else 'No',
+            certificate='Yes' if self.certificate_given else 'No')
+
 
 class NrsimhaTile(BaseBrick):
     amount_rs = 51000
     amount_usd = 1000
 
     @classmethod
-    def get_create_url(cls, person_id):
+    def get_create_url(cls, person_id, pledge_id):
         return reverse('promotions:nrsimha_tile:create', None,
-                       kwargs={'person_id': person_id})
+                       kwargs={'person_id': person_id, 'pledge_id': pledge_id})
 
 
 class GoldenBrick(BaseBrick):
@@ -95,9 +103,9 @@ class GoldenBrick(BaseBrick):
     amount_usd = 1600
 
     @classmethod
-    def get_create_url(cls, person_id):
+    def get_create_url(cls, person_id, pledge_id):
         return reverse('promotions:golden_brick:create', None,
-                       kwargs={'person_id': person_id})
+                       kwargs={'person_id': person_id, 'pledge_id': pledge_id})
 
 
 class GuruParamparaBrick(BaseBrick):
@@ -105,9 +113,9 @@ class GuruParamparaBrick(BaseBrick):
     amount_usd = 1600
 
     @classmethod
-    def get_create_url(cls, person_id):
+    def get_create_url(cls, person_id, pledge_id):
         return reverse('promotions:guru_parampara_brick:create', None,
-                       kwargs={'person_id': person_id})
+                       kwargs={'person_id': person_id, 'pledge_id': pledge_id})
 
 
 class RadhaMadhavaBrick(BaseBrick):
@@ -115,9 +123,9 @@ class RadhaMadhavaBrick(BaseBrick):
     amount_usd = 2500
 
     @classmethod
-    def get_create_url(cls, person_id):
+    def get_create_url(cls, person_id, pledge_id):
         return reverse('promotions:radha_madhava_brick:create', None,
-                       kwargs={'person_id': person_id})
+                       kwargs={'person_id': person_id, 'pledge_id': pledge_id})
 
 
 class SilverCoin(BaseCoin):
@@ -125,9 +133,9 @@ class SilverCoin(BaseCoin):
     amount_usd = 11000
 
     @classmethod
-    def get_create_url(cls, person_id):
+    def get_create_url(cls, person_id, pledge_id):
         return reverse('promotions:silver_coin:create', None,
-                       kwargs={'person_id': person_id})
+                       kwargs={'person_id': person_id, 'pledge_id': pledge_id})
 
 
 class GoldCoin(BaseCoin):
@@ -135,9 +143,9 @@ class GoldCoin(BaseCoin):
     amount_usd = 108000
 
     @classmethod
-    def get_create_url(cls, person_id):
+    def get_create_url(cls, person_id, pledge_id):
         return reverse('promotions:gold_coin:create', None,
-                       kwargs={'person_id': person_id})
+                       kwargs={'person_id': person_id, 'pledge_id': pledge_id})
 
 
 class PlatinumCoin(BaseCoin):
@@ -145,9 +153,9 @@ class PlatinumCoin(BaseCoin):
     amount_usd = 250000
 
     @classmethod
-    def get_create_url(cls, person_id):
+    def get_create_url(cls, person_id, pledge_id):
         return reverse('promotions:platinum_coin:create', None,
-                       kwargs={'person_id': person_id})
+                       kwargs={'person_id': person_id, 'pledge_id': pledge_id})
 
 
 class SquareFeet(CertificateGivenMixin, BasePromotion):
@@ -159,9 +167,9 @@ class SquareFeet(CertificateGivenMixin, BasePromotion):
         help_text=_("Enter how many feets you want to add."))
 
     @classmethod
-    def get_create_url(cls, person_id):
+    def get_create_url(cls, person_id, pledge_id):
         return reverse('promotions:square_feet:create', None,
-                       kwargs={'person_id': person_id})
+                       kwargs={'person_id': person_id, 'pledge_id': pledge_id})
 
 
 class SquareMeter(CertificateGivenMixin, BasePromotion):
@@ -173,9 +181,9 @@ class SquareMeter(CertificateGivenMixin, BasePromotion):
         help_text=_("Enter how many meters you want to add."))
 
     @classmethod
-    def get_create_url(cls, person_id):
+    def get_create_url(cls, person_id, pledge_id):
         return reverse('promotions:square_meter:create', None,
-                       kwargs={'person_id': person_id})
+                       kwargs={'person_id': person_id, 'pledge_id': pledge_id})
 
 
 class Trustee(BasePromotion):
@@ -183,9 +191,9 @@ class Trustee(BasePromotion):
     amount_usd = 1000000
 
     @classmethod
-    def get_create_url(cls, person_id):
+    def get_create_url(cls, person_id, pledge_id):
         return reverse('promotions:trustee:create', None,
-                       kwargs={'person_id': person_id})
+                       kwargs={'person_id': person_id, 'pledge_id': pledge_id})
 
 
 promotions = [NrsimhaTile, GoldenBrick, GuruParamparaBrick, RadhaMadhavaBrick,

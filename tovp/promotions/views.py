@@ -35,7 +35,14 @@ class BasePromotionCreateView(LoginRequiredMixin, PermissionRequiredMixin,
         return kwargs
 
     def get_success_url(self):
-        return self.object.pledge.person.get_absolute_url()
+        return self.object.pledge.get_absolute_url()
+
+    def get_initial(self):
+        initial = super(BasePromotionCreateView, self).get_initial()
+        initial = initial.copy()
+        initial['person'] = self.kwargs.get('person_id')
+        initial['pledge'] = self.kwargs.get('pledge_id')
+        return initial
 
     def get_context_data(self, **kwargs):
         context = super(BasePromotionCreateView, self).get_context_data(

@@ -10,7 +10,7 @@ urlpatterns = patterns(
         patterns(
             '',
             url(
-                regex=r'^(?P<person_id>\d+)/create/$',
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
                 view=views.NrsimhaTileCreateView.as_view(),
                 name='create'
             ),
@@ -19,7 +19,7 @@ urlpatterns = patterns(
         patterns(
             '',
             url(
-                regex=r'^(?P<person_id>\d+)/create/$',
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
                 view=views.GoldenBrickCreateView.as_view(),
                 name='create'
             ),
@@ -28,7 +28,7 @@ urlpatterns = patterns(
         patterns(
             '',
             url(
-                regex=r'^(?P<person_id>\d+)/create/$',
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
                 view=views.GuruParamparaBrickCreateView.as_view(),
                 name='create'
             ),
@@ -37,7 +37,7 @@ urlpatterns = patterns(
         patterns(
             '',
             url(
-                regex=r'^(?P<person_id>\d+)/create/$',
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
                 view=views.RadhaMadhavaBrickCreateView.as_view(),
                 name='create'
             ),
@@ -46,7 +46,7 @@ urlpatterns = patterns(
         patterns(
             '',
             url(
-                regex=r'^(?P<person_id>\d+)/create/$',
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
                 view=views.SilverCoinCreateView.as_view(),
                 name='create'
             ),
@@ -55,7 +55,7 @@ urlpatterns = patterns(
         patterns(
             '',
             url(
-                regex=r'^(?P<person_id>\d+)/create/$',
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
                 view=views.GoldCoinCreateView.as_view(),
                 name='create'
             ),
@@ -64,7 +64,7 @@ urlpatterns = patterns(
         patterns(
             '',
             url(
-                regex=r'^(?P<person_id>\d+)/create/$',
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
                 view=views.PlatinumCoinCreateView.as_view(),
                 name='create'
             ),
@@ -73,7 +73,7 @@ urlpatterns = patterns(
         patterns(
             '',
             url(
-                regex=r'^(?P<person_id>\d+)/create/$',
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
                 view=views.SquareFeetCreateView.as_view(),
                 name='create'
             ),
@@ -82,7 +82,7 @@ urlpatterns = patterns(
         patterns(
             '',
             url(
-                regex=r'^(?P<person_id>\d+)/create/$',
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
                 view=views.SquareMeterCreateView.as_view(),
                 name='create'
             ),
@@ -91,7 +91,7 @@ urlpatterns = patterns(
         patterns(
             '',
             url(
-                regex=r'^(?P<person_id>\d+)/create/$',
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
                 view=views.TrusteeCreateView.as_view(),
                 name='create'
             ),

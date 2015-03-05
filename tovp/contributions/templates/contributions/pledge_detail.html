@@ -27,7 +27,7 @@
     <div class="col-xs-12 col-ms-8 col-sm-8">
         <div class="field-label">{{ field_label }}</div>
         <div class="field-value">
-            <a href="{{ object[field_name].get_absolute_url() }}">{{ object[field_name].full_name }}</a>
+            <a href="{{ object[field_name].get_absolute_url() }}">{{ object[field_name].full_name }}{% if object[field_name].full_name %} - {% endif %}{{ object[field_name].initiated_name}}</a>
         </div>
     </div>
     {% set field_label = 'Status' %}
@@ -72,9 +72,73 @@
         </div>
     </div>
     {% endif %}
+
     <div class="col-xs-12">
-        <a href="{{ url('contributions:contribution:create', object.person.pk, object.pk) }}" class="btn btn-lg btn-success">Add new contribution</a>
+        <h2>Contributions</h2>
+        {% if object.contributions.all() %}
+            {% for contribution in object.contributions.all() %}
+                <div class="col-xs-12">
+                    <a href="{{ contribution.get_absolute_url() }}">{{ contribution.info() }}</a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>There are currently no contributions.</p>
+        {% endif %}
+
+        {% if user.has_perm('contributions.add_contribution') %}
+            {% if object.person.assigned_promotions() %}
+                <a href="{{ url('contributions:contribution:create', object.person.pk, object.pk) }}" class="btn btn-lg btn-success">Add new contribution</a>
+            {% else %}
+                You need to create promotion first to be able to add contribution.
+            {% endif %}
+        {% endif %}
     </div>
+
+    <div class="col-xs-12">
+        <h2>Promotions</h2>
+        {% if object.person.assigned_promotions() %}
+            <h3>Awarded Promotions</h3>
+            <ul>
+            {% for promotion in object.person.assigned_promotions() %}
+            <li>[{{ promotion.pledge.status }}] {{ promotion }}</li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            Person don't have any promotions yet.
+        {% endif %}
+    </div>
+    {% if user.has_perm('promotions.change_nrsimhatile') %}
+        <div class="col-xs-12">
+            {% if eligible_promotions %}
+                <h3>Eligible Promotions</h3>
+                {% for promotion in eligible_promotions %}
+                <div class="row">
+                    <div class="col-xs-12">
+                        <a href="{{ promotion.get_create_url(object.person.pk, object.pk) }}" class="btn btn-xxmd btn-success">Add</a>
+                        {{ promotion._meta.verbose_name.title() }}
+                    </div>
+                </div>
+                {% endfor %}
+            {% endif %}
+            {% if not_eligible_promotions %}
+            <h3>May need bigger contribution</h3>
+            {% for promotion in not_eligible_promotions %}
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-lg-6">
+                    <a href="{{ promotion.get_create_url(object.person.pk, object.pk) }}" class="btn btn-xxmd btn-success">Add</a>
+                    {{ promotion._meta.verbose_name.title() }}
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                    {{ promotion|promo_ballance(object.person.get_ballance()) }}
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+    {% endif %}
+
+
+
 </div>
 
 {% endblock %}

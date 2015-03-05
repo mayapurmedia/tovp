@@ -56,7 +56,7 @@
     <div class="col-xs-12">
         <div class="field-label">{{ field_label }}</div>
         <div class="field-value">
-            <a href="{{ object[field_name].get_absolute_url() }}">{{ object[field_name].full_name }}</a>
+            <a href="{{ object[field_name].get_absolute_url() }}">{{ object[field_name].full_name }}{% if object[field_name].full_name %} - {% endif %}{{ object[field_name].initiated_name}}</a>
         </div>
     </div>
     {% set field_label = 'Amount' %}
