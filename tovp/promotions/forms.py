@@ -4,7 +4,7 @@ from contributions.models import Pledge
 
 from .models import (NrsimhaTile, GoldenBrick, GuruParamparaBrick,
                      RadhaMadhavaBrick, SilverCoin, GoldCoin, PlatinumCoin,
-                     SquareFeet, SquareMeter, Trustee)
+                     SquareFeet, SquareMeter, Trustee, GeneralDonation)
 
 
 class PromotionForm(forms.ModelForm):
@@ -83,3 +83,8 @@ class SquareMeterForm(BaseGeneralPromotionForm):
 class TrusteeForm(BaseGeneralPromotionForm):
     class Meta(BaseCoinForm.Meta):
         model = Trustee
+
+
+class GeneralDonationForm(BaseGeneralPromotionForm):
+    class Meta(BaseCoinForm.Meta):
+        model = GeneralDonation

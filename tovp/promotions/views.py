@@ -16,12 +16,12 @@ from braces.views import LoginRequiredMixin, PermissionRequiredMixin
 
 from .models import (NrsimhaTile, GoldenBrick, GuruParamparaBrick,
                      RadhaMadhavaBrick, SilverCoin, GoldCoin, PlatinumCoin,
-                     SquareFeet, SquareMeter, Trustee)
+                     SquareFeet, SquareMeter, Trustee, GeneralDonation)
 
 from .forms import (NrsimhaTileForm, GoldenBrickForm, GuruParamparaBrickForm,
                     RadhaMadhavaBrickForm, SilverCoinForm, GoldCoinForm,
                     PlatinumCoinForm, SquareFeetForm, SquareMeterForm,
-                    TrusteeForm)
+                    TrusteeForm, GeneralDonationForm)
 
 
 class BasePromotionCreateView(LoginRequiredMixin, PermissionRequiredMixin,
@@ -110,3 +110,8 @@ class SquareMeterCreateView(BasePromotionCreateView):
 class TrusteeCreateView(BasePromotionCreateView):
     model = Trustee
     form_class = TrusteeForm
+
+
+class GeneralDonationCreateView(BasePromotionCreateView):
+    model = GeneralDonation
+    form_class = GeneralDonationForm

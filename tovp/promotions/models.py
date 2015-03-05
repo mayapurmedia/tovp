@@ -196,6 +196,15 @@ class Trustee(BasePromotion):
                        kwargs={'person_id': person_id, 'pledge_id': pledge_id})
 
 
+class GeneralDonation(BasePromotion):
+    amount_rs = 1
+    amount_usd = 1
+
+    @classmethod
+    def get_create_url(cls, person_id, pledge_id):
+        return reverse('promotions:general_donation:create', None,
+                       kwargs={'person_id': person_id, 'pledge_id': pledge_id})
+
 promotions = [NrsimhaTile, GoldenBrick, GuruParamparaBrick, RadhaMadhavaBrick,
               SilverCoin, GoldCoin, PlatinumCoin,
-              SquareFeet, SquareMeter, Trustee]
+              SquareFeet, SquareMeter, Trustee, GeneralDonation]

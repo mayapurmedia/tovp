@@ -5,7 +5,7 @@ from contacts.search_indexes import PledgePersonSearchIndexMixin
 
 from .models import (NrsimhaTile, GoldenBrick, GuruParamparaBrick,
                      RadhaMadhavaBrick, SilverCoin, GoldCoin, PlatinumCoin,
-                     SquareFeet, SquareMeter, Trustee)
+                     SquareFeet, SquareMeter, Trustee, GeneralDonation)
 
 
 class PromotionIndexMixin(ContentSearchIndexMixin, PledgePersonSearchIndexMixin,
@@ -81,3 +81,7 @@ class SquareMeterIndex(PromotionIndexMixin, indexes.Indexable):
 
 class TrusteeIndex(PromotionIndexMixin, indexes.Indexable):
     model = Trustee
+
+
+class GeneralDonationIndex(PromotionIndexMixin, indexes.Indexable):
+    model = GeneralDonation

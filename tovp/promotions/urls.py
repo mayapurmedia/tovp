@@ -96,4 +96,13 @@ urlpatterns = patterns(
                 name='create'
             ),
         ), namespace="trustee")),
+    (r'^general_donation/', include(
+        patterns(
+            '',
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
+                view=views.GeneralDonationCreateView.as_view(),
+                name='create'
+            ),
+        ), namespace="general_donation")),
 )
