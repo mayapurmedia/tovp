@@ -212,13 +212,13 @@ class Person(TimeStampedModel):
 
     # legal name
     first_name = models.CharField(
-        max_length=100,
+        max_length=100, blank=True,
         help_text=_('Enter your first name.'))
     middle_name = models.CharField(
         max_length=100, blank=True,
         help_text=_('Enter your middle name.'))
     last_name = models.CharField(
-        max_length=100,
+        max_length=100, blank=True,
         help_text=_('Enter your surname.'))
 
     initiated_name = models.CharField(
@@ -246,7 +246,6 @@ class Person(TimeStampedModel):
         _('PAN card number'), max_length=50, blank=True, null=True,
         help_text=_('Required for Indian citizens. Enter your PAN card number.')
     )
-
     YATRA_CHOICES = (
         ('middle-east', _('Middle East')),
         ('russia', _('Russia')),
@@ -266,6 +265,16 @@ class Person(TimeStampedModel):
 
         # Ensure postcodes are valid for country
         self.ensure_postcode_is_valid_for_country()
+        # Ensure either initiated name or legal name is entered
+        self.ensure_name_is_entered()
+
+    def ensure_name_is_entered(self):
+        """
+        Check that at least one of names is entered
+        """
+        if not ((self.first_name and self.last_name) or self.initiated_name):
+            msg = _("Either initiated name of legal name has to be provided")
+            raise exceptions.ValidationError({'initiated_name': [msg]})
 
     def ensure_postcode_is_valid_for_country(self):
         """
