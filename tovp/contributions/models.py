@@ -37,6 +37,7 @@ class Pledge(TimeStampedModel, AuthStampedModel):
         (u'3', _('3 months')),
         (u'4', _('4 months')),
         (u'6', _('6 months')),
+        (u'12', _('12 months')),
     )
     interval = models.CharField(
         _("Payments Interval"), max_length=30, choices=INTERVAL_CHOICES,
@@ -171,6 +172,10 @@ class Contribution(TimeStampedModel, AuthStampedModel):
     overwrite_address = models.CharField(
         _("Address who pays on behalf of main contact"), max_length=255,
         blank=True)
+
+    is_external = models.BooleanField(
+        default=False, db_index=True,
+        help_text='This MUST be checked if other than India TOVP receipt was given.')
 
     def __init__(self, *args, **kwargs):
         super(Contribution, self).__init__(*args, **kwargs)

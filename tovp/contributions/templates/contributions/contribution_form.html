@@ -55,7 +55,7 @@
                 {% endif %}
             </div>
             {% set field_name = 'currency' %}
-            <div class="col-ms-6 col-sm-6 col-lg-4 form-group{{' has-error' if form[field_name].errors }}">
+            <div class="col-ms-6 col-sm-6 col-lg-3 form-group{{' has-error' if form[field_name].errors }}">
                 <label class="control-label" for="id_{{ field_name }}">{{ form[field_name].label }}</label>
                 {{form[field_name]|add_css('form-control')}}
                 {{ form[field_name].errors|safe }}
@@ -63,6 +63,17 @@
                     <div class="help-text">
                         {{ form[field_name].help_text }}
                     </div>
+                {% endif %}
+            </div>
+            {% set field_name = 'is_external' %}
+            <div class="col-xs-12 col-sm-6 col-lg-5 form-group{{' has-error' if form[field_name].errors }}">
+                <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
+                {{form[field_name]|add_css('form-control')}}
+                {{ form[field_name].errors|safe }}
+                {% if form[field_name].help_text %}
+                <div class="help-text">
+                    {{ form[field_name].help_text }}
+                </div>
                 {% endif %}
             </div>
             {% set field_name = 'payment_method' %}
