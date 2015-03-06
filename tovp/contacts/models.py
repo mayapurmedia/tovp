@@ -248,7 +248,10 @@ class Person(TimeStampedModel):
     )
     YATRA_CHOICES = (
         ('middle-east', _('Middle East')),
+        ('north-america', _('North America')),
         ('russia', _('Russia')),
+        ('south-africa', _('South Africa')),
+        ('uk', _('UK')),
     )
     yatra = models.CharField(
         "Yatra", max_length=100, choices=YATRA_CHOICES, blank=True, null=True,
