@@ -2,8 +2,7 @@
 django
 
 # Configuration
-#django-configurations
--e git://github.com/jezdez/django-configurations.git@c60b7daac4ca37621f5b89fd3738b13e8b20746d#egg=django-configurations
+django-configurations
 django-secure
 django-cache-url
 dj-database-url
