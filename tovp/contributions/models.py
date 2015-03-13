@@ -60,6 +60,22 @@ class Pledge(TimeStampedModel, AuthStampedModel):
         help_text=_('Date of next expected payment.'),
     )
 
+    cache_assigned_promotions = None
+
+    def assigned_promotions(self):
+        """
+        Returns all promotions (e.g. Golden Brick, Silver Coin) for person
+        """
+        if not self.cache_assigned_promotions:
+            from promotions.models import promotions
+            assigned_promotions = []
+            for promotion_class in promotions:
+                for promotion in promotion_class.objects.all(). \
+                        filter(pledge=self):
+                    assigned_promotions.append(promotion)
+            self.cache_assigned_promotions = assigned_promotions
+        return self.cache_assigned_promotions
+
     @property
     def progress(self):
         if self.amount_paid and self.amount:
