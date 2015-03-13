@@ -55,12 +55,12 @@ class ContributionIndex(ContentSearchIndexMixin, PersonSearchIndexMixin,
 
     def prepare_has_book(self, obj):
         if not obj.book_number:
-            return 'No'
+            return 'Missing'
         return 'Yes'
 
     def prepare_has_slip(self, obj):
         if not obj.slip_number:
-            return 'No'
+            return 'Missing'
         return 'Yes'
 
     def prepare_cleared_on(self, obj):
