@@ -43,6 +43,8 @@ class ContributionIndex(ContentSearchIndexMixin, PersonSearchIndexMixin,
     slip_number = indexes.CharField(model_attr='slip_number')
     overwrite_name = indexes.CharField(model_attr='overwrite_name')
     overwrite_address = indexes.CharField(model_attr='overwrite_address')
+    has_book = indexes.CharField(faceted=True)
+    has_slip = indexes.CharField(faceted=True)
 
     def get_model(self):
         return Contribution
@@ -50,6 +52,16 @@ class ContributionIndex(ContentSearchIndexMixin, PersonSearchIndexMixin,
     def prepare_dated(self, obj):
         if obj.dated:
             return obj.dated
+
+    def prepare_has_book(self, obj):
+        if not obj.book_number:
+            return 'No'
+        return 'Yes'
+
+    def prepare_has_slip(self, obj):
+        if not obj.slip_number:
+            return 'No'
+        return 'Yes'
 
     def prepare_cleared_on(self, obj):
         if obj.cleared_on:
