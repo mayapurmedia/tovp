@@ -52,8 +52,8 @@ class BasePromotionUpdateView(BasePromotionCreateUpdateView, UpdateView):
 
 
 class PromotionDeleteView(PermissionRequiredMixin, DeleteView):
-    permission_required = "contributions.delete_nrsimhatile"
-    success_message = "Brick #%(pk)s was deleted successfully"
+    permission_required = "promotions.delete_nrsimhatile"
+    success_message = "#%(pk)s was deleted successfully"
     template_name = 'promotions/confirm_delete.html'
 
     def get_success_url(self):
@@ -93,7 +93,7 @@ class FeetUpdateView(BasePromotionUpdateView):
 
 
 class FeetDetailView(DetailView):
-    template_name = 'promotions/feet_form.html'
+    template_name = 'promotions/feet_detail.html'
 
 
 class TrusteeCreateView(BasePromotionCreateView):
