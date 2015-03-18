@@ -31,8 +31,8 @@
             </div>
         </div>
         <input class="btn btn-lg btn-success" type="submit" value="Save" />
-        {% if object %}
-            <a href="{{ url('contributions:pledge:delete', object.pk) }}" class="btn btn-large">Delete Pledge</a>
+        {% if object and user.has_perm('promotions.delete_nrsimhatile' )%}
+            <a href="{{ object.get_delete_url() }}" class="btn btn-large">Delete {{ object._meta.verbose_name.title() }}</a>
         {% endif %}
     </form>
 

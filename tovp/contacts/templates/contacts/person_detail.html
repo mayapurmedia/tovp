@@ -126,7 +126,7 @@
                             <h3>Awarded Promotions</h3>
                             <ul>
                             {% for promotion in object.assigned_promotions() %}
-                            <li>[{{ promotion.pledge.status }}] {{ promotion }}</li>
+                                <li><a href="{{ promotion.get_absolute_url() }}">[{{ promotion.pledge.status }}] {{ promotion }}</a></li>
                             {% endfor %}
                             </ul>
                         {% else %}

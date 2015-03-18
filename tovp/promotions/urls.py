@@ -2,7 +2,14 @@
 from django.conf.urls import patterns, include, url
 
 from . import views
+from .models import (NrsimhaTile, GoldenBrick, GuruParamparaBrick,
+                     RadhaMadhavaBrick, SilverCoin, GoldCoin, PlatinumCoin,
+                     SquareFeet, SquareMeter, Trustee, GeneralDonation)
 
+from .forms import (NrsimhaTileForm, GoldenBrickForm, GuruParamparaBrickForm,
+                    RadhaMadhavaBrickForm, SilverCoinForm, GoldCoinForm,
+                    PlatinumCoinForm, SquareFeetForm, SquareMeterForm,
+                    TrusteeForm, GeneralDonationForm)
 
 urlpatterns = patterns(
     '',
@@ -11,8 +18,33 @@ urlpatterns = patterns(
             '',
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
-                view=views.NrsimhaTileCreateView.as_view(),
+                view=views.BrickCreateView.as_view(
+                    model=NrsimhaTile,
+                    form_class=NrsimhaTileForm,
+                ),
                 name='create'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/$',
+                view=views.BrickDetailView.as_view(
+                    model=NrsimhaTile,
+                ),
+                name='detail'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/update/$',
+                view=views.BrickUpdateView.as_view(
+                    model=NrsimhaTile,
+                    form_class=NrsimhaTileForm,
+                ),
+                name='update'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/delete/$',
+                view=views.PromotionDeleteView.as_view(
+                    model=NrsimhaTile,
+                ),
+                name='delete'
             ),
         ), namespace="nrsimha_tile")),
     (r'^golden_brick/', include(
@@ -20,8 +52,33 @@ urlpatterns = patterns(
             '',
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
-                view=views.GoldenBrickCreateView.as_view(),
+                view=views.BrickCreateView.as_view(
+                    model=GoldenBrick,
+                    form_class=GoldenBrickForm,
+                ),
                 name='create'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/$',
+                view=views.BrickDetailView.as_view(
+                    model=GoldenBrick,
+                ),
+                name='detail'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/update/$',
+                view=views.BrickUpdateView.as_view(
+                    model=GoldenBrick,
+                    form_class=GoldenBrickForm,
+                ),
+                name='update'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/delete/$',
+                view=views.PromotionDeleteView.as_view(
+                    model=GoldenBrick,
+                ),
+                name='delete'
             ),
         ), namespace="golden_brick")),
     (r'^guru_parampara_brick/', include(
@@ -29,8 +86,33 @@ urlpatterns = patterns(
             '',
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
-                view=views.GuruParamparaBrickCreateView.as_view(),
+                view=views.BrickCreateView.as_view(
+                    model=GuruParamparaBrick,
+                    form_class=GuruParamparaBrickForm,
+                ),
                 name='create'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/$',
+                view=views.BrickDetailView.as_view(
+                    model=GuruParamparaBrick,
+                ),
+                name='detail'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/update/$',
+                view=views.BrickUpdateView.as_view(
+                    model=GuruParamparaBrick,
+                    form_class=GuruParamparaBrickForm,
+                ),
+                name='update'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/delete/$',
+                view=views.PromotionDeleteView.as_view(
+                    model=GuruParamparaBrick,
+                ),
+                name='delete'
             ),
         ), namespace="guru_parampara_brick")),
     (r'^radha_madhava_brick/', include(
@@ -38,8 +120,33 @@ urlpatterns = patterns(
             '',
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
-                view=views.RadhaMadhavaBrickCreateView.as_view(),
+                view=views.BrickCreateView.as_view(
+                    model=RadhaMadhavaBrick,
+                    form_class=RadhaMadhavaBrickForm,
+                ),
                 name='create'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/$',
+                view=views.BrickDetailView.as_view(
+                    model=RadhaMadhavaBrick,
+                ),
+                name='detail'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/update/$',
+                view=views.BrickUpdateView.as_view(
+                    model=RadhaMadhavaBrick,
+                    form_class=RadhaMadhavaBrickForm,
+                ),
+                name='update'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/delete/$',
+                view=views.PromotionDeleteView.as_view(
+                    model=RadhaMadhavaBrick,
+                ),
+                name='delete'
             ),
         ), namespace="radha_madhava_brick")),
     (r'^silver_coin/', include(
@@ -47,8 +154,33 @@ urlpatterns = patterns(
             '',
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
-                view=views.SilverCoinCreateView.as_view(),
+                view=views.CoinCreateView.as_view(
+                    model=SilverCoin,
+                    form_class=SilverCoinForm,
+                ),
                 name='create'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/$',
+                view=views.CoinDetailView.as_view(
+                    model=SilverCoin,
+                ),
+                name='detail'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/update/$',
+                view=views.CoinUpdateView.as_view(
+                    model=SilverCoin,
+                    form_class=SilverCoinForm,
+                ),
+                name='update'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/delete/$',
+                view=views.PromotionDeleteView.as_view(
+                    model=SilverCoin,
+                ),
+                name='delete'
             ),
         ), namespace="silver_coin")),
     (r'^gold_coin/', include(
@@ -56,8 +188,33 @@ urlpatterns = patterns(
             '',
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
-                view=views.GoldCoinCreateView.as_view(),
+                view=views.CoinCreateView.as_view(
+                    model=GoldCoin,
+                    form_class=GoldCoinForm,
+                ),
                 name='create'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/$',
+                view=views.CoinDetailView.as_view(
+                    model=GoldCoin,
+                ),
+                name='detail'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/update/$',
+                view=views.CoinUpdateView.as_view(
+                    model=GoldCoin,
+                    form_class=GoldCoinForm,
+                ),
+                name='update'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/delete/$',
+                view=views.PromotionDeleteView.as_view(
+                    model=GoldCoin,
+                ),
+                name='delete'
             ),
         ), namespace="gold_coin")),
     (r'^platinum_coin/', include(
@@ -65,8 +222,33 @@ urlpatterns = patterns(
             '',
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
-                view=views.PlatinumCoinCreateView.as_view(),
+                view=views.CoinCreateView.as_view(
+                    model=PlatinumCoin,
+                    form_class=PlatinumCoinForm,
+                ),
                 name='create'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/$',
+                view=views.CoinDetailView.as_view(
+                    model=PlatinumCoin,
+                ),
+                name='detail'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/update/$',
+                view=views.CoinUpdateView.as_view(
+                    model=PlatinumCoin,
+                    form_class=PlatinumCoinForm,
+                ),
+                name='update'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/delete/$',
+                view=views.PromotionDeleteView.as_view(
+                    model=PlatinumCoin,
+                ),
+                name='delete'
             ),
         ), namespace="platinum_coin")),
     (r'^square_feet/', include(
@@ -74,8 +256,33 @@ urlpatterns = patterns(
             '',
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
-                view=views.SquareFeetCreateView.as_view(),
+                view=views.FeetCreateView.as_view(
+                    model=SquareFeet,
+                    form_class=SquareFeetForm,
+                ),
                 name='create'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/$',
+                view=views.FeetDetailView.as_view(
+                    model=SquareFeet,
+                ),
+                name='detail'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/update/$',
+                view=views.FeetUpdateView.as_view(
+                    model=SquareFeet,
+                    form_class=SquareFeetForm,
+                ),
+                name='update'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/delete/$',
+                view=views.PromotionDeleteView.as_view(
+                    model=SquareFeet,
+                ),
+                name='delete'
             ),
         ), namespace="square_feet")),
     (r'^square_meter/', include(
@@ -83,8 +290,33 @@ urlpatterns = patterns(
             '',
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
-                view=views.SquareMeterCreateView.as_view(),
+                view=views.FeetCreateView.as_view(
+                    model=SquareMeter,
+                    form_class=SquareMeterForm,
+                ),
                 name='create'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/$',
+                view=views.FeetDetailView.as_view(
+                    model=SquareMeter,
+                ),
+                name='detail'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/update/$',
+                view=views.FeetUpdateView.as_view(
+                    model=SquareMeter,
+                    form_class=SquareMeterForm,
+                ),
+                name='update'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/delete/$',
+                view=views.PromotionDeleteView.as_view(
+                    model=SquareMeter,
+                ),
+                name='delete'
             ),
         ), namespace="square_meter")),
     (r'^trustee/', include(
@@ -92,8 +324,33 @@ urlpatterns = patterns(
             '',
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
-                view=views.TrusteeCreateView.as_view(),
+                view=views.TrusteeCreateView.as_view(
+                    model=Trustee,
+                    form_class=TrusteeForm,
+                ),
                 name='create'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/$',
+                view=views.TrusteeDetailView.as_view(
+                    model=Trustee,
+                ),
+                name='detail'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/update/$',
+                view=views.TrusteeUpdateView.as_view(
+                    model=Trustee,
+                    form_class=TrusteeForm,
+                ),
+                name='update'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/delete/$',
+                view=views.PromotionDeleteView.as_view(
+                    model=Trustee,
+                ),
+                name='delete'
             ),
         ), namespace="trustee")),
     (r'^general_donation/', include(
@@ -101,8 +358,33 @@ urlpatterns = patterns(
             '',
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
-                view=views.GeneralDonationCreateView.as_view(),
+                view=views.GeneralDonationCreateView.as_view(
+                    model=GeneralDonation,
+                    form_class=GeneralDonationForm,
+                ),
                 name='create'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/$',
+                view=views.GeneralDonationDetailView.as_view(
+                    model=GeneralDonation,
+                ),
+                name='detail'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/update/$',
+                view=views.GeneralDonationUpdateView.as_view(
+                    model=GeneralDonation,
+                    form_class=GeneralDonationForm,
+                ),
+                name='update'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/delete/$',
+                view=views.PromotionDeleteView.as_view(
+                    model=GeneralDonation,
+                ),
+                name='delete'
             ),
         ), namespace="general_donation")),
 )

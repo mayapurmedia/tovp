@@ -3,8 +3,6 @@
 
 {% block javascript_head %}
     {{ super() }}
-    <link href="//cdnjs.cloudflare.com/ajax/libs/selectize.js/0.6.14/selectize.css" rel="stylesheet">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/selectize.js/0.6.14/selectize.min.js"></script>
 {% endblock %}
 
 {% block page_content %}
@@ -55,8 +53,8 @@
             </div>
         </div>
         <input class="btn btn-lg btn-success" type="submit" value="Save" />
-        {% if object %}
-            <a href="{{ url('contributions:pledge:delete', object.pk) }}" class="btn btn-large">Delete Pledge</a>
+        {% if object and user.has_perm('promotions.delete_squarefeet' )%}
+        <a href="{{ object.get_delete_url() }}" class="btn btn-large">Delete {{ object._meta.verbose_name.title() }}</a>
         {% endif %}
     </form>
 

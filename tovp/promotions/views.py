@@ -3,8 +3,8 @@
 # from django.core.urlresolvers import reverse
 
 # view imports
-# from django.views.generic import DetailView, UpdateView, ListView
-from django.views.generic.edit import CreateView  # , DeleteView
+from django.views.generic import DetailView, UpdateView  # , ListView
+from django.views.generic.edit import CreateView, DeleteView
 # from django.utils.translation import ugettext as _
 # from django.shortcuts import get_object_or_404
 
@@ -14,23 +14,14 @@ from django.views.generic.edit import CreateView  # , DeleteView
 # Only authenticated users can access views using this.
 from braces.views import LoginRequiredMixin, PermissionRequiredMixin
 
-from .models import (NrsimhaTile, GoldenBrick, GuruParamparaBrick,
-                     RadhaMadhavaBrick, SilverCoin, GoldCoin, PlatinumCoin,
-                     SquareFeet, SquareMeter, Trustee, GeneralDonation)
 
-from .forms import (NrsimhaTileForm, GoldenBrickForm, GuruParamparaBrickForm,
-                    RadhaMadhavaBrickForm, SilverCoinForm, GoldCoinForm,
-                    PlatinumCoinForm, SquareFeetForm, SquareMeterForm,
-                    TrusteeForm, GeneralDonationForm)
-
-
-class BasePromotionCreateView(LoginRequiredMixin, PermissionRequiredMixin,
-                              CreateView):
+class BasePromotionCreateUpdateView(LoginRequiredMixin,
+                                    PermissionRequiredMixin):
     template_name = 'promotions/promotion_form.html'
     permission_required = "promotions.add_nrsimhatile"
 
     def get_form_kwargs(self):
-        kwargs = super(BasePromotionCreateView, self).get_form_kwargs()
+        kwargs = super(BasePromotionCreateUpdateView, self).get_form_kwargs()
         kwargs['person'] = self.kwargs.get('person_id')
         return kwargs
 
@@ -38,80 +29,92 @@ class BasePromotionCreateView(LoginRequiredMixin, PermissionRequiredMixin,
         return self.object.pledge.get_absolute_url()
 
     def get_initial(self):
-        initial = super(BasePromotionCreateView, self).get_initial()
+        initial = super(BasePromotionCreateUpdateView, self).get_initial()
         initial = initial.copy()
         initial['person'] = self.kwargs.get('person_id')
         initial['pledge'] = self.kwargs.get('pledge_id')
         return initial
 
     def get_context_data(self, **kwargs):
-        context = super(BasePromotionCreateView, self).get_context_data(
+        context = super(BasePromotionCreateUpdateView, self).get_context_data(
             **kwargs)
         context['content_title'] = "Add %s" % self.model._meta. \
             verbose_name.title()
         return context
 
 
-class BaseBrickCreateView(BasePromotionCreateView):
+class BasePromotionCreateView(BasePromotionCreateUpdateView, CreateView):
+    pass
+
+
+class BasePromotionUpdateView(BasePromotionCreateUpdateView, UpdateView):
+    pass
+
+
+class PromotionDeleteView(PermissionRequiredMixin, DeleteView):
+    permission_required = "contributions.delete_nrsimhatile"
+    success_message = "Brick #%(pk)s was deleted successfully"
+    template_name = 'promotions/confirm_delete.html'
+
+    def get_success_url(self):
+        return self.get_object().pledge.get_absolute_url()
+
+
+class BrickCreateView(BasePromotionCreateView):
     template_name = 'promotions/brick_form.html'
 
 
-class NrsimhaTileCreateView(BaseBrickCreateView):
-    model = NrsimhaTile
-    form_class = NrsimhaTileForm
+class BrickUpdateView(BasePromotionUpdateView):
+    template_name = 'promotions/brick_form.html'
 
 
-class GoldenBrickCreateView(BaseBrickCreateView):
-    model = GoldenBrick
-    form_class = GoldenBrickForm
+class BrickDetailView(DetailView):
+    template_name = 'promotions/brick_detail.html'
 
 
-class GuruParamparaBrickCreateView(BaseBrickCreateView):
-    model = GuruParamparaBrick
-    form_class = GuruParamparaBrickForm
-
-
-class RadhaMadhavaBrickCreateView(BaseBrickCreateView):
-    model = RadhaMadhavaBrick
-    form_class = RadhaMadhavaBrickForm
-
-
-class BaseCoinCreateView(BasePromotionCreateView):
+class CoinCreateView(BasePromotionCreateView):
     template_name = 'promotions/coin_form.html'
 
 
-class SilverCoinCreateView(BaseCoinCreateView):
-    model = SilverCoin
-    form_class = SilverCoinForm
+class CoinUpdateView(BasePromotionUpdateView):
+    template_name = 'promotions/coin_form.html'
 
 
-class GoldCoinCreateView(BaseCoinCreateView):
-    model = GoldCoin
-    form_class = GoldCoinForm
+class CoinDetailView(DetailView):
+    template_name = 'promotions/coin_detail.html'
 
 
-class PlatinumCoinCreateView(BaseCoinCreateView):
-    model = PlatinumCoin
-    form_class = PlatinumCoinForm
+class FeetCreateView(BasePromotionCreateView):
+    template_name = 'promotions/feet_form.html'
 
 
-class SquareFeetCreateView(BasePromotionCreateView):
-    template_name = 'promotions/square_feet_form.html'
-    model = SquareFeet
-    form_class = SquareFeetForm
+class FeetUpdateView(BasePromotionUpdateView):
+    template_name = 'promotions/feet_form.html'
 
 
-class SquareMeterCreateView(BasePromotionCreateView):
-    template_name = 'promotions/square_feet_form.html'
-    model = SquareMeter
-    form_class = SquareMeterForm
+class FeetDetailView(DetailView):
+    template_name = 'promotions/feet_form.html'
 
 
 class TrusteeCreateView(BasePromotionCreateView):
-    model = Trustee
-    form_class = TrusteeForm
+    template_name = 'promotions/promotion_form.html'
+
+
+class TrusteeUpdateView(BasePromotionUpdateView):
+    template_name = 'promotions/promotion_form.html'
+
+
+class TrusteeDetailView(DetailView):
+    template_name = 'promotions/promotion_detail.html'
 
 
 class GeneralDonationCreateView(BasePromotionCreateView):
-    model = GeneralDonation
-    form_class = GeneralDonationForm
+    template_name = 'promotions/promotion_form.html'
+
+
+class GeneralDonationUpdateView(BasePromotionUpdateView):
+    template_name = 'promotions/promotion_form.html'
+
+
+class GeneralDonationDetailView(DetailView):
+    template_name = 'promotions/promotion_detail.html'
