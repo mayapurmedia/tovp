@@ -9,7 +9,7 @@ from django.views.generic.edit import CreateView, DeleteView
 # from django.shortcuts import get_object_or_404
 
 # Will be used for logged in and logged out messages
-# from django.contrib import messages
+from django.contrib import messages
 
 # Only authenticated users can access views using this.
 from braces.views import LoginRequiredMixin, PermissionRequiredMixin
@@ -53,11 +53,16 @@ class BasePromotionUpdateView(BasePromotionCreateUpdateView, UpdateView):
 
 class PromotionDeleteView(PermissionRequiredMixin, DeleteView):
     permission_required = "promotions.delete_nrsimhatile"
-    success_message = "#%(pk)s was deleted successfully"
     template_name = 'promotions/confirm_delete.html'
 
     def get_success_url(self):
         return self.get_object().pledge.get_absolute_url()
+
+    def delete(self, request, *args, **kwargs):
+        success_message = "%s has been deleted successfully" % \
+            self.get_object()._meta.verbose_name.title()
+        messages.success(self.request, success_message)
+        return super(PromotionDeleteView, self).delete(request, *args, **kwargs)
 
 
 class BrickCreateView(BasePromotionCreateView):
