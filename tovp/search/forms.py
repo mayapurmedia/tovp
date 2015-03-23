@@ -101,4 +101,4 @@ class SearchForm(forms.Form):
         return sqs
 
     def show_all(self):
-        return self.searchqueryset  # .order_by('-created_on')
+        return self.searchqueryset.order_by('-modified')
