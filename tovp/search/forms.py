@@ -49,55 +49,17 @@ class SearchForm(forms.Form):
             # sqs = sqs.auto_query(self.cleaned_data['q'])
             sqs = sqs.filter(text__contains=self.cleaned_data['q'])
 
-        if self.cleaned_data.get('mixed_name'):
-            sqs = sqs.filter(mixed_name__startswith=self.cleaned_data['mixed_name'])
+        # fields which are filtered with __startswith
+        starts_with = [
+            'mixed_name', 'initiated_name', 'first_name', 'middle_name',
+            'last_name', 'email', 'pan_card_number', 'phone_number',
+            'serial_number', 'book_number', 'slip_number', 'transaction_id',
+            'record_id']
 
-        if self.cleaned_data.get('initiated_name'):
-            # sqs =
-            # self.searchqueryset.filter(initiated_name__startswith=self.cleaned_data['initiated_name'])
-            sqs = sqs.filter(initiated_name__startswith=self.cleaned_data['initiated_name'])
-
-        if self.cleaned_data.get('first_name'):
-            sqs = sqs.filter(first_name__startswith=self.cleaned_data['first_name'])
-
-        if self.cleaned_data.get('last_name'):
-            sqs = sqs.filter(last_name__startswith=self.cleaned_data['last_name'])
-
-        if self.cleaned_data.get('email'):
-            sqs = sqs.filter(email__startswith=self.cleaned_data['email'])
-
-        if self.cleaned_data.get('pan_card_number'):
-            sqs = sqs.filter(pan_card_number__startswith=self.cleaned_data['pan_card_number'])
-
-        if self.cleaned_data.get('book_number'):
-            sqs = sqs.filter(book_number__startswith=self.cleaned_data['book_number'])
-
-        if self.cleaned_data.get('slip_number'):
-            sqs = sqs.filter(slip_number__startswith=self.cleaned_data['slip_number'])
-
-        if self.cleaned_data.get('transaction_id'):
-            sqs = sqs.filter(transaction_id__startswith=self.cleaned_data['transaction_id'])
-
-        if self.cleaned_data.get('record_id'):
-            # in case when somebody use id in form TOVPxxx we remove 'tovp' part
-            record_id = self.cleaned_data.get('record_id').lower().replace('tovp', '')
-            sqs = sqs.filter(record_id__startswith=record_id)
-
-        # if self.cleaned_data.get('pan_card_number'):
-        #     sqs = sqs.filter(pan_card_number__startswith=self.cleaned_data['pan_card_number'])
-
-        # if self.cleaned_data.get('pan_card_number'):
-        #     sqs = sqs.filter(pan_card_number__startswith=self.cleaned_data['pan_card_number'])
-
-        # if self.cleaned_data.get('pan_card_number'):
-        #     sqs = sqs.filter(pan_card_number__startswith=self.cleaned_data['pan_card_number'])
-
-        # if self.cleaned_data.get('pan_card_number'):
-        #     sqs = sqs.filter(pan_card_number__startswith=self.cleaned_data['pan_card_number'])
-
-        # if self.cleaned_data.get('pan_card_number'):
-        #     sqs = sqs.filter(pan_card_number__startswith=self.cleaned_data['pan_card_number'])
-
+        for field_name in starts_with:
+            if self.cleaned_data.get(field_name):
+                sqs = sqs.filter(**{'%s__startswith' % field_name:
+                                    self.cleaned_data[field_name]})
         return sqs
 
     def show_all(self):
