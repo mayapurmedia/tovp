@@ -259,7 +259,7 @@ class Contribution(TimeStampedModel, AuthStampedModel):
             msg = _("There must be date for completed transaction")
             errors['cleared_on'] = [msg]
 
-        if not (self.receipt_date or self.cleared_on):
+        if (not (self.receipt_date or self.cleared_on) and self.payment_method != 'paypal'):
             msg = _("You have to fill this when there is no Cleared On date.")
             errors['receipt_date'] = [msg]
 
