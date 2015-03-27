@@ -11,11 +11,11 @@
 <div class="row">
     {% set field_label = 'TOVP Contact ID' %}
     {% set field_name = 'pk' %}
-    <div class="{% if user.has_perm('contacts.change_person') %} col-xs-9 col-ms-10 col-sm-8{% else %}col-xs-12{% endif %}">
+    <div class="{% if user.has_perm('contacts.change_person') %} col-xs-9 col-ms-10 col-sm-11{% else %}col-xs-12{% endif %}">
         <h1>{{ object.full_name }}</h1>
     </div>
     {% if user.has_perm('contacts.change_person') %} 
-        <div class="col-xs-3 col-ms-2 col-sm-4">
+        <div class="col-xs-3 col-ms-2 col-sm-1">
             <a href="{{ url('contacts:person:update', object.pk) }}" class="btn btn-lg btn-warning">Edit</a>
         </div>
     {% endif %}
