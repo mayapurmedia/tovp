@@ -258,6 +258,11 @@ class Person(TimeStampedModel):
         help_text=_('If person belongs to one the of yatras in drowpdown, '
                     'please choose it'))
 
+    old_database_id = models.IntegerField(
+        _('Old Database ID'), blank=True, null=True,
+        help_text=_('If you are transfering data from old database (CiviCRM), '
+                    'enter contact_id here. Otherwise leave empty.'))
+
     def clean(self):
         # Strip all whitespace
         for field in ['first_name', 'middle_name', 'last_name',
