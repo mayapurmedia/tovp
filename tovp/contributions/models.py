@@ -153,6 +153,7 @@ class Contribution(TimeStampedModel, AuthStampedModel):
         (u'neftf', _('NEFT (Foreign)')),
         (u'chequel', _('Cheque (Indian)')),
         (u'chequef', _('Cheque (Foreign)')),
+        (u'paypal', _('Paypal')),
     )
     payment_method = models.CharField(
         "Payment Method", max_length=16, choices=PAYMENT_METHOD_CHOICES)
