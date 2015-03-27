@@ -243,6 +243,7 @@ $(document).ready(function() {
         $('#id_payment_method').val() == 'cashf' | 
         $('#id_payment_method').val() == 'neftl' | 
         $('#id_payment_method').val() == 'neftf' | 
+        $('#id_payment_method').val() == 'axis' | 
         $('#id_payment_method').val() == 'paypal' | 
         $('#id_payment_method').val() == 'ccdcsl' | 
         $('#id_payment_method').val() == 'ccdcsf'
@@ -277,6 +278,7 @@ $(document).ready(function() {
             $('.field_id_transaction_id').slideUp();
         }
         if (
+            selectedValue  === 'axis' | 
             selectedValue  === 'paypal' | 
             selectedValue  === 'cashl' | 
             selectedValue === 'cashf' | 
@@ -286,6 +288,7 @@ $(document).ready(function() {
             $('.field_id_dated').slideUp();
         }
         if (
+            selectedValue  === 'axis' | 
             selectedValue  === 'paypal' | 
             selectedValue  === 'ccdcsl' | 
             selectedValue === 'ccdcsf' | 
