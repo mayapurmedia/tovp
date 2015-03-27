@@ -44,6 +44,14 @@ class ContributionForm(forms.ModelForm):
                 },
                 bootstrap_version=3
             ),
+            'receipt_date': DateWidget(
+                attrs={},
+                options={
+                    'startView': 2,
+                    'format': 'yyyy-mm-dd',
+                },
+                bootstrap_version=3
+            ),
             'cleared_on': DateWidget(
                 attrs={},
                 options={

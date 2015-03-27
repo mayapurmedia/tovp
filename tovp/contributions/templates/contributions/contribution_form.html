@@ -113,6 +113,17 @@
                     </div>
                 {% endif %}
             </div>
+            {% set field_name = 'receipt_date' %}
+            <div class="col-xs-12 col-ms-12 col-sm-6 col-lg-4 form-group{{' has-error' if form[field_name].errors }}">
+                <label class="control-label" for="id_{{ field_name }}">{{ form[field_name].label }}</label>
+                {{form[field_name]|add_css('form-control')}}
+                {{ form[field_name].errors|safe }}
+                {% if form[field_name].help_text %}
+                    <div class="help-text">
+                        {{ form[field_name].help_text }}
+                    </div>
+                {% endif %}
+            </div>
             {% set field_name = 'cleared_on' %}
             <div class="col-xs-12 col-ms-12 col-sm-6 col-lg-4 form-group{{' has-error' if form[field_name].errors }}">
                 <label class="control-label" for="id_{{ field_name }}">{{ form[field_name].label }}</label>

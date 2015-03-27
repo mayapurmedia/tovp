@@ -29,10 +29,18 @@
         </div>
     </div>
 
+    {% set field_label = 'Serial Number' %}
+    <div class="col-xs-6 col-ms-12 col-sm-4">
+        <div class="field-label">{{ field_label }}</div>
+        <div class="field-value">
+            {{ object.get_serial_number() }}
+        </div>
+    </div>
+
     {% if object.book_number %}
     {% set field_label = 'Book Number' %}
     {% set field_name = 'book_number' %}
-    <div class="col-xs-6 col-ms-6 col-sm-6">
+    <div class="col-xs-6 col-ms-6 col-sm-4">
         <div class="field-label">{{ field_label }}</div>
         <div class="field-value">
             {{ object[field_name] }}
@@ -43,7 +51,7 @@
     {% if object.slip_number %}
     {% set field_label = 'Slip Number' %}
     {% set field_name = 'slip_number' %}
-    <div class="col-xs-6 col-ms-6 col-sm-6">
+    <div class="col-xs-6 col-ms-6 col-sm-4">
         <div class="field-label">{{ field_label }}</div>
         <div class="field-value">
             {{ object[field_name] }}
@@ -76,6 +84,13 @@
     {% endif %}
     {% set field_label = 'Dated' %}
     {% set field_name = 'dated' %}
+    {% if object[field_name] %}
+    <div class="col-xs-12 col-ms-4 col-sm-4">
+        {{ print_field(field_label, object[field_name])}}
+    </div>
+    {% endif %}
+    {% set field_label = 'Receipt Date' %}
+    {% set field_name = 'receipt_date' %}
     {% if object[field_name] %}
     <div class="col-xs-12 col-ms-4 col-sm-4">
         {{ print_field(field_label, object[field_name])}}
@@ -115,8 +130,12 @@
     </div>
     {% endif %}
     <div class="col-xs-12">
-        <a href="{{ url('contributions:contribution:donor_letter', object.pk) }}" target="_blank" class="btn btn-lg btn-success">Print Donor Letter</a>
-        <a href="{{ url('contributions:contribution:donor_receipt', object.pk) }}" target="_blank" class="btn btn-lg btn-success">Print Receipt</a>
+        {% if not object.is_external %}
+            <a href="{{ url('contributions:contribution:donor_letter', object.pk) }}" target="_blank" class="btn btn-lg btn-success">Print Donor Letter</a>
+            <a href="{{ url('contributions:contribution:donor_receipt', object.pk) }}" target="_blank" class="btn btn-lg btn-success">Print Receipt</a>
+        {% else %}
+            This is external contribution for which we cannot print receipt as it was issued by somebody else.
+        {% endif %}
     </div>
     <div class="col-xs-12 next-prev-navigation">
         {% if object.prev() %}

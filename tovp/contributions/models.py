@@ -126,6 +126,16 @@ class Contribution(TimeStampedModel, AuthStampedModel):
                                related_name='contributions')
     person = models.ForeignKey(Person, verbose_name="Person", blank=True,
                                related_name='contributions')
+
+    # fields to save serial number for contributions for which are not from
+    # the books/slips and we should generate receipt for
+    serial_year = models.CharField(
+        _('Serial Number Year'), max_length=5, blank=True,
+        help_text=_('Serial Number Year of this contribution.'))
+    serial_number = models.CharField(
+        _('Serial Number'), max_length=5, blank=True,
+        help_text=_('Serial Number of this contribution for financial year.'))
+
     amount = models.DecimalField(_('Amount'), max_digits=20, decimal_places=2)
     CURRENCY_CHOICES = (
         ('INR', _('₹')),
@@ -160,6 +170,10 @@ class Contribution(TimeStampedModel, AuthStampedModel):
         _("Dated"), null=True, blank=True,
         help_text=_('Enter date on the cheque')
     )
+    receipt_date = models.DateField(
+        _("Receipt Date"), null=True, blank=True,
+        help_text=_("Enter date which should be on the receipt.")
+    )
     cleared_on = models.DateField(
         _("Cleared On"), null=True, blank=True,
         help_text=_('Enter date when transaction was completed '
@@ -191,14 +205,46 @@ class Contribution(TimeStampedModel, AuthStampedModel):
 
     is_external = models.BooleanField(
         default=False, db_index=True,
-        help_text='This MUST be checked if other than India TOVP receipt was given.')
+        help_text='This MUST be checked if other than India TOVP receipt '
+                  'was given.')
 
     def __init__(self, *args, **kwargs):
         super(Contribution, self).__init__(*args, **kwargs)
+        if self.serial_year:
+            self._serial_year = self.serial_year
+            self._serial_number = self.serial_number
+        else:
+            self._serial_year = None
+            self._serial_number = None
+
         if self.pk:
             self._original_pledge = self.pledge
         else:
             self._original_pledge = None
+
+    def get_serial_number(self):
+        if self.book_number:
+            return '{book}/{slip}'.format(book=self.book_number,
+                                          slip=self.slip_number)
+        elif self.serial_year and self.serial_number:
+            number = '%05d' % int(self.serial_number)
+            if self.status == 'completed':
+                prefix = 'TOVP'
+            else:
+                prefix = 'TMP'
+            return '{prefix}/{year}/{number}'.format(prefix=prefix,
+                                                     year=self.serial_year,
+                                                     number=number)
+        return ''
+
+    def generate_serial_year(self):
+        if self.receipt_date:
+            date = self.receipt_date
+            if date.month < 4:
+                year = date.year - 2001
+            else:
+                year = date.year - 2000
+            return '%d-%d' % (year, year + 1)
 
     def clean(self):
         errors = {}
@@ -212,6 +258,10 @@ class Contribution(TimeStampedModel, AuthStampedModel):
             msg = _("There must be date for completed transaction")
             errors['cleared_on'] = [msg]
 
+        if not (self.receipt_date or self.cleared_on):
+            msg = _("You have to fill this when there is no Cleared On date.")
+            errors['receipt_date'] = [msg]
+
         # transaction id is required for cheque or credit/debit cards payments
         if not self.transaction_id:
             if self.payment_method in ['cheque', 'ccdcsl', 'ccdcsf']:
@@ -222,8 +272,33 @@ class Contribution(TimeStampedModel, AuthStampedModel):
                 if self.payment_method == 'cheque':
                     msg = _("You have to fill Cheque Number")
                     errors['transaction_id'] = [msg]
+
+        self.ensure_book_and_slip_number()
+        self.ensure_serial_number_not_generated()
+
         if errors:
             raise exceptions.ValidationError(errors)
+
+    def ensure_book_and_slip_number(self):
+        """
+        Make sure that none or both book and slip number is entered
+        """
+        if bool(self.book_number) != bool(self.slip_number):
+            msg = _("There must be both book number and slip number")
+            if self.book_number:
+                raise exceptions.ValidationError({'slip_number': [msg]})
+            else:
+                raise exceptions.ValidationError({'book_number': [msg]})
+
+    def ensure_serial_number_not_generated(self):
+        if self._serial_number and self.book_number:
+            msg = _("This contribution has already serial number generated, "
+                    "You cannot add book and slip numbers anymore.")
+            raise exceptions.ValidationError({'book_number': [msg]})
+        if self._serial_number and self.is_external:
+            msg = _("This contribution has already serial number generated, "
+                    "You cannot set is as external anymore.")
+            raise exceptions.ValidationError({'is_external': [msg]})
 
     @property
     def currency_words(self):
@@ -266,6 +341,25 @@ class Contribution(TimeStampedModel, AuthStampedModel):
         return ' - '.join(filter(bool, field_values))
 
     def save(self, **kwargs):
+        if self.cleared_on and not self.receipt_date:
+            self.receipt_date = self.cleared_on
+        if not self.receipt_date:
+            if self.pk:
+                self.receipt_date = self.created
+            else:
+                self.receipt_date = datetime.now()
+
+        if self._serial_year:
+            self.serial_year = self._serial_year
+            self.serial_number = self._serial_number
+
+        # Disable generating serial number until we launch system for new
+        # financial year
+        # if not (self.is_external or self.book_number or self.serial_number):
+        #     self.serial_year = self.generate_serial_year()
+        #     self.serial_number = len(Contribution.objects.all().
+        #                              filter(serial_year=self.serial_year)) + 1
+
         super(Contribution, self).save()
         # if contribution pledge changed save original pledge first, so its
         # amount_paid is updated correctly

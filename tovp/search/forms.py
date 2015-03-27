@@ -19,8 +19,13 @@ class SearchForm(forms.Form):
                                      widget=forms.TextInput())
     email = forms.CharField(required=False, label=_('Email'),
                             widget=forms.TextInput())
-    pan_card_number = forms.CharField(required=False, label=_('Pan Card Number'),
+    pan_card_number = forms.CharField(required=False,
+                                      label=_('Pan Card Number'),
                                       widget=forms.TextInput())
+    serial_number = forms.CharField(required=False, label=_('Serial Number'),
+                                    widget=forms.TextInput())
+    phone_number = forms.CharField(required=False, label=_('Phone Number'),
+                                   widget=forms.TextInput())
     book_number = forms.CharField(required=False, label=_('Book Number'),
                                   widget=forms.TextInput())
     slip_number = forms.CharField(required=False, label=_('Slip Number'),

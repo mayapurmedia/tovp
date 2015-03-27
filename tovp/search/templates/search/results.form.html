@@ -49,7 +49,7 @@
                 {% endif %}
             </div>
             {% endfor %}
-            {% for field_name in ['pan_card_number'] %}
+            {% for field_name in ['pan_card_number', 'phone_number', 'serial_number'] %}
             <div class="col-ms-6 col-sm-4 form-group{{' has-error' if form[field_name].errors }}">
                 <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
 

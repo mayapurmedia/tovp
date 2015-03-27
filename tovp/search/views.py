@@ -251,6 +251,8 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
                               'last_name',
                               'email',
                               'pan_card_number',
+                              'phone_number',
+                              'serial_number',
                               'book_number',
                               'slip_number',
                               'transaction_id',

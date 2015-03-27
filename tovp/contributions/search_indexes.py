@@ -19,7 +19,6 @@ class PledgeIndex(ContentSearchIndexMixin, PersonSearchIndexMixin,
     interval = indexes.CharField(model_attr='get_interval_display',
                                  faceted=True)
     status = indexes.CharField(model_attr='get_status_display', faceted=True)
-
     # next_payment_date =
 
     def get_model(self):
@@ -43,6 +42,7 @@ class ContributionIndex(ContentSearchIndexMixin, PersonSearchIndexMixin,
     slip_number = indexes.CharField(model_attr='slip_number')
     overwrite_name = indexes.CharField(model_attr='overwrite_name')
     overwrite_address = indexes.CharField(model_attr='overwrite_address')
+    serial_number = indexes.CharField()
     has_book = indexes.CharField(faceted=True)
     has_slip = indexes.CharField(faceted=True)
 
@@ -66,3 +66,7 @@ class ContributionIndex(ContentSearchIndexMixin, PersonSearchIndexMixin,
     def prepare_cleared_on(self, obj):
         if obj.cleared_on:
             return obj.cleared_on
+
+    def prepare_serial_number(self, obj):
+        if obj.get_serial_number():
+            return obj.get_serial_number()
