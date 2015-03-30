@@ -44,6 +44,10 @@ class Pledge(TimeStampedModel, AuthStampedModel):
         default=u'1', help_text=_("Enter planned interval of payments "
                                   "(e.g. 1 month)"),
     )
+    number_of_instalments = models.IntegerField(
+        _('Number of instalments'), default=1,
+        help_text=_('If somebody knows in how many instalment they would like '
+                    'to pay the pledge.'))
     STATUS_CHOICES = (
         (u'pending', _('Pledged')),
         (u'partial', _('Partially Paid')),

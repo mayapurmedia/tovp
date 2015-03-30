@@ -55,7 +55,7 @@
     {% set field_label = 'Payments Start Date' %}
     {% set field_name = 'payments_start_date' %}
     {% if object[field_name] %}
-    <div class="col-xs-12 col-ms-8 col-sm-8">
+    <div class="col-xs-12 col-ms-12 col-sm-4">
         <div class="field-label">{{ field_label }}</div>
         <div class="field-value">
             {{ object.payments_start_date|datetimeformat('%B %-d, %Y') }}
@@ -65,10 +65,21 @@
     {% set field_label = 'Interval' %}
     {% set field_name = 'interval' %}
     {% if object[field_name] %}
-    <div class="col-xs-12 col-ms-4 col-sm-4">
+    <div class="col-xs-12 col-ms-6 col-sm-4">
         <div class="field-label">{{ field_label }}</div>
         <div class="field-value">
             {{ object.get_interval_display() }}
+        </div>
+    </div>
+    {% endif %}
+
+    {% set field_label = 'Number of instalments' %}
+    {% set field_name = 'number_of_instalments' %}
+    {% if object.number_of_instalments > 1 %}
+    <div class="col-xs-12 col-ms-6 col-sm-4">
+        <div class="field-label">{{ field_label }}</div>
+        <div class="field-value">
+            {{ object.number_of_instalments }}
         </div>
     </div>
     {% endif %}
