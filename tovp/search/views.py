@@ -101,6 +101,7 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
             'payment_method': 'Payment Method', 'interval': 'Interval',
             'country': 'Country', 'yatra': 'Yatra',
             'has_book': 'Book filled', 'has_slip': 'Slip filled',
+            'created_by': 'Created By', 'modified_by': 'Modified By',
         }
 
         narrow_facets = {
@@ -110,7 +111,8 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
                 'fields': (
                     'content_type', 'currency', 'status', 'promotion_type',
                     'payment_method', 'yatra', 'interval', 'country',
-                    'has_book', 'has_slip'),
+                    'has_book', 'has_slip', 'created_by', 'modified_by',
+                ),
             },
         }
 
@@ -128,6 +130,8 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
             "promotion_type": None,
             "has_book": None,
             "has_slip": None,
+            "created_by": None,
+            "modified_by": None,
         }
 
         show_primary_filters = None

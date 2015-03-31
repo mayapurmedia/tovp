@@ -45,9 +45,19 @@ class ContributionIndex(ContentSearchIndexMixin, PersonSearchIndexMixin,
     serial_number = indexes.CharField()
     has_book = indexes.CharField(faceted=True)
     has_slip = indexes.CharField(faceted=True)
+    created_by = indexes.CharField(faceted=True)
+    modified_by = indexes.CharField(faceted=True)
 
     def get_model(self):
         return Contribution
+
+    def prepare_created_by(self, obj):
+        if obj.created_by:
+            return obj.created_by.display_name
+
+    def prepare_modified_by(self, obj):
+        if obj.modified_by:
+            return obj.modified_by.display_name
 
     def prepare_dated(self, obj):
         if obj.dated:
