@@ -31,6 +31,17 @@ class ContributionForm(forms.ModelForm):
         super(ContributionForm, self).__init__(*args, **kwargs)
         self.fields['pledge'].queryset = Pledge.objects.filter(
             person=person)
+        instance = getattr(self, 'instance', None)
+        if instance and instance.pk:
+            self.fields['amount'].widget.attrs['readonly'] = True
+            self.fields['currency'].widget.attrs['readonly'] = True
+            self.fields['receipt_date'].widget.attrs['readonly'] = True
+            if instance._serial_year:
+                self.fields['is_external'].widget.attrs['readonly'] = True
+                self.fields['is_external'].widget.attrs['disabled'] = True
+            if instance.status == 'completed':
+                self.fields['status'].widget.attrs['readonly'] = True
+                self.fields['cleared_on'].widget.attrs['readonly'] = True
 
     class Meta:
         model = Contribution

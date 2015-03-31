@@ -360,12 +360,18 @@ class Contribution(TimeStampedModel, AuthStampedModel):
             self.serial_year = self._serial_year
             self.serial_number = self._serial_number
 
-        # Disable generating serial number until we launch system for new
-        # financial year
-        # if not (self.is_external or self.book_number or self.serial_number):
-        #     self.serial_year = self.generate_serial_year()
-        #     self.serial_number = len(Contribution.objects.all().
-        #                              filter(serial_year=self.serial_year)) + 1
+        if not (self.is_external or self.book_number or self.serial_number):
+            if self.receipt_date:
+                date = self.receipt_date
+                year = date.year
+                if date.month < 4:
+                    year -= 1
+                print(year > 2014, year)
+                if year > 2014:
+                    self.serial_year = self.generate_serial_year()
+                    self.serial_number = len(
+                        Contribution.objects.all().
+                        filter(serial_year=self.serial_year)) + 1
 
         super(Contribution, self).save()
         # if contribution pledge changed save original pledge first, so its
