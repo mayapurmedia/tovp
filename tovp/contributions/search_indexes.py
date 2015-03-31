@@ -47,6 +47,7 @@ class ContributionIndex(ContentSearchIndexMixin, PersonSearchIndexMixin,
     has_slip = indexes.CharField(faceted=True)
     created_by = indexes.CharField(faceted=True)
     modified_by = indexes.CharField(faceted=True)
+    is_external = indexes.CharField(faceted=True)
 
     def get_model(self):
         return Contribution
@@ -72,6 +73,11 @@ class ContributionIndex(ContentSearchIndexMixin, PersonSearchIndexMixin,
         if not obj.slip_number:
             return 'Missing'
         return 'Yes'
+
+    def prepare_is_external(self, obj):
+        if not obj.is_external:
+            return 'Not external'
+        return 'External'
 
     def prepare_cleared_on(self, obj):
         if obj.cleared_on:
