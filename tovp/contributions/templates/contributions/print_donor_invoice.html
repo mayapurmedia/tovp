@@ -69,7 +69,7 @@
     }
     .footer {
         position: absolute;
-        top: 36.8em;
+        top: 40.8em;
         width:100%;
     }
     .footer-line {
@@ -96,14 +96,14 @@
 {% endmarkdown %}
     </div>
 
-    <div class="col-xs-12" style="margin-top: 1em;margin-bottom: 1em;">
+    <div class="col-xs-12" style="margin-top: 0em;margin-bottom: 0.5em;">
         <div class="row">
             <div class="col-xs-1 item-name">Date:</div>
             <div class="col-xs-3 item-value">{{ object.receipt_date|datetimeformat }}</div>
-            <div class="col-xs-5 temporary-receipt align-center">
+            <div class="col-xs-4 temporary-receipt align-center">
                 {% if object.status == 'completed' %}Permanent Receipt{% else %}Temporary Receipt{% endif %}
             </div>
-            <div class="col-xs-3 align-right item">
+            <div class="col-xs-4 align-right item">
                 <span class="item-name">Serial No.: </span>
                 <span class="item-value">
                     {{ object.get_serial_number() }}
