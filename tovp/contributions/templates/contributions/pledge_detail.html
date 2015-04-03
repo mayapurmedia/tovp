@@ -30,6 +30,13 @@
             <a href="{{ object[field_name].get_absolute_url() }}">{{ object[field_name].full_name }}{% if object[field_name].full_name %} - {% endif %}{{ object[field_name].initiated_name}}</a>
         </div>
     </div>
+    {% set field_label = 'Source' %}
+    {% set field_name = 'source' %}
+    {% if object[field_name] %}
+    <div class="col-xs-12 col-ms-4 col-sm-4">
+        {{ print_field(field_label, object.get_source_display()) }}
+    </div>
+    {% endif %}
     {% set field_label = 'Status' %}
     {% set field_name = 'status' %}
     {% if object[field_name] %}

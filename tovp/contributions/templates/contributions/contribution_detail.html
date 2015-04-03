@@ -36,6 +36,13 @@
             {{ object.get_serial_number() }}
         </div>
     </div>
+    {% set field_label = 'Source' %}
+    {% set field_name = 'source' %}
+    {% if object[field_name] %}
+    <div class="col-xs-12 col-ms-4 col-sm-4">
+        {{ print_field(field_label, object.get_source_display()) }}
+    </div>
+    {% endif %}
 
     {% if object.book_number %}
     {% set field_label = 'Book Number' %}

@@ -11,9 +11,10 @@ from model_utils.models import TimeStampedModel
 from audit_log.models import AuthStampedModel
 
 from contacts.models import Person
+from ananta.models import SourceMixin
 
 
-class Pledge(TimeStampedModel, AuthStampedModel):
+class Pledge(TimeStampedModel, AuthStampedModel, SourceMixin):
     def reindex_related(self):
         related = []
         for contribution in self.contributions.all():
@@ -133,7 +134,7 @@ class Pledge(TimeStampedModel, AuthStampedModel):
             progress=self.progress)
 
 
-class Contribution(TimeStampedModel, AuthStampedModel):
+class Contribution(TimeStampedModel, AuthStampedModel, SourceMixin):
     pledge = models.ForeignKey(Pledge, verbose_name="Pledge",
                                related_name='contributions')
     person = models.ForeignKey(Person, verbose_name="Person", blank=True,
