@@ -1,7 +1,7 @@
 from haystack.signals import RealtimeSignalProcessor
 
-class RelatedRealtimeSignalProcessor(RealtimeSignalProcessor):
 
+class RelatedRealtimeSignalProcessor(RealtimeSignalProcessor):
     def handle_save(self, sender, instance, **kwargs):
         if hasattr(instance, 'reindex_related'):
             for related in instance.reindex_related():
