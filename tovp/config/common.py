@@ -316,5 +316,5 @@ class Common(Configuration):
             'INDEX_NAME': get_env_variable('ELASTICSEARCH_INDEX_NAME'),
         },
     }
-    HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+    HAYSTACK_SIGNAL_PROCESSOR = 'search.signals.RelatedRealtimeSignalProcessor'
     HAYSTACK_DEFAULT_OPERATOR = 'AND'

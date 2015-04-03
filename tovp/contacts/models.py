@@ -13,6 +13,12 @@ from django.db.models.loading import get_model
 
 
 class Person(TimeStampedModel):
+    def reindex_related(self):
+        related = []
+        for pledge in self.pledges.all():
+            related.append(pledge)
+        return related
+
     # title of the person
     MR, MISS, MRS, MS, DR = ('Mr', 'Miss', 'Mrs', 'Ms', 'Dr')
     TITLE_CHOICES = (

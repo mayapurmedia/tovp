@@ -14,6 +14,14 @@ from contacts.models import Person
 
 
 class Pledge(TimeStampedModel, AuthStampedModel):
+    def reindex_related(self):
+        related = []
+        for contribution in self.contributions.all():
+            related.append(contribution)
+        for promotion in self.assigned_promotions():
+            related.append(promotion)
+        return related
+
     person = models.ForeignKey(Person, verbose_name="Person", blank=True,
                                related_name='pledges')
     amount = models.DecimalField(_('Amount'), max_digits=20, decimal_places=2)
