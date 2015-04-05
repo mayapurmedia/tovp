@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.safestring import mark_safe
 
 from datetimewidget.widgets import DateWidget
 
@@ -23,6 +24,18 @@ class PledgeForm(forms.ModelForm):
         }
 
 
+class NoInput(forms.Widget):
+    def render(self, name, value, attrs=None):
+        return mark_safe(value)
+
+
+class StaticField(forms.Field):
+    widget = NoInput
+
+    def clean(self, value):
+        return
+
+
 class ContributionForm(forms.ModelForm):
     person = forms.ModelChoiceField(queryset=Person.objects.all(),
                                     widget=forms.HiddenInput())
@@ -32,16 +45,22 @@ class ContributionForm(forms.ModelForm):
         self.fields['pledge'].queryset = Pledge.objects.filter(
             person=person)
         instance = getattr(self, 'instance', None)
-        if instance and instance.pk:
-            self.fields['amount'].widget.attrs['readonly'] = True
-            self.fields['currency'].widget.attrs['readonly'] = True
-            self.fields['receipt_date'].widget.attrs['readonly'] = True
-            if instance._serial_year:
-                self.fields['is_external'].widget.attrs['readonly'] = True
-                self.fields['is_external'].widget.attrs['disabled'] = True
+        if instance and instance.pk and instance.serial_number:
+            self.fields['amount'] = StaticField()
+            self.fields['currency'] = StaticField()
+            self.fields['receipt_date'] = StaticField()
+            self.fields['is_external'] = StaticField()
             if instance.status == 'completed':
-                self.fields['status'].widget.attrs['readonly'] = True
-                self.fields['cleared_on'].widget.attrs['readonly'] = True
+                self.fields['status'] = StaticField()
+                self.fields['cleared_on'] = StaticField()
+                self.fields['payment_method'] = StaticField()
+
+    def clean(self):
+        for name, field in self.fields.items():
+            if isinstance(field, StaticField):
+                self.cleaned_data.update({name: self.initial[name]})
+
+        return self.cleaned_data
 
     class Meta:
         model = Contribution
