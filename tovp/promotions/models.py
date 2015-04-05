@@ -3,11 +3,12 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 
 from model_utils.models import TimeStampedModel, MonitorField
+from audit_log.models import AuthStampedModel
 
 from contributions.models import Pledge
 
 
-class BasePromotion(TimeStampedModel):
+class BasePromotion(AuthStampedModel, TimeStampedModel):
     pledge = models.ForeignKey(Pledge, verbose_name="Pledge",  # blank=True,
                                related_name='+')
 
