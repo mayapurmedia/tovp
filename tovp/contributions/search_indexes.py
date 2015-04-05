@@ -66,7 +66,7 @@ class ContributionIndex(ContentSearchIndexMixin, PersonSearchIndexMixin,
 
     def prepare_is_external(self, obj):
         if not obj.is_external:
-            return 'Not external'
+            return 'Mayapur TOVP Receipt'
         return 'External'
 
     def prepare_cleared_on(self, obj):

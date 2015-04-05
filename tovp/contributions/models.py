@@ -219,7 +219,7 @@ class Contribution(TimeStampedModel, AuthStampedModel, NextPrevMixin, SourceMixi
         blank=True)
 
     is_external = models.BooleanField(
-        default=False, db_index=True,
+        _('Non Mayapur TOVP receipt'), default=False, db_index=True,
         help_text='This MUST be checked if other than India TOVP receipt '
                   'was given.')
 

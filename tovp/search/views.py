@@ -102,6 +102,7 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
             'country': 'Country', 'yatra': 'Yatra',
             'has_book': 'Book filled', 'has_slip': 'Slip filled',
             'created_by': 'Created By', 'modified_by': 'Modified By',
+            'is_external': 'Non Mayapur TOVP Receipt',
         }
 
         narrow_facets = {
@@ -112,6 +113,7 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
                     'content_type', 'currency', 'status', 'promotion_type',
                     'payment_method', 'yatra', 'interval', 'country',
                     'has_book', 'has_slip', 'created_by', 'modified_by',
+                    'is_external',
                 ),
             },
         }
@@ -132,6 +134,7 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
             "has_slip": None,
             "created_by": None,
             "modified_by": None,
+            "is_external": None,
         }
 
         show_primary_filters = None
