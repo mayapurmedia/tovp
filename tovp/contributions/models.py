@@ -11,10 +11,10 @@ from model_utils.models import TimeStampedModel
 from audit_log.models import AuthStampedModel
 
 from contacts.models import Person
-from ananta.models import SourceMixin
+from ananta.models import SourceMixin, NextPrevMixin
 
 
-class Pledge(TimeStampedModel, AuthStampedModel, SourceMixin):
+class Pledge(TimeStampedModel, AuthStampedModel, NextPrevMixin, SourceMixin):
     def reindex_related(self):
         related = []
         for contribution in self.contributions.all():
@@ -134,7 +134,7 @@ class Pledge(TimeStampedModel, AuthStampedModel, SourceMixin):
             progress=self.progress)
 
 
-class Contribution(TimeStampedModel, AuthStampedModel, SourceMixin):
+class Contribution(TimeStampedModel, AuthStampedModel, NextPrevMixin, SourceMixin):
     pledge = models.ForeignKey(Pledge, verbose_name="Pledge",
                                related_name='contributions')
     person = models.ForeignKey(Person, verbose_name="Person", blank=True,
@@ -330,18 +330,6 @@ class Contribution(TimeStampedModel, AuthStampedModel, SourceMixin):
         return ('contributions:contribution:detail', None, {
             'person_id': self.person.pk,
             'pk': self.pk})
-
-    def next(self):
-        obj = Contribution.objects.filter(pk__gt=self.pk)[0:1]
-        if len(obj):
-            return obj[0]
-        return ''
-
-    def prev(self):
-        obj = Contribution.objects.filter(pk__lt=self.pk).order_by('-pk')[0:1]
-        if len(obj):
-            return obj[0]
-        return ''
 
     def info(self, show_name=None):
         field_values = [

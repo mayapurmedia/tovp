@@ -30,3 +30,17 @@ class SourceMixin(models.Model):
 
     class Meta:
         abstract = True
+
+
+class NextPrevMixin(object):
+    def next(self):
+        obj = self.__class__.objects.filter(pk__gt=self.pk)[0:1]
+        if len(obj):
+            return obj[0]
+        return ''
+
+    def prev(self):
+        obj = self.__class__.objects.filter(pk__lt=self.pk).order_by('-pk')[0:1]
+        if len(obj):
+            return obj[0]
+        return ''

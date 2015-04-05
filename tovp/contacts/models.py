@@ -4,15 +4,17 @@ from django.db import models
 from django.db.models import permalink
 from django.utils.translation import ugettext_lazy as _, pgettext_lazy as __
 from django.core import exceptions
+from django.db.models.loading import get_model
 
 from django_countries.fields import CountryField
 
 from model_utils.models import TimeStampedModel
+from audit_log.models import AuthStampedModel
 
-from django.db.models.loading import get_model
+from ananta.models import NextPrevMixin
 
 
-class Person(TimeStampedModel):
+class Person(AuthStampedModel, NextPrevMixin, TimeStampedModel):
     def reindex_related(self):
         related = []
         for pledge in self.pledges.all():
@@ -315,18 +317,6 @@ class Person(TimeStampedModel):
                        'country': self.country.name}
                 raise exceptions.ValidationError(
                     {'postcode': [msg]})
-
-    def next(self):
-        obj = Person.objects.filter(pk__gt=self.pk)[0:1]
-        if len(obj):
-            return obj[0]
-        return ''
-
-    def prev(self):
-        obj = Person.objects.filter(pk__lt=self.pk).order_by('-pk')[0:1]
-        if len(obj):
-            return obj[0]
-        return ''
 
     def join_fields(self, fields, separator=u", "):
         """
