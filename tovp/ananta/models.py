@@ -19,9 +19,10 @@ class SourceMixin(models.Model):
         (u'jps-office', _('JPS Office')),
         (u'namahatta', _('JPS Namahatta')),
         (u'jps-others', _('JPS Others')),
+        (u'nvs', _('Nava Yogendra Swami')),
         (u'mso', _('M.S.O.')),
         (u'lm-reception', _('Life Membership Reception')),
-        (u'vrindavan-booth', _('Vrindavan')),
+        (u'vrindavan-booth', _('Vrindavan Booth')),
         (u'other', _('Other')),
     )
     source = models.CharField("Source", max_length=30, default='',
