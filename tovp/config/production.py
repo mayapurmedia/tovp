@@ -61,6 +61,8 @@ class Production(Common):
     # STATIC_URL = 'https://s3.amazonaws.com/%s/' % AWS_STORAGE_BUCKET_NAME
     # END STORAGE CONFIGURATION
 
+    MEDIA_ROOT = values.Value()
+    MEDIA_URL = values.Value()
     STATIC_ROOT = values.Value()
     STATIC_URL = values.Value()
 
