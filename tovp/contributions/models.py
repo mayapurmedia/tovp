@@ -30,9 +30,10 @@ class Pledge(TimeStampedModel, AuthStampedModel, NextPrevMixin, SourceMixin):
                                       default=0, decimal_places=2,
                                       null=True, blank=True)
     CURRENCY_CHOICES = (
-        ('INR', _('₹')),
-        ('USD', _('$')),
-        ('EUR', _('€')),
+        ('INR', _('₹ (INR)')),
+        ('USD', _('$ (USD)')),
+        ('EUR', _('€ (EUR)')),
+        ('GBP', _('£ (GBP)')),
     )
     currency = models.CharField(
         "Currency", max_length=6, choices=CURRENCY_CHOICES, default="INR")
@@ -322,6 +323,7 @@ class Contribution(TimeStampedModel, AuthStampedModel, NextPrevMixin, SourceMixi
             'INR': 'rupees',
             'USD': 'american dollars',
             'EUR': 'euro',
+            'GBP': 'british pounds',
         }
         return CURRENCY_CHOICES[self.currency]
 
