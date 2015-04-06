@@ -98,8 +98,15 @@ class ContributionDonorLetterDetailView(LoginRequiredMixin, DetailView):
 
 
 class DonorInvoiceDetailView(LoginRequiredMixin, DetailView):
+    print_signature = None
     model = Contribution
     template_name = 'contributions/print_donor_invoice.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(DonorInvoiceDetailView, self).get_context_data(
+            **kwargs)
+        context['print_signature'] = self.print_signature
+        return context
 
 
 class ContributionCreateView(LoginRequiredMixin, PermissionRequiredMixin,

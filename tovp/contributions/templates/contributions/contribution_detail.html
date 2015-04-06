@@ -140,6 +140,9 @@
         {% if not object.is_external %}
             <a href="{{ url('contributions:contribution:donor_letter', object.pk) }}" target="_blank" class="btn btn-lg btn-success">Print Donor Letter</a>
             <a href="{{ url('contributions:contribution:donor_receipt', object.pk) }}" target="_blank" class="btn btn-lg btn-success">Print Receipt</a>
+        {% if user.signature %}
+            <a href="{{ url('contributions:contribution:donor_receipt_with_signature', object.pk) }}" target="_blank" class="btn btn-lg btn-success">Receipt with signature</a>
+        {% endif %}
         {% else %}
             This is external contribution for which we cannot print receipt as it was issued by somebody else.
         {% endif %}

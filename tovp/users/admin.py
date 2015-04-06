@@ -22,7 +22,7 @@ class UserProfileAdmin(UserAdmin):
     # )
     fieldsets = (
         (None, {'fields': ('username', 'email', 'password', 'password1', 'password2')}),
-        (_('Personal info'), {'fields': ['display_name', 'about']}),
+        (_('Personal info'), {'fields': ['display_name', 'about', 'signature']}),
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
                                        'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),

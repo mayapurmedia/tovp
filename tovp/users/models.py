@@ -66,6 +66,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     about = models.TextField(blank=True)
 
+    signature = models.FileField('Digital Signature', blank=True,
+                                 upload_to='signatures')
     objects = UserManager()
 
     def get_name(self):

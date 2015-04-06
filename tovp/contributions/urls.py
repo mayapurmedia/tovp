@@ -72,6 +72,11 @@ contributions = patterns(
         name='donor_receipt',
     ),
     url(
+        regex=r'^print/(?P<pk>\d+)/receipt-digital-signature$',
+        view=views.DonorInvoiceDetailView.as_view(print_signature=True),
+        name='donor_receipt_with_signature',
+    ),
+    url(
         regex=r'^delete/(?P<pk>\d+)/$',
         view=views.ContributionDeleteView.as_view(),
         name="delete",
