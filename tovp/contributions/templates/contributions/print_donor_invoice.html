@@ -24,7 +24,7 @@
     .signature {
         position: absolute;
         top: 38.5em;
-        left: 10em;
+        left: 15em;
         width:100%;
     }
     .signature img {
@@ -224,7 +224,7 @@
 <div class="row footer">
     <div class="col-xs-6 item-name">
         For ISKCON<br /><br />
-        Authorized Signatory
+        Authorized Signatory {{ user.display_name }}
     </div>
 
     {% if object.person.pan_card_number and object.status == 'completed' %}
