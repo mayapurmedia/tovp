@@ -56,6 +56,7 @@ class Common(Configuration):
         'reversion',
         'reversion_compare',
         'haystack',
+        'hijack',
         # 'django_extensions',
     )
 
@@ -318,3 +319,6 @@ class Common(Configuration):
     }
     HAYSTACK_SIGNAL_PROCESSOR = 'search.signals.RelatedRealtimeSignalProcessor'
     HAYSTACK_DEFAULT_OPERATOR = 'AND'
+
+    SHOW_HIJACKUSER_IN_ADMIN = False
+    HIJACK_LOGIN_REDIRECT_URL = "/"

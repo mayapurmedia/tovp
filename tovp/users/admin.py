@@ -2,11 +2,13 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import ugettext_lazy as _
 
+from hijack.admin import HijackUserAdminMixin
+
 from .models import User
 from .forms import UserCreationForm, UserChangeForm
 
 
-class UserProfileAdmin(UserAdmin):
+class UserProfileAdmin(HijackUserAdminMixin, UserAdmin):
     # The forms to add and change user instances
     form = UserChangeForm
     add_form = UserCreationForm
@@ -14,7 +16,7 @@ class UserProfileAdmin(UserAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ('username', 'display_name', 'is_admin')
+    list_display = ('username', 'display_name', 'is_admin', 'hijack_field')
     list_filter = ('is_admin',)
     # fieldsets = (
     #     (None, {'fields': ('username', 'password')}),

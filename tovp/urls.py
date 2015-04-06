@@ -24,4 +24,5 @@ urlpatterns = patterns(
     url(r'^promotions/', include("promotions.urls", namespace="promotions")),
     url(r'^contributions/', include("contributions.urls",
                                     namespace="contributions")),
+    url(r'^hijack/', include('hijack.urls')),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
