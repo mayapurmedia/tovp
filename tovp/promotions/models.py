@@ -14,18 +14,13 @@ class BasePromotion(AuthStampedModel, TimeStampedModel):
 
     @classmethod
     def get_amount(cls, currency):
-        functions = {
-            'INR': cls.amount_rs,
-            'USD': cls.amount_usd,
-        }
-        return functions[currency]
+        return cls.amount[currency]
 
     @classmethod
     def is_eligible(cls, person_ballance):
-        if cls.amount_rs <= person_ballance['INR']['available']:
-            return True
-        if cls.amount_usd <= person_ballance['USD']['available']:
-            return True
+        for currency in cls.amount:
+            if cls.amount[currency] <= person_ballance[currency]['available']:
+                return True
         return None
 
     @classmethod
@@ -121,43 +116,75 @@ class BaseCoin(CertificateGivenMixin, CoinGivenMixin, BasePromotion):
 
 
 class NrsimhaTile(BaseBrick):
-    amount_rs = 51000
-    amount_usd = 1000
+    amount = {
+        'INR': 51000,
+        'USD': 1000,
+        'EUR': 1000,
+        'GBP': 800,
+    }
 
 
 class GoldenBrick(BaseBrick):
-    amount_rs = 100000
-    amount_usd = 1600
+    amount = {
+        'INR': 100000,
+        'USD': 1600,
+        'EUR': 1500,
+        'GBP': 1300,
+    }
 
 
 class GuruParamparaBrick(BaseBrick):
-    amount_rs = 100000
-    amount_usd = 1600
+    amount = {
+        'INR': 100000,
+        'USD': 1600,
+        'EUR': 1500,
+        'GBP': 1300,
+    }
 
 
 class RadhaMadhavaBrick(BaseBrick):
-    amount_rs = 150000
-    amount_usd = 2500
+    amount = {
+        'INR': 150000,
+        'USD': 2500,
+        'EUR': 2400,
+        'GBP': 2200,
+    }
 
 
 class SilverCoin(BaseCoin):
-    amount_rs = 650000
-    amount_usd = 11000
+    amount = {
+        'INR': 650000,
+        'USD': 11000,
+        'EUR': 10000,
+        'GBP': 9000,
+    }
 
 
 class GoldCoin(BaseCoin):
-    amount_rs = 6500000
-    amount_usd = 108000
+    amount = {
+        'INR': 6500000,
+        'USD': 108000,
+        'EUR': 108000,
+        'GBP': 108000,
+    }
 
 
 class PlatinumCoin(BaseCoin):
-    amount_rs = 15000000
-    amount_usd = 250000
+    amount = {
+        'INR': 15000000,
+        'USD': 250000,
+        'EUR': 240000,
+        'GBP': 220000,
+    }
 
 
 class SquareFeet(CertificateGivenMixin, BasePromotion):
-    amount_rs = 7000
-    amount_usd = 150
+    amount = {
+        'INR': 7000,
+        'USD': 150,
+        'EUR': 140,
+        'GBP': 130,
+    }
 
     quantity = models.PositiveIntegerField(
         _('Quantity'), default=1,
@@ -171,8 +198,12 @@ class SquareFeet(CertificateGivenMixin, BasePromotion):
 
 
 class SquareMeter(CertificateGivenMixin, BasePromotion):
-    amount_rs = 70000
-    amount_usd = 1500
+    amount = {
+        'INR': 70000,
+        'USD': 1500,
+        'EUR': 1400,
+        'GBP': 1300,
+    }
 
     quantity = models.PositiveIntegerField(
         _('Quantity'), default=1,
@@ -186,13 +217,21 @@ class SquareMeter(CertificateGivenMixin, BasePromotion):
 
 
 class Trustee(BasePromotion):
-    amount_rs = 51000000
-    amount_usd = 1000000
+    amount = {
+        'INR': 51000000,
+        'USD': 1000000,
+        'EUR': 1000000,
+        'GBP': 850000,
+    }
 
 
 class GeneralDonation(BasePromotion):
-    amount_rs = 1
-    amount_usd = 1
+    amount = {
+        'INR': 1,
+        'USD': 1,
+        'EUR': 1,
+        'GBP': 1,
+    }
 
 
 promotions = [NrsimhaTile, GoldenBrick, GuruParamparaBrick, RadhaMadhavaBrick,

@@ -378,6 +378,13 @@ class Person(AuthStampedModel, NextPrevMixin, TimeStampedModel):
             self.cache_assigned_promotions = assigned_promotions
         return self.cache_assigned_promotions
 
+    has_ballance = None
+
+    def get_has_ballance(self):
+        if not self.cache_ballance:
+            self.get_ballance()
+        return self.has_ballance
+
     cache_ballance = None
 
     def get_ballance(self):
@@ -396,24 +403,27 @@ class Person(AuthStampedModel, NextPrevMixin, TimeStampedModel):
                         'paid': 0,
                         'used': 0,
                         'available': 0},
+                'GBP': {'pledged': 0,
+                        'paid': 0,
+                        'used': 0,
+                        'available': 0},
+                'EUR': {'pledged': 0,
+                        'paid': 0,
+                        'used': 0,
+                        'available': 0},
             }
             Pledge = get_model(app_label='contributions', model_name='Pledge')
             for pledge in Pledge.objects.all().filter(person=self):
                 ballance[pledge.currency]['pledged'] += pledge.amount
                 ballance[pledge.currency]['paid'] += pledge.amount_paid or 0
+                self.has_ballance = True
             for promotion in self.assigned_promotions():
-                if promotion.pledge.currency == 'INR':
-                    if hasattr(promotion, 'quantity'):
-                        ballance['INR']['used'] += \
-                            promotion.quantity * promotion.amount_rs
-                    else:
-                        ballance['INR']['used'] += promotion.amount_rs
-                if promotion.pledge.currency == 'USD':
-                    if hasattr(promotion, 'quantity'):
-                        ballance['USD']['used'] += \
-                            promotion.quantity * promotion.amount_usd
-                    else:
-                        ballance['USD']['used'] += promotion.amount_usd
+                currency = promotion.pledge.currency
+                if hasattr(promotion, 'quantity'):
+                    ballance[currency]['used'] += \
+                        promotion.quantity * promotion.amount[currency]
+                else:
+                    ballance[currency]['used'] += promotion.amount[currency]
             # calculate unused ballance for each currency
             for currency in ballance:
                 ballance[currency]['available'] = \

@@ -152,9 +152,10 @@ class Contribution(TimeStampedModel, AuthStampedModel, NextPrevMixin, SourceMixi
 
     amount = models.DecimalField(_('Amount'), max_digits=20, decimal_places=2)
     CURRENCY_CHOICES = (
-        ('INR', _('₹')),
-        ('USD', _('$')),
-        ('EUR', _('€')),
+        ('INR', _('₹ (INR)')),
+        ('USD', _('$ (USD)')),
+        ('EUR', _('€ (EUR)')),
+        ('GBP', _('£ (GBP)')),
     )
     currency = models.CharField(
         "Currency", max_length=6, choices=CURRENCY_CHOICES, default="INR")

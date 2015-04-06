@@ -80,27 +80,25 @@
                 <h2>Pledges</h2>
                 {% if object.pledges.all() %}
                     <div class="row">
-                        {% if object.get_ballance()['INR'].pledged or object.get_ballance()['USD'].pledged %}
+                        {% if object.get_has_ballance() %}
                             <div class="col-xs-6">
                                 <div class="field-label">Total Pledged</div>
                                 <div class="field-value">
-                                    {% if object.get_ballance()['INR'].pledged %}
-                                        <div>{{ object.get_ballance()['INR'].pledged }} INR</div>
-                                    {% endif %}
-                                    {% if object.get_ballance()['USD'].pledged %}
-                                        <div>{{ object.get_ballance()['USD'].pledged }} USD</div>
-                                    {% endif %}
+                                    {% for currency in object.get_ballance() %}
+                                        {% if object.get_ballance()[currency].pledged %}
+                                            <div>{{ object.get_ballance()[currency].pledged }} {{ currency }}</div>
+                                        {% endif %}
+                                    {% endfor %}
                                 </div>
                             </div>
                             <div class="col-xs-6">
                                 <div class="field-label">Total Paid</div>
                                 <div class="field-value">
-                                    {% if object.get_ballance()['INR'].pledged %}
-                                        <div>{{ object.get_ballance()['INR'].paid }} INR</div>
-                                    {% endif %}
-                                    {% if object.get_ballance()['USD'].pledged %}
-                                        <div>{{ object.get_ballance()['USD'].paid }} USD</div>
-                                    {% endif %}
+                                    {% for currency in object.get_ballance() %}
+                                        {% if object.get_ballance()[currency].pledged %}
+                                            <div>{{ object.get_ballance()[currency].paid }} {{ currency }}</div>
+                                        {% endif %}
+                                    {% endfor %}
                                 </div>
                             </div>
                         {% endif %}

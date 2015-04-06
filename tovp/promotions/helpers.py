@@ -8,16 +8,9 @@ def promo_ballance(promotion, ballance):
     format_functions = {
         'INR': format_for_india,
         'USD': format_with_commas,
+        'GBP': format_with_commas,
+        'EUR': format_with_commas,
     }
-    # ballance = {
-    #     'INR': {'pledged': 0,
-    #             'paid': 0,
-    #             'used': 0},
-    #     'USD': {'pledged': 0,
-    #             'paid': 0,
-    #             'used': 0},
-    # }
-    # currencies = {'INR': '₹', 'USD': '$'}
     output = []
     for currency in ballance:
         missing_amount = promotion.get_amount(currency) - (
