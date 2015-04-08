@@ -3,8 +3,7 @@
 
 {% block javascript_head %}
     {{ super() }}
-    <link href="//cdnjs.cloudflare.com/ajax/libs/selectize.js/0.6.14/selectize.css" rel="stylesheet">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/selectize.js/0.6.14/selectize.min.js"></script>
+    {% include '_import-selectize.html' %}
 {% endblock %}
 
 {% block page_content %}
@@ -42,9 +41,9 @@
                 {% endif %}
             </div>
             {% set field_name = 'source' %}
-            <div class="col-ms-5 col-sm-6 col-lg-4 form-group{{' has-error' if form[field_name].errors }}">
-                <label class="control-label" for="id_{{ field_name }}">{{ form[field_name].label }}</label>
-                {{form[field_name]|add_css('form-control')}}
+            <div class="col-xs-12 col-lg-4 form-group{{' has-error' if form[field_name].errors }}">
+                <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
+                {{ form[field_name]|add_css('is-selectize') }}
                 {{ form[field_name].errors|safe }}
                 {% if form[field_name].help_text %}
                     <div class="help-text">
@@ -90,7 +89,7 @@
             {% set field_name = 'payment_method' %}
             <div class="col-xs-12 col-sm-12 col-lg-8 form-group{{' has-error' if form[field_name].errors }}">
                 <label class="control-label" for="id_{{ field_name }}">{{ form[field_name].label }}</label>
-                {{form[field_name]|add_css('form-control')}}
+                {{ form[field_name]|add_css('is-selectize') }}
                 {{ form[field_name].errors|safe }}
                 {% if form[field_name].help_text %}
                     <div class="help-text">
@@ -328,7 +327,9 @@ $(document).ready(function() {
         }
     });
 });
-
+</script>
+<script>
+    $('.is-selectize').selectize()
 </script>
 {% endblock %}
 
