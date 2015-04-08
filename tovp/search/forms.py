@@ -56,7 +56,7 @@ class SearchForm(forms.Form):
 
         # fields which are filtered with __contains
         contains = [
-            'email', 'serial_number',
+            'email', 'serial_number', 'phone_number',
         ]
 
         for field_name in contains:
@@ -67,9 +67,8 @@ class SearchForm(forms.Form):
         # fields which are filtered with __startswith
         starts_with = [
             'mixed_name', 'initiated_name', 'first_name', 'middle_name',
-            'last_name', 'pan_card_number', 'phone_number',
-            'book_number', 'slip_number', 'transaction_id',
-            'record_id']
+            'last_name', 'pan_card_number', 'record_id',
+            'book_number', 'slip_number', 'transaction_id']
 
         for field_name in starts_with:
             if self.cleaned_data.get(field_name):
