@@ -54,11 +54,21 @@ class SearchForm(forms.Form):
             # sqs = sqs.auto_query(self.cleaned_data['q'])
             sqs = sqs.filter(text__contains=self.cleaned_data['q'])
 
+        # fields which are filtered with __contains
+        contains = [
+            'email', 'serial_number',
+        ]
+
+        for field_name in contains:
+            if self.cleaned_data.get(field_name):
+                sqs = sqs.filter(**{'%s__contains' % field_name:
+                                    self.cleaned_data[field_name]})
+
         # fields which are filtered with __startswith
         starts_with = [
             'mixed_name', 'initiated_name', 'first_name', 'middle_name',
-            'last_name', 'email', 'pan_card_number', 'phone_number',
-            'serial_number', 'book_number', 'slip_number', 'transaction_id',
+            'last_name', 'pan_card_number', 'phone_number',
+            'book_number', 'slip_number', 'transaction_id',
             'record_id']
 
         for field_name in starts_with:
