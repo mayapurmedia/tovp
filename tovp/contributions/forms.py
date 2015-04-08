@@ -1,5 +1,6 @@
 from django import forms
 from django.utils.safestring import mark_safe
+from django.forms import TextInput
 
 from datetimewidget.widgets import DateWidget
 
@@ -16,6 +17,7 @@ class PledgeForm(forms.ModelForm):
         model = Pledge
         exclude = ('status_changed',)
         widgets = {
+            'amount': TextInput(attrs={'type': 'text'}),
             'payments_start_date': DateWidget(
                 attrs={},
                 options={'startView': 2, 'format': 'yyyy-mm-dd'},
@@ -66,6 +68,7 @@ class ContributionForm(forms.ModelForm):
         model = Contribution
         exclude = ('status_changed',)
         widgets = {
+            'amount': TextInput(attrs={'type': 'text'}),
             'dated': DateWidget(
                 attrs={},
                 options={
