@@ -20,9 +20,10 @@ class SourceMixin(models.Model):
         (u'namahatta', _('JPS Namahatta')),
         (u'jps-others', _('JPS Others')),
         (u'nvs', _('Nava Yogendra Swami')),
-        (u'mso', _('M.S.O.')),
+        (u'mso', _('MSO')),
         (u'lm-reception', _('Life Membership Reception')),
         (u'vrindavan-booth', _('Vrindavan Booth')),
+        (u'prabhupada-currency-inr', _('Prabhupada Currency INR')),
         (u'other', _('Other')),
     )
     source = models.CharField("Source", max_length=30, default='',
