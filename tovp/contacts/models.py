@@ -362,6 +362,18 @@ class Person(AuthStampedModel, NextPrevMixin, TimeStampedModel):
     def get_absolute_url(self):
         return ('contacts:person:detail', None, {'pk': self.pk})
 
+    cache_contributions = None
+
+    def get_contributions(self):
+        """
+        Returns all contributions of person
+        """
+        if not self.cache_contributions:
+            from contributions.models import Contribution
+            self.cache_contributions = Contribution.objects.all(). \
+                filter(pledge__person=self)
+        return self.cache_contributions
+
     cache_assigned_promotions = None
 
     def assigned_promotions(self):

@@ -119,8 +119,8 @@
             </div>
             <div class="col-xs-12 col-sm-6">
                 <h2>Latest Contributions</h2>
-                {% if object.contributions.all() %}
-                    {% for contribution in object.contributions.all() %}
+                {% if object.get_contributions().all() %}
+                    {% for contribution in object.get_contributions().all() %}
                         <div class="col-xs-12">
                             <a href="{{ contribution.get_absolute_url() }}">{{ contribution.info() }}</a>
                         </div>

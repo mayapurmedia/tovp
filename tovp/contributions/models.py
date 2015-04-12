@@ -138,8 +138,6 @@ class Pledge(TimeStampedModel, AuthStampedModel, NextPrevMixin, SourceMixin):
 class Contribution(TimeStampedModel, AuthStampedModel, NextPrevMixin, SourceMixin):
     pledge = models.ForeignKey(Pledge, verbose_name="Pledge",
                                related_name='contributions')
-    person = models.ForeignKey(Person, verbose_name="Person", blank=True,
-                               related_name='contributions')
 
     # fields to save serial number for contributions for which are not from
     # the books/slips and we should generate receipt for
@@ -331,7 +329,7 @@ class Contribution(TimeStampedModel, AuthStampedModel, NextPrevMixin, SourceMixi
     @permalink
     def get_absolute_url(self):
         return ('contributions:contribution:detail', None, {
-            'person_id': self.person.pk,
+            'person_id': self.pledge.person.pk,
             'pk': self.pk})
 
     def info(self, show_name=None):
@@ -390,7 +388,7 @@ class Contribution(TimeStampedModel, AuthStampedModel, NextPrevMixin, SourceMixi
 
     def __str__(self):
         field_values = (
-            self.person.full_name,
+            self.pledge.person.full_name,
             str(self.amount),
             '(%s)' % self.get_payment_method_display()
         )

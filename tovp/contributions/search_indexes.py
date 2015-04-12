@@ -1,7 +1,7 @@
 from haystack import indexes
 
 from ananta.search_indexes import ContentSearchIndexMixin
-from contacts.search_indexes import PersonSearchIndexMixin
+from contacts.search_indexes import PersonSearchIndexMixin, PledgePersonSearchIndexMixin
 
 from .models import Pledge, Contribution
 
@@ -25,7 +25,7 @@ class PledgeIndex(ContentSearchIndexMixin, PersonSearchIndexMixin,
         return Pledge
 
 
-class ContributionIndex(ContentSearchIndexMixin, PersonSearchIndexMixin,
+class ContributionIndex(ContentSearchIndexMixin, PledgePersonSearchIndexMixin,
                         indexes.SearchIndex, indexes.Indexable):
     content_name = 'Contribution'
     text = indexes.CharField(document=True, use_template=True)

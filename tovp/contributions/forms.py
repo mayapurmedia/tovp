@@ -39,9 +39,6 @@ class StaticField(forms.Field):
 
 
 class ContributionForm(forms.ModelForm):
-    person = forms.ModelChoiceField(queryset=Person.objects.all(),
-                                    widget=forms.HiddenInput())
-
     def __init__(self, person, *args, **kwargs):
         super(ContributionForm, self).__init__(*args, **kwargs)
         self.fields['pledge'].queryset = Pledge.objects.filter(
