@@ -97,7 +97,7 @@
             </div>
         </div>
         <input class="btn btn-lg btn-success" type="submit" value="Save" />
-        {% if object %}
+        {% if object and user.has_perm('contributions.delete_pledge' )%}
             <a href="{{ url('contributions:pledge:delete', object.pk) }}" class="btn btn-large">Delete Pledge</a>
         {% endif %}
     </form>

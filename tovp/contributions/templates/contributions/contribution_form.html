@@ -220,8 +220,8 @@
             </div>
         </div>
         <input class="btn btn-lg btn-success" type="submit" value="Save" /> 
-        {% if object %}
-            <a href="{{ url('contributions:contribution:delete', object.pk) }}" class="btn btn-large">Delete Contribution</a>
+        {% if object and user.has_perm('contributions.delete_contribution' )%}
+            <a href="{{ url('contributions:contribution:delete', 2015-04-13 04:51 Monobject.pk) }}" class="btn btn-large">Delete Contribution</a>
         {% endif %}
     </form>
 
