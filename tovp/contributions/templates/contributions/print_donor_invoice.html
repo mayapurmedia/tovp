@@ -123,17 +123,11 @@
     <div class="col-xs-12 item">
         <span class="item-name">Received with thanks from: </span>
         <span class="item-value">
-            {% if object.overwrite_address %}
                 {% if object.overwrite_name %}
                     {{ object.overwrite_name }}
-                {% elif object.pledge.person.initiated_name %}
-                    {{ object.pledge.person.initiated_name }}
                 {% else %}
                     {{ object.pledge.person.name }}
                 {% endif %}
-            {% else %}
-                {{ object.pledge.person.name }}
-            {% endif %}
         </span>
     </div>
 
@@ -153,12 +147,16 @@
         {{ object.amount }} {{ object.currency }} ({{ object.amount|num2words }} {{ object.currency_words}})
     </div>
 
-    {% if object.pledge.person.pan_card_number %}
+    {% if object.overwrite_pan_card or object.pledge.person.pan_card_number %}
     <div class="col-xs-12">
         <div class="row">
             <div class="col-xs-2 col-custom-2-5 item-name">PAN Card Nunber:</div>
             <div class="col-xs-9 item-value">
-                {{ object.pledge.person.pan_card_number }}
+                {% if object.overwrite_pan_card %}
+                    {{ object.overwrite_pan_card }}
+                {% else %}
+                    {{ object.pledge.person.pan_card_number }}
+                {% endif %}
             </div>
         </div>
     </div>
@@ -227,7 +225,7 @@
         Authorized Signatory {{ user.display_name }}
     </div>
 
-    {% if object.pledge.person.pan_card_number and object.status == 'completed' %}
+    {% if (object.pledge.person.pan_card_number or object.overwrite_pan_card) and object.status == 'completed' %}
     <div class="col-xs-6 align-right">
         <div class="itg-stamp align-right">
             <div class="box">

@@ -145,6 +145,8 @@
         {{ print_field(field_label, object[field_name])}}
     </div>
     {% endif %}
+    </div>
+    <div class="row">
     {% set field_label = 'Overwrite Name' %}
     {% set field_name = 'overwrite_name' %}
     {% if object[field_name] %}
@@ -155,7 +157,14 @@
     {% set field_label = 'Overwrite Address' %}
     {% set field_name = 'overwrite_address' %}
     {% if object[field_name] %}
-    <div class="col-xs-12 col-sm-8">
+    <div class="col-xs-12 col-sm-5">
+        {{ print_field(field_label, object[field_name]) }}
+    </div>
+    {% endif %}
+    {% set field_label = 'Overwrite PAN Card' %}
+    {% set field_name = 'overwrite_pan_card' %}
+    {% if object[field_name] %}
+    <div class="col-xs-12 col-sm-3">
         {{ print_field(field_label, object[field_name]) }}
     </div>
     {% endif %}

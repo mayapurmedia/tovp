@@ -216,6 +216,8 @@ class BaseContribution(TimeStampedModel, AuthStampedModel, NextPrevMixin,
     overwrite_address = models.CharField(
         _("Address who pays on behalf of main contact"), max_length=255,
         blank=True)
+    overwrite_pan_card = models.CharField(
+        _('Overwrite PAN card number'), max_length=50, blank=True, null=True)
 
     def __init__(self, *args, **kwargs):
         super(BaseContribution, self).__init__(*args, **kwargs)
