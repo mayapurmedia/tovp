@@ -17,8 +17,8 @@ from braces.views import LoginRequiredMixin, PermissionRequiredMixin
 from ananta.models import RevisionCommentMixin
 from promotions.models import promotions
 
-from .forms import PledgeForm, ContributionForm
-from .models import Pledge, Contribution
+from .forms import PledgeForm, ContributionForm, BulkPaymentForm
+from .models import Pledge, Contribution, BulkPayment
 
 
 class PledgeListView(LoginRequiredMixin, ListView):
@@ -160,4 +160,73 @@ class ContributionDeleteView(PermissionRequiredMixin, DeleteView):
 
     def get_success_url(self):
         item = get_object_or_404(Contribution, pk=self.kwargs['pk'])
+        return item.pledge.person.get_absolute_url()
+
+
+class BulkPaymentDetailView(LoginRequiredMixin, DetailView):
+    model = BulkPayment
+
+
+class BulkPaymentCreateView(LoginRequiredMixin, PermissionRequiredMixin,
+                            CreateView):
+    model = BulkPayment
+    permission_required = "contributions.add_contribution"
+    template_name = 'contributions/bulkpayment_form.html'
+    form_class = BulkPaymentForm
+
+    def get_form_kwargs(self):
+        kwargs = super(BulkPaymentCreateView, self).get_form_kwargs()
+        kwargs['person'] = self.kwargs.get('person_id')
+        return kwargs
+
+    def get_initial(self):
+        initial = super(BulkPaymentCreateView, self).get_initial()
+        initial = initial.copy()
+        initial['person'] = self.kwargs.get('person_id')
+        return initial
+
+    def get_context_data(self, **kwargs):
+        context = super(BulkPaymentCreateView, self).get_context_data(**kwargs)
+        context['content_title'] = _("Add new bulk payment")
+        return context
+
+
+class BulkPaymentUpdateView(RevisionCommentMixin, LoginRequiredMixin,
+                            PermissionRequiredMixin, UpdateView):
+    model = BulkPayment
+    permission_required = "contributions.change_bulkpayment"
+    template_name = 'contributions/bulkpayment_form.html'
+    form_class = BulkPaymentForm
+
+    def get_form_kwargs(self):
+        kwargs = super(BulkPaymentUpdateView, self).get_form_kwargs()
+        kwargs['person'] = self.kwargs.get('person_id')
+        return kwargs
+
+    def get_context_data(self, **kwargs):
+        context = super(BulkPaymentUpdateView, self).get_context_data(**kwargs)
+        context['content_title'] = _("Edit bulk payment")
+        return context
+
+
+class BulkPaymentDeleteView(PermissionRequiredMixin, DeleteView):
+    model = BulkPayment
+    permission_required = "contributions.delete_bulkpayment"
+    success_message = "%(pk)s was deleted successfully"
+    template_name = 'contributions/model_confirm_delete.html'
+
+    def get_success_url(self):
+        item = get_object_or_404(BulkPayment, pk=self.kwargs['pk'])
         return item.person.get_absolute_url()
+
+
+class BulkPaymentReceiptDetailView(LoginRequiredMixin, DetailView):
+    print_signature = None
+    model = BulkPayment
+    template_name = 'contributions/print_collector_invoice.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(BulkPaymentReceiptDetailView, self).get_context_data(
+            **kwargs)
+        context['print_signature'] = self.print_signature
+        return context

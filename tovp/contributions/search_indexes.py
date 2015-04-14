@@ -1,15 +1,15 @@
 from haystack import indexes
 
 from ananta.search_indexes import ContentSearchIndexMixin
-from contacts.search_indexes import PersonSearchIndexMixin, PledgePersonSearchIndexMixin
+from contacts.search_indexes import (PersonSearchIndexMixin,
+                                     PledgePersonSearchIndexMixin)
 
-from .models import Pledge, Contribution
+from .models import Pledge, Contribution, BulkPayment
 
 
 class PledgeIndex(ContentSearchIndexMixin, PersonSearchIndexMixin,
                   indexes.SearchIndex, indexes.Indexable):
     content_name = 'Pledge'
-    text = indexes.CharField(document=True, use_template=True)
     amount = indexes.IntegerField(model_attr='amount')
     amount_paid = indexes.IntegerField(model_attr='amount_paid')
     currency = indexes.CharField(model_attr='currency', faceted=True)
@@ -25,10 +25,7 @@ class PledgeIndex(ContentSearchIndexMixin, PersonSearchIndexMixin,
         return Pledge
 
 
-class ContributionIndex(ContentSearchIndexMixin, PledgePersonSearchIndexMixin,
-                        indexes.SearchIndex, indexes.Indexable):
-    content_name = 'Contribution'
-    text = indexes.CharField(document=True, use_template=True)
+class BaseContributionIndexMixin(indexes.SearchIndex):
     amount = indexes.IntegerField(model_attr='amount')
     currency = indexes.CharField(model_attr='currency', faceted=True)
     payment_method = indexes.CharField(model_attr='get_payment_method_display',
@@ -45,10 +42,6 @@ class ContributionIndex(ContentSearchIndexMixin, PledgePersonSearchIndexMixin,
     serial_number = indexes.CharField()
     has_book = indexes.CharField(faceted=True)
     has_slip = indexes.CharField(faceted=True)
-    is_external = indexes.CharField(faceted=True)
-
-    def get_model(self):
-        return Contribution
 
     def prepare_dated(self, obj):
         if obj.dated:
@@ -64,10 +57,52 @@ class ContributionIndex(ContentSearchIndexMixin, PledgePersonSearchIndexMixin,
             return 'Missing'
         return 'Yes'
 
+    def prepare_cleared_on(self, obj):
+        if obj.cleared_on:
+            return obj.cleared_on
+
+    def prepare_serial_number(self, obj):
+        if obj.get_serial_number():
+            return obj.get_serial_number()
+
+
+class ContributionIndex(BaseContributionIndexMixin,
+                        ContentSearchIndexMixin, PledgePersonSearchIndexMixin,
+                        indexes.SearchIndex, indexes.Indexable):
+    content_name = 'Contribution'
+    is_external = indexes.CharField(faceted=True)
+
+    def get_model(self):
+        return Contribution
+
     def prepare_is_external(self, obj):
         if not obj.is_external:
             return 'Mayapur TOVP Receipt'
         return 'External'
+
+
+class BulkPaymentIndex(BaseContributionIndexMixin, ContentSearchIndexMixin,
+                       PersonSearchIndexMixin, indexes.SearchIndex,
+                       indexes.Indexable):
+    content_name = 'Bulk Payment'
+    receipt_type = indexes.CharField(faceted=True)
+
+    def get_model(self):
+        return BulkPayment
+
+    def prepare_dated(self, obj):
+        if obj.dated:
+            return obj.dated
+
+    def prepare_has_book(self, obj):
+        if not obj.book_number:
+            return 'Missing'
+        return 'Yes'
+
+    def prepare_has_slip(self, obj):
+        if not obj.slip_number:
+            return 'Missing'
+        return 'Yes'
 
     def prepare_cleared_on(self, obj):
         if obj.cleared_on:

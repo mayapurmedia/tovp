@@ -105,7 +105,7 @@
                         <div class="col-xs-12">
                             <ul>
                             {% for pledge in object.pledges.all() %}
-                                <li><a href="{{ pledge.get_absolute_url() }}">{{ pledge }}</a></li>
+                                <li>Pledge: <a href="{{ pledge.get_absolute_url() }}">{{ pledge }}</a></li>
                             {% endfor %}
                             </ul>
                         </div>
@@ -113,8 +113,11 @@
                 {% else %}
                     <p>There are currently no pledges.</p>
                 {% endif %}
-                {% if user.has_perm('contacts.change_person') %} 
-                    <a href="{{ url('contributions:pledge:create', object.pk) }}" class="btn btn-lg btn-success">Add new pledge</a>
+                {% if user.has_perm('contributions.add_pledge') %}
+                    <a href="{{ url('contributions:pledge:create', object.pk) }}" class="btn btn-lg btn-success">Add PLEDGE</a>
+                {% endif %}
+                {% if user.has_perm('contributions.add_bulkpayment') %}
+                    <a href="{{ url('contributions:bulk_payment:create', object.pk) }}" class="btn btn-lg btn-success">Add BULK PAYMENT</a>
                 {% endif %}
             </div>
             <div class="col-xs-12 col-sm-6">
@@ -127,6 +130,14 @@
                     {% endfor %}
                 {% else %}
                     <p>There are currently no contributions.</p>
+                {% endif %}
+                {% if object.bulk_payments.all() %}
+                <h2>Latest Bulk Payments</h2>
+                    {% for contribution in object.bulk_payments.all() %}
+                        <div class="col-xs-12">
+                            <a href="{{ contribution.get_absolute_url() }}">{{ contribution.info() }}</a>
+                        </div>
+                    {% endfor %}
                 {% endif %}
             </div>
             <div class="col-xs-12">

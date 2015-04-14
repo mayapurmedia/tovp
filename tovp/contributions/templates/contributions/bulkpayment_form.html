@@ -7,15 +7,6 @@
 {% endblock %}
 
 {% block page_content %}
-{# <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
- #}
-<!-- Latest compiled and minified JavaScript -->
-{# <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> #}
-
     <script src="{{ static('js/jquery.formset.js') }}"></script>
 
     <form action="" enctype="multipart/form-data" method="post">{{ csrf() }}
@@ -29,39 +20,6 @@
             {{ form.person }}
         </div>
         <div class="row">
-            {% set field_name = 'collector' %}
-            <div class="col-xs-12 col-sm-6 form-group{{' has-error' if form[field_name].errors }}">
-                <label class="control-label" for="id_{{ field_name }}">{{ form[field_name].label }}</label>
-                {{ form[field_name]|add_css('xis-selectize') }}
-                {{ form[field_name].errors|safe }}
-                {% if form[field_name].help_text %}
-                    <div class="help-text">
-                        {{ form[field_name].help_text }}
-                    </div>
-                {% endif %}
-            </div>
-            {% set field_name = 'bulk_payment' %}
-            <div class="col-xs-12 col-sm-6 form-group{{' has-error' if form[field_name].errors }}">
-                <label class="control-label" for="id_{{ field_name }}">{{ form[field_name].label }}</label>
-                {{ form[field_name]|add_css('xis-selectize') }}
-                {{ form[field_name].errors|safe }}
-                {% if form[field_name].help_text %}
-                    <div class="help-text">
-                        {{ form[field_name].help_text }}
-                    </div>
-                {% endif %}
-            </div>
-            {% set field_name = 'pledge' %}
-            <div class="col-xs-12 col-lg-8 form-group{{' has-error' if form[field_name].errors }}">
-                <label class="control-label" for="id_{{ field_name }}">{{ form[field_name].label }}</label>
-                {{form[field_name]|add_css('form-control')}}
-                {{ form[field_name].errors|safe }}
-                {% if form[field_name].help_text %}
-                    <div class="help-text">
-                        {{ form[field_name].help_text }}
-                    </div>
-                {% endif %}
-            </div>
             {% set field_name = 'source' %}
             <div class="col-xs-12 col-lg-4 form-group{{' has-error' if form[field_name].errors }}">
                 <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
@@ -97,7 +55,7 @@
                     </div>
                 {% endif %}
             </div>
-            {% set field_name = 'is_external' %}
+            {% set field_name = 'receipt_type' %}
             <div class="col-xs-12 col-sm-6 col-lg-5 form-group{{' has-error' if form[field_name].errors }}">
                 <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
                 {{form[field_name]|add_css('form-control')}}

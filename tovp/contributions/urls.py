@@ -83,9 +83,46 @@ contributions = patterns(
     ),
 )
 
+bulk_payments = patterns(
+    '',
+    url(
+        regex=r'^(?P<person_id>\d+)/(?P<pk>\d+)/$',
+        view=views.BulkPaymentDetailView.as_view(),
+        name='detail',
+    ),
+    url(
+        regex=r'^(?P<person_id>\d+)/create/$',
+        view=views.BulkPaymentCreateView.as_view(),
+        name='create',
+    ),
+    url(
+        regex=r'^(?P<person_id>\d+)/(?P<pk>\d+)/edit$',
+        view=views.BulkPaymentUpdateView.as_view(),
+        name='update',
+    ),
+    url(
+        regex=r'^print/(?P<pk>\d+)/receipt$',
+        view=views.BulkPaymentReceiptDetailView.as_view(),
+        name='print_receipt',
+    ),
+    url(
+        regex=r'^print/(?P<pk>\d+)/acknowledgement$',
+        view=views.BulkPaymentReceiptDetailView.as_view(
+            template_name='contributions/print_acknowledgement.html',
+        ),
+        name='print_acknowledgement',
+    ),
+    url(
+        regex=r'^delete/(?P<pk>\d+)/$',
+        view=views.BulkPaymentDeleteView.as_view(),
+        name="delete",
+    ),
+)
+
 
 urlpatterns = patterns(
     '',
     (r'^pledge/', include(pledges, namespace="pledge")),
     (r'^contribution/', include(contributions, namespace="contribution")),
+    (r'^bulk_payment/', include(bulk_payments, namespace="bulk_payment")),
 )

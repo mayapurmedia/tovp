@@ -329,7 +329,8 @@ class Person(AuthStampedModel, NextPrevMixin, TimeStampedModel):
                 value = self.get_title_display()
             else:
                 value = getattr(self, field)
-            field_values.append(value)
+            if value:
+                field_values.append(value)
         return separator.join(filter(bool, field_values))
 
     def full_address(self, include_full_name=None):
@@ -351,6 +352,15 @@ class Person(AuthStampedModel, NextPrevMixin, TimeStampedModel):
         """
         return self.join_fields(
             ('title', 'first_name', 'middle_name', 'last_name'),
+            separator=u" ")
+
+    @property
+    def mixed_name(self):
+        """
+        Name (including title)
+        """
+        return self.join_fields(
+            ('initiated_name', 'first_name', 'middle_name', 'last_name'),
             separator=u" ")
 
     @property

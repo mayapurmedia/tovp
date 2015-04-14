@@ -135,10 +135,8 @@ class Pledge(TimeStampedModel, AuthStampedModel, NextPrevMixin, SourceMixin):
             progress=self.progress)
 
 
-class Contribution(TimeStampedModel, AuthStampedModel, NextPrevMixin, SourceMixin):
-    pledge = models.ForeignKey(Pledge, verbose_name="Pledge",
-                               related_name='contributions')
-
+class BaseContribution(TimeStampedModel, AuthStampedModel, NextPrevMixin,
+                       SourceMixin):
     # fields to save serial number for contributions for which are not from
     # the books/slips and we should generate receipt for
     serial_year = models.CharField(
@@ -168,6 +166,7 @@ class Contribution(TimeStampedModel, AuthStampedModel, NextPrevMixin, SourceMixi
         (u'chequef', _('Cheque (Foreign)')),
         (u'paypal', _('Paypal')),
         (u'axis', _('Gateway Axis (Internet)')),
+        (u'treasury', _('ISKCON Treasury')),
     )
     payment_method = models.CharField(
         "Payment Method", max_length=16, choices=PAYMENT_METHOD_CHOICES)
@@ -194,13 +193,13 @@ class Contribution(TimeStampedModel, AuthStampedModel, NextPrevMixin, SourceMixi
         help_text=_('Enter date when transaction was completed '
                     '(money came to TOVP)')
     )
+
     STATUS_CHOICES = (
         (u'pending', _('Pending')),
         (u'completed', _('Completed')),
         (u'failed', _('Failed')),
     )
     status = models.CharField("Status", max_length=30, choices=STATUS_CHOICES)
-
     status_changed = MonitorField(monitor='status')
 
     book_number = models.CharField(
@@ -218,13 +217,8 @@ class Contribution(TimeStampedModel, AuthStampedModel, NextPrevMixin, SourceMixi
         _("Address who pays on behalf of main contact"), max_length=255,
         blank=True)
 
-    is_external = models.BooleanField(
-        _('Non Mayapur TOVP receipt'), default=False, db_index=True,
-        help_text='This MUST be checked if other than India TOVP receipt '
-                  'was given.')
-
     def __init__(self, *args, **kwargs):
-        super(Contribution, self).__init__(*args, **kwargs)
+        super(BaseContribution, self).__init__(*args, **kwargs)
         if self.serial_year:
             self._serial_year = self.serial_year
             self._serial_number = self.serial_number
@@ -232,10 +226,11 @@ class Contribution(TimeStampedModel, AuthStampedModel, NextPrevMixin, SourceMixi
             self._serial_year = None
             self._serial_number = None
 
-        if self.pk:
-            self._original_pledge = self.pledge
-        else:
-            self._original_pledge = None
+    @classmethod
+    def get_serial_number_prefix(cls, completed=None):
+        if completed:
+            return cls.serial_number_prefix_completed
+        return cls.serial_number_prefix_temporary
 
     def get_serial_number(self):
         if self.book_number:
@@ -244,9 +239,9 @@ class Contribution(TimeStampedModel, AuthStampedModel, NextPrevMixin, SourceMixi
         elif self.serial_year and self.serial_number:
             number = '%05d' % int(self.serial_number)
             if self.status == 'completed':
-                prefix = 'TOVP'
+                prefix = self.get_serial_number_prefix(completed=True)
             else:
-                prefix = 'TMP'
+                prefix = self.get_serial_number_prefix(completed=None)
             return '{prefix}/{year}/{number}'.format(prefix=prefix,
                                                      year=self.serial_year,
                                                      number=number)
@@ -306,16 +301,6 @@ class Contribution(TimeStampedModel, AuthStampedModel, NextPrevMixin, SourceMixi
             else:
                 raise exceptions.ValidationError({'book_number': [msg]})
 
-    def ensure_serial_number_not_generated(self):
-        if self._serial_number and self.book_number:
-            msg = _("This contribution has already serial number generated, "
-                    "You cannot add book and slip numbers anymore.")
-            raise exceptions.ValidationError({'book_number': [msg]})
-        if self._serial_number and self.is_external:
-            msg = _("This contribution has already serial number generated, "
-                    "You cannot set is as external anymore.")
-            raise exceptions.ValidationError({'is_external': [msg]})
-
     @property
     def currency_words(self):
         CURRENCY_CHOICES = {
@@ -326,19 +311,12 @@ class Contribution(TimeStampedModel, AuthStampedModel, NextPrevMixin, SourceMixi
         }
         return CURRENCY_CHOICES[self.currency]
 
-    @permalink
-    def get_absolute_url(self):
-        return ('contributions:contribution:detail', None, {
-            'person_id': self.pledge.person.pk,
-            'pk': self.pk})
-
     def info(self, show_name=None):
         field_values = [
             '#' + str(self.pk),
         ]
-        if show_name:
-            field_values.append(self.person.full_name)
-        # field_values.append(str(self.dated))
+        # if show_name:
+        #     field_values.append(self.person.full_name)
         field_values.append(str(self.amount))
         field_values.append(self.currency)
         field_values.append('(%s)' % self.get_payment_method_display())
@@ -348,6 +326,7 @@ class Contribution(TimeStampedModel, AuthStampedModel, NextPrevMixin, SourceMixi
     def save(self, **kwargs):
         if self.cleared_on and not self.receipt_date:
             self.receipt_date = self.cleared_on
+            print(self.receipt_date)
         if not self.receipt_date:
             if self.pk:
                 self.receipt_date = self.created
@@ -358,17 +337,131 @@ class Contribution(TimeStampedModel, AuthStampedModel, NextPrevMixin, SourceMixi
             self.serial_year = self._serial_year
             self.serial_number = self._serial_number
 
+        super(BaseContribution, self).save()
+
+    class Meta:
+        abstract = True
+
+
+class BulkPayment(BaseContribution):
+    person = models.ForeignKey(Person, verbose_name="Person", blank=True,
+                               related_name='bulk_payments')
+
+    RECEIPT_TYPE_CHOICES = (
+        ('official', _('Official')),
+        ('acknowledgement', _('Not official / Acknowledgement')),
+    )
+    receipt_type = models.CharField(
+        "Receipt Type", max_length=100, choices=RECEIPT_TYPE_CHOICES)
+
+    def get_serial_number_prefix(self, completed=None):
+        if self.receipt_type == 'official':
+            if completed:
+                return 'BULK-TOVP'
+            return 'BULK-TMP'
+        else:
+            return 'BULK-INTRA'
+
+    @permalink
+    def get_absolute_url(self):
+        return ('contributions:bulk_payment:detail', None, {
+            'person_id': self.person.pk,
+            'pk': self.pk})
+
+    def ensure_serial_number_not_generated(self):
+        if self._serial_number and self.book_number:
+            msg = _("This contribution has already serial number generated, "
+                    "You cannot add book and slip numbers anymore.")
+            raise exceptions.ValidationError({'book_number': [msg]})
+        if self._serial_number and self.receipt_type != 'official':
+            msg = _("This contribution has already serial number generated, "
+                    "You have to keep it as 'Official' receipt.")
+            raise exceptions.ValidationError({'receipt_type': [msg]})
+
+    def __str__(self):
+        field_values = (
+            '#' + str(self.pk),
+            self.person.mixed_name,
+            str(self.amount),
+            str(self.receipt_date),
+            '(%s)' % self.get_payment_method_display()
+        )
+        return ' - '.join(filter(bool, field_values))
+
+    def save(self, **kwargs):
+        if not (self.book_number or self.serial_number):
+            if self.receipt_date:
+                date = self.receipt_date
+                year = date.year
+                if date.month < 4:
+                    year -= 1
+                if year > 2014:
+                    self.serial_year = self.generate_serial_year()
+                    self.serial_number = len(
+                        self.__class__.objects.all().
+                        filter(receipt_type=self.receipt_type).
+                        filter(serial_year=self.serial_year)) + 1
+
+        super(BulkPayment, self).save()
+
+
+class Contribution(BaseContribution):
+    serial_number_prefix_completed = 'TOVP'
+    serial_number_prefix_temporary = 'TMP'
+
+    pledge = models.ForeignKey(Pledge, verbose_name="Pledge",
+                               related_name='contributions')
+
+    collector = models.ForeignKey(
+        Person, verbose_name="Collector", blank=True, null=True,
+        related_name='collector_contributions',
+        help_text='If this is comes through collector.')
+
+    bulk_payment = models.ForeignKey(
+        BulkPayment, verbose_name="Bulk Payment", blank=True, null=True,
+        related_name='contributions',
+        help_text=_('If this contribution is part of bulk payment please choose'
+                    'it here.'))
+
+    is_external = models.BooleanField(
+        _('Non Mayapur TOVP receipt'), default=False, db_index=True,
+        help_text='This MUST be checked if other than India TOVP receipt '
+                  'was given.')
+
+    def __init__(self, *args, **kwargs):
+        super(Contribution, self).__init__(*args, **kwargs)
+        if self.pk:
+            self._original_pledge = self.pledge
+        else:
+            self._original_pledge = None
+
+    def ensure_serial_number_not_generated(self):
+        if self._serial_number and self.book_number:
+            msg = _("This contribution has already serial number generated, "
+                    "You cannot add book and slip numbers anymore.")
+            raise exceptions.ValidationError({'book_number': [msg]})
+        if self._serial_number and self.is_external:
+            msg = _("This contribution has already serial number generated, "
+                    "You cannot set is as external anymore.")
+            raise exceptions.ValidationError({'is_external': [msg]})
+
+    @permalink
+    def get_absolute_url(self):
+        return ('contributions:contribution:detail', None, {
+            'person_id': self.pledge.person.pk,
+            'pk': self.pk})
+
+    def save(self, **kwargs):
         if not (self.is_external or self.book_number or self.serial_number):
             if self.receipt_date:
                 date = self.receipt_date
                 year = date.year
                 if date.month < 4:
                     year -= 1
-                print(year > 2014, year)
                 if year > 2014:
                     self.serial_year = self.generate_serial_year()
                     self.serial_number = len(
-                        Contribution.objects.all().
+                        self.__class__.objects.all().
                         filter(serial_year=self.serial_year)) + 1
 
         super(Contribution, self).save()

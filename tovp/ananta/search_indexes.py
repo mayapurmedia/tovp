@@ -2,6 +2,7 @@ from haystack import indexes
 
 
 class ContentSearchIndexMixin(indexes.SearchIndex):
+    text = indexes.CharField(document=True, use_template=True)
     record_id = indexes.IntegerField(model_attr='pk')
     created = indexes.DateTimeField(model_attr='created')
     modified = indexes.DateTimeField(model_attr='modified')

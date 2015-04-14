@@ -11,48 +11,21 @@
 {% block page_content %}
 
 <div class="row">
-    <div class="{% if user.has_perm('contributions.change_contribution') %} col-xs-9 col-ms-10 col-sm-11{% else %}col-xs-12{% endif %}">
-        <h1>Contribution #{{ object.pk }}</h1>
+    <div class="{% if user.has_perm('contributions.change_bulkpayment') %} col-xs-9 col-ms-10 col-sm-11{% else %}col-xs-12{% endif %}">
+        <h1>Bulk Payment #{{ object.pk }}</h1>
     </div>
     {% if user.has_perm('contacts.change_person') %} 
         <div class="col-xs-3 col-ms-2 col-sm-1">
-            <a href="{{ url('contributions:contribution:update', object.pledge.person.pk, object.pk) }}" class="btn btn-lg btn-warning">Edit</a>
+            <a href="{{ url('contributions:bulk_payment:update', object.person.pk, object.pk) }}" class="btn btn-lg btn-warning">Edit</a>
         </div>
     {% endif %}
 
     {% set field_label = 'Collector' %}
-    {% set field_name = 'collector' %}
-    <div class="col-xs-6">
-        <div class="field-label">{{ field_label }}</div>
-        <div class="field-value">
-            <a href="{{ object[field_name].get_absolute_url() }}">{{ object[field_name].mixed_name }}</a>
-        </div>
-    </div>
-
-    {% set field_label = 'Part of bulk payment' %}
-    {% set field_name = 'bulk_payment' %}
-    <div class="col-xs-6">
-        <div class="field-label">{{ field_label }}</div>
-        <div class="field-value">
-            <a href="{{ object[field_name].get_absolute_url() }}">{{ object[field_name] }}</a>
-        </div>
-    </div>
-
-    {% set field_label = 'Associated Pledge' %}
-    {% set field_name = 'pledge' %}
-    <div class="col-xs-12 col-md-6">
-        <div class="field-label">{{ field_label }}</div>
-        <div class="field-value">
-            <a href="{{ object[field_name].get_absolute_url() }}">{{ object[field_name] }}</a>
-        </div>
-    </div>
-
-    {% set field_label = 'Donor' %}
     {% set field_name = 'person' %}
     <div class="col-xs-12 col-md-6">
         <div class="field-label">{{ field_label }}</div>
         <div class="field-value">
-            <a href="{{ object.pledge.person.get_absolute_url() }}">{{ object.pledge.person.full_name }}{% if object.pledge.person.full_name %} - {% endif %}{{ object.pledge.person.initiated_name}}</a>
+            <a href="{{ object.person.get_absolute_url() }}">{{ object.person.full_name }}{% if object.person.full_name %} - {% endif %}{{ object.person.initiated_name}}</a>
         </div>
     </div>
 
@@ -156,16 +129,27 @@
     </div>
     {% endif %}
     <div class="col-xs-12">
-        {% if not object.is_external %}
-            <a href="{{ url('contributions:contribution:donor_letter', object.pk) }}" target="_blank" class="btn btn-lg btn-success">Print Donor Letter</a>
-            <a href="{{ url('contributions:contribution:donor_receipt', object.pk) }}" target="_blank" class="btn btn-lg btn-success">Print Receipt</a>
-        {% if user.signature %}
-            <a href="{{ url('contributions:contribution:donor_receipt_with_signature', object.pk) }}" target="_blank" class="btn btn-lg btn-success">Receipt with signature</a>
-        {% endif %}
+        {% if object.receipt_type == 'official' %}
+            <a href="{{ url('contributions:bulk_payment:print_receipt', object.pk) }}" target="_blank" class="btn btn-lg btn-success">Print Receipt</a>
         {% else %}
-            This is external contribution for which we cannot print receipt as it was issued by somebody else.
+            <a href="{{ url('contributions:bulk_payment:print_acknowledgement', object.pk) }}" target="_blank" class="btn btn-lg btn-success">Print Acknowledgement</a>
         {% endif %}
     </div>
+
+
+    <div class="col-xs-12">
+    <h2>Associated Contributions</h2>
+    {% if object.contributions.all() %}
+    {% for contribution in object.contributions.all() %}
+    <div class="col-xs-12">
+        <a href="{{ contribution.get_absolute_url() }}">{{ contribution.info() }}</a>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p>There are currently no contributions.</p>
+    {% endif %}
+    </div>
+
     <div class="col-xs-12 next-prev-navigation">
         {% if object.prev() %}
         <a href="{{ object.prev().get_absolute_url() }}" class="btn btn-warning float-left">&laquo; Previous</a>
