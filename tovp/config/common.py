@@ -57,6 +57,7 @@ class Common(Configuration):
         'reversion_compare',
         'haystack',
         'hijack',
+        'ajax_select',
         # 'django_extensions',
     )
 
@@ -322,3 +323,8 @@ class Common(Configuration):
 
     SHOW_HIJACKUSER_IN_ADMIN = False
     HIJACK_LOGIN_REDIRECT_URL = "/"
+
+    AJAX_LOOKUP_CHANNELS = {
+        'person': ('contacts.lookups', 'PersonLookup'),
+        'bulk_payment': ('contributions.lookups', 'BulkPaymentLookup'),
+    }

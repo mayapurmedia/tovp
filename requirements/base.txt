@@ -52,3 +52,5 @@ django-haystack
 # Django-hijack allows superusers to hijack (=login as) and work on behalf of 
 # other users without knowing their credentials.
 django-hijack
+
+django-ajax-selects
