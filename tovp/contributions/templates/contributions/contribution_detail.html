@@ -20,6 +20,7 @@
         </div>
     {% endif %}
 
+    {% if object.collector %}
     {% set field_label = 'Collector' %}
     {% set field_name = 'collector' %}
     <div class="col-xs-6">
@@ -28,7 +29,9 @@
             <a href="{{ object[field_name].get_absolute_url() }}">{{ object[field_name].mixed_name }}</a>
         </div>
     </div>
+    {% endif %}
 
+    {% if object.bulk_payment %}
     {% set field_label = 'Part of bulk payment' %}
     {% set field_name = 'bulk_payment' %}
     <div class="col-xs-6">
@@ -37,6 +40,7 @@
             <a href="{{ object[field_name].get_absolute_url() }}">{{ object[field_name] }}</a>
         </div>
     </div>
+    {% endif %}
 
     {% set field_label = 'Associated Pledge' %}
     {% set field_name = 'pledge' %}
