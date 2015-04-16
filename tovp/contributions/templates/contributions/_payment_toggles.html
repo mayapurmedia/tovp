@@ -1,0 +1,74 @@
+<script>
+$(document).ready(function() {
+    function in_array(needle, haystack, argStrict) {
+    var key = '',
+        strict = !! argStrict;
+
+    if (strict) {
+        for (key in haystack) {
+        if (haystack[key] === needle) {
+            return true;
+        }
+        }
+    } else {
+        for (key in haystack) {
+        if (haystack[key] == needle) {
+            return true;
+        }
+        }
+    }
+    return false;
+    }
+
+    // check for prefilled fields
+    if (in_array($('#id_payment_method').val(),
+                ['cashl', 'cashf', 'neftl', 'neftf'])) {
+        $('.field_id_transaction_id').hide();
+    }
+    if (in_array($('#id_payment_method').val(),
+                ['cashl', 'cashf', 'neftl', 'neftf', 'axis', 'paypal',
+                'ccdcsl', 'ccdcsf'])) {
+        $('.field_id_dated').hide();
+    }
+    if (in_array($('#id_payment_method').val(),
+            ['cashl', 'cashf', 'neftl', 'neftf', 'ccdcsl', 'ccdcsf'])) {
+        $('.field_id_bank').hide();
+    }
+
+    // check for changing of the values
+    $('#id_payment_method').change(function() {
+        var selectedValue = $(this).val();
+        if (in_array(selectedValue,
+                ['cashl', 'cashf'])) {
+            $('#id_status').val('completed');
+        }
+        if (in_array(selectedValue,
+                ['cashl', 'cashf', 'cashd', 'neftl', 'neftf'])) {
+            $('.field_id_transaction_id').slideUp();
+        }
+        if (in_array(selectedValue,
+                ['axis', 'paypal', 'cashl', 'cashf', 'cashd', 'chequed', 'neftl', 'neftf']
+           )) {
+            $('.field_id_dated').slideUp();
+        }
+        if (in_array(selectedValue,
+                ['axis', 'paypal', 'ccdcsl', 'ccdcsf', 'cashl', 'cashf', 'neftl', 'neftf'])) {
+            $('.field_id_bank').slideUp();
+        }
+        if (in_array(selectedValue,
+                ['paypal', 'chequel', 'chequef', 'chequed', 'ccdcsl', 'ccdcsf'])) {
+            $('.field_id_transaction_id').slideDown();
+        }
+        if (in_array(selectedValue,
+                ['chequel', 'chequef'])) {
+            $('.field_id_dated').slideDown();
+        }
+        if (in_array(selectedValue,
+                ['chequel', 'chequef', 'chequed', 'cashd'])) {
+            $('.field_id_bank').slideDown();
+        }
+    });
+
+});
+</script>
+
