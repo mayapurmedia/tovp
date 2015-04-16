@@ -43,16 +43,16 @@ $(document).ready(function() {
             $('#id_status').val('completed');
         }
         if (in_array(selectedValue,
-                ['cashl', 'cashf', 'cashd', 'neftl', 'neftf'])) {
+                ['cashl', 'cashf', 'cashd', 'neftl', 'neftf', 'bulk'])) {
             $('.field_id_transaction_id').slideUp();
         }
         if (in_array(selectedValue,
-                ['axis', 'paypal', 'cashl', 'cashf', 'cashd', 'chequed', 'neftl', 'neftf']
+                ['axis', 'paypal', 'cashl', 'cashf', 'cashd', 'chequed', 'neftl', 'neftf', 'bulk']
            )) {
             $('.field_id_dated').slideUp();
         }
         if (in_array(selectedValue,
-                ['axis', 'paypal', 'ccdcsl', 'ccdcsf', 'cashl', 'cashf', 'neftl', 'neftf'])) {
+                ['axis', 'paypal', 'ccdcsl', 'ccdcsf', 'cashl', 'cashf', 'neftl', 'neftf', 'bulk'])) {
             $('.field_id_bank').slideUp();
         }
         if (in_array(selectedValue,
