@@ -125,8 +125,10 @@
         <span class="item-value">
                 {% if object.overwrite_name %}
                     {{ object.overwrite_name }}
-                {% else %}
+                {% elif object.pledge.person.name %}
                     {{ object.pledge.person.name }}
+                {% else %}
+                    {{ object.pledge.person.initiated_name }}
                 {% endif %}
         </span>
     </div>
