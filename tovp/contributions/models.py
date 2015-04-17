@@ -458,6 +458,10 @@ class Contribution(BaseContribution):
             'pk': self.pk})
 
     def save(self, **kwargs):
+        # set controbution to external if bulk payment is official receipt type
+        if self.bulk_payment and self.bulk_payment.receipt_type == 'official':
+            self.is_external = True
+
         if not (self.is_external or self.book_number or self.serial_number):
             if self.receipt_date:
                 date = self.receipt_date
