@@ -126,17 +126,13 @@
     <div class="col-xs-12 item">
         <span class="item-name">Received with thanks from: </span>
         <span class="item-value">
-            {% if object.overwrite_address %}
                 {% if object.overwrite_name %}
                     {{ object.overwrite_name }}
-                {% elif object.person.initiated_name %}
-                    {{ object.person.initiated_name }}
-                {% else %}
-                    {{ object.person.name }}
-                {% endif %}
-            {% else %}
+                {% elif object.person.name %}
                 {{ object.person.name }}
-            {% endif %}
+                {% else %}
+                {{ object.person.initiated_name }}
+                {% endif %}
         </span>
     </div>
 
