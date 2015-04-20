@@ -14,7 +14,7 @@ class Command(BaseCommand):
             dest="filename",
             help="Specify import file",
             metavar="FILE"),
-        )
+    )
 
     help = 'Imports contacts from North American csv files.'
 
