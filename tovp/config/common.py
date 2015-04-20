@@ -50,6 +50,7 @@ class Common(Configuration):
     )
 
     THIRD_PARTY_APPS = (
+        'flat',
         'jingo_markdown',
         'jingo_paginator',
         'datetimewidget',

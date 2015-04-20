@@ -54,3 +54,6 @@ django-haystack
 django-hijack
 
 django-ajax-selects
+
+# New theme for admin
+django-flat-theme
