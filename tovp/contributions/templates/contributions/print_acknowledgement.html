@@ -109,10 +109,7 @@
         <div class="row">
             <div class="col-xs-1 item-name">Date:</div>
             <div class="col-xs-3 item-value">{{ object.receipt_date|datetimeformat }}</div>
-            <div class="col-xs-4 temporary-receipt align-center">
-                Acknowledgement about 
-                {% if object.status == 'completed' %}Permanent Receipt{% else %}{% if object.status == 'failed' %}Failed - {% endif %}Temporary Receipt{% endif %}
-            </div>
+            <div class="col-xs-4 temporary-receipt align-center">Acknowledgement</div>
             <div class="col-xs-4 align-right item">
                 {% if object.get_serial_number() %}
                 <span class="item-name">Serial No.: </span>
