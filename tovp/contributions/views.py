@@ -230,12 +230,15 @@ class BulkPaymentDeleteView(PermissionRequiredMixin, DeleteView):
 
 
 class BulkPaymentReceiptDetailView(LoginRequiredMixin, DetailView):
-    print_signature = None
     model = BulkPayment
     template_name = 'contributions/print_collector_invoice.html'
 
     def get_context_data(self, **kwargs):
         context = super(BulkPaymentReceiptDetailView, self).get_context_data(
             **kwargs)
-        context['print_signature'] = self.print_signature
+        if self.kwargs['signature'] == '1':
+            print_signature = True
+        else:
+            print_signature = None
+        context['print_signature'] = print_signature
         return context

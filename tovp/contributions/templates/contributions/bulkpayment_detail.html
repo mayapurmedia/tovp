@@ -130,9 +130,15 @@
     {% endif %}
     <div class="col-xs-12">
         {% if object.receipt_type == 'official' %}
-            <a href="{{ url('contributions:bulk_payment:print_receipt', object.pk) }}" target="_blank" class="btn btn-lg btn-success">Print Receipt</a>
+            <a href="{{ url('contributions:bulk_payment:print_receipt', object.pk, 0) }}" target="_blank" class="btn btn-lg btn-success">Print Receipt</a>
+            {% if user.signature %}
+                <a href="{{ url('contributions:bulk_payment:print_receipt', object.pk, 1) }}" target="_blank" class="btn btn-lg btn-success">Receipt with signature</a>
+            {% endif %}
         {% else %}
-            <a href="{{ url('contributions:bulk_payment:print_acknowledgement', object.pk) }}" target="_blank" class="btn btn-lg btn-success">Print Acknowledgement</a>
+            <a href="{{ url('contributions:bulk_payment:print_acknowledgement', object.pk, 0) }}" target="_blank" class="btn btn-lg btn-success">Print Acknowledgement</a>
+            {% if user.signature %}
+            <a href="{{ url('contributions:bulk_payment:print_acknowledgement', object.pk, 1) }}" target="_blank" class="btn btn-lg btn-success">Acknowledgement with signature</a>
+            {% endif %}
         {% endif %}
     </div>
 

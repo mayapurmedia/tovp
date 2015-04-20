@@ -101,12 +101,12 @@ bulk_payments = patterns(
         name='update',
     ),
     url(
-        regex=r'^print/(?P<pk>\d+)/receipt$',
+        regex=r'^print/(?P<pk>\d+)/receipt/(?P<signature>0|1)/$',
         view=views.BulkPaymentReceiptDetailView.as_view(),
         name='print_receipt',
     ),
     url(
-        regex=r'^print/(?P<pk>\d+)/acknowledgement$',
+        regex=r'^print/(?P<pk>\d+)/acknowledgement/(?P<signature>0|1)/$',
         view=views.BulkPaymentReceiptDetailView.as_view(
             template_name='contributions/print_acknowledgement.html',
         ),
