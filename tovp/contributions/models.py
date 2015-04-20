@@ -170,7 +170,7 @@ class BaseContribution(TimeStampedModel, AuthStampedModel, NextPrevMixin,
         (u'paypal', _('Paypal')),
         (u'axis', _('Gateway Axis (Internet)')),
         (u'treasury', _('ISKCON Treasury')),
-        (u'bulk', _('Part of Official Bulk Payment')),
+        (u'bulk', _('Part of the Bulk Payment')),
     )
     payment_method = models.CharField(
         "Payment Method", max_length=16, choices=PAYMENT_METHOD_CHOICES)
