@@ -151,6 +151,15 @@ class ContributionUpdateView(RevisionCommentMixin, LoginRequiredMixin,
         context['content_title'] = _("Edit contribution")
         return context
 
+    def form_valid(self, form):
+        instance = form.save(commit=False)
+        # Set contribution's receipt to be external when saved by user who can
+        # save only external receipts
+        if (self.request.user.only_external_receipts):
+            instance.is_external = True
+            self.object = form.save()
+        return super(ContributionUpdateView, self).form_valid(form)
+
 
 class ContributionDeleteView(PermissionRequiredMixin, DeleteView):
     model = Contribution
