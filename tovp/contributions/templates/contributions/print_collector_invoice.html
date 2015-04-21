@@ -185,6 +185,8 @@
                     Cheque Deposit
                 {% elif object.payment_method in ['cashd'] %}
                     Cash Deposit
+                {% elif object.payment_method in ['axis'] %}
+                    AXIS Gateway (online)
                 {% endif %}
             </div>
         </div>
