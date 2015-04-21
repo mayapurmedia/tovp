@@ -118,11 +118,17 @@
                     {{ object.get_serial_number() }}
                 </span>
             </div>
+            {% if (object.person.country == 'IN' and object.person.pan_card_number) or object.overwrite_pan_card %}
+            <div class="col-xs-12 item" style="text-align:right;">
+                <span class="item-name">ISKCON PAN Card No.:</span>
+                <span class="item-value">AAATI0017P</span>
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>
 <div class="row">
-    <div class="col-xs-8 item">
+    <div class="col-xs-12 item">
         <span class="item-name">Received with thanks from: </span>
         <span class="item-value">
                 {% if object.overwrite_name %}
@@ -133,12 +139,6 @@
                     {{ object.person.initiated_name }}
                 {% endif %}
         </span>
-    </div>
-    <div class="col-xs-4 item" style="text-align:right;">
-    {% if (object.person.country == 'IN' and object.person.pan_card_number) or object.overwrite_pan_card %}
-        <span class="item-name">ISKCON PAN Card No.:</span>
-        <span class="item-value">AAATI0017P</span>
-    {% endif %}
     </div>
 </div>
 <div class="row">
