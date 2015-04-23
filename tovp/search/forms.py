@@ -97,9 +97,7 @@ class SearchForm(forms.Form):
                 sqs = sqs.filter(**{'%s__startswith' % field_name:
                                     self.cleaned_data[field_name]})
 
-        print(self.DATE_TYPE_CHOICES)
-        print(self.cleaned_data.get('date_type'))
-        date_type = 'cleared_on'
+        date_type = self.cleaned_data.get('date_type')
         field_name = 'date_from'
         if self.cleaned_data.get(field_name):
             filter_date = datetime.datetime.strptime(
