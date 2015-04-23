@@ -269,20 +269,6 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
                 self.search_form_used = True
                 data[form_field_id] = self.request.GET[form_field_id]
 
-        # if 'q' in self.request.GET and self.request.GET['q']:
-        #     data['q'] = self.request.GET['q']
-        # if 'initiated_name' in self.request.GET and self.request.GET['initiated_name']:
-        #     data['initiated_name'] = self.request.GET['initiated_name']
-        # if 'first_name' in self.request.GET and self.request.GET['first_name']:
-        #     data['first_name'] = self.request.GET['first_name']
-        # if 'last_name' in self.request.GET and self.request.GET['last_name']:
-        #     data['last_name'] = self.request.GET['last_name']
-        # if 'email' in self.request.GET and self.request.GET['email']:
-        #     data['email'] = self.request.GET['email']
-        # if 'pan_card_number' in self.request.GET and self.request.GET['pan_card_number']:
-        #     data['pan_card_number'] = self.request.GET['pan_card_number']
-        # if 'record_id' in self.request.GET and self.request.GET['record_id']:
-        #     data['record_id'] = self.request.GET['record_id']
         form = SearchForm(data)
 
         if form.is_valid():
