@@ -32,6 +32,7 @@ class BaseContributionIndexMixin(indexes.SearchIndex):
                                        faceted=True)
     transaction_id = indexes.CharField(model_attr='transaction_id')
     bank = indexes.CharField(model_attr='bank', faceted=True)
+    receipt_date = indexes.DateTimeField()
     dated = indexes.DateTimeField()
     cleared_on = indexes.DateTimeField()
     status = indexes.CharField(model_attr='get_status_display', faceted=True)
@@ -42,6 +43,10 @@ class BaseContributionIndexMixin(indexes.SearchIndex):
     serial_number = indexes.CharField()
     has_book = indexes.CharField(faceted=True)
     has_slip = indexes.CharField(faceted=True)
+
+    def prepare_receipt_date(self, obj):
+        if obj.receipt_date:
+            return obj.receipt_date
 
     def prepare_dated(self, obj):
         if obj.dated:
