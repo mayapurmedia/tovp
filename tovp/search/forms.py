@@ -1,6 +1,9 @@
+import datetime
+
 from django import forms
 from django.utils.translation import ugettext as _
 
+from datetimewidget.widgets import DateWidget
 from haystack.query import SearchQuerySet
 
 
@@ -34,6 +37,25 @@ class SearchForm(forms.Form):
                                      widget=forms.TextInput())
     record_id = forms.CharField(required=False, label=_('Record ID'),
                                 widget=forms.TextInput())
+
+    DATE_TYPE_CHOICES = (
+        (u'receipt_date', _('Receipt Date')),
+        (u'cleared_on', _('Cleared On')),
+        (u'dated', _('Dated')),
+        (u'created', _('Created on')),
+        (u'modified', _('Last modified on')),
+    )
+
+    date_type = forms.ChoiceField(required=False, label='Date Type',
+                                  choices=DATE_TYPE_CHOICES)
+    date_from = forms.CharField(
+        required=False, label=_('Date From'),
+        widget=DateWidget(attrs={'id': "date-from"},
+                          usel10n=True, bootstrap_version=3))
+    date_to = forms.CharField(
+        required=False, label=_('Date To'),
+        widget=DateWidget(attrs={'id': "date-to"},
+                          usel10n=True, bootstrap_version=3))
 
     def __init__(self, *args, **kwargs):
         self.searchqueryset = kwargs.pop('searchqueryset', None)
@@ -74,6 +96,22 @@ class SearchForm(forms.Form):
             if self.cleaned_data.get(field_name):
                 sqs = sqs.filter(**{'%s__startswith' % field_name:
                                     self.cleaned_data[field_name]})
+
+        print(self.DATE_TYPE_CHOICES)
+        print(self.cleaned_data.get('date_type'))
+        date_type = 'cleared_on'
+        field_name = 'date_from'
+        if self.cleaned_data.get(field_name):
+            filter_date = datetime.datetime.strptime(
+                self.cleaned_data.get(field_name), '%Y-%m-%d')
+            sqs = sqs.filter(**{'%s__gte' % date_type: filter_date})
+
+        field_name = 'date_to'
+        if self.cleaned_data.get(field_name):
+            filter_date = datetime.datetime.strptime(
+                self.cleaned_data.get(field_name), '%Y-%m-%d')
+            sqs = sqs.filter(**{'%s__lte' % date_type: filter_date})
+
         return sqs
 
     def show_all(self):

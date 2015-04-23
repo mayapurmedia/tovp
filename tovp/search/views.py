@@ -264,14 +264,14 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
                               'slip_number',
                               'transaction_id',
                               'record_id',
+                              'date_type',
+                              'date_from',
+                              'date_to',
                               ]:
-            if form_field_id in self.request.GET and self.request.GET[form_field_id]:
+            if form_field_id in self.request.GET and \
+                    self.request.GET[form_field_id]:
                 self.search_form_used = True
                 data[form_field_id] = self.request.GET[form_field_id]
 
         form = SearchForm(data)
-
-        if form.is_valid():
-            return self.form_valid(form)
-        else:
-            return self.form_invalid(form)
+        return self.form_valid(form)
