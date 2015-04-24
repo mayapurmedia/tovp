@@ -192,6 +192,15 @@
         </div>
     </div>
 
+    {% if object.payment_method in ['neftl', 'neftf'] %}
+        {% if object.cleared_on %}
+        <div class="col-xs-3 col-custom-2-5 item-name">Credited On:</div>
+        <div class="col-xs-2 item-value">
+            {{ object.cleared_on|datetimeformat }}
+        </div>
+        {% endif %}
+    {% endif %}
+
     {% if object.payment_method in ['ccdcsl', 'ccdcsf'] %}
         <div class="col-xs-2 col-custom-2-5 item-name">Transaction ID:</div>
         <div class="col-xs-2 item-value">
