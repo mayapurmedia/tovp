@@ -266,6 +266,8 @@ class Person(AuthStampedModel, NextPrevMixin, TimeStampedModel):
         help_text=_('If person belongs to one the of yatras in drowpdown, '
                     'please choose it'))
 
+    location = models.CharField(_("Collection Location"), max_length=100,
+                                blank=True)
     old_database_id = models.IntegerField(
         _('Old Database ID'), blank=True, null=True,
         help_text=_('If you are transfering data from old database (CiviCRM), '
