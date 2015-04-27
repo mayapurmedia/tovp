@@ -2,6 +2,7 @@ import os
 import csv
 from optparse import make_option
 from django.core.management.base import BaseCommand, CommandError
+from django.contrib.auth import get_user_model
 
 from ...models import Person
 
@@ -34,6 +35,7 @@ class Command(BaseCommand):
 
         self.stdout.write("Opening input file...")
 
+        user = get_user_model().objects.get(pk=1)
         count = 0
         with open(options['filename']) as csvfile:
             csv_reader = csv.DictReader(csvfile, delimiter=',', quotechar='"')
@@ -63,6 +65,9 @@ class Command(BaseCommand):
                                     pan_card_number='', **kwargs)
                     if options['location']:
                         person.location = options['location']
+
+                    person.created_by = user
+
                     if (person.first_name and person.last_name) or person.initiated_name:
                         person.save()
                     else:
