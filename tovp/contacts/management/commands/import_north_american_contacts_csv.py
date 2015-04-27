@@ -52,9 +52,10 @@ class Command(BaseCommand):
                         kwargs[field_names[field]] = row[field]
                         # setattr(person, field_names[field], row[field].strip())
                 try:
-                    Person.objects.get(country='US', pan_card_number='', **kwargs)
+                    person = Person.objects.get(country='US', pan_card_number='', **kwargs)
                 except:
                     person = Person(country='US', pan_card_number='', **kwargs)
                     person.save()
                     count += 1
+                print(person.pk)
         print('Imported %d new contacts.' % count)
