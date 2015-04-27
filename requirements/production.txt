@@ -2,8 +2,6 @@
 #	production that isn't in development.
 -r base.txt
 
-gunicorn
-
 # Quick and small memcached client for Python
 # will need to have installed libmemcached-dev
 # sudo apt-get install libmemcached-dev
