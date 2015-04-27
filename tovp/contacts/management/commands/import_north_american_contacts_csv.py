@@ -14,6 +14,11 @@ class Command(BaseCommand):
             dest="filename",
             help="Specify import file",
             metavar="FILE"),
+        make_option(
+            "-l",
+            "--location",
+            dest="location",
+            help="Specify location of collection"),
     )
 
     help = 'Imports contacts from North American csv files.'
@@ -54,8 +59,14 @@ class Command(BaseCommand):
                 try:
                     person = Person.objects.get(country='US', pan_card_number='', **kwargs)
                 except:
-                    person = Person(country='US', pan_card_number='', **kwargs)
-                    person.save()
+                    person = Person(country='US', yatra='north-america',
+                                    pan_card_number='', **kwargs)
+                    if options['location']:
+                        person.location = options['location']
+                    if (person.first_name and person.last_name) or person.initiated_name:
+                        person.save()
+                    else:
+                        print('ERROR - skipping, record missing name')
                     count += 1
                 print(person.pk)
         print('Imported %d new contacts.' % count)
