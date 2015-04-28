@@ -196,7 +196,7 @@
         </div>
     </div>
 
-    {% if object.payment_method in ['neftl', 'neftf'] %}
+    {% if object.payment_method in ['neftl', 'neftf', 'cashd'] %}
         {% if object.cleared_on %}
         <div class="col-xs-3 col-custom-2-5 item-name">Credited On:</div>
         <div class="col-xs-2 item-value">
