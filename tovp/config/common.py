@@ -50,7 +50,6 @@ class Common(Configuration):
     )
 
     THIRD_PARTY_APPS = (
-        'flat',
         'jingo_markdown',
         'jingo_paginator',
         'datetimewidget',
@@ -77,6 +76,9 @@ class Common(Configuration):
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
     INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
     # END APP CONFIGURATION
+
+    # Flat theme needs to be loaded before admin
+    INSTALLED_APPS = ('flat',) + INSTALLED_APPS
 
     # MIDDLEWARE CONFIGURATION
     MIDDLEWARE_CLASSES = (
