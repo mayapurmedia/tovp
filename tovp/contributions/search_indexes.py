@@ -76,6 +76,7 @@ class ContributionIndex(BaseContributionIndexMixin,
                         indexes.SearchIndex, indexes.Indexable):
     content_name = 'Contribution'
     is_external = indexes.CharField(faceted=True)
+    promotion_type = indexes.CharField(faceted=True)
 
     def get_model(self):
         return Contribution
@@ -84,6 +85,14 @@ class ContributionIndex(BaseContributionIndexMixin,
         if not obj.is_external:
             return 'Mayapur TOVP Receipt'
         return 'External'
+
+    def prepare_promotion_type(self, obj):
+        for promotion in obj.pledge.assigned_promotions():
+            try:
+                return promotion._meta.verbose_name.title()
+                # return self.promotion_type
+            except:
+                return 'Noname'
 
 
 class BulkPaymentIndex(BaseContributionIndexMixin, ContentSearchIndexMixin,
