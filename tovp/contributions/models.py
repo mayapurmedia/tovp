@@ -379,6 +379,26 @@ class BulkPayment(BaseContribution):
             'person_id': self.person.pk,
             'pk': self.pk})
 
+    def get_serial_number(self):
+        if self.book_number:
+            return '{book}/{slip}'.format(book=self.book_number,
+                                          slip=self.slip_number)
+        elif self.serial_year and self.serial_number:
+            number = '%05d' % int(self.serial_number)
+            if self.status == 'completed':
+                prefix = self.get_serial_number_prefix(completed=True)
+            else:
+                prefix = self.get_serial_number_prefix(completed=None)
+
+            atg = ''
+            if self.overwrite_pan_card or self.person.pan_card_number:
+                atg = '80G/'
+            return '{prefix}/{year}/{atg}{number}'.format(prefix=prefix,
+                                                          year=self.serial_year,
+                                                          atg=atg,
+                                                          number=number)
+        return ''
+
     def ensure_serial_number_not_generated(self):
         if self._serial_number and self.book_number:
             msg = _("This contribution has already serial number generated, "
