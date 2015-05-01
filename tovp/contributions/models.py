@@ -253,9 +253,9 @@ class BaseContribution(TimeStampedModel, AuthStampedModel, NextPrevMixin,
             if self.overwrite_pan_card or self.pledge.person.pan_card_number:
                 atg = '80G/'
             return '{prefix}/{year}/{atg}{number}'.format(prefix=prefix,
-                                                     year=self.serial_year,
-                                                     atg=atg,
-                                                     number=number)
+                                                          year=self.serial_year,
+                                                          atg=atg,
+                                                          number=number)
         return ''
 
     def generate_serial_year(self):
