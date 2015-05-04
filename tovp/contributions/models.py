@@ -63,6 +63,7 @@ class Pledge(TimeStampedModel, AuthStampedModel, NextPrevMixin, SourceMixin):
         (u'partial', _('Partially Paid')),
         (u'completed', _('Completed')),
         (u'failed', _('Shadow')),
+        (u'canceled', _('Canceled')),
     )
     status = models.CharField("Status", max_length=30, default='pending',
                               choices=STATUS_CHOICES, blank=True)
