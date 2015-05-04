@@ -44,7 +44,7 @@ class ContributionForm(forms.ModelForm):
     collector = make_ajax_field(Contribution, 'collector', 'person', help_text=None)
     bulk_payment = make_ajax_field(Contribution, 'bulk_payment', 'bulk_payment', help_text=None)
 
-    def __init__(self, user, person, *args, **kwargs):
+    def __init__(self, person, user=None, *args, **kwargs):
         super(ContributionForm, self).__init__(*args, **kwargs)
         self.fields['pledge'].queryset = Pledge.objects.filter(
             person=person)
