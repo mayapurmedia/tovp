@@ -521,3 +521,6 @@ class Contribution(BaseContribution):
             '(%s)' % self.get_payment_method_display()
         )
         return ' - '.join(filter(bool, field_values))
+
+    class Meta:
+        permissions = (("can_edit_completed", "Can edit completed"),)

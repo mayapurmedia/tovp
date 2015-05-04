@@ -44,12 +44,13 @@ class ContributionForm(forms.ModelForm):
     collector = make_ajax_field(Contribution, 'collector', 'person', help_text=None)
     bulk_payment = make_ajax_field(Contribution, 'bulk_payment', 'bulk_payment', help_text=None)
 
-    def __init__(self, person, *args, **kwargs):
+    def __init__(self, user, person, *args, **kwargs):
         super(ContributionForm, self).__init__(*args, **kwargs)
         self.fields['pledge'].queryset = Pledge.objects.filter(
             person=person)
         instance = getattr(self, 'instance', None)
-        if instance and instance.pk and instance.serial_number:
+        if instance and instance.pk and instance.serial_number \
+                and not user.has_perm('contributions.can_view_mensalidades'):
             self.fields['amount'] = StaticField()
             self.fields['currency'] = StaticField()
             self.fields['receipt_date'] = StaticField()

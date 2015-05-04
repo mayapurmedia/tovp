@@ -144,6 +144,7 @@ class ContributionUpdateView(RevisionCommentMixin, LoginRequiredMixin,
     def get_form_kwargs(self):
         kwargs = super(ContributionUpdateView, self).get_form_kwargs()
         kwargs['person'] = self.kwargs.get('person_id')
+        kwargs['user'] = self.request.user
         return kwargs
 
     def get_context_data(self, **kwargs):
