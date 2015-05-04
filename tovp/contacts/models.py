@@ -5,6 +5,7 @@ from django.db.models import permalink
 from django.utils.translation import ugettext_lazy as _, pgettext_lazy as __
 from django.core import exceptions
 from django.db.models.loading import get_model
+from django.core.validators import RegexValidator
 
 from django_countries.fields import CountryField
 
@@ -252,6 +253,13 @@ class Person(AuthStampedModel, NextPrevMixin, TimeStampedModel):
 
     pan_card_number = models.CharField(
         _('PAN card number'), max_length=50, blank=True, null=True,
+        validators=[
+            RegexValidator(
+                regex='[A-Za-z]{5}\d{4}[A-Za-z]{1}',
+                message='Seems like invalid PAN Card Number.',
+                code='invalid_pan_number'
+            ),
+        ],
         help_text=_('Required for Indian citizens. Enter your PAN card number.')
     )
     YATRA_CHOICES = (
