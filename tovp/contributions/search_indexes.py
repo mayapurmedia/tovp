@@ -35,6 +35,7 @@ class BaseContributionIndexMixin(indexes.SearchIndex):
     receipt_date = indexes.DateTimeField()
     dated = indexes.DateTimeField()
     cleared_on = indexes.DateTimeField()
+    source = indexes.MultiValueField(null=True, faceted=True)
     status = indexes.CharField(model_attr='get_status_display', faceted=True)
     book_number = indexes.CharField(model_attr='book_number')
     slip_number = indexes.CharField(model_attr='slip_number')
@@ -43,6 +44,14 @@ class BaseContributionIndexMixin(indexes.SearchIndex):
     serial_number = indexes.CharField()
     has_book = indexes.CharField(faceted=True)
     has_slip = indexes.CharField(faceted=True)
+
+    def prepare_source(self, obj):
+        items = []
+        if obj.source:
+            items.append(obj.get_source_display())
+            if obj.source in ['jps-office', 'namahatta', 'jps-others']:
+                items.append('JPS (All combined)')
+        return items
 
     def prepare_receipt_date(self, obj):
         if obj.receipt_date:
