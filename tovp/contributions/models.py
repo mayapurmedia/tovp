@@ -251,7 +251,8 @@ class BaseContribution(TimeStampedModel, AuthStampedModel, NextPrevMixin,
                 prefix = self.get_serial_number_prefix(completed=None)
 
             atg = ''
-            if self.overwrite_pan_card or self.pledge.person.pan_card_number:
+            if self.overwrite_pan_card or self.pledge.person.pan_card_number \
+                    and self.status == 'completed':
                 atg = '80G/'
             return '{prefix}/{year}/{atg}{number}'.format(prefix=prefix,
                                                           year=self.serial_year,

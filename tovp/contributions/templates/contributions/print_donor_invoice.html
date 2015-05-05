@@ -119,7 +119,7 @@
                     {{ object.get_serial_number() }}
                 </span>
             </div>
-            {% if (object.pledge.person.country == 'IN' and object.pledge.person.pan_card_number) or object.overwrite_pan_card %}
+            {% if ((object.pledge.person.country == 'IN' and object.pledge.person.pan_card_number) or object.overwrite_pan_card) and object.status == 'completed' %}
             <div class="col-xs-12 item" style="text-align:right;">
                 <span class="item-name">ISKCON PAN Card No.:</span>
                 <span class="item-value">AAATI0017P</span>
