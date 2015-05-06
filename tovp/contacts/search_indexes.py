@@ -21,10 +21,10 @@ class PersonIndex(ContentSearchIndexMixin, indexes.SearchIndex,
     address = indexes.CharField(model_attr='address')
     city = indexes.CharField(model_attr='city')
     state = indexes.CharField(model_attr='state')
-    old_database_id = indexes.CharField(model_attr='old_database_id')
+    old_database_id = indexes.CharField(model_attr='old_database_id', null=True)
     country = indexes.CharField(model_attr='get_country_display', faceted=True)
     postcode = indexes.CharField(model_attr='postcode')
-    pan_card_number = indexes.CharField(model_attr='pan_card_number')
+    pan_card_number = indexes.CharField(model_attr='pan_card_number', null=True)
 
     def prepare_mixed_name(self, obj):
         return obj.join_fields(
