@@ -17,6 +17,7 @@ from .forms import SearchForm
 
 class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
     searchqueryset = SearchQuerySet()
+    export_csv = None
     load_all = True
     paginate_by = 36
     allow_empty = True
@@ -188,6 +189,86 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
 
             facets = facets.facet_counts()
 
+            # ======================================
+            if self.export_csv:
+
+                import csv
+                from django.utils.encoding import smart_str
+                from django.http import HttpResponse
+
+                response = HttpResponse(content_type='text/csv')
+                response['Content-Disposition'] = 'attachment; filename=mymodel.csv'
+                writer = csv.writer(response, csv.excel)
+                response.write(u'\ufeff'.encode('utf8'))  # BOM (optional...Excel needs it to open UTF-8 file properly)
+                writer.writerow([
+                    smart_str(u"Record ID"),
+                    smart_str(u"Receipt Date"),
+                    smart_str(u"Name"),
+                    smart_str(u"Serial Number"),
+                    smart_str(u"Amount"),
+                    smart_str(u"Currency"),
+                    smart_str(u"Payment Method"),
+                    smart_str(u"Transaction ID"),
+                    smart_str(u"Cleared On"),
+                    smart_str(u"Dated On"),
+                    smart_str(u"PAN Card No"),
+                    smart_str(u"Promotions"),
+                ])
+                for result in results:
+                    obj = result.object
+
+                    receipt_date = ''
+                    if obj.receipt_date:
+                        receipt_date = obj.receipt_date.strftime("%d %B %Y")
+                    elif obj.cleared_on:
+                        receipt_date = obj.cleared_on.strftime("%d %B %Y")
+
+                    cleared_on = ''
+                    if obj.cleared_on:
+                        cleared_on = obj.cleared_on.strftime("%d %B %Y")
+
+                    dated = ''
+                    if obj.dated:
+                        dated = obj.dated.strftime("%d %B %Y")
+
+                    if obj.overwrite_name:
+                        name = obj.overwrite_name
+                    elif obj.pledge.person.name:
+                        name = obj.pledge.person.name
+                    else:
+                        name = obj.pledge.person.initiated_name
+
+                    promotions = []
+                    for promotion in obj.pledge.assigned_promotions():
+                        try:
+                            promotions.append(promotion._meta.verbose_name.title())
+                        except:
+                            promotions.appen('*Noname*')
+
+                    pan_card_number = ''
+                    if obj.overwrite_pan_card:
+                        pan_card_number = obj.overwrite_pan_card
+                    elif obj.pledge.person.pan_card_number:
+                        pan_card_number = obj.pledge.person.pan_card_number
+
+                    writer.writerow([
+                        smart_str(result.object.pk),
+                        smart_str(receipt_date),
+                        smart_str(name),
+                        smart_str(obj.get_serial_number()),
+                        smart_str(obj.amount),
+                        smart_str(obj.currency),
+                        smart_str(obj.get_payment_method_display()),
+                        smart_str(obj.transaction_id),
+                        smart_str(cleared_on),
+                        smart_str(dated),
+                        smart_str(pan_card_number),
+                        smart_str(",".join(promotions)),
+                    ])
+                return response
+
+            # ======================================
+
             paginator, page, results, is_paginated = self.paginate_results(results, page_size)
 
             # Grumble.
@@ -218,7 +299,9 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
             paginator, page, is_paginated = None, None, False
 
         content_title = "Search"
-
+        show_export_link = None
+        if 'content_type' in self.request.GET and self.request.GET['content_type'] == 'Contribution':
+            show_export_link = True
         ctx = {
             "form": form,
             "results": results,
@@ -227,6 +310,7 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
             "paginator": paginator,
             "is_paginated": is_paginated,
             "facets": facets,
+            "show_export_link": show_export_link,
             "faceted_by_primary": faceted_by_primary,
             "faceted_by_secondary": faceted_by_secondary,
             "query_params": query_params,
@@ -274,6 +358,9 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
                     self.request.GET[form_field_id]:
                 self.search_form_used = True
                 data[form_field_id] = self.request.GET[form_field_id]
+
+        if 'export_csv' in self.request.GET and self.request.GET['export_csv']:
+            self.export_csv = True
 
         form = SearchForm(data)
         return self.form_valid(form)

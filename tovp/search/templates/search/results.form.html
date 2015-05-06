@@ -129,7 +129,12 @@
             {% endfor %}
         </div>
         <div class="row">
-<div class="col-xs-12 col-sm-12 submit-wrapper"><input class="submit-filter btn btn-lg btn-success" type="submit" value="Search"></div>
+<div class="col-xs-12 col-sm-12 submit-wrapper">
+    <input class="submit-filter btn btn-lg btn-success" type="submit" value="Search">
+    {% if show_export_link %}
+        <a class="btn btn-lg btn-primary" href="{{ request.get_full_path()|update_url_query({'export_csv': 1,'page': None}) }}">Export as CSV</a>
+    {% endif %}
+</div>
         </div>
 
     {% for field in faceted_by_secondary %}
