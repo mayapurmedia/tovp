@@ -21,6 +21,7 @@ class PersonIndex(ContentSearchIndexMixin, indexes.SearchIndex,
     address = indexes.CharField(model_attr='address')
     city = indexes.CharField(model_attr='city')
     state = indexes.CharField(model_attr='state')
+    old_database_id = indexes.CharField(model_attr='old_database_id')
     country = indexes.CharField(model_attr='get_country_display', faceted=True)
     postcode = indexes.CharField(model_attr='postcode')
     pan_card_number = indexes.CharField(model_attr='pan_card_number')
