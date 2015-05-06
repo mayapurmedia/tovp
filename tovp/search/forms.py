@@ -30,7 +30,7 @@ class SearchForm(forms.Form):
     phone_number = forms.CharField(required=False, label=_('Phone Number'),
                                    widget=forms.TextInput())
     old_database_id = forms.CharField(required=False, label=_('Old Database Id'),
-                                     widget=forms.TextInput())
+                                      widget=forms.TextInput())
     book_number = forms.CharField(required=False, label=_('Book Number'),
                                   widget=forms.TextInput())
     slip_number = forms.CharField(required=False, label=_('Slip Number'),
