@@ -264,6 +264,7 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
                               'book_number',
                               'slip_number',
                               'transaction_id',
+                              'old_database_id',
                               'record_id',
                               'date_type',
                               'date_from',

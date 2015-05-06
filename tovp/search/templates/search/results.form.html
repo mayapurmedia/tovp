@@ -74,7 +74,7 @@
                 {% endif %}
             </div>
             {% endfor %}
-            {% for field_name in ['transaction_id'] %}
+            {% for field_name in ['transaction_id', 'old_database_id'] %}
             <div class="col-ms-6 col-sm-4 form-group{{' has-error' if form[field_name].errors }}">
                 <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
 

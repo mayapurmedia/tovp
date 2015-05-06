@@ -29,6 +29,8 @@ class SearchForm(forms.Form):
                                     widget=forms.TextInput())
     phone_number = forms.CharField(required=False, label=_('Phone Number'),
                                    widget=forms.TextInput())
+    old_database_id = forms.CharField(required=False, label=_('Old Database Id'),
+                                     widget=forms.TextInput())
     book_number = forms.CharField(required=False, label=_('Book Number'),
                                   widget=forms.TextInput())
     slip_number = forms.CharField(required=False, label=_('Slip Number'),
@@ -75,6 +77,16 @@ class SearchForm(forms.Form):
         if self.cleaned_data.get('q'):
             # sqs = sqs.auto_query(self.cleaned_data['q'])
             sqs = sqs.filter(text__contains=self.cleaned_data['q'])
+
+        # fields which are filtered with __contains
+        contains = [
+            'old_database_id'
+        ]
+
+        for field_name in contains:
+            if self.cleaned_data.get(field_name):
+                sqs = sqs.filter(**{'%s__exact' % field_name:
+                                    self.cleaned_data[field_name]})
 
         # fields which are filtered with __contains
         contains = [
