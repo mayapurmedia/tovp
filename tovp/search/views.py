@@ -202,9 +202,12 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
                 response.write(u'\ufeff'.encode('utf8'))  # BOM (optional...Excel needs it to open UTF-8 file properly)
                 writer.writerow([
                     smart_str(u"Record ID"),
+                    smart_str(u"Mayapur Official Receipt"),
                     smart_str(u"Receipt Date"),
                     smart_str(u"Name"),
+                    smart_str(u"Address"),
                     smart_str(u"Serial Number"),
+                    smart_str(u"Status"),
                     smart_str(u"Amount"),
                     smart_str(u"Currency"),
                     smart_str(u"Payment Method"),
@@ -212,6 +215,7 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
                     smart_str(u"Cleared On"),
                     smart_str(u"Dated On"),
                     smart_str(u"PAN Card No"),
+                    smart_str(u"Source"),
                     smart_str(u"Promotions"),
                 ])
                 for result in results:
@@ -251,11 +255,20 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
                     elif obj.pledge.person.pan_card_number:
                         pan_card_number = obj.pledge.person.pan_card_number
 
+                    address = ''
+                    if obj.overwrite_address:
+                        address = obj.overwrite_address
+                    elif obj.pledge.person.address:
+                        address = obj.pledge.person.address
+
                     writer.writerow([
                         smart_str(result.object.pk),
+                        smart_str(obj.is_external),
                         smart_str(receipt_date),
                         smart_str(name),
+                        smart_str(address),
                         smart_str(obj.get_serial_number()),
+                        smart_str(obj.get_status_display()),
                         smart_str(obj.amount),
                         smart_str(obj.currency),
                         smart_str(obj.get_payment_method_display()),
@@ -263,6 +276,7 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
                         smart_str(cleared_on),
                         smart_str(dated),
                         smart_str(pan_card_number),
+                        smart_str(obj.get_source_display()),
                         smart_str(",".join(promotions)),
                     ])
                 return response
