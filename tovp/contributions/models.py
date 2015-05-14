@@ -406,10 +406,6 @@ class BulkPayment(BaseContribution):
             msg = _("This contribution has already serial number generated, "
                     "You cannot add book and slip numbers anymore.")
             raise exceptions.ValidationError({'book_number': [msg]})
-        if self._serial_number and self.receipt_type != 'official':
-            msg = _("This contribution has already serial number generated, "
-                    "You have to keep it as 'Official' receipt.")
-            raise exceptions.ValidationError({'receipt_type': [msg]})
 
     def __str__(self):
         field_values = (
