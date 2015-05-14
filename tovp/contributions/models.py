@@ -203,6 +203,7 @@ class BaseContribution(TimeStampedModel, AuthStampedModel, NextPrevMixin,
         (u'pending', _('Pending')),
         (u'completed', _('Completed')),
         (u'failed', _('Failed')),
+        (u'canceled', _('Canceled')),
     )
     status = models.CharField("Status", max_length=30, choices=STATUS_CHOICES)
     status_changed = MonitorField(monitor='status')
