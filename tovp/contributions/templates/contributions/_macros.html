@@ -1,0 +1,88 @@
+{% macro print_payment_method(object) -%}
+    {% if object.payment_method in ['cashl', 'cashf'] %}
+        Cash
+    {% elif object.payment_method in ['ccdcsl', 'ccdcsf'] %}
+        Credit/Debit Card
+    {% elif object.payment_method in ['neftl', 'neftf'] %}
+        NEFT
+    {% elif object.payment_method in ['chequel', 'chequef'] %}
+        Cheque
+    {% elif object.payment_method in ['chequed'] %}
+        Cheque Deposit
+    {% elif object.payment_method in ['cashd'] %}
+        Cash Deposit
+    {% elif object.payment_method in ['axis'] %}
+        AXIS Gateway (online)
+    {% elif object.payment_method in ['treasury'] %}
+        {{ object.get_payment_method_display() }}
+    {% endif %}
+{%- endmacro %}
+
+{% macro print_payment_other(object) -%}
+    {% if object.payment_method in ['treasury'] %}
+        {% if object.cleared_on %}
+        <div class="col-xs-3 col-custom-2-5 item-name">Bill No.:</div>
+        <div class="col-xs-2 item-value">
+            {{ object.transaction_id }}
+        </div>
+        {% endif %}
+    {% endif %}
+
+    {% if object.payment_method in ['neftl', 'neftf', 'cashd'] %}
+        {% if object.cleared_on %}
+        <div class="col-xs-3 col-custom-2-5 item-name">Credited On:</div>
+        <div class="col-xs-2 item-value">
+            {{ object.cleared_on|datetimeformat }}
+        </div>
+        {% endif %}
+    {% endif %}
+
+    {% if object.payment_method in ['ccdcsl', 'ccdcsf'] %}
+        <div class="col-xs-2 col-custom-2-5 item-name">Transaction ID:</div>
+        <div class="col-xs-2 item-value">
+            {{ object.transaction_id }}
+        </div>
+        {% if object.cleared_on %}
+        <div class="col-xs-2 col-custom-2-5 item-name">Transaction Date:</div>
+        <div class="col-xs-3 item-value">
+            {{ object.cleared_on|datetimeformat }}
+        </div>
+        {% endif %}
+    {% endif %}
+    {% if object.payment_method in ['chequed'] %}
+        <div class="col-xs-3 col-custom-2-5 item-name">Cheque No.:</div>
+        <div class="col-xs-2 item-value">
+            {{ object.transaction_id }}
+        </div>
+        {% if object.cleared_on %}
+        <div class="col-xs-3 col-custom-2-5 item-name">Cleared On:</div>
+        <div class="col-xs-2 item-value">
+            {{ object.cleared_on|datetimeformat }}
+        </div>
+        {% endif %}
+    {% endif %}
+    {% if object.payment_method in ['chequel', 'chequef'] %}
+        <div class="col-xs-3 col-custom-2-5 item-name">Cheque No.:</div>
+        <div class="col-xs-2 item-value">
+            {{ object.transaction_id }}
+        </div>
+        {% if object.dated %}
+        <div class="col-xs-3 col-custom-2-5 item-name">Dated:</div>
+        <div class="col-xs-3 item-value">
+            {{ object.dated|datetimeformat }}
+        </div>
+        {% endif %}
+        {% if object.cleared_on %}
+        <div class="col-xs-3 col-custom-2-5 item-name">Cleared On:</div>
+        <div class="col-xs-2 item-value">
+            {{ object.cleared_on|datetimeformat }}
+        </div>
+        {% endif %}
+        {% if object.bank %}
+        <div class="col-xs-3 col-custom-2-5 item-name">Bank:</div>
+        <div class="col-xs-4 item-value">
+            {{ object.bank }}
+        </div>
+        {% endif %}
+    {% endif %}
+{%- endmacro %}

@@ -1,3 +1,4 @@
+{% import 'contributions/_macros.html' as print_macros %}
 {% extends 'print-base.html' %}
 {% set body_class = "person-detail" %}
 {% set page_content = "Donor Letter" %}
@@ -165,65 +166,12 @@
         <div class="row">
             <div class="col-xs-2 col-custom-2-5 item-name">Payment Method:</div>
             <div class="col-xs-8 item-value">
-                {% if object.payment_method in ['cashl', 'cashf'] %}
-                    Cash
-                {% elif object.payment_method in ['ccdcsl', 'ccdcsf'] %}
-                    Credit/Debit Card
-                {% elif object.payment_method in ['neftl', 'neftf'] %}
-                    NEFT
-                {% elif object.payment_method in ['chequel', 'chequef'] %}
-                    Cheque
-                {% endif %}
+                {{ print_macros.print_payment_method(object) }}
             </div>
         </div>
     </div>
 
-    {% if object.payment_method in ['neftl', 'neftf', 'cashd'] %}
-        {% if object.cleared_on %}
-        <div class="col-xs-3 col-custom-2-5 item-name">Credited On:</div>
-        <div class="col-xs-2 item-value">
-            {{ object.cleared_on|datetimeformat }}
-        </div>
-        {% endif %}
-    {% endif %}
-
-    {% if object.payment_method in ['ccdcsl', 'ccdcsf'] %}
-        <div class="col-xs-2 col-custom-2-5 item-name">Transaction ID:</div>
-        <div class="col-xs-2 item-value">
-            {{ object.transaction_id }}
-        </div>
-        {% if object.cleared_on %}
-        <div class="col-xs-2 col-custom-2-5 item-name">Transaction Date:</div>
-        <div class="col-xs-3 item-value">
-            {{ object.cleared_on|datetimeformat }}
-        </div>
-        {% endif %}
-    {% endif %}
-
-    {% if object.payment_method in ['chequel', 'chequef'] %}
-        <div class="col-xs-3 col-custom-2-5 item-name">Cheque No.:</div>
-        <div class="col-xs-2 item-value">
-            {{ object.transaction_id }}
-        </div>
-        {% if object.dated %}
-        <div class="col-xs-3 col-custom-2-5 item-name">Dated:</div>
-        <div class="col-xs-3 item-value">
-            {{ object.dated|datetimeformat }}
-        </div>
-        {% endif %}
-        {% if object.cleared_on %}
-        <div class="col-xs-3 col-custom-2-5 item-name">Cleared On:</div>
-        <div class="col-xs-2 item-value">
-            {{ object.cleared_on|datetimeformat }}
-        </div>
-        {% endif %}
-        {% if object.bank %}
-        <div class="col-xs-3 col-custom-2-5 item-name">Bank:</div>
-        <div class="col-xs-4 item-value">
-            {{ object.bank }}
-        </div>
-        {% endif %}
-    {% endif %}
+    {{ print_macros.print_payment_other(object) }}
 
 </div>
 
