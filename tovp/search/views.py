@@ -205,6 +205,8 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
                     smart_str(u"Mayapur Official Receipt"),
                     smart_str(u"Receipt Date"),
                     smart_str(u"Name"),
+                    smart_str(u"Email"),
+                    smart_str(u"Phone Number"),
                     smart_str(u"Address"),
                     smart_str(u"Serial Number"),
                     smart_str(u"Status"),
@@ -217,6 +219,7 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
                     smart_str(u"PAN Card No"),
                     smart_str(u"Source"),
                     smart_str(u"Promotions"),
+                    smart_str(u"Collector"),
                 ])
                 for result in results:
                     obj = result.object
@@ -266,6 +269,8 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
                         smart_str(obj.is_external),
                         smart_str(receipt_date),
                         smart_str(name),
+                        smart_str(obj.pledge.person.email),
+                        smart_str(obj.pledge.person.phone_number),
                         smart_str(address),
                         smart_str(obj.get_serial_number()),
                         smart_str(obj.get_status_display()),
@@ -278,6 +283,7 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
                         smart_str(pan_card_number),
                         smart_str(obj.get_source_display()),
                         smart_str(",".join(promotions)),
+                        smart_str(obj.collector.mixed_name),
                     ])
                 return response
 
