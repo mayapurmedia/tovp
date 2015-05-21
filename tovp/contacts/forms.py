@@ -10,5 +10,5 @@ class PersonForm(forms.ModelForm):
         exclude = ()
         widgets = {
             'address': forms.Textarea(attrs={'rows': 2}),
-            'old_database_id': TextInput(attrs={'type': 'text'}),
+            'old_database_id': TextInput(attrs={'type': 'hidden'}),
         }

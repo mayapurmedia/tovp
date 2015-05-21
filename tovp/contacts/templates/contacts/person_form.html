@@ -17,22 +17,13 @@
             </p>
         {% endif %}
 
-        {# temporary solution how to show old_database_id only to two people #}
-        {% if user.pk in [1, 8] %}
         <div class="row">
             {% set field_name = 'old_database_id' %}
             <div class="col-xs-12 form-group{{' has-error' if form[field_name].errors }}">
-                <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
                 {{ form[field_name].errors|safe }}
                 {{form[field_name]|add_css('form-control')}}
-                {% if form[field_name].help_text %}
-                    <div class="help-text">
-                        {{ form[field_name].help_text }}
-                    </div>
-                {% endif %}
             </div>
         </div>
-        {% endif %}
 
         <div class="row">
             {% set field_name = 'title' %}
