@@ -264,6 +264,10 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
                     elif obj.pledge.person.address:
                         address = obj.pledge.person.address
 
+                    collector = ''
+                    if obj.collector:
+                        collector = obj.collector.mixed_name
+
                     writer.writerow([
                         smart_str(result.object.pk),
                         smart_str(obj.is_external),
@@ -283,7 +287,7 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
                         smart_str(pan_card_number),
                         smart_str(obj.get_source_display()),
                         smart_str(",".join(promotions)),
-                        smart_str(obj.collector.mixed_name),
+                        smart_str(collector),
                     ])
                 return response
 
