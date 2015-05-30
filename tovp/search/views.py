@@ -120,13 +120,13 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
         }
 
         faceted_by_primary = {
+            "deposited_status": None,
         }
 
         faceted_by_secondary = {
             "content_type": None,
             "currency": None,
             "status": None,
-            "deposited_status": None,
             "payment_method": None,
             "source": None,
             "yatra": None,

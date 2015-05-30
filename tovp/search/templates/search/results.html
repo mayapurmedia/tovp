@@ -19,6 +19,11 @@
                 <h3>You have selected</h3>
                 {% endif %}
                 <ul class="selected-filters">
+                    {% for field in faceted_by_primary %}
+                    {% if faceted_by_primary[field] %}
+                    <li><a class="remove-filter" href="{{ request.get_full_path()|update_url_query({field:None,'page':None}) }}"><span class="icon fa fa-times"></span> {{ facets_titles[field] }} :: {{ faceted_by_primary[field] }}</a></li>
+                    {% endif %}
+                    {% endfor %}
                     {% for field in faceted_by_secondary %}
                     {% if faceted_by_secondary[field] %}
                     <li><a class="remove-filter" href="{{ request.get_full_path()|update_url_query({field:None,'page':None}) }}"><span class="icon fa fa-times"></span> {{ facets_titles[field] }} :: {{ faceted_by_secondary[field] }}</a></li>
