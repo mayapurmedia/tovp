@@ -453,6 +453,27 @@ class Contribution(BaseContribution):
         help_text=_('If this contribution is part of bulk payment please choose'
                     'it here.'))
 
+    DEPOSITED_STATUS_CHOICES = (
+        ('not-deposited', _('Not deposited')),
+        ('ready-to-deposit', _('Ready to deposit')),
+        ('deposited', _('Deposited')),
+    )
+    deposited_status = models.CharField(
+        "Is Deposited", max_length=20, choices=DEPOSITED_STATUS_CHOICES,
+        default="not-deposited")
+    deposited_status_changed = MonitorField(monitor='deposited_status')
+
+    DEPOSITED_STATUS_FLOW = {
+        'not-deposited': 'ready-to-deposit',
+        'ready-to-deposit': 'deposited',
+        'deposited': 'not-deposited',
+    }
+
+    def change_deposited_status(self):
+        self.deposited_status = self.DEPOSITED_STATUS_FLOW[self.deposited_status]
+        # self.save(update_fields=["deposited_status"])
+        self.save()
+
     is_external = models.BooleanField(
         _('Non Mayapur TOVP receipt'), default=False, db_index=True,
         help_text='This MUST be checked if other than India TOVP receipt '
@@ -522,4 +543,5 @@ class Contribution(BaseContribution):
         return ' - '.join(filter(bool, field_values))
 
     class Meta:
-        permissions = (("can_edit_completed", "Can edit completed"),)
+        permissions = (("can_edit_completed", "Can edit completed"),
+                       ("can_deposit", "Can deposit"))

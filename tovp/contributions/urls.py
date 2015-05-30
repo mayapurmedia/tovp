@@ -81,6 +81,11 @@ contributions = patterns(
         view=views.ContributionDeleteView.as_view(),
         name="delete",
     ),
+    url(
+        regex=r'^status_changer/(?P<pk>\d+)/$',
+        view=views.ContributionDepositStatusChangeView.as_view(),
+        name="deposit_status_changer",
+    ),
 )
 
 bulk_payments = patterns(

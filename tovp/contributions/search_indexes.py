@@ -84,6 +84,8 @@ class ContributionIndex(BaseContributionIndexMixin,
                         ContentSearchIndexMixin, PledgePersonSearchIndexMixin,
                         indexes.SearchIndex, indexes.Indexable):
     content_name = 'Contribution'
+    deposited_status = indexes.CharField(
+        model_attr='get_deposited_status_display', faceted=True)
     is_external = indexes.CharField(faceted=True)
     promotion_type = indexes.CharField(faceted=True)
 

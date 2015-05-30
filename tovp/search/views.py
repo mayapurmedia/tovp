@@ -98,9 +98,9 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
         total_results_count = results.count()
         facets_titles = {
             'content_type': 'Content Type', 'currency': 'Currency',
-            'promotion_type': 'Promotion Type', 'status': 'Status',
-            'payment_method': 'Payment Method', 'interval': 'Interval',
-            'country': 'Country', 'yatra': 'Yatra',
+            'deposited_status': 'Deposited Status', 'promotion_type': 'Promotion Type',
+            'status': 'Status', 'payment_method': 'Payment Method',
+            'interval': 'Interval', 'country': 'Country', 'yatra': 'Yatra',
             'has_book': 'Book filled', 'has_slip': 'Slip filled',
             'created_by': 'Created By', 'modified_by': 'Modified By',
             'is_external': 'Non Mayapur TOVP Receipt', 'source': 'Source',
@@ -111,10 +111,10 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
                 'title': 'Test 1',
                 'has_results': None,
                 'fields': (
-                    'content_type', 'currency', 'status', 'promotion_type',
-                    'payment_method', 'yatra', 'interval', 'country',
-                    'has_book', 'has_slip', 'created_by', 'modified_by',
-                    'is_external', 'source',
+                    'content_type', 'currency', 'status', 'deposited_status',
+                    'promotion_type', 'payment_method', 'yatra', 'interval',
+                    'country', 'has_book', 'has_slip', 'created_by',
+                    'modified_by', 'is_external', 'source',
                 ),
             },
         }
@@ -126,6 +126,7 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
             "content_type": None,
             "currency": None,
             "status": None,
+            "deposited_status": None,
             "payment_method": None,
             "source": None,
             "yatra": None,

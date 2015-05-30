@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
+import json
 # Import the reverse lookup function
 # from django.core.urlresolvers import reverse
 
 # view imports
-from django.views.generic import DetailView, UpdateView, ListView
+from django.views.generic import View, DetailView, UpdateView, ListView
 from django.views.generic.edit import CreateView, DeleteView
 from django.utils.translation import ugettext as _
 from django.shortcuts import get_object_or_404
+from django.http import HttpResponse, HttpResponseRedirect
 
 # Will be used for logged in and logged out messages
 # from django.contrib import messages
@@ -171,6 +173,29 @@ class ContributionDeleteView(PermissionRequiredMixin, DeleteView):
     def get_success_url(self):
         item = get_object_or_404(Contribution, pk=self.kwargs['pk'])
         return item.pledge.person.get_absolute_url()
+
+
+class ContributionDepositStatusChangeView(PermissionRequiredMixin, View):
+    permission_required = "contributions.can_deposit"
+
+    def get_object(self):
+            return Contribution
+
+    def dispatch(self, request, *args, **kwargs):
+        self.pk = kwargs['pk']
+        self.contribution = Contribution.objects.get(pk=self.pk)
+        self.contribution.change_deposited_status()
+
+        # if this view is called from ajax return json object
+        if request.is_ajax():
+            response_data = {
+                'new_status_name': self.contribution.get_deposited_status_display(),
+                'new_status_slug': self.contribution.deposited_status,
+            }
+            return HttpResponse(json.dumps(response_data),
+                                content_type="application/json")
+
+        return HttpResponseRedirect(request.GET['next'])
 
 
 class BulkPaymentDetailView(LoginRequiredMixin, DetailView):
