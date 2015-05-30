@@ -69,7 +69,7 @@ class ContributionForm(forms.ModelForm):
 
     class Meta:
         model = Contribution
-        exclude = ('status_changed',)
+        exclude = ('status_changed', 'deposited_status', 'deposited_status_changed')
         widgets = {
             'amount': TextInput(attrs={'type': 'text'}),
             'dated': DateWidget(
