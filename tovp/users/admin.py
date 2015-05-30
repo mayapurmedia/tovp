@@ -16,7 +16,7 @@ class UserProfileAdmin(HijackUserAdminMixin, UserAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ('username', 'display_name', 'is_admin', 'hijack_field')
+    list_display = ('username', 'display_name', 'is_admin', 'is_staff', 'hijack_field')
     list_filter = ('is_admin',)
     # fieldsets = (
     #     (None, {'fields': ('username', 'password')}),
