@@ -140,6 +140,7 @@
             <a href="{{ url('contributions:bulk_payment:print_acknowledgement', object.pk, 1) }}" target="_blank" class="btn btn-lg btn-success">Acknowledgement with signature</a>
             {% endif %}
         {% endif %}
+            <a href="{{ url('contributions:bulk_payment:donor_letter', object.pk) }}" target="_blank" class="btn btn-lg btn-success">Print Donor Letter</a>
     </div>
 
 

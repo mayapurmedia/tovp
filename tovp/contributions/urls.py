@@ -106,6 +106,11 @@ bulk_payments = patterns(
         name='update',
     ),
     url(
+        regex=r'^print/(?P<pk>\d+)/donor$',
+        view=views.BulkPaymentDonorLetterDetailView.as_view(),
+        name='donor_letter',
+    ),
+    url(
         regex=r'^print/(?P<pk>\d+)/receipt/(?P<signature>0|1)/$',
         view=views.BulkPaymentReceiptDetailView.as_view(),
         name='print_receipt',

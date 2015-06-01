@@ -98,6 +98,12 @@ class ContributionDonorLetterDetailView(LoginRequiredMixin, DetailView):
     model = Contribution
     template_name = 'contributions/print_donor_letter.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(ContributionDonorLetterDetailView, self). \
+            get_context_data(**kwargs)
+        context['person'] = self.get_object().pledge.person
+        return context
+
 
 class DonorInvoiceDetailView(LoginRequiredMixin, DetailView):
     print_signature = None
@@ -267,4 +273,15 @@ class BulkPaymentReceiptDetailView(LoginRequiredMixin, DetailView):
         else:
             print_signature = None
         context['print_signature'] = print_signature
+        return context
+
+
+class BulkPaymentDonorLetterDetailView(LoginRequiredMixin, DetailView):
+    model = BulkPayment
+    template_name = 'contributions/print_donor_letter.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(BulkPaymentDonorLetterDetailView, self). \
+            get_context_data(**kwargs)
+        context['person'] = self.get_object().person
         return context
