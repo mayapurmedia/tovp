@@ -1,10 +1,12 @@
 from ajax_select import LookupChannel
+from django.core.exceptions import PermissionDenied
 from django.utils.html import escape
 from django.db.models import Q
+
 from .models import BulkPayment
 
 
-class BulkPaymentLookup(object):
+class BulkPaymentLookup(LookupChannel):
 
     def get_query(self, q, request):
         return BulkPayment.objects.filter(Q(pk__startswith=q) | Q(person__first_name__icontains=q) | Q(person__initiated_name__icontains=q) | Q(person__last_name__icontains=q))  # .order_by('name')
@@ -22,3 +24,8 @@ class BulkPaymentLookup(object):
         return u"{name}<div>{amount} {currency}</div><div>{date}</div>". \
             format(name=escape(obj.person.mixed_name), amount=obj.amount,
                    currency=obj.currency, date=obj.receipt_date)
+
+    def check_auth(self, request):
+        """Return results only to logged users."""
+        if not request.user.is_authenticated():
+            raise PermissionDenied
