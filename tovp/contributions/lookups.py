@@ -8,6 +8,8 @@ from .models import BulkPayment
 
 class BulkPaymentLookup(LookupChannel):
 
+    model = BulkPayment
+
     def get_query(self, q, request):
         return BulkPayment.objects.filter(Q(pk__startswith=q) | Q(person__first_name__icontains=q) | Q(person__initiated_name__icontains=q) | Q(person__last_name__icontains=q))  # .order_by('name')
 
