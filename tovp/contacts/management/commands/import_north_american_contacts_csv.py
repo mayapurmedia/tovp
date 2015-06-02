@@ -41,16 +41,17 @@ class Command(BaseCommand):
             csv_reader = csv.DictReader(csvfile, delimiter=',', quotechar='"')
             for row in csv_reader:
                 field_names = {
+                    'Temple': 'temple',
                     'Spiritual Name': 'initiated_name',
                     'First Name': 'first_name',
                     'Middle Name': 'middle_name',
                     'Last Name': 'last_name',
-                    'City': 'city',
+                    'Phone': 'phone_number',
+                    'Email': 'email',
                     'Street Address': 'address',
-                    'Zip Code': 'postcode',
+                    'City': 'city',
                     'State': 'state',
-                    'email': 'email',
-                    'Phone ': 'phone_number',
+                    'Zip Code': 'postcode',
                 }
 
                 kwargs = {}
