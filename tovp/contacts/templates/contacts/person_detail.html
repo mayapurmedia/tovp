@@ -45,6 +45,16 @@
     <div class="col-xs-12 col-sm-6">
         {{ print_field(field_label, object[field_name])}}
     </div>
+    {% set field_label = 'Yatra' %}
+    {% set field_name = 'yatra' %}
+    {% if object[field_name] %}
+    <div class="col-xs-12">
+        <div class="field-label">{{ field_label }}</div>
+        <div class="field-value">
+            {{ object.get_yatra_display() }}
+        </div>
+    </div>
+    {% endif %}
     {% set field_label = 'Note' %}
     {% set field_name = 'note' %}
     {% if object[field_name] %}
