@@ -243,6 +243,12 @@ class Person(AuthStampedModel, NextPrevMixin, TimeStampedModel):
         help_text='Enter your phone number. If it is a non-Indian number '
                   'please use the international format e.g.: +421 222 333 444')
 
+    temple = models.CharField(
+        max_length=100, blank=True,
+        help_text=_('If person tells you association with temple, please enter '
+                    'it here.')
+    )
+
     # Following 5 fields are all part of the address
     address = models.TextField(
         _("Address"), max_length=255, blank=True)
