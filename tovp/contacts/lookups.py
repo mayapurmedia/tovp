@@ -1,4 +1,5 @@
 from ajax_select import LookupChannel
+from django.core.exceptions import PermissionDenied
 from django.utils.html import escape
 from django.db.models import Q
 from .models import Person
@@ -22,3 +23,8 @@ class PersonLookup(LookupChannel):
     def format_item_display(self, obj):
         """ (HTML) formatted item for displaying item in the selected deck area """
         return u"%s<div></div>" % (escape(obj.mixed_name))
+
+    def check_auth(self, request):
+        """Return results only to logged users."""
+        if not request.user.is_authenticated():
+            raise PermissionDenied
