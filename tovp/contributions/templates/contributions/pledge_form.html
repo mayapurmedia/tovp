@@ -26,6 +26,10 @@
                 {{ form.non_field_errors() }}
             </p>
         {% endif %}
+            <div class="col-xs-12 form-group">
+                <label class="control-label">Donor Name:</label>
+                <h2>{{ person }}</h2>
+            </div>
         {{form.person|add_css('hide')}}
             {% set field_name = 'amount' %}
             <div class="col-ms-7 col-sm-6 col-lg-4 form-group{{' has-error' if form[field_name].errors }}">

@@ -19,6 +19,8 @@ from braces.views import LoginRequiredMixin, PermissionRequiredMixin
 from ananta.models import RevisionCommentMixin
 from promotions.models import promotions
 
+from contacts.models import Person
+
 from .forms import PledgeForm, ContributionForm, BulkPaymentForm
 from .models import Pledge, Contribution, BulkPayment
 
@@ -60,6 +62,8 @@ class PledgeCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super(PledgeCreateView, self).get_context_data(**kwargs)
         context['content_title'] = _("Add new pledge")
+        person = Person.objects.get(pk=self.kwargs.get('person_id'))
+        context['person'] = person
         return context
 
 
@@ -73,6 +77,8 @@ class PledgeUpdateView(RevisionCommentMixin, LoginRequiredMixin,
     def get_context_data(self, **kwargs):
         context = super(PledgeUpdateView, self).get_context_data(**kwargs)
         context['content_title'] = _("Edit pledge")
+        person = Person.objects.get(pk=self.kwargs.get('person_id'))
+        context['person'] = person
         return context
 
 
