@@ -120,10 +120,10 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
         }
 
         faceted_by_primary = {
-            "deposited_status": None,
         }
 
         faceted_by_secondary = {
+            "deposited_status": None,
             "content_type": None,
             "currency": None,
             "status": None,
@@ -145,7 +145,7 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
         show_selected_filters = 0
 
         for filter_item in faceted_by_primary.keys():
-            if (filter_item in self.request.GET) and self.request.GET[filter_item] and (self.request.GET[filter_item] != 'all'):
+            if filter_item in self.request.GET:
                 faceted_by_primary[filter_item] = self.request.GET[filter_item]
                 results = results.narrow('%s_exact:"%s"' % (filter_item, self.request.GET[filter_item]))
                 show_selected_filters += 1
@@ -154,7 +154,10 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
             if filter_item in self.request.GET:
                 faceted_by_secondary[filter_item] = self.request.GET[filter_item]
                 # results = results.filter(**{filter_item: self.request.GET[filter_item]})
-                results = results.narrow('%s:"%s"' % (filter_item, self.request.GET[filter_item]))
+                if filter_item in ['deposited_status']:
+                    results = results.narrow('%s_exact:"%s"' % (filter_item, self.request.GET[filter_item]))
+                else:
+                    results = results.narrow('%s:"%s"' % (filter_item, self.request.GET[filter_item]))
                 show_selected_filters += 1
 
         page_size = self.get_paginate_by()
@@ -163,15 +166,6 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
 
             sort_by_year = None
             active_year_filters = {}
-            if 'year_from' in self.request.GET and self.request.GET['year_from'] and self.request.GET['year_from'] != 'all':
-                results = results.filter(year__gte=self.request.GET['year_from'])
-                sort_by_year = True
-                active_year_filters['year_from'] = self.request.GET['year_from']
-
-            if 'year_to' in self.request.GET and self.request.GET['year_to'] and self.request.GET['year_to'] != 'all':
-                results = results.filter(year__lte=self.request.GET['year_to'])
-                sort_by_year = True
-                active_year_filters['year_to'] = self.request.GET['year_to']
 
             if sort_by_year:
                 results = results.order_by('year')
