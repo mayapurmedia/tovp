@@ -190,7 +190,7 @@ class ContributionDepositStatusChangeView(PermissionRequiredMixin, View):
     def dispatch(self, request, *args, **kwargs):
         self.pk = kwargs['pk']
         self.contribution = Contribution.objects.get(pk=self.pk)
-        self.contribution.change_deposited_status()
+        self.contribution.change_deposited_status(self.request.user)
 
         # if this view is called from ajax return json object
         if request.is_ajax():

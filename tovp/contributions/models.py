@@ -468,9 +468,21 @@ class Contribution(BaseContribution):
         'deposited': 'not-deposited',
     }
 
-    def change_deposited_status(self):
-        self.deposited_status = self.DEPOSITED_STATUS_FLOW[self.deposited_status]
-        # self.save(update_fields=["deposited_status"])
+    def change_deposited_status(self, user):
+        next_status = self.DEPOSITED_STATUS_FLOW[self.deposited_status]
+        if next_status == 'deposited':
+            if user.has_perm('contributions.can_deposit'):
+                self.deposited_status = next_status
+            else:
+                self.deposited_status = 'not-deposited'
+
+        if next_status == 'ready-to-deposit':
+                self.deposited_status = next_status
+
+        if next_status == 'not-deposited':
+            if user.has_perm('contributions.can_deposit'):
+                self.deposited_status = next_status
+
         self.save()
 
     is_external = models.BooleanField(
@@ -543,4 +555,5 @@ class Contribution(BaseContribution):
 
     class Meta:
         permissions = (("can_edit_completed", "Can edit completed"),
-                       ("can_deposit", "Can deposit"))
+                       ("can_change_deposit_status", "Can change deposit status"),
+                       ("can_deposit", "Can mark as deposited"))

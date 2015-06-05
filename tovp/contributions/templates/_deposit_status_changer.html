@@ -1,4 +1,4 @@
-{% if user.has_perm('contributions.can_deposit' )%}
+{% if user.has_perm('contributions.can_change_deposit_status' )%}
 <script>
 (function($) {
     $.fn.status_changer = function(options) {
