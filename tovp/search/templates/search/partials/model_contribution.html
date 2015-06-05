@@ -7,6 +7,9 @@
     {% endif %}
     </div>
     <div>{{ result.content_type }}: <a class="object-link" href="{{ result.absolute_url }}">{{ result.full_name }}{% if result.initiated_name %} - {{ result.initiated_name }}{% endif %}</a></div>
+    {% if result.receipt_date %}
+        <div>{{ result.receipt_date|datetimeformat }}</div>
+    {% endif %}
     <div>Serial No: {{ result.serial_number }}</div>
     <div>{{ result.amount }} {{ result.currency }} [{{ result.status }}]</div>
     <div>{{ result.payment_method }}</div>
