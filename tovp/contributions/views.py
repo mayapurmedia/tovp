@@ -145,6 +145,8 @@ class ContributionCreateView(LoginRequiredMixin, PermissionRequiredMixin,
     def get_context_data(self, **kwargs):
         context = super(ContributionCreateView, self).get_context_data(**kwargs)
         context['content_title'] = _("Add new contribution")
+        person = Person.objects.get(pk=self.kwargs.get('person_id'))
+        context['person'] = person
         return context
 
 
@@ -164,6 +166,8 @@ class ContributionUpdateView(RevisionCommentMixin, LoginRequiredMixin,
     def get_context_data(self, **kwargs):
         context = super(ContributionUpdateView, self).get_context_data(**kwargs)
         context['content_title'] = _("Edit contribution")
+        person = Person.objects.get(pk=self.kwargs.get('person_id'))
+        context['person'] = person
         return context
 
     def form_valid(self, form):
