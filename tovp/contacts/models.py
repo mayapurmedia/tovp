@@ -287,6 +287,8 @@ class Person(AuthStampedModel, NextPrevMixin, TimeStampedModel):
         help_text=_('If you are transfering data from old database (CiviCRM), '
                     'enter contact_id here. Otherwise leave empty.'))
 
+    note = models.TextField(_("Note"), max_length=255, blank=True)
+
     def clean(self):
         # Strip all whitespace
         for field in ['first_name', 'middle_name', 'last_name',

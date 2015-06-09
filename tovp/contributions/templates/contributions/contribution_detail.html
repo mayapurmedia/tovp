@@ -171,6 +171,13 @@
         {{ print_field(field_label, object[field_name]) }}
     </div>
     {% endif %}
+    {% set field_label = 'Note' %}
+    {% set field_name = 'note' %}
+    {% if object[field_name] %}
+    <div class="col-xs-12">
+        {{ print_field(field_label, object[field_name])}}
+    </div>
+    {% endif %}
     <div class="col-xs-12">
         {% if not object.is_external %}
             <a href="{{ url('contributions:contribution:donor_letter', object.pk) }}" target="_blank" class="btn btn-lg btn-success">Print Donor Letter</a>

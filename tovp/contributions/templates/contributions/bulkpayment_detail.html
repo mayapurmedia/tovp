@@ -128,6 +128,13 @@
         {{ print_field(field_label, object[field_name]) }}
     </div>
     {% endif %}
+    {% set field_label = 'Note' %}
+    {% set field_name = 'note' %}
+    {% if object[field_name] %}
+    <div class="col-xs-12">
+        {{ print_field(field_label, object[field_name])}}
+    </div>
+    {% endif %}
     <div class="col-xs-12">
         {% if object.receipt_type == 'official' %}
             <a href="{{ url('contributions:bulk_payment:print_receipt', object.pk, 0) }}" target="_blank" class="btn btn-lg btn-success">Print Receipt</a>

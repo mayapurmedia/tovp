@@ -25,6 +25,7 @@ class PersonIndex(ContentSearchIndexMixin, indexes.SearchIndex,
     country = indexes.CharField(model_attr='get_country_display', faceted=True)
     postcode = indexes.CharField(model_attr='postcode')
     pan_card_number = indexes.CharField(model_attr='pan_card_number', null=True)
+    note = indexes.CharField(model_attr='note')
 
     def prepare_mixed_name(self, obj):
         return obj.join_fields(

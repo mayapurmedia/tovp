@@ -44,6 +44,7 @@ class BaseContributionIndexMixin(indexes.SearchIndex):
     serial_number = indexes.CharField()
     has_book = indexes.CharField(faceted=True)
     has_slip = indexes.CharField(faceted=True)
+    note = indexes.CharField(model_attr='note')
 
     def prepare_source(self, obj):
         items = []

@@ -225,6 +225,8 @@ class BaseContribution(TimeStampedModel, AuthStampedModel, NextPrevMixin,
     overwrite_pan_card = models.CharField(
         _('Overwrite PAN card number'), max_length=50, blank=True, null=True)
 
+    note = models.TextField(_("Note"), max_length=255, blank=True)
+
     def __init__(self, *args, **kwargs):
         super(BaseContribution, self).__init__(*args, **kwargs)
         if self.serial_year:
