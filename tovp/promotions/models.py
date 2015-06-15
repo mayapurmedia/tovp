@@ -94,11 +94,12 @@ class BaseBrick(CertificateGivenMixin, CoinGivenMixin, BasePromotion):
                                     choices=BRICK_STATUS_CHOICES)
 
     def __str__(self):
-        return '{promotion_title} ({name}) — Coin={coin}, Cert={certificate}'.format(
-            promotion_title=self._meta.verbose_name.title(),
-            name=self.name_on_brick or '*None*',
-            coin='Yes' if self.coin_given else 'No',
-            certificate='Yes' if self.certificate_given else 'No')
+        return '{promotion_title} ({name}) — Coin={coin}, Cert={certificate}'. \
+            format(
+                promotion_title=self._meta.verbose_name.title(),
+                name=self.name_on_brick or '*None*',
+                coin='Yes' if self.coin_given else 'No',
+                certificate='Yes' if self.certificate_given else 'No')
 
     class Meta:
         abstract = True
