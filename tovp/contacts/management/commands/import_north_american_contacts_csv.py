@@ -3,6 +3,7 @@ import csv
 from optparse import make_option
 from django.core.management.base import BaseCommand, CommandError
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ObjectDoesNotExist
 
 from ...models import Person
 
@@ -61,7 +62,7 @@ class Command(BaseCommand):
                         # setattr(person, field_names[field], row[field].strip())
                 try:
                     person = Person.objects.get(country='US', pan_card_number='', **kwargs)
-                except:
+                except ObjectDoesNotExist:
                     person = Person(country='US', yatra='north-america',
                                     pan_card_number='', **kwargs)
                     if options['location']:
@@ -74,5 +75,7 @@ class Command(BaseCommand):
                     else:
                         print('ERROR - skipping, record missing name')
                     count += 1
+                except:
+                    pass
                 print(person.pk)
         print('Imported %d new contacts.' % count)
