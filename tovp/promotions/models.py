@@ -160,6 +160,33 @@ class SilverCoin(BaseCoin):
         'GBP': 9000,
     }
 
+    class Meta:
+        verbose_name = 'Srivas Coin'
+
+
+class GadadharCoin(BaseCoin):
+    amount = {
+        'INR': 1500000,
+        'USD': 25000,
+        'EUR': 25000,
+        'GBP': 25000,
+    }
+
+    class Meta:
+        verbose_name = 'Gadadhar Coin'
+
+
+class AdvaitaCoin(BaseCoin):
+    amount = {
+        'INR': 3100000,
+        'USD': 51000,
+        'EUR': 51000,
+        'GBP': 51000,
+    }
+
+    class Meta:
+        verbose_name = 'Advaita Coin'
+
 
 class GoldCoin(BaseCoin):
     amount = {
@@ -169,6 +196,9 @@ class GoldCoin(BaseCoin):
         'GBP': 108000,
     }
 
+    class Meta:
+        verbose_name = 'Nityananda Coin'
+
 
 class PlatinumCoin(BaseCoin):
     amount = {
@@ -177,6 +207,21 @@ class PlatinumCoin(BaseCoin):
         'EUR': 240000,
         'GBP': 220000,
     }
+
+    class Meta:
+        verbose_name = 'Caitanya Coin'
+
+
+class RadharaniCoin(BaseCoin):
+    amount = {
+        'INR': 60000000,
+        'USD': 1000000,
+        'EUR': 1000000,
+        'GBP': 1000000,
+    }
+
+    class Meta:
+        verbose_name = 'Radharani Coin'
 
 
 class SquareFeet(CertificateGivenMixin, BasePromotion):
@@ -236,5 +281,5 @@ class GeneralDonation(BasePromotion):
 
 
 promotions = [NrsimhaTile, GoldenBrick, GuruParamparaBrick, RadhaMadhavaBrick,
-              SilverCoin, GoldCoin, PlatinumCoin,
-              SquareFeet, SquareMeter, Trustee, GeneralDonation]
+              SilverCoin, GadadharCoin, AdvaitaCoin, GoldCoin, PlatinumCoin,
+              RadharaniCoin, SquareFeet, SquareMeter, Trustee, GeneralDonation]

@@ -3,7 +3,8 @@ from django import forms
 from contributions.models import Pledge
 
 from .models import (NrsimhaTile, GoldenBrick, GuruParamparaBrick,
-                     RadhaMadhavaBrick, SilverCoin, GoldCoin, PlatinumCoin,
+                     RadhaMadhavaBrick, SilverCoin, GadadharCoin, AdvaitaCoin,
+                     GoldCoin, PlatinumCoin, RadharaniCoin,
                      SquareFeet, SquareMeter, Trustee, GeneralDonation)
 
 
@@ -53,6 +54,16 @@ class SilverCoinForm(BaseCoinForm):
         model = SilverCoin
 
 
+class GadadharCoinForm(BaseCoinForm):
+    class Meta(BaseCoinForm.Meta):
+        model = GadadharCoin
+
+
+class AdvaitaCoinForm(BaseCoinForm):
+    class Meta(BaseCoinForm.Meta):
+        model = AdvaitaCoin
+
+
 class GoldCoinForm(BaseCoinForm):
     class Meta(BaseCoinForm.Meta):
         model = GoldCoin
@@ -61,6 +72,11 @@ class GoldCoinForm(BaseCoinForm):
 class PlatinumCoinForm(BaseCoinForm):
     class Meta(BaseCoinForm.Meta):
         model = PlatinumCoin
+
+
+class RadharaniCoinForm(BaseCoinForm):
+    class Meta(BaseCoinForm.Meta):
+        model = RadharaniCoin
 
 
 class BaseGeneralPromotionForm(PromotionForm):

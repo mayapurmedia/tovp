@@ -4,7 +4,8 @@ from ananta.search_indexes import ContentSearchIndexMixin
 from contacts.search_indexes import PledgePersonSearchIndexMixin
 
 from .models import (NrsimhaTile, GoldenBrick, GuruParamparaBrick,
-                     RadhaMadhavaBrick, SilverCoin, GoldCoin, PlatinumCoin,
+                     RadhaMadhavaBrick, SilverCoin, GadadharCoin, AdvaitaCoin,
+                     GoldCoin, PlatinumCoin, RadharaniCoin,
                      SquareFeet, SquareMeter, Trustee, GeneralDonation)
 
 
@@ -61,12 +62,24 @@ class SilverCoinIndex(PromotionIndexMixin, indexes.Indexable):
     model = SilverCoin
 
 
+class GadadharCoinIndex(PromotionIndexMixin, indexes.Indexable):
+    model = GadadharCoin
+
+
+class AdvaitaCoinIndex(PromotionIndexMixin, indexes.Indexable):
+    model = AdvaitaCoin
+
+
 class GoldCoinIndex(PromotionIndexMixin, indexes.Indexable):
     model = GoldCoin
 
 
 class PlatinumCoinIndex(PromotionIndexMixin, indexes.Indexable):
     model = PlatinumCoin
+
+
+class RadharaniCoinIndex(PromotionIndexMixin, indexes.Indexable):
+    model = RadharaniCoin
 
 
 class SquareFeetIndex(PromotionIndexMixin, indexes.Indexable):

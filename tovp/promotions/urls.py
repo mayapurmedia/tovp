@@ -3,12 +3,14 @@ from django.conf.urls import patterns, include, url
 
 from . import views
 from .models import (NrsimhaTile, GoldenBrick, GuruParamparaBrick,
-                     RadhaMadhavaBrick, SilverCoin, GoldCoin, PlatinumCoin,
+                     RadhaMadhavaBrick, SilverCoin, GadadharCoin, AdvaitaCoin,
+                     GoldCoin, PlatinumCoin, RadharaniCoin,
                      SquareFeet, SquareMeter, Trustee, GeneralDonation)
 
 from .forms import (NrsimhaTileForm, GoldenBrickForm, GuruParamparaBrickForm,
-                    RadhaMadhavaBrickForm, SilverCoinForm, GoldCoinForm,
-                    PlatinumCoinForm, SquareFeetForm, SquareMeterForm,
+                    RadhaMadhavaBrickForm, SilverCoinForm, GadadharCoinForm,
+                    AdvaitaCoinForm, GoldCoinForm, PlatinumCoinForm,
+                    RadharaniCoinForm, SquareFeetForm, SquareMeterForm,
                     TrusteeForm, GeneralDonationForm)
 
 urlpatterns = patterns(
@@ -149,7 +151,7 @@ urlpatterns = patterns(
                 name='delete'
             ),
         ), namespace="radha_madhava_brick")),
-    (r'^silver_coin/', include(
+    (r'^srivas_coin/', include(
         patterns(
             '',
             url(
@@ -182,7 +184,75 @@ urlpatterns = patterns(
                 ),
                 name='delete'
             ),
-        ), namespace="silver_coin")),
+        ), namespace="Srivas_Coin")),
+    (r'^gadadhar_coin/', include(
+        patterns(
+            '',
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
+                view=views.CoinCreateView.as_view(
+                    model=GadadharCoin,
+                    form_class=GadadharCoinForm,
+                ),
+                name='create'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/$',
+                view=views.CoinDetailView.as_view(
+                    model=GadadharCoin,
+                ),
+                name='detail'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/update/$',
+                view=views.CoinUpdateView.as_view(
+                    model=GadadharCoin,
+                    form_class=GadadharCoinForm,
+                ),
+                name='update'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/delete/$',
+                view=views.PromotionDeleteView.as_view(
+                    model=GadadharCoin,
+                ),
+                name='delete'
+            ),
+        ), namespace="Gadadhar_Coin")),
+    (r'^advaita_coin/', include(
+        patterns(
+            '',
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
+                view=views.CoinCreateView.as_view(
+                    model=AdvaitaCoin,
+                    form_class=AdvaitaCoinForm,
+                ),
+                name='create'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/$',
+                view=views.CoinDetailView.as_view(
+                    model=AdvaitaCoin,
+                ),
+                name='detail'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/update/$',
+                view=views.CoinUpdateView.as_view(
+                    model=AdvaitaCoin,
+                    form_class=AdvaitaCoinForm,
+                ),
+                name='update'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/delete/$',
+                view=views.PromotionDeleteView.as_view(
+                    model=AdvaitaCoin,
+                ),
+                name='delete'
+            ),
+        ), namespace="Advaita_Coin")),
     (r'^gold_coin/', include(
         patterns(
             '',
@@ -216,7 +286,7 @@ urlpatterns = patterns(
                 ),
                 name='delete'
             ),
-        ), namespace="gold_coin")),
+        ), namespace="Nityananda_Coin")),
     (r'^platinum_coin/', include(
         patterns(
             '',
@@ -250,7 +320,41 @@ urlpatterns = patterns(
                 ),
                 name='delete'
             ),
-        ), namespace="platinum_coin")),
+        ), namespace="Caitanya_Coin")),
+    (r'^radharani_coin/', include(
+        patterns(
+            '',
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
+                view=views.CoinCreateView.as_view(
+                    model=RadharaniCoin,
+                    form_class=RadharaniCoinForm,
+                ),
+                name='create'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/$',
+                view=views.CoinDetailView.as_view(
+                    model=RadharaniCoin,
+                ),
+                name='detail'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/update/$',
+                view=views.CoinUpdateView.as_view(
+                    model=RadharaniCoin,
+                    form_class=RadharaniCoinForm,
+                ),
+                name='update'
+            ),
+            url(
+                regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/(?P<pk>\d+)/delete/$',
+                view=views.PromotionDeleteView.as_view(
+                    model=RadharaniCoin,
+                ),
+                name='delete'
+            ),
+        ), namespace="Radharani_Coin")),
     (r'^square_feet/', include(
         patterns(
             '',
