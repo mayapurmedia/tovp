@@ -14,7 +14,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 # from django.contrib import messages
 
 # Only authenticated users can access views using this.
-from braces.views import LoginRequiredMixin, PermissionRequiredMixin
+from braces.views import (LoginRequiredMixin, PermissionRequiredMixin,
+                          MultiplePermissionsRequiredMixin)
 
 from ananta.models import RevisionCommentMixin
 from promotions.models import promotions
@@ -82,10 +83,25 @@ class PledgeUpdateView(RevisionCommentMixin, LoginRequiredMixin,
         return context
 
 
-class PledgeDeleteView(PermissionRequiredMixin, DeleteView):
+class PledgeDeleteView(MultiplePermissionsRequiredMixin, DeleteView):
     model = Pledge
-    permission_required = "contributions.delete_pledge"
+    permissions = {
+        "any": ("contributions.delete_pledge", "contributions.can_delete_if_no_contributions"),
+    }
     success_message = "%(pk)s was deleted successfully"
+
+    def dispatch(self, request, *args, **kwargs):
+        """
+        Check to see if the user in the request has the required
+        permission.
+        """
+
+        # Check if pledge doesn't have any contributions
+        if not self.get_object().can_delete_pledge(request.user):
+            return self.handle_no_permission(request)
+
+        return super(PledgeDeleteView, self).dispatch(
+            request, *args, **kwargs)
 
     def get_success_url(self):
         item = get_object_or_404(Pledge, pk=self.kwargs['pk'])
