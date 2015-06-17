@@ -44,6 +44,7 @@ django-audit-log
 # Add support for reversions of models
 django-reversion
 django-reversion-compare
+diff-match-patch
 
 # Search
 elasticsearch
