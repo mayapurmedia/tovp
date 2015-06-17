@@ -13,6 +13,7 @@ class PledgeIndex(ContentSearchIndexMixin, PersonSearchIndexMixin,
     amount = indexes.IntegerField(model_attr='amount')
     amount_paid = indexes.IntegerField(model_attr='amount_paid')
     currency = indexes.CharField(model_attr='currency', faceted=True)
+    source = indexes.MultiValueField(null=True, faceted=True)
     payments_start_date = indexes.DateTimeField(
         model_attr='payments_start_date')
     info = indexes.CharField(model_attr='info')
@@ -20,6 +21,14 @@ class PledgeIndex(ContentSearchIndexMixin, PersonSearchIndexMixin,
                                  faceted=True)
     status = indexes.CharField(model_attr='get_status_display', faceted=True)
     # next_payment_date =
+
+    def prepare_source(self, obj):
+        items = []
+        if obj.source:
+            items.append(obj.get_source_display())
+            if obj.source in ['jps-office', 'namahatta', 'jps-others']:
+                items.append('JPS (All combined)')
+        return items
 
     def get_model(self):
         return Pledge
@@ -52,6 +61,12 @@ class BaseContributionIndexMixin(indexes.SearchIndex):
             items.append(obj.get_source_display())
             if obj.source in ['jps-office', 'namahatta', 'jps-others']:
                 items.append('JPS (All combined)')
+        if getattr(obj, 'pledge', None) and obj.pledge.source:
+            source = obj.pledge.get_source_display()
+            if source not in items:
+                items.append(source)
+                if obj.source in ['jps-office', 'namahatta', 'jps-others']:
+                    items.append('JPS (All combined)')
         return items
 
     def prepare_receipt_date(self, obj):
