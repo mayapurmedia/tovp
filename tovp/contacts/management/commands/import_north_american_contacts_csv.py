@@ -17,6 +17,11 @@ class Command(BaseCommand):
             help="Specify import file",
             metavar="FILE"),
         make_option(
+            "-c",
+            "--country",
+            dest="country",
+            help="Specify country"),
+        make_option(
             "-l",
             "--location",
             dest="location",
@@ -29,6 +34,11 @@ class Command(BaseCommand):
         # make sure file option is present
         if options['filename'] is None:
             raise CommandError("Option `--file=...` must be specified.")
+
+        if options['country'] is None:
+            country = 'US'
+        else:
+            country = options['country']
 
         # make sure file path resolves
         if not os.path.isfile(options['filename']):
@@ -61,9 +71,9 @@ class Command(BaseCommand):
                         kwargs[field_names[field]] = row[field]
                         # setattr(person, field_names[field], row[field].strip())
                 try:
-                    person = Person.objects.get(country='US', pan_card_number='', **kwargs)
+                    person = Person.objects.get(country=country, pan_card_number='', **kwargs)
                 except ObjectDoesNotExist:
-                    person = Person(country='US', yatra='north-america',
+                    person = Person(country=country, yatra='north-america',
                                     pan_card_number='', **kwargs)
                     if options['location']:
                         person.location = options['location']
@@ -74,8 +84,9 @@ class Command(BaseCommand):
                         person.save()
                     else:
                         print('ERROR - skipping, record missing name')
+                        print(row)
                     count += 1
+                    print(person.pk)
                 except:
-                    pass
-                print(person.pk)
+                    print('not-imported')
         print('Imported %d new contacts.' % count)
