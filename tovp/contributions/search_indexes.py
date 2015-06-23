@@ -20,6 +20,7 @@ class PledgeIndex(ContentSearchIndexMixin, PersonSearchIndexMixin,
     interval = indexes.CharField(model_attr='get_interval_display',
                                  faceted=True)
     status = indexes.CharField(model_attr='get_status_display', faceted=True)
+    promotion_type = indexes.CharField(faceted=True)
     # next_payment_date =
 
     def prepare_source(self, obj):
@@ -32,6 +33,14 @@ class PledgeIndex(ContentSearchIndexMixin, PersonSearchIndexMixin,
 
     def get_model(self):
         return Pledge
+
+    def prepare_promotion_type(self, obj):
+        for promotion in obj.assigned_promotions():
+            try:
+                return promotion._meta.verbose_name.title()
+                # return self.promotion_type
+            except:
+                return 'Noname'
 
 
 class BaseContributionIndexMixin(indexes.SearchIndex):
