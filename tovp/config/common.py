@@ -57,7 +57,6 @@ class Common(Configuration):
         'reversion_compare',
         'haystack',
         'hijack',
-        'ajax_select',
         # 'django_extensions',
     )
 

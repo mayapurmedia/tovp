@@ -16,6 +16,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 # Only authenticated users can access views using this.
 from braces.views import (LoginRequiredMixin, PermissionRequiredMixin,
                           MultiplePermissionsRequiredMixin)
+from haystack.query import SearchQuerySet
+from django_ajax.decorators import ajax
 
 from ananta.models import RevisionCommentMixin
 from promotions.models import promotions
@@ -311,3 +313,23 @@ class BulkPaymentDonorLetterDetailView(LoginRequiredMixin, DetailView):
             get_context_data(**kwargs)
         context['person'] = self.get_object().person
         return context
+
+
+@ajax
+def bulk_payment_ajax_search(request):
+    sqs = SearchQuerySet()
+    sqs = sqs.narrow('content_type_exact:"Bulk Payment"')
+
+    if 'q' in request.GET:
+        q = request.GET['q']
+        sqs = sqs.filter(**{'mixed_name__startswith': q})
+    return [{
+        'text': "(#%d) %s %d%s %s" % (
+            bulk_payment.object.pk,
+            bulk_payment.object.person.mixed_name,
+            bulk_payment.amount,
+            bulk_payment.currency,
+            bulk_payment.receipt_date.strftime("(%B %-d %Y)"),
+        ),
+        'value': bulk_payment.object.pk
+    } for bulk_payment in sqs]

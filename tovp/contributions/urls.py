@@ -127,6 +127,11 @@ bulk_payments = patterns(
         view=views.BulkPaymentDeleteView.as_view(),
         name="delete",
     ),
+    url(
+        regex=r'^ajax/$',
+        view=views.bulk_payment_ajax_search,
+        name='ajax'
+    ),
 )
 
 

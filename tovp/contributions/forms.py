@@ -4,8 +4,6 @@ from django.forms import TextInput
 
 from datetimewidget.widgets import DateWidget
 
-from ajax_select import make_ajax_field
-
 from .models import Pledge, Contribution, BulkPayment
 
 from contacts.models import Person
@@ -41,11 +39,23 @@ class StaticField(forms.Field):
 
 
 class ContributionForm(forms.ModelForm):
-    collector = make_ajax_field(Contribution, 'collector', 'person', help_text=None)
-    bulk_payment = make_ajax_field(Contribution, 'bulk_payment', 'bulk_payment', help_text=None)
-
     def __init__(self, person, user=None, *args, **kwargs):
         super(ContributionForm, self).__init__(*args, **kwargs)
+
+        if self.is_bound:
+            return
+        if None not in (self.instance, self.instance.bulk_payment):
+            self.fields['bulk_payment'].queryset = BulkPayment.objects.filter(
+                pk=self.instance.bulk_payment.pk)
+        else:
+            self.fields['bulk_payment'].queryset = BulkPayment.objects.none()
+
+        if None not in (self.instance, self.instance.collector):
+            self.fields['collector'].queryset = Person.objects.filter(
+                pk=self.instance.collector.pk)
+        else:
+            self.fields['collector'].queryset = Person.objects.none()
+
         self.fields['pledge'].queryset = Pledge.objects.filter(
             person=person)
         instance = getattr(self, 'instance', None)
@@ -71,6 +81,7 @@ class ContributionForm(forms.ModelForm):
         model = Contribution
         exclude = ('status_changed', 'deposited_status', 'deposited_status_changed')
         widgets = {
+            'collector': forms.Select(attrs={'class': 'autocomplete'}),
             'amount': TextInput(attrs={'type': 'text'}),
             'dated': DateWidget(
                 attrs={},

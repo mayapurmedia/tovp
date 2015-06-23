@@ -24,6 +24,11 @@ person = patterns(
         view=views.PersonUpdateView.as_view(),
         name='update',
     ),
+    url(
+        regex=r'^ajax/$',
+        view=views.person_ajax_search,
+        name='ajax'
+    ),
 )
 
 urlpatterns = patterns(

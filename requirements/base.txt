@@ -54,6 +54,7 @@ django-haystack
 # other users without knowing their credentials.
 django-hijack
 
+djangoajax
 django-ajax-selects
 
 # New theme for admin

@@ -277,7 +277,35 @@
 </script>
 {% include 'contributions/_payment_toggles.html' %}
 <script>
-    $('.is-selectize').selectize()
+    $('.is-selectize').selectize();
+    $('#id_collector').selectize({
+        load: function(query, callback) {
+            if (!query.length) return callback();
+            $.ajax({
+                url: '{{ url('contacts:person:ajax') }}',
+                type: 'GET',
+                data: {q: query},
+                error: function() { callback(); },
+                success: function(res) {
+                    callback(res.content);
+                }
+            });
+        }
+    });
+    $('#id_bulk_payment').selectize({
+        load: function(query, callback) {
+            if (!query.length) return callback();
+            $.ajax({
+                url: '{{ url('contributions:bulk_payment:ajax') }}',
+                type: 'GET',
+                data: {q: query},
+                error: function() { callback(); },
+                success: function(res) {
+                    callback(res.content);
+                }
+            });
+        }
+    });
 </script>
 {% endblock %}
 

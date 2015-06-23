@@ -427,7 +427,7 @@ class BulkPayment(BaseContribution):
             self.person.mixed_name,
             str(self.amount),
             str(self.receipt_date),
-            '(%s)' % self.get_payment_method_display()
+            # '(%s)' % self.get_payment_method_display()
         )
         return ' - '.join(filter(bool, field_values))
 
