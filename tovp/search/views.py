@@ -12,6 +12,8 @@ from django.views.generic.edit import FormMixin
 from braces.views import LoginRequiredMixin
 from haystack.query import SearchQuerySet
 
+from contributions.exports import PledgeExport, ContributionExport
+
 from .forms import SearchForm
 
 
@@ -25,6 +27,9 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
     paginator_class = Paginator
     search_key = 'general_search'
     search_form_used = None
+
+    exporters = {'Contribution': ContributionExport,
+                 'Pledge': PledgeExport}
 
     def get_template_names(self):
         return ["search/results.html"]
@@ -185,107 +190,10 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
             facets = facets.facet_counts()
 
             # ======================================
-            if self.export_csv:
-
-                import csv
-                from django.utils.encoding import smart_str
-                from django.http import HttpResponse
-
-                response = HttpResponse(content_type='text/csv')
-                response['Content-Disposition'] = 'attachment; filename=donate.tovp.org-export.csv'
-                writer = csv.writer(response, csv.excel)
-                response.write(u'\ufeff'.encode('utf8'))  # BOM (optional...Excel needs it to open UTF-8 file properly)
-                writer.writerow([
-                    smart_str(u"Record ID"),
-                    smart_str(u"Mayapur Official Receipt"),
-                    smart_str(u"Receipt Date"),
-                    smart_str(u"Name"),
-                    smart_str(u"Email"),
-                    smart_str(u"Phone Number"),
-                    smart_str(u"Address"),
-                    smart_str(u"Serial Number"),
-                    smart_str(u"Status"),
-                    smart_str(u"Amount"),
-                    smart_str(u"Currency"),
-                    smart_str(u"Payment Method"),
-                    smart_str(u"Transaction ID"),
-                    smart_str(u"Cleared On"),
-                    smart_str(u"Dated On"),
-                    smart_str(u"PAN Card No"),
-                    smart_str(u"Source"),
-                    smart_str(u"Promotions"),
-                    smart_str(u"Collector"),
-                ])
-                for result in results:
-                    obj = result.object
-
-                    receipt_date = ''
-                    if obj.receipt_date:
-                        receipt_date = obj.receipt_date.strftime("%d %B %Y")
-                    elif obj.cleared_on:
-                        receipt_date = obj.cleared_on.strftime("%d %B %Y")
-
-                    cleared_on = ''
-                    if obj.cleared_on:
-                        cleared_on = obj.cleared_on.strftime("%d %B %Y")
-
-                    dated = ''
-                    if obj.dated:
-                        dated = obj.dated.strftime("%d %B %Y")
-
-                    if obj.overwrite_name:
-                        name = obj.overwrite_name
-                    elif obj.pledge.person.name:
-                        name = obj.pledge.person.name
-                    else:
-                        name = obj.pledge.person.initiated_name
-
-                    promotions = []
-                    for promotion in obj.pledge.assigned_promotions():
-                        try:
-                            promotions.append(promotion._meta.verbose_name.title())
-                        except:
-                            promotions.appen('*Noname*')
-
-                    pan_card_number = ''
-                    if obj.overwrite_pan_card:
-                        pan_card_number = obj.overwrite_pan_card
-                    elif obj.pledge.person.pan_card_number:
-                        pan_card_number = obj.pledge.person.pan_card_number
-
-                    address = ''
-                    if obj.overwrite_address:
-                        address = obj.overwrite_address
-                    elif obj.pledge.person.address:
-                        address = obj.pledge.person.address
-
-                    collector = ''
-                    if obj.collector:
-                        collector = obj.collector.mixed_name
-
-                    writer.writerow([
-                        smart_str(result.object.pk),
-                        smart_str(obj.is_external),
-                        smart_str(receipt_date),
-                        smart_str(name),
-                        smart_str(obj.pledge.person.email),
-                        smart_str(obj.pledge.person.phone_number),
-                        smart_str(address),
-                        smart_str(obj.get_serial_number()),
-                        smart_str(obj.get_status_display()),
-                        smart_str(obj.amount),
-                        smart_str(obj.currency),
-                        smart_str(obj.get_payment_method_display()),
-                        smart_str(obj.transaction_id),
-                        smart_str(cleared_on),
-                        smart_str(dated),
-                        smart_str(pan_card_number),
-                        smart_str(obj.get_source_display()),
-                        smart_str(",".join(promotions)),
-                        smart_str(collector),
-                    ])
-                return response
-
+            if self.export_csv and ('content_type' in self.request.GET):
+                if self.request.GET['content_type'] in self.exporters:
+                    exporter = self.exporters[self.request.GET['content_type']](results)
+                    return exporter.render()
             # ======================================
 
             paginator, page, results, is_paginated = self.paginate_results(results, page_size)
@@ -319,7 +227,7 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
 
         content_title = "Search"
         show_export_link = None
-        if 'content_type' in self.request.GET and self.request.GET['content_type'] == 'Contribution':
+        if 'content_type' in self.request.GET and self.request.GET['content_type'] in self.exporters:
             show_export_link = True
         ctx = {
             "form": form,
