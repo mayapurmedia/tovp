@@ -42,20 +42,6 @@ class ContributionForm(forms.ModelForm):
     def __init__(self, person, user=None, *args, **kwargs):
         super(ContributionForm, self).__init__(*args, **kwargs)
 
-        if self.is_bound:
-            return
-        if None not in (self.instance, self.instance.bulk_payment):
-            self.fields['bulk_payment'].queryset = BulkPayment.objects.filter(
-                pk=self.instance.bulk_payment.pk)
-        else:
-            self.fields['bulk_payment'].queryset = BulkPayment.objects.none()
-
-        if None not in (self.instance, self.instance.collector):
-            self.fields['collector'].queryset = Person.objects.filter(
-                pk=self.instance.collector.pk)
-        else:
-            self.fields['collector'].queryset = Person.objects.none()
-
         self.fields['pledge'].queryset = Pledge.objects.filter(
             person=person)
         instance = getattr(self, 'instance', None)
@@ -70,6 +56,22 @@ class ContributionForm(forms.ModelForm):
                 self.fields['cleared_on'] = StaticField()
                 self.fields['payment_method'] = StaticField()
 
+        if not self.is_bound:
+            if None not in (self.instance, self.instance.bulk_payment):
+                self.fields['bulk_payment'].queryset = BulkPayment.objects. \
+                    filter(pk=self.instance.bulk_payment.pk)
+            else:
+                self.fields['bulk_payment'].queryset = BulkPayment.objects. \
+                    none()
+
+            if None not in (self.instance, self.instance.collector):
+                self.fields['collector'].queryset = Person.objects.filter(
+                    pk=self.instance.collector.pk)
+                print(self.fields['collector'].queryset)
+
+            else:
+                self.fields['collector'].queryset = Person.objects.none()
+
     def clean(self):
         for name, field in self.fields.items():
             if isinstance(field, StaticField):
@@ -79,7 +81,8 @@ class ContributionForm(forms.ModelForm):
 
     class Meta:
         model = Contribution
-        exclude = ('status_changed', 'deposited_status', 'deposited_status_changed')
+        exclude = ('status_changed', 'deposited_status',
+                   'deposited_status_changed')
         widgets = {
             'collector': forms.Select(attrs={'class': 'autocomplete'}),
             'amount': TextInput(attrs={'type': 'text'}),

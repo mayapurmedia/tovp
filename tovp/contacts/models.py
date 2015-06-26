@@ -472,4 +472,4 @@ class Person(AuthStampedModel, NextPrevMixin, TimeStampedModel):
         return self.cache_ballance
 
     def __str__(self):
-        return self.name
+        return self.mixed_name
