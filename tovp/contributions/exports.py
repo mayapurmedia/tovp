@@ -84,7 +84,7 @@ class PledgeExport(BaseExport):
             ("Phone Number", {'type': 'value', 'value': 'person.phone_number'}),
             ("Address", {'type': 'custom', 'value': 'address'}),
             ("City", {'type': 'value', 'value': 'person.city'}),
-            ("ZIP code", {'type': 'value', 'value': 'person.postcode '}),
+            ("ZIP code", {'type': 'value', 'value': 'person.postcode'}),
             ("State", {'type': 'value', 'value': 'person.state'}),
             ("Country", {'type': 'value', 'value': 'person.country.name'}),
             ("Amount", {'type': 'value', 'value': 'amount'}),
