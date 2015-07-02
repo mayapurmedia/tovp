@@ -23,7 +23,7 @@ class PersonModelTests(TestCase):
         self.assertEqual(self.person.name, 'Jay Narasimhadeva')
 
     def test_str(self):
-        self.assertEqual(str(self.person), 'Jay Sri Narasimhadeva')
+        self.assertEqual(str(self.person), 'Narasimha Das Jay Sri Narasimhadeva')
 
     def test_full_name(self):
         self.assertEqual(self.person.full_name, 'Dr Jay Sri Narasimhadeva')
