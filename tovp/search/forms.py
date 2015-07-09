@@ -80,7 +80,6 @@ class SearchForm(forms.Form):
             except:
                 pass
 
-
     def search(self):
         if not self.is_valid():
             return self.show_all()
