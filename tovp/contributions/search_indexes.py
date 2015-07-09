@@ -113,6 +113,17 @@ class ContributionIndex(BaseContributionIndexMixin,
         model_attr='get_deposited_status_display', faceted=True)
     is_external = indexes.CharField(faceted=True)
     promotion_type = indexes.CharField(faceted=True)
+    collector = indexes.MultiValueField(null=True)
+
+    def prepare_collector(self, obj):
+        items = []
+        if obj.collector:
+            items.append(obj.collector.pk)
+        if getattr(obj, 'bulk_payment', None):
+            collector = obj.bulk_payment.person.pk
+            if collector not in items:
+                items.append(collector)
+        return items
 
     def get_model(self):
         return Contribution

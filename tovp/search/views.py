@@ -289,5 +289,9 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
         if 'export_csv' in self.request.GET and self.request.GET['export_csv']:
             self.export_csv = True
 
-        form = SearchForm(data)
+        collector = None
+        if 'collector' in self.request.GET and self.request.GET['collector']:
+            collector = self.request.GET['collector']
+
+        form = SearchForm(collector, data)
         return self.form_valid(form)

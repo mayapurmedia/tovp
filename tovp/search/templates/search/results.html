@@ -9,6 +9,11 @@
 
 {% block main_content_class %}{% if main_content_class %} {{ main_content_class }}{% endif %}{% endblock %}
 
+{% block javascript_head %}
+    {{ super() }}
+    {% include '_import-selectize.html' %}
+{% endblock %}
+
 {% block page_content %}
 <div class="row">
     <div class="search-filters col-xs-12 col-sm-3">
@@ -108,5 +113,22 @@
 </div>
 
 {% include '_deposit_status_changer.html' %}
+
+<script>
+    $('#id_collector').selectize({
+        load: function(query, callback) {
+            if (!query.length) return callback();
+            $.ajax({
+                url: '{{ url('contacts:person:ajax') }}',
+                type: 'GET',
+                data: {q: query},
+                error: function() { callback(); },
+                success: function(res) {
+                    callback(res.content);
+                }
+            });
+        }
+    });
+</script>
 
 {% endblock %}

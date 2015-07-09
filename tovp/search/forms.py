@@ -6,6 +6,8 @@ from django.utils.translation import ugettext as _
 from datetimewidget.widgets import DateWidget
 from haystack.query import SearchQuerySet
 
+from contacts.models import Person
+
 
 class SearchForm(forms.Form):
     q = forms.CharField(required=False, label=_('Text'),
@@ -39,6 +41,8 @@ class SearchForm(forms.Form):
                                      widget=forms.TextInput())
     record_id = forms.CharField(required=False, label=_('Record ID'),
                                 widget=forms.TextInput())
+    collector = forms.ChoiceField(required=False, label='Collector',
+                                  choices=())
 
     DATE_TYPE_CHOICES = (
         (u'receipt_date', _('Receipt Date')),
@@ -59,7 +63,8 @@ class SearchForm(forms.Form):
         widget=DateWidget(attrs={'id': "date-to"},
                           usel10n=True, bootstrap_version=3))
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, collector_pk=None, *args, **kwargs):
+        self.collector_pk = None
         self.searchqueryset = kwargs.pop('searchqueryset', None)
         self.load_all = kwargs.pop('load_all', False)
 
@@ -67,6 +72,14 @@ class SearchForm(forms.Form):
             self.searchqueryset = SearchQuerySet()
 
         super(SearchForm, self).__init__(*args, **kwargs)
+        if collector_pk:
+            try:
+                collector = Person.objects.filter(pk=collector_pk)[0]
+                self.fields['collector'].choices = ((collector.pk, collector.mixed_name),)
+                self.collector_pk = collector_pk
+            except:
+                pass
+
 
     def search(self):
         if not self.is_valid():
@@ -111,6 +124,11 @@ class SearchForm(forms.Form):
             filter_date = datetime.datetime.strptime(
                 self.cleaned_data.get(field_name), '%Y-%m-%d')
             sqs = sqs.filter(**{'%s__lte' % date_type: filter_date})
+
+        field_name = 'collector'
+        if self.collector_pk:
+            sqs = sqs.filter(**{'%s__startswith' % field_name:
+                                self.collector_pk})
 
         return sqs
 
