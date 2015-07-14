@@ -177,7 +177,7 @@
                 Fill following in case person who pays is doing on behalf of the contact:
             </div>
             {% set field_name = 'overwrite_name' %}
-            <div class="col-xs-12 col-sm-6 form-group{{' has-error' if form[field_name].errors }}">
+            <div class="col-xs-12 col-sm-4 form-group{{' has-error' if form[field_name].errors }}">
                 <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
                 {{form[field_name]|add_css('form-control')}}
                 {{ form[field_name].errors|safe }}
@@ -188,7 +188,18 @@
                 {% endif %}
             </div>
             {% set field_name = 'overwrite_address' %}
-            <div class="col-xs-12 col-sm-6 form-group{{' has-error' if form[field_name].errors }}">
+            <div class="col-xs-12 col-sm-5 form-group{{' has-error' if form[field_name].errors }}">
+                <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
+                {{form[field_name]|add_css('form-control')}}
+                {{ form[field_name].errors|safe }}
+                {% if form[field_name].help_text %}
+                <div class="help-text">
+                    {{ form[field_name].help_text }}
+                </div>
+                {% endif %}
+            </div>
+            {% set field_name = 'overwrite_pan_card' %}
+            <div class="col-xs-12 col-sm-3 form-group{{' has-error' if form[field_name].errors }}">
                 <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
                 {{form[field_name]|add_css('form-control')}}
                 {{ form[field_name].errors|safe }}

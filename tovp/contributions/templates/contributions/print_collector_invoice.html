@@ -120,7 +120,7 @@
                     {{ object.get_serial_number() }}
                 </span>
             </div>
-            {% if ((object.person.country == 'IN' and object.person.pan_card_number) or object.overwrite_pan_card) and object.status == 'completed' %}
+            {% if object.overwrite_pan_card != 'hide' and (object.person.pan_card_number or object.overwrite_pan_card) and object.status == 'completed' %}
             <div class="col-xs-12 item" style="text-align:right;">
                 <span class="item-name">ISKCON PAN Card No.:</span>
                 <span class="item-value">AAATI0017P</span>
@@ -159,8 +159,7 @@
     <div class="col-xs-11 item-value">
         {{ object.amount }} {{ object.currency }} ({{ object.amount|num2words }} {{ object.currency_words}})
     </div>
-
-    {% if object.person.pan_card_number or object.overwrite_pan_card %}
+    {% if object.overwrite_pan_card != 'hide' and (object.person.pan_card_number or object.overwrite_pan_card) and object.status == 'completed' %}
     <div class="col-xs-12">
         <div class="row">
             <div class="col-xs-2 col-custom-2-5 item-name">PAN Card Nunber:</div>
@@ -190,7 +189,7 @@
         Authorized Signatory {{ user.display_name }}
     </div>
 
-    {% if ((object.person.country == 'IN' and object.person.pan_card_number) or object.overwrite_pan_card) and object.status == 'completed' %}
+    {% if object.overwrite_pan_card != 'hide' and (object.person.pan_card_number or object.overwrite_pan_card) and object.status == 'completed' %}
     <div class="col-xs-6 align-right">
         <div class="itg-stamp align-right">
             <div class="box">

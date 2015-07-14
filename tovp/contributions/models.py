@@ -266,7 +266,7 @@ class BaseContribution(TimeStampedModel, AuthStampedModel, NextPrevMixin,
                 prefix = self.get_serial_number_prefix(completed=None)
 
             atg = ''
-            if (self.status == 'completed') and (self.overwrite_pan_card or self.pledge.person.pan_card_number):
+            if self.status == 'completed' and self.overwrite_pan_card != 'hide' and (self.overwrite_pan_card or self.pledge.person.pan_card_number):
                 atg = '80G/'
             return '{prefix}/{year}/{atg}{number}'.format(prefix=prefix,
                                                           year=self.serial_year,
@@ -407,7 +407,7 @@ class BulkPayment(BaseContribution):
                 prefix = self.get_serial_number_prefix(completed=None)
 
             atg = ''
-            if self.overwrite_pan_card or self.person.pan_card_number:
+            if self.status == 'completed' and self.overwrite_pan_card != 'hide' and (self.overwrite_pan_card or self.person.pan_card_number):
                 atg = '80G/'
             return '{prefix}/{year}/{atg}{number}'.format(prefix=prefix,
                                                           year=self.serial_year,
