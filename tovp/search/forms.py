@@ -10,8 +10,8 @@ from contacts.models import Person
 
 
 class SearchForm(forms.Form):
-    q = forms.CharField(required=False, label=_('Text'),
-                        widget=forms.TextInput())  # attrs={'type': 'search'}))
+    q = forms.CharField(required=False, label=_('Search Text'),
+                        widget=forms.TextInput())
     # has_releases = forms.BooleanField(label=_("Has Releases"),
     #                                   required=False, initial=True)
     mixed_name = forms.CharField(required=False, label=_('Mixed Name'),
@@ -35,6 +35,8 @@ class SearchForm(forms.Form):
                                       widget=forms.TextInput())
     book_number = forms.CharField(required=False, label=_('Book Number'),
                                   widget=forms.TextInput())
+    postcode = forms.CharField(required=False, label=_('Post Code'),
+                               widget=forms.TextInput())
     slip_number = forms.CharField(required=False, label=_('Slip Number'),
                                   widget=forms.TextInput())
     transaction_id = forms.CharField(required=False, label=_('Transaction ID'),
@@ -103,7 +105,7 @@ class SearchForm(forms.Form):
         # fields which are filtered with __startswith
         starts_with = [
             'mixed_name', 'initiated_name', 'first_name', 'middle_name',
-            'last_name', 'pan_card_number', 'record_id',
+            'last_name', 'pan_card_number', 'record_id', 'postcode',
             'book_number', 'slip_number', 'transaction_id']
 
         for field_name in starts_with:

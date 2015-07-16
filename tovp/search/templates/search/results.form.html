@@ -8,7 +8,7 @@
         {% endif %}
 
         <div class="row">
-            {% for field_name in ['mixed_name'] %}
+            {% for field_name in ['mixed_name', 'q'] %}
             <div class="col-ms-12 col-sm-12 form-group{{' has-error' if form[field_name].errors }}">
                 <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
 
@@ -113,9 +113,7 @@
                 {% endif %}
             </div>
             {% endfor %}
-        </div>
-        <div class="row">
-            {% for field_name in ['date_type', 'date_from', 'date_to'] %}
+            {% for field_name in ['postcode', 'collector'] %}
             <div class="col-ms-6 col-sm-4 form-group{{' has-error' if form[field_name].errors }}">
                 <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
                 {{form[field_name]|add_css('form-control')}}
@@ -129,7 +127,7 @@
             {% endfor %}
         </div>
         <div class="row">
-            {% for field_name in ['collector'] %}
+            {% for field_name in ['date_type', 'date_from', 'date_to'] %}
             <div class="col-ms-6 col-sm-4 form-group{{' has-error' if form[field_name].errors }}">
                 <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
                 {{form[field_name]|add_css('form-control')}}

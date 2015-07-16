@@ -1,6 +1,13 @@
 {{ object.first_name }}
+{{ object.middle_name }}
 {{ object.last_name }}
 {{ object.initiated_name }}
 {{ object.email }}
 {{ object.phone_number }}
+{{ object.temple }}
 {{ object.address }}
+{{ object.city }}
+{{ object.postcode }}
+{{ object.pan_card_number }}
+{{ object.note }}
+
