@@ -45,6 +45,27 @@ class RadhaMadhavaBrickForm(BaseBrickForm):
 
 
 class BaseCoinForm(PromotionForm):
+    nrsimha_tile = forms.CharField(required=False, widget=forms.TextInput(),
+                                   label='Name for Nrsimha Tile')
+    golden_brick = forms.CharField(required=False, widget=forms.TextInput(),
+                                   label='Name for Golden Brick')
+    radha_madhava_brick = forms.CharField(required=False,
+                                          widget=forms.TextInput(),
+                                          label='Name for Radha Madhava Brick')
+
+    def save(self, commit=True):
+        instance = super(BaseCoinForm, self).save()
+        NrsimhaTile(pledge=self.cleaned_data['pledge'],
+                    name_on_brick=self.cleaned_data['nrsimha_tile'],
+                    ).save()
+        GoldenBrick(pledge=self.cleaned_data['pledge'],
+                    name_on_brick=self.cleaned_data['golden_brick'],
+                    ).save()
+        RadhaMadhavaBrick(
+            pledge=self.cleaned_data['pledge'],
+            name_on_brick=self.cleaned_data['radha_madhava_brick']).save()
+        return instance
+
     class Meta:
         exclude = ['certificate_given_date', 'coin_given_date']
 

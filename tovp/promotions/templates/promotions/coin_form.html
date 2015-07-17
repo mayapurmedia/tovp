@@ -54,6 +54,22 @@
                 {% endif %}
             </div>
         </div>
+        {% if not object %}
+        <div class="row">
+            {% for field_name in complimentary_bricks %}
+            <div class="col-xs-12 form-group{{' has-error' if form[field_name].errors }}">
+                <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
+                {{form[field_name]|add_css('form-control')}}
+                {% if form[field_name].help_text %}
+                {{ form[field_name].errors|safe }}
+                    <div class="help-text">
+                        {{ form[field_name].help_text }}
+                    </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
         <input class="btn btn-lg btn-success" type="submit" value="Save" />
         {% if object and user.has_perm('promotions.delete_silvercoin' )%}
             <a href="{{ object.get_delete_url() }}" class="btn btn-large">Delete {{ object._meta.verbose_name.title() }}</a>

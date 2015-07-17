@@ -40,6 +40,8 @@ class BasePromotionCreateUpdateView(LoginRequiredMixin,
             **kwargs)
         context['content_title'] = "Add %s" % self.model._meta. \
             verbose_name.title()
+        context['complimentary_bricks'] = ['nrsimha_tile', 'golden_brick',
+                                           'radha_madhava_brick']
         return context
 
 
