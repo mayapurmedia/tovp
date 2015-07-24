@@ -20,7 +20,7 @@ class PledgeIndex(ContentSearchIndexMixin, PersonSearchIndexMixin,
     interval = indexes.CharField(model_attr='get_interval_display',
                                  faceted=True)
     status = indexes.CharField(model_attr='get_status_display', faceted=True)
-    promotion_type = indexes.CharField(faceted=True)
+    promotion_type = indexes.MultiValueField(null=True, faceted=True)
     # next_payment_date =
 
     def prepare_source(self, obj):
@@ -35,12 +35,13 @@ class PledgeIndex(ContentSearchIndexMixin, PersonSearchIndexMixin,
         return Pledge
 
     def prepare_promotion_type(self, obj):
+        items = []
         for promotion in obj.assigned_promotions():
             try:
-                return promotion._meta.verbose_name.title()
-                # return self.promotion_type
+                items.append(promotion._meta.verbose_name.title())
             except:
-                return 'Noname'
+                items.append('Noname')
+        return items
 
 
 class BaseContributionIndexMixin(indexes.SearchIndex):
@@ -112,7 +113,7 @@ class ContributionIndex(BaseContributionIndexMixin,
     deposited_status = indexes.CharField(
         model_attr='get_deposited_status_display', faceted=True)
     is_external = indexes.CharField(faceted=True)
-    promotion_type = indexes.CharField(faceted=True)
+    promotion_type = indexes.MultiValueField(null=True, faceted=True)
     collector = indexes.MultiValueField(null=True)
 
     def prepare_collector(self, obj):
@@ -134,12 +135,13 @@ class ContributionIndex(BaseContributionIndexMixin,
         return 'External'
 
     def prepare_promotion_type(self, obj):
+        items = []
         for promotion in obj.pledge.assigned_promotions():
             try:
-                return promotion._meta.verbose_name.title()
-                # return self.promotion_type
+                items.append(promotion._meta.verbose_name.title())
             except:
-                return 'Noname'
+                items.append('Noname')
+        return items
 
 
 class BulkPaymentIndex(BaseContributionIndexMixin, ContentSearchIndexMixin,

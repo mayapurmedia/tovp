@@ -26,6 +26,16 @@ class PersonIndex(ContentSearchIndexMixin, indexes.SearchIndex,
     postcode = indexes.CharField(model_attr='postcode')
     pan_card_number = indexes.CharField(model_attr='pan_card_number', null=True)
     note = indexes.CharField(model_attr='note')
+    promotion_type = indexes.MultiValueField(null=True, faceted=True)
+
+    def prepare_promotion_type(self, obj):
+        items = []
+        for promotion in obj.assigned_promotions():
+            try:
+                items.append(promotion._meta.verbose_name.title())
+            except:
+                items.append('Noname')
+        return items
 
     def prepare_mixed_name(self, obj):
         return obj.join_fields(
