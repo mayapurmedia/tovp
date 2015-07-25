@@ -25,6 +25,7 @@ urlpatterns = patterns(
     # Your stuff: custom urls go here
     url(r'^contacts/', include("contacts.urls", namespace="contacts")),
     url(r'^promotions/', include("promotions.urls", namespace="promotions")),
+    url(r'^gifts/', include("gifts.urls", namespace="gifts")),
     url(r'^contributions/', include("contributions.urls",
                                     namespace="contributions")),
     url(r'^hijack/', include('hijack.urls')),

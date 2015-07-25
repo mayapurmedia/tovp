@@ -67,6 +67,7 @@ class Common(Configuration):
         'contacts',
         'contributions',
         'promotions',
+        'gifts',
         'search',
         'theme',
         # Your stuff: custom apps go here

@@ -26,7 +26,15 @@ class PersonIndex(ContentSearchIndexMixin, indexes.SearchIndex,
     postcode = indexes.CharField(model_attr='postcode')
     pan_card_number = indexes.CharField(model_attr='pan_card_number', null=True)
     note = indexes.CharField(model_attr='note')
+    gifts = indexes.MultiValueField(null=True, faceted=True)
     promotion_type = indexes.MultiValueField(null=True, faceted=True)
+
+    def prepare_gifts(self, obj):
+        items = []
+        if obj.gifts.count():
+            for gift_given in obj.gifts.all():
+                items.append(gift_given.gift.name)
+        return items
 
     def prepare_promotion_type(self, obj):
         items = []

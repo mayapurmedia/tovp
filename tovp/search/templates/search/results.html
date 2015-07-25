@@ -92,6 +92,8 @@
                     {% include "search/partials/model_promotion.html" %}
                 {% elif result.content_type == 'Bulk Payment' %}
                     {% include "search/partials/model_bulk_payment.html" %}
+                {% elif result.content_type == 'Gift' %}
+                    {% include "search/partials/model_gift.html" %}
                 {% else %}
                     <div class="person-result">
                         <div>XXX {{ result.content_type }}: <a class="object-link" href="{{ result.absolute_url }}">{{ result.full_name }}{% if result.initiated_name %} - {{ result.initiated_name }}{% endif %}</a></div>
