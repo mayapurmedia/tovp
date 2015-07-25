@@ -16,7 +16,7 @@
               {% if user.has_perm('contacts.change_person') %}
                   <li><a href="{{ url('contacts:person:create') }}">Add new person</a></li>
               {% endif %}
-              {% if user.has_perm('gitfs.add_gift') %}
+              {% if user.has_perm('gifts.add_gift') %}
                   <li><a href="{{ url('gifts:gift:index') }}">Manage Gifts</a></li>
               {% endif %}
               {% if user.is_authenticated() %}
