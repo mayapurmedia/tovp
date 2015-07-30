@@ -185,7 +185,7 @@
                             {% endfor %}
                             </ul>
                         {% else %}
-                            <p>Person don't have any promotions yet.</p>
+                            <p>Person don't have any gifts yet.</p>
                         {% endif %}
                         {% if user.has_perm('gifts.add_giftgiven') %}
                             <a href="{{ url('gifts:gift_given:create', object.pk) }}" class="btn btn-lg btn-success">Add GIFT</a>
