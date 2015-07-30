@@ -88,6 +88,7 @@ class PledgeExport(BaseExport):
             ("State", {'type': 'value', 'value': 'person.state'}),
             ("Country", {'type': 'value', 'value': 'person.country.name'}),
             ("Amount", {'type': 'value', 'value': 'amount'}),
+            ("Amount Paid", {'type': 'value', 'value': 'amount_paid'}),
             ("Currency", {'type': 'value', 'value': 'currency'}),
             ("Source", {'type': 'function', 'value': 'get_source_display'}),
             ("Promotions", {'type': 'custom', 'value': 'promotions'}),
