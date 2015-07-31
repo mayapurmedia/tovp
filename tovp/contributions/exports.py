@@ -37,7 +37,9 @@ class PledgeExport(BaseExport):
     def export_data(self):
         export_data = OrderedDict((
             ("Record ID", {'type': 'value', 'value': 'pk'}),
-            ("Legal Name", {'type': 'value', 'value': 'person.name'}),
+            ("First Name", {'type': 'value', 'value': 'person.first_name'}),
+            ("Middle Name", {'type': 'value', 'value': 'person.middle_name'}),
+            ("Last Name", {'type': 'value', 'value': 'person.last_name'}),
             ("Initiated Name", {'type': 'value', 'value': 'person.initiated_name'}),
             ("Email", {'type': 'value', 'value': 'person.email'}),
             ("Phone Number", {'type': 'value', 'value': 'person.phone_number'}),
@@ -133,6 +135,10 @@ class ContributionExport(BaseExport):
             ("Mayapur Official Receipt", {'type': 'value', 'value': 'is_external'}),
             ("Receipt Date", {'type': 'custom', 'value': 'receipt_date'}),
             ("Name", {'type': 'custom', 'value': 'name'}),
+            ("First Name", {'type': 'value', 'value': 'pledge.person.first_name'}),
+            ("Middle Name", {'type': 'value', 'value': 'pledge.person.middle_name'}),
+            ("Last Name", {'type': 'value', 'value': 'pledge.person.last_name'}),
+            ("Initiated Name", {'type': 'value', 'value': 'pledge.person.initiated_name'}),
             ("Email", {'type': 'value', 'value': 'pledge.person.email'}),
             ("Phone Number", {'type': 'value', 'value': 'pledge.person.phone_number'}),
             ("Address", {'type': 'custom', 'value': 'address'}),
