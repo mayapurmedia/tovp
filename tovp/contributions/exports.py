@@ -51,6 +51,7 @@ class PledgeExport(BaseExport):
             ("Currency", {'type': 'value', 'value': 'currency'}),
             ("Percent Paid", {'type': 'custom', 'value': 'progress'}),
             ("Source", {'type': 'function', 'value': 'get_source_display'}),
+            ("Temple", {'type': 'value', 'value': 'person.temple'}),
             ("Promotions", {'type': 'custom', 'value': 'promotions'}),
         ))
         return export_data
