@@ -141,12 +141,13 @@ class ContributionExport(BaseExport):
             ("Amount", {'type': 'value', 'value': 'amount'}),
             ("Currency", {'type': 'value', 'value': 'currency'}),
             ("Payment Method", {'type': 'function', 'value': 'get_payment_method_display'}),
-            ("Transaction ID", {'type': 'value', 'value': 'transaction_id'}),
+            ("Transaction/Cheque ID", {'type': 'value', 'value': 'transaction_id'}),
             ("Cleared On", {'type': 'custom', 'value': 'cleared_on'}),
             ("Dated On", {'type': 'custom', 'value': 'dated'}),
             ("PAN Card No", {'type': 'custom', 'value': 'pan_card_number'}),
             ("Source", {'type': 'function', 'value': 'get_source_display'}),
             ("Promotions", {'type': 'custom', 'value': 'promotions'}),
             ("Collector", {'type': 'custom', 'value': 'collector'}),
+            ("Note", {'type': 'value', 'value': 'note'}),
         ))
         return export_data
