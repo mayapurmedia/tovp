@@ -20,6 +20,10 @@ class PledgeExport(BaseExport):
             address = obj.person.address
         return address
 
+    def get_progress(self):
+        obj = self.obj
+        return "{progress:.2f}%".format(progress=obj.progress)
+
     def get_promotions(self):
         obj = self.obj
         promotions = []
@@ -45,6 +49,7 @@ class PledgeExport(BaseExport):
             ("Amount", {'type': 'value', 'value': 'amount'}),
             ("Amount Paid", {'type': 'value', 'value': 'amount_paid'}),
             ("Currency", {'type': 'value', 'value': 'currency'}),
+            ("Percent Paid", {'type': 'custom', 'value': 'progress'}),
             ("Source", {'type': 'function', 'value': 'get_source_display'}),
             ("Promotions", {'type': 'custom', 'value': 'promotions'}),
         ))
