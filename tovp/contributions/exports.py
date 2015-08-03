@@ -37,6 +37,7 @@ class PledgeExport(BaseExport):
     def export_data(self):
         export_data = OrderedDict((
             ("Record ID", {'type': 'value', 'value': 'pk'}),
+            ("Contact Record ID", {'type': 'value', 'value': 'person.pk'}),
             ("First Name", {'type': 'value', 'value': 'person.first_name'}),
             ("Middle Name", {'type': 'value', 'value': 'person.middle_name'}),
             ("Last Name", {'type': 'value', 'value': 'person.last_name'}),
