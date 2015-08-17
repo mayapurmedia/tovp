@@ -12,6 +12,7 @@ from django.views.generic.edit import FormMixin
 from braces.views import LoginRequiredMixin
 from haystack.query import SearchQuerySet
 
+from contacts.exports import ContactExport
 from contributions.exports import PledgeExport, ContributionExport
 
 from .forms import SearchForm
@@ -28,7 +29,8 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
     search_key = 'general_search'
     search_form_used = None
 
-    exporters = {'Contribution': ContributionExport,
+    exporters = {'Contact': ContactExport,
+                 'Contribution': ContributionExport,
                  'Pledge': PledgeExport}
 
     def get_template_names(self):

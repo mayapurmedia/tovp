@@ -1,3 +1,4 @@
+import datetime
 import re
 
 from django.db import models
@@ -434,29 +435,45 @@ class Person(AuthStampedModel, NextPrevMixin, TimeStampedModel):
         # if we are calling this method in same request it will use cached
         # values instead of going through al pledges again
         if not self.cache_ballance:
+            def get_financial_year(date):
+                if date.month < 4:
+                    year = date.year - 2001
+                else:
+                    year = date.year - 2000
+                    return '%d-%d' % (year, year + 1)
+
+            def ballance_dict():
+                return {'pledged': 0,
+                        'paid': 0,
+                        'used': 0,
+                        'available': 0,
+                        'donated_total': 0,
+                        'donated_year': 0,
+                        'donated_financial_year': 0}
+
             ballance = {
-                'USD': {'pledged': 0,
-                        'paid': 0,
-                        'used': 0,
-                        'available': 0},
-                'INR': {'pledged': 0,
-                        'paid': 0,
-                        'used': 0,
-                        'available': 0},
-                'GBP': {'pledged': 0,
-                        'paid': 0,
-                        'used': 0,
-                        'available': 0},
-                'EUR': {'pledged': 0,
-                        'paid': 0,
-                        'used': 0,
-                        'available': 0},
+                'USD': ballance_dict(),
+                'INR': ballance_dict(),
+                'GBP': ballance_dict(),
+                'EUR': ballance_dict(),
             }
+
+            today = datetime.datetime.now()
+            current_financial_year = get_financial_year(today)
+
             Pledge = get_model(app_label='contributions', model_name='Pledge')
             for pledge in Pledge.objects.all().filter(person=self):
                 ballance[pledge.currency]['pledged'] += pledge.amount
                 ballance[pledge.currency]['paid'] += pledge.amount_paid or 0
                 self.has_ballance = True
+
+                for contribution in pledge.contributions.all():
+                    if contribution.status == 'completed':
+                        if today.year == contribution.cleared_on.year:
+                            ballance[pledge.currency]['donated_year'] += contribution.amount
+                        if contribution.generate_serial_year() == current_financial_year:
+                            ballance[pledge.currency]['donated_financial_year'] += contribution.amount
+
             for promotion in self.assigned_promotions():
                 currency = promotion.pledge.currency
                 if hasattr(promotion, 'quantity'):
@@ -464,6 +481,7 @@ class Person(AuthStampedModel, NextPrevMixin, TimeStampedModel):
                         promotion.quantity * promotion.amount[currency]
                 else:
                     ballance[currency]['used'] += promotion.amount[currency]
+
             # calculate unused ballance for each currency
             for currency in ballance:
                 ballance[currency]['available'] = \
