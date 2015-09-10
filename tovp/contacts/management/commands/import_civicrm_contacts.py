@@ -340,10 +340,15 @@ class Command(BaseCommand):
                 if address:
                     kwargs['postcode'] = postcode
 
-                try:
-                    person = Person.objects.get(**kwargs)
-                except:
+                person_count = Person.objects. \
+                    filter(old_database_id=kwargs['old_database_id']). \
+                    all().count()
+                if person_count:
+                    print('...skipping', kwargs['old_database_id'],
+                          person_count)
+                else:
                     person = Person(**kwargs)
+                    print('-->saving  ', kwargs['old_database_id'])
 
                     if not (person.first_name or person.last_name or
                             person.middle_name or person.initiated_name):
@@ -351,7 +356,7 @@ class Command(BaseCommand):
 
                     person.created_by = user
                     person.save()
+                    if not person.pk:
+                        print('ERROR - not created %d' % person.old_database_id)
                 count += 1
-                if not person.pk:
-                    print('ERROR - not created %d' % person.old_database_id)
         print('Imported %d new contacts.' % count)
