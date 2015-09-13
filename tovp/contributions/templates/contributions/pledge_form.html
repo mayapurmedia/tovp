@@ -3,20 +3,10 @@
 
 {% block javascript_head %}
     {{ super() }}
-    <link href="//cdnjs.cloudflare.com/ajax/libs/selectize.js/0.6.14/selectize.css" rel="stylesheet">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/selectize.js/0.6.14/selectize.min.js"></script>
+    {% include '_import-selectize.html' %}
 {% endblock %}
 
 {% block page_content %}
-{# <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
- #}
-<!-- Latest compiled and minified JavaScript -->
-{# <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> #}
-
     <script src="{{ static('js/jquery.formset.js') }}"></script>
     <form action="" enctype="multipart/form-data" method="post">{{ csrf() }}
         <div class="row">
@@ -54,9 +44,9 @@
                 {% endif %}
             </div>
             {% set field_name = 'source' %}
-            <div class="col-ms-5 col-sm-6 col-lg-4 form-group{{' has-error' if form[field_name].errors }}">
+            <div class="col-xs-12 col-lg-4 form-group{{' has-error' if form[field_name].errors }}">
                 <label class="control-label" for="id_{{ field_name }}">{{ form[field_name].label }}</label>
-                {{form[field_name]|add_css('form-control')}}
+                {{ form[field_name]|add_css('is-selectize') }}
                 {{ form[field_name].errors|safe }}
                 {% if form[field_name].help_text %}
                     <div class="help-text">
@@ -116,6 +106,8 @@
     document.querySelector('form').onkeypress = checkEnter;
 </script>
 <script>
+$('.is-selectize').selectize();
+
 $(document).ready(function() {
     var $aerialTr = $('#id_A').closest('tr').hide();
     var $groundSprayTr = $('#id_B').closest('tr').hide();

@@ -19,6 +19,7 @@ class SourceMixin(models.Model):
         (u'jps-office', _('JPS Office')),
         (u'namahatta', _('JPS Namahatta')),
         (u'jps-others', _('JPS Others')),
+        (u'gkg-vp-2015', _('GKG Vyasa Puja 2015')),
         (u'nvs', _('Nava Yogendra Swami')),
         (u'mso', _('MSO')),
         (u'lm-reception', _('Life Membership Reception')),
