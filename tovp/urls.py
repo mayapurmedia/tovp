@@ -29,5 +29,6 @@ urlpatterns = patterns(
     url(r'^contributions/', include("contributions.urls",
                                     namespace="contributions")),
     url(r'^hijack/', include('hijack.urls')),
+    (r'^attachments/', include('attachments.urls')),
     (r'^ajax_select/lookups/', include(ajax_select_urls)),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
