@@ -94,6 +94,8 @@
     </div>
     {% endif %}
 
+    {% include "attachments/_attached_files.html" %}
+
     <div class="col-xs-12">
         <h2>Contributions</h2>
         {% if object.contributions.all() %}

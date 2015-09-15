@@ -70,6 +70,7 @@ class Common(Configuration):
         'gifts',
         'search',
         'theme',
+        'attachments',
         # Your stuff: custom apps go here
     )
 

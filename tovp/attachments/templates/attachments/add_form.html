@@ -1,0 +1,59 @@
+{% if form %}
+<div class="col-xs-12">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12">
+
+            <form method="post" enctype="multipart/form-data" action="{{ form_url }}" class="add-attachment">
+                {% if csrf() %}
+                    {{ csrf() }}
+                {% else %}
+                    <input type='hidden' name='csrfmiddlewaretoken' value='{{ csrf_cookie }}' />
+                {% endif %}
+
+                <input type="hidden" name="next" value="{{ next }}"/>
+
+        <div class="row">
+            {% set field_name = 'attachment_type' %}
+            <div class="col-xs-12 col-ms-6 col-sm-4 form-group{{' has-error' if form[field_name].errors }}">
+                <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
+                {{ form[field_name].errors|safe }}
+                {{form[field_name]|add_css('form-control')}}
+                {% if form[field_name].help_text %}
+                    <div class="help-text">
+                        {{ form[field_name].help_text }}
+                    </div>
+                {% endif %}
+            </div>
+            {% set field_name = 'description' %}
+            <div class="col-xs-12 col-ms-6 col-sm-4 form-group{{' has-error' if form[field_name].errors }}">
+                <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
+                {{ form[field_name].errors|safe }}
+                {{form[field_name]|add_css('form-control')}}
+                {% if form[field_name].help_text %}
+                    <div class="help-text">
+                        {{ form[field_name].help_text }}
+                    </div>
+                {% endif %}
+            </div>
+            {% set field_name = 'attachment_file' %}
+            <div class="col-xs-12 col-ms-6 col-sm-4 form-group{{' has-error' if form[field_name].errors }}">
+                <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
+                {{ form[field_name].errors|safe }}
+                {{form[field_name]|add_css('xform-control')}}
+                {% if form[field_name].help_text %}
+                    <div class="help-text">
+                        {{ form[field_name].help_text }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+
+                <p class="submit">
+                <input class="btn" type="submit" value="Add attachment"/>
+                </p>
+            </form>
+        </div>
+    </div>
+</div>
+{% endif %}
