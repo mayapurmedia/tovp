@@ -30,7 +30,7 @@ class Attachment(TimeStampedModel, AuthStampedModel):
     object_id = models.PositiveIntegerField()
     content_object = generic.GenericForeignKey('content_type', 'object_id')
     attachment_file = models.FileField('attachment', upload_to=attachment_upload)
-    description = models.CharField(max_length=255)
+    description = models.CharField(max_length=255, blank=True)
 
     ATTACHMENT_TYPE_CHOICES = (
         ('passport', _('Passport')),
