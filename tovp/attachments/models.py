@@ -21,8 +21,8 @@ class Attachment(TimeStampedModel, AuthStampedModel):
         return 'attachments/%s/%s/%s' % (
             '%s_%s' % (instance.content_object._meta.app_label,
                        instance.content_object._meta.object_name.lower()),
-                       instance.content_object.pk,
-                       filename)
+            instance.content_object.pk,
+            filename)
 
     objects = AttachmentManager()
 
