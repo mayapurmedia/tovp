@@ -7,7 +7,7 @@ from django.core import exceptions
 
 from model_utils.fields import MonitorField
 from model_utils.models import TimeStampedModel
-# from dateutil import relativedelta
+from dateutil.relativedelta import relativedelta
 from audit_log.models import AuthStampedModel
 
 from contacts.models import Person
@@ -115,9 +115,24 @@ class Pledge(TimeStampedModel, AuthStampedModel, NextPrevMixin, SourceMixin):
             total += contribution.amount
         self.amount_paid = total
 
-    # def update_next_payment_due(self):
-    #     self.next_payment_date = last_contribution_date + \
-    #                              relativedelta(months = self.interval)
+    def update_next_payment_date(self):
+        latest = self.contributions.all().order_by('-cleared_on')[:1]
+        interval = int(self.interval)
+        # if there is any contribution dated after payment start
+        if latest.count() and latest[0].cleared_on and (latest[0].cleared_on > self.payments_start_date):
+            self.next_payment_date = latest[0].cleared_on + \
+                relativedelta(months=interval)
+        else:
+            self.next_payment_date = self.payments_start_date + \
+                relativedelta(months=interval) + \
+                relativedelta(days=14)
+        return self.next_payment_date
+
+    def has_late_payment(self):
+        self.update_next_payment_date()
+        if self.next_payment_date > datetime.date(datetime.now()):
+            return None
+        return True
 
     def save(self, **kwargs):
         self._calculate_amount_paid()
@@ -128,6 +143,8 @@ class Pledge(TimeStampedModel, AuthStampedModel, NextPrevMixin, SourceMixin):
         else:
             self.status = 'completed'
 
+        # set when next payment should be expected
+        self.update_next_payment_date()
         super(Pledge, self).save()
 
     def __str__(self):

@@ -1,5 +1,4 @@
-import datetime
-
+from datetime import datetime
 from django import forms
 from django.utils.translation import ugettext as _
 
@@ -116,13 +115,13 @@ class SearchForm(forms.Form):
         date_type = self.cleaned_data.get('date_type')
         field_name = 'date_from'
         if self.cleaned_data.get(field_name):
-            filter_date = datetime.datetime.strptime(
+            filter_date = datetime.strptime(
                 self.cleaned_data.get(field_name), '%Y-%m-%d')
             sqs = sqs.filter(**{'%s__gte' % date_type: filter_date})
 
         field_name = 'date_to'
         if self.cleaned_data.get(field_name):
-            filter_date = datetime.datetime.strptime(
+            filter_date = datetime.strptime(
                 self.cleaned_data.get(field_name), '%Y-%m-%d')
             sqs = sqs.filter(**{'%s__lte' % date_type: filter_date})
 
@@ -135,3 +134,12 @@ class SearchForm(forms.Form):
 
     def show_all(self):
         return self.searchqueryset.order_by('-modified')
+
+
+class FollowUpForm(SearchForm):
+    def show_all(self):
+        return self.searchqueryset. \
+            filter(content_type='Pledge'). \
+            filter(next_payment_date__lte=datetime.now()). \
+            exclude(status='Completed'). \
+            order_by('next_payment_date')

@@ -15,7 +15,7 @@ admin.autodiscover()
 
 urlpatterns = patterns(
     '',
-    url(r'^$', include("search.urls", namespace="search")),
+    url(r'', include("search.urls", namespace="search")),
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
 

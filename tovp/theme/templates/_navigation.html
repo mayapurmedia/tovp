@@ -13,6 +13,7 @@
       <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
               <li class="{{ active_link_class(request, "^/$") }}"><a href="/">Home</a></li>
+              <li><a href="{{ url('search:follow_up') }}">Follow Up</a></li>
               {% if user.has_perm('contacts.change_person') %}
                   <li><a href="{{ url('contacts:person:create') }}">Add new person</a></li>
               {% endif %}

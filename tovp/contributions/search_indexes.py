@@ -21,7 +21,8 @@ class PledgeIndex(ContentSearchIndexMixin, PersonSearchIndexMixin,
                                  faceted=True)
     status = indexes.CharField(model_attr='get_status_display', faceted=True)
     promotion_type = indexes.MultiValueField(null=True, faceted=True)
-    # next_payment_date =
+
+    next_payment_date = indexes.DateTimeField(model_attr='update_next_payment_date')
 
     def prepare_source(self, obj):
         items = []

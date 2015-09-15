@@ -6,13 +6,14 @@ from jingo import register
 from jinja2 import Markup
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.utils.html import strip_tags
-from django.utils.timesince import timesince
+from django.utils.timesince import timesince, timeuntil
 
 from num2words import num2words as _num2words
 from markdown import markdown
 
 
 register.filter(timesince)
+register.filter(timeuntil)
 
 
 @register.function
