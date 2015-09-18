@@ -34,48 +34,51 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
                  'Contribution': ContributionExport,
                  'Pledge': PledgeExport}
 
-    facets_titles = {
-        'content_type': 'Content Type', 'currency': 'Currency',
-        'deposited_status': 'Deposited Status', 'promotion_type': 'Promotion Type',
-        'status': 'Status', 'payment_method': 'Payment Method',
-        'interval': 'Interval', 'country': 'Country', 'yatra': 'Yatra',
-        'has_book': 'Book filled', 'has_slip': 'Slip filled',
-        'created_by': 'Created By', 'modified_by': 'Modified By',
-        'is_external': 'Non Mayapur TOVP Receipt', 'source': 'Source',
-        'gifts': 'Has Gift',
-    }
+    def default_facets_titles():
+        return {
+            'content_type': 'Content Type', 'currency': 'Currency',
+            'deposited_status': 'Deposited Status', 'promotion_type': 'Promotion Type',
+            'status': 'Status', 'payment_method': 'Payment Method',
+            'interval': 'Interval', 'country': 'Country', 'yatra': 'Yatra',
+            'has_book': 'Book filled', 'has_slip': 'Slip filled',
+            'created_by': 'Created By', 'modified_by': 'Modified By',
+            'is_external': 'Non Mayapur TOVP Receipt', 'source': 'Source',
+            'gifts': 'Has Gift',
+        }
 
-    faceted_by_secondary = {
-        "deposited_status": None,
-        "content_type": None,
-        "currency": None,
-        "status": None,
-        "payment_method": None,
-        "source": None,
-        "yatra": None,
-        "interval": None,
-        "country": None,
-        "promotion_type": None,
-        "has_book": None,
-        "has_slip": None,
-        "created_by": None,
-        "modified_by": None,
-        "is_external": None,
-        "gifts": None,
-    }
+    def default_narrow_facets():
+        return {
+            'first': {
+                'title': 'Test 1',
+                'has_results': None,
+                'fields': (
+                    'content_type', 'currency', 'status', 'source',
+                    'deposited_status', 'promotion_type', 'payment_method',
+                    'yatra', 'interval', 'has_book', 'has_slip', 'created_by',
+                    'modified_by', 'is_external', 'gifts', 'country',
+                ),
+            },
+        }
 
-    narrow_facets = {
-        'first': {
-            'title': 'Test 1',
-            'has_results': None,
-            'fields': (
-                'content_type', 'currency', 'status', 'source',
-                'deposited_status', 'promotion_type', 'payment_method',
-                'yatra', 'interval', 'has_book', 'has_slip', 'created_by',
-                'modified_by', 'is_external', 'gifts', 'country',
-            ),
-        },
-    }
+    def default_faceted_by_secondary():
+        return {
+            "deposited_status": None,
+            "content_type": None,
+            "currency": None,
+            "status": None,
+            "payment_method": None,
+            "source": None,
+            "yatra": None,
+            "interval": None,
+            "country": None,
+            "promotion_type": None,
+            "has_book": None,
+            "has_slip": None,
+            "created_by": None,
+            "modified_by": None,
+            "is_external": None,
+            "gifts": None,
+        }
 
     def get_template_names(self):
         return ["search/results.html"]
@@ -147,10 +150,10 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
         results = form.search()
 
         total_results_count = results.count()
-        facets_titles = self.facets_titles
-        narrow_facets = self.narrow_facets
+        facets_titles = self.default_facets_titles()
+        narrow_facets = self.default_narrow_facets()
         faceted_by_primary = {}
-        faceted_by_secondary = self.faceted_by_secondary
+        faceted_by_secondary = self.default_faceted_by_secondary()
 
         show_primary_filters = None
         show_secondary_filters = None
@@ -310,11 +313,12 @@ class FollowUpView(SearchView):
     form_class = FollowUpForm
     show_form = None
 
-    faceted_by_secondary = {
-        "currency": None,
-        "status": None,
-        "source": None,
-        "yatra": None,
-        "country": None,
-        "promotion_type": None,
-    }
+    def default_faceted_by_secondary():
+        return {
+            "currency": None,
+            "status": None,
+            "source": None,
+            "yatra": None,
+            "country": None,
+            "promotion_type": None,
+        }
