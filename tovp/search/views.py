@@ -34,7 +34,7 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
                  'Contribution': ContributionExport,
                  'Pledge': PledgeExport}
 
-    def default_facets_titles():
+    def default_facets_titles(self):
         return {
             'content_type': 'Content Type', 'currency': 'Currency',
             'deposited_status': 'Deposited Status', 'promotion_type': 'Promotion Type',
@@ -46,7 +46,7 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
             'gifts': 'Has Gift',
         }
 
-    def default_narrow_facets():
+    def default_narrow_facets(self):
         return {
             'first': {
                 'title': 'Test 1',
@@ -60,7 +60,7 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
             },
         }
 
-    def default_faceted_by_secondary():
+    def default_faceted_by_secondary(self):
         return {
             "deposited_status": None,
             "content_type": None,
@@ -313,7 +313,7 @@ class FollowUpView(SearchView):
     form_class = FollowUpForm
     show_form = None
 
-    def default_faceted_by_secondary():
+    def default_faceted_by_secondary(self):
         return {
             "currency": None,
             "status": None,
