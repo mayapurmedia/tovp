@@ -20,6 +20,8 @@ class SourceMixin(models.Model):
         (u'namahatta', _('JPS Namahatta')),
         (u'jps-others', _('JPS Others')),
         (u'gkg-vp-2015', _('GKG Vyasa Puja 2015')),
+        (u'bcs-vp-2015', _('BCS Vyasa Puja 2015')),
+        (u'kanjurmarg-mumbai-2015', _('Kanjurmarg Mumbai 2015')),
         (u'nvs', _('Nava Yogendra Swami')),
         (u'mso', _('MSO')),
         (u'lm-reception', _('Life Membership Reception')),
