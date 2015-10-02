@@ -19,12 +19,23 @@ class PromotionIndexMixin(ContentSearchIndexMixin, PledgePersonSearchIndexMixin,
 
     status = indexes.CharField(model_attr='pledge__get_status_display', faceted=True)
     absolute_url = indexes.CharField(model_attr='pledge__person__get_absolute_url')
+    source = indexes.MultiValueField(null=True, faceted=True)
 
     def get_model(self):
         try:
             return self.model
         except:
             pass
+
+    def prepare_source(self, obj):
+        items = []
+        if getattr(obj, 'pledge', None) and obj.pledge.source:
+            source = obj.pledge.get_source_display()
+            if source not in items:
+                items.append(source)
+                if obj.source in ['jps-office', 'namahatta', 'jps-others']:
+                    items.append('JPS (All combined)')
+        return items
 
     def prepare_promotion_type(self, obj):
         try:
