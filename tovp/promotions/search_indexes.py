@@ -33,7 +33,8 @@ class PromotionIndexMixin(ContentSearchIndexMixin, PledgePersonSearchIndexMixin,
             source = obj.pledge.get_source_display()
             if source not in items:
                 items.append(source)
-                if obj.source in ['jps-office', 'namahatta', 'jps-others']:
+                if obj.pledge.source in ['jps-office', 'namahatta',
+                                         'jps-others']:
                     items.append('JPS (All combined)')
         return items
 
