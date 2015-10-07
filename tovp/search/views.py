@@ -43,7 +43,8 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
             'has_book': 'Book filled', 'has_slip': 'Slip filled',
             'created_by': 'Created By', 'modified_by': 'Modified By',
             'is_external': 'Non Mayapur TOVP Receipt', 'source': 'Source',
-            'gifts': 'Has Gift',
+            'gifts': 'Has Gift', 'coin_given': 'Coin Given',
+            'certificate_given': 'Certificate Given',
         }
 
     def default_narrow_facets(self):
@@ -56,6 +57,7 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
                     'deposited_status', 'promotion_type', 'payment_method',
                     'yatra', 'interval', 'has_book', 'has_slip', 'created_by',
                     'modified_by', 'is_external', 'gifts', 'country',
+                    'coin_given', 'certificate_given',
                 ),
             },
         }
@@ -78,6 +80,8 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
             "modified_by": None,
             "is_external": None,
             "gifts": None,
+            "coin_given": None,
+            "certificate_given": None,
         }
 
     def get_template_names(self):
@@ -169,7 +173,7 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
             if filter_item in self.request.GET:
                 faceted_by_secondary[filter_item] = self.request.GET[filter_item]
                 # results = results.filter(**{filter_item: self.request.GET[filter_item]})
-                if filter_item in ['deposited_status']:
+                if filter_item in ['deposited_status', 'coin_given', 'certificate_given']:
                     results = results.narrow('%s_exact:"%s"' % (filter_item, self.request.GET[filter_item]))
                 else:
                     results = results.narrow('%s:"%s"' % (filter_item, self.request.GET[filter_item]))

@@ -48,6 +48,18 @@ class PromotionIndexMixin(ContentSearchIndexMixin, PledgePersonSearchIndexMixin,
 
 class BrickIndex(PromotionIndexMixin):
     name_on_brick = indexes.CharField(model_attr='name_on_brick')
+    coin_given = indexes.CharField(faceted=True)
+    certificate_given = indexes.CharField(faceted=True)
+
+    def prepare_coin_given(self, obj):
+        if not obj.coin_given:
+            return 'No'
+        return 'Yes'
+
+    def prepare_certificate_given(self, obj):
+        if not obj.certificate_given:
+            return 'No'
+        return 'Yes'
 
 
 class NrsimhaTileIndex(BrickIndex, indexes.Indexable):
@@ -67,7 +79,18 @@ class RadhaMadhavaBrickIndex(BrickIndex, indexes.Indexable):
 
 
 class CoinIndex(PromotionIndexMixin):
-    pass
+    coin_given = indexes.CharField(faceted=True)
+    certificate_given = indexes.CharField(faceted=True)
+
+    def prepare_coin_given(self, obj):
+        if not obj.coin_given:
+            return 'No'
+        return 'Yes'
+
+    def prepare_certificate_given(self, obj):
+        if not obj.certificate_given:
+            return 'No'
+        return 'Yes'
 
 
 class SilverCoinIndex(PromotionIndexMixin, indexes.Indexable):
