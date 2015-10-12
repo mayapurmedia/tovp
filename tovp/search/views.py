@@ -14,6 +14,7 @@ from haystack.query import SearchQuerySet
 
 from contacts.exports import ContactExport
 from contributions.exports import PledgeExport, ContributionExport
+from promotions.exports import PromotionExport
 
 from .forms import SearchForm, FollowUpForm
 
@@ -32,6 +33,7 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
 
     exporters = {'Contact': ContactExport,
                  'Contribution': ContributionExport,
+                 'Promotion': PromotionExport,
                  'Pledge': PledgeExport}
 
     def default_facets_titles(self):
