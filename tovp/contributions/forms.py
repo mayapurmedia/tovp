@@ -46,6 +46,7 @@ class ContributionForm(forms.ModelForm):
             person=person)
         instance = getattr(self, 'instance', None)
         if instance and instance.pk and instance.serial_number \
+                and instance.payment_method in ['cashl', 'cashf'] \
                 and not user.has_perm('contributions.can_edit_completed'):
             self.fields['amount'] = StaticField()
             self.fields['currency'] = StaticField()
