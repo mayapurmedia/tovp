@@ -1,4 +1,6 @@
 import os
+from datetime import datetime
+
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
@@ -18,11 +20,12 @@ class AttachmentManager(models.Manager):
 class Attachment(TimeStampedModel, AuthStampedModel):
     def attachment_upload(instance, filename):
         """Stores the attachment in a "per module/appname/primary key" folder"""
+
         return 'attachments/%s/%s/%s' % (
             '%s_%s' % (instance.content_object._meta.app_label,
                        instance.content_object._meta.object_name.lower()),
             instance.content_object.pk,
-            filename)
+            datetime.now().strftime("%Y%m%d%H%M-%f") + os.path.splitext(filename)[1])
 
     objects = AttachmentManager()
 
@@ -38,7 +41,7 @@ class Attachment(TimeStampedModel, AuthStampedModel):
         ('other', _('Other Document')),
     )
     attachment_type = models.CharField(
-        "Attachment Type", max_length=100, choices=ATTACHMENT_TYPE_CHOICES)
+        "Attachment Type", max_length=50, choices=ATTACHMENT_TYPE_CHOICES)
 
     class Meta:
         # ordering = ['-created']
