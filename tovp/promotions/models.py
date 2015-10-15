@@ -120,6 +120,7 @@ class NrsimhaTile(BaseBrick):
     amount = {
         'INR': 51000,
         'USD': 1000,
+        'CAD': 1000,
         'EUR': 1000,
         'GBP': 800,
     }
@@ -129,6 +130,7 @@ class GoldenBrick(BaseBrick):
     amount = {
         'INR': 100000,
         'USD': 1600,
+        'CAD': 1600,
         'EUR': 1500,
         'GBP': 1300,
     }
@@ -138,6 +140,7 @@ class GuruParamparaBrick(BaseBrick):
     amount = {
         'INR': 100000,
         'USD': 1600,
+        'CAD': 1600,
         'EUR': 1500,
         'GBP': 1300,
     }
@@ -147,6 +150,7 @@ class RadhaMadhavaBrick(BaseBrick):
     amount = {
         'INR': 150000,
         'USD': 2500,
+        'CAD': 2500,
         'EUR': 2400,
         'GBP': 2200,
     }
@@ -156,6 +160,7 @@ class SilverCoin(BaseCoin):
     amount = {
         'INR': 650000,
         'USD': 11000,
+        'CAD': 11000,
         'EUR': 10000,
         'GBP': 9000,
     }
@@ -168,6 +173,7 @@ class GadadharCoin(BaseCoin):
     amount = {
         'INR': 1500000,
         'USD': 25000,
+        'CAD': 25000,
         'EUR': 25000,
         'GBP': 25000,
     }
@@ -180,6 +186,7 @@ class AdvaitaCoin(BaseCoin):
     amount = {
         'INR': 3100000,
         'USD': 51000,
+        'CAD': 51000,
         'EUR': 51000,
         'GBP': 51000,
     }
@@ -192,6 +199,7 @@ class GoldCoin(BaseCoin):
     amount = {
         'INR': 6500000,
         'USD': 108000,
+        'CAD': 108000,
         'EUR': 108000,
         'GBP': 108000,
     }
@@ -204,6 +212,7 @@ class PlatinumCoin(BaseCoin):
     amount = {
         'INR': 15000000,
         'USD': 250000,
+        'CAD': 250000,
         'EUR': 240000,
         'GBP': 220000,
     }
@@ -216,6 +225,7 @@ class RadharaniCoin(BaseCoin):
     amount = {
         'INR': 60000000,
         'USD': 1000000,
+        'CAD': 1000000,
         'EUR': 1000000,
         'GBP': 1000000,
     }
@@ -228,6 +238,7 @@ class SquareFeet(CertificateGivenMixin, BasePromotion):
     amount = {
         'INR': 7000,
         'USD': 150,
+        'CAD': 150,
         'EUR': 140,
         'GBP': 130,
     }
@@ -247,6 +258,7 @@ class SquareMeter(CertificateGivenMixin, BasePromotion):
     amount = {
         'INR': 70000,
         'USD': 1500,
+        'CAD': 1500,
         'EUR': 1400,
         'GBP': 1300,
     }
@@ -266,6 +278,7 @@ class Trustee(BasePromotion):
     amount = {
         'INR': 51000000,
         'USD': 1000000,
+        'CAD': 1000000,
         'EUR': 1000000,
         'GBP': 850000,
     }
@@ -275,6 +288,7 @@ class GeneralDonation(BasePromotion):
     amount = {
         'INR': 1,
         'USD': 1,
+        'CAD': 1,
         'EUR': 1,
         'GBP': 1,
     }
