@@ -169,8 +169,8 @@
                     <a href="{{ promotion.get_create_url(object.person.pk, object.pk) }}" class="btn btn-xxmd btn-success">Add</a>
                     {{ promotion._meta.verbose_name.title() }}
                 </div>
-                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                    {{ promotion|promo_ballance(object.person.get_ballance()) }}
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 promotion-more-required">
+                    {{ promotion|promo_ballance(pledge, object.person.get_ballance()) }}
                 </div>
             </div>
             {% endfor %}
