@@ -47,7 +47,7 @@ django-reversion-compare
 diff-match-patch
 
 # Search
-elasticsearch
+elasticsearch>=1.0.0,<2.0.0
 django-haystack
 
 # Django-hijack allows superusers to hijack (=login as) and work on behalf of 
