@@ -12,6 +12,7 @@ from audit_log.models import AuthStampedModel
 
 from contacts.models import Person
 from ananta.models import SourceMixin, NextPrevMixin
+from currencies.utils import get_currency_choices, get_currency_words
 
 
 class Pledge(TimeStampedModel, AuthStampedModel, NextPrevMixin, SourceMixin):
@@ -29,14 +30,8 @@ class Pledge(TimeStampedModel, AuthStampedModel, NextPrevMixin, SourceMixin):
     amount_paid = models.DecimalField(_('Amount Paid'), max_digits=20,
                                       default=0, decimal_places=2,
                                       null=True, blank=True)
-    CURRENCY_CHOICES = (
-        ('INR', _('₹ (INR)')),
-        ('USD', _('$ (USD)')),
-        ('EUR', _('€ (EUR)')),
-        ('GBP', _('£ (GBP)')),
-    )
     currency = models.CharField(
-        "Currency", max_length=6, choices=CURRENCY_CHOICES, default="INR")
+        "Currency", max_length=6, choices=get_currency_choices(), default="INR")
     payments_start_date = models.DateField(
         _("Payments Start"), null=True, blank=True, default=datetime.now,
         help_text=_('Date of first expected payment for this pledge.'),
@@ -177,14 +172,8 @@ class BaseContribution(TimeStampedModel, AuthStampedModel, NextPrevMixin,
         help_text=_('Serial Number of this contribution for financial year.'))
 
     amount = models.DecimalField(_('Amount'), max_digits=20, decimal_places=2)
-    CURRENCY_CHOICES = (
-        ('INR', _('₹ (INR)')),
-        ('USD', _('$ (USD)')),
-        ('EUR', _('€ (EUR)')),
-        ('GBP', _('£ (GBP)')),
-    )
     currency = models.CharField(
-        "Currency", max_length=6, choices=CURRENCY_CHOICES, default="INR")
+        "Currency", max_length=6, choices=get_currency_choices(), default="INR")
 
     PAYMENT_METHOD_CHOICES = (
         (u'cashl', _('Cash (Indian)')),
@@ -347,13 +336,7 @@ class BaseContribution(TimeStampedModel, AuthStampedModel, NextPrevMixin,
 
     @property
     def currency_words(self):
-        CURRENCY_CHOICES = {
-            'INR': 'rupees',
-            'USD': 'american dollars',
-            'EUR': 'euro',
-            'GBP': 'british pounds',
-        }
-        return CURRENCY_CHOICES[self.currency]
+        return get_currency_words(self.currency)
 
     def info(self, show_name=None):
         field_values = [

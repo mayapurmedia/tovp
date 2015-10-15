@@ -17,6 +17,8 @@ from django.core.exceptions import ImproperlyConfigured
 
 import django_cache_url
 from configurations import Configuration, values
+from collections import OrderedDict
+
 
 BASE_DIR = dirname(dirname(__file__))
 
@@ -332,3 +334,14 @@ class Common(Configuration):
         'person': ('contacts.lookups', 'PersonLookup'),
         'bulk_payment': ('contributions.lookups', 'BulkPaymentLookup'),
     }
+
+    ENABLED_CURRENCIES = OrderedDict((
+        ('INR', {'word': 'rupees',
+                 'symbol': '₹ (INR)'}),
+        ('USD', {'word': 'american dollars',
+                 'symbol': '$ (USD)'}),
+        ('EUR', {'word': 'euro',
+                 'symbol': '€ (EUR)'}),
+        ('GBP', {'word': 'british pounds',
+                 'symbol': '£ (GBP)'}),
+    ))

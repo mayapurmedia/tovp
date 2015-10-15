@@ -1,6 +1,7 @@
 import datetime
 import re
 
+from django.conf import settings
 from django.db import models
 from django.db.models import permalink
 from django.utils.translation import ugettext_lazy as _, pgettext_lazy as __
@@ -451,12 +452,9 @@ class Person(AuthStampedModel, NextPrevMixin, TimeStampedModel):
                         'donated_year': 0,
                         'donated_financial_year': 0}
 
-            ballance = {
-                'USD': ballance_dict(),
-                'INR': ballance_dict(),
-                'GBP': ballance_dict(),
-                'EUR': ballance_dict(),
-            }
+            ballance = {}
+            for currency in settings.ENABLED_CURRENCIES:
+                ballance[currency] = ballance_dict()
 
             today = datetime.datetime.now()
             current_financial_year = get_financial_year(today)
