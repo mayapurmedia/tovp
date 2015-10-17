@@ -346,4 +346,6 @@ class Common(Configuration):
                  'symbol': '£ (GBP)'}),
         ('CAD', {'word': 'canadian dollars',
                  'symbol': 'C$ (CAD)'}),
+        ('RUB', {'word': 'russian ruble',
+                 'symbol': '₽ (RUB)'}),
     ))

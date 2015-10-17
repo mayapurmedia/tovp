@@ -119,6 +119,7 @@ class BaseCoin(CertificateGivenMixin, CoinGivenMixin, BasePromotion):
 class NrsimhaTile(BaseBrick):
     amount = {
         'INR': 51000,
+        'RUB': 30000,
         'USD': 1000,
         'CAD': 1000,
         'EUR': 1000,
@@ -129,6 +130,7 @@ class NrsimhaTile(BaseBrick):
 class GoldenBrick(BaseBrick):
     amount = {
         'INR': 100000,
+        'RUB': 50000,
         'USD': 1600,
         'CAD': 1600,
         'EUR': 1500,
@@ -139,6 +141,7 @@ class GoldenBrick(BaseBrick):
 class GuruParamparaBrick(BaseBrick):
     amount = {
         'INR': 100000,
+        'RUB': 50000,
         'USD': 1600,
         'CAD': 1600,
         'EUR': 1500,
@@ -149,6 +152,7 @@ class GuruParamparaBrick(BaseBrick):
 class RadhaMadhavaBrick(BaseBrick):
     amount = {
         'INR': 150000,
+        'RUB': 100000,
         'USD': 2500,
         'CAD': 2500,
         'EUR': 2400,
@@ -159,6 +163,7 @@ class RadhaMadhavaBrick(BaseBrick):
 class SilverCoin(BaseCoin):
     amount = {
         'INR': 650000,
+        'RUB': 500000,
         'USD': 11000,
         'CAD': 11000,
         'EUR': 10000,
@@ -172,6 +177,7 @@ class SilverCoin(BaseCoin):
 class GadadharCoin(BaseCoin):
     amount = {
         'INR': 1500000,
+        'RUB': 1500000,
         'USD': 25000,
         'CAD': 25000,
         'EUR': 25000,
@@ -185,6 +191,7 @@ class GadadharCoin(BaseCoin):
 class AdvaitaCoin(BaseCoin):
     amount = {
         'INR': 3100000,
+        'RUB': 3100000,
         'USD': 51000,
         'CAD': 51000,
         'EUR': 51000,
@@ -198,6 +205,7 @@ class AdvaitaCoin(BaseCoin):
 class GoldCoin(BaseCoin):
     amount = {
         'INR': 6500000,
+        'RUB': 5000000,
         'USD': 108000,
         'CAD': 108000,
         'EUR': 108000,
@@ -211,6 +219,7 @@ class GoldCoin(BaseCoin):
 class PlatinumCoin(BaseCoin):
     amount = {
         'INR': 15000000,
+        'RUB': 11000000,
         'USD': 250000,
         'CAD': 250000,
         'EUR': 240000,
@@ -224,6 +233,7 @@ class PlatinumCoin(BaseCoin):
 class RadharaniCoin(BaseCoin):
     amount = {
         'INR': 60000000,
+        'RUB': 60000000,
         'USD': 1000000,
         'CAD': 1000000,
         'EUR': 1000000,
@@ -237,6 +247,7 @@ class RadharaniCoin(BaseCoin):
 class SquareFeet(CertificateGivenMixin, BasePromotion):
     amount = {
         'INR': 7000,
+        'RUB': 5000,
         'USD': 150,
         'CAD': 150,
         'EUR': 140,
@@ -257,6 +268,7 @@ class SquareFeet(CertificateGivenMixin, BasePromotion):
 class SquareMeter(CertificateGivenMixin, BasePromotion):
     amount = {
         'INR': 70000,
+        'RUB': 50000,
         'USD': 1500,
         'CAD': 1500,
         'EUR': 1400,
@@ -277,6 +289,7 @@ class SquareMeter(CertificateGivenMixin, BasePromotion):
 class Trustee(BasePromotion):
     amount = {
         'INR': 51000000,
+        'RUB': 51000000,
         'USD': 1000000,
         'CAD': 1000000,
         'EUR': 1000000,
@@ -287,6 +300,7 @@ class Trustee(BasePromotion):
 class GeneralDonation(BasePromotion):
     amount = {
         'INR': 1,
+        'RUB': 1,
         'USD': 1,
         'CAD': 1,
         'EUR': 1,
