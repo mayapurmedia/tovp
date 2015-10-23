@@ -20,6 +20,18 @@ class ContactExport(BaseExport):
             address = obj.address
         return address
 
+    def get_sources(self):
+        obj = self.obj
+
+        items = []
+        for pledge in obj.pledges.all():
+            if (pledge.get_source_display()) and (pledge.get_source_display() not in items):
+                items.append(pledge.get_source_display())
+            for contribution in pledge.contributions.all():
+                if (contribution.get_source_display()) and (contribution.get_source_display() not in items):
+                    items.append(pledge.get_source_display())
+        return ",".join(items)
+
     def get_promotions(self):
         obj = self.obj
         promotions = []
@@ -85,6 +97,7 @@ class ContactExport(BaseExport):
             ("Year Balance [INR]", {'type': 'custom', 'value': 'balance_year_inr'}),
             ("Fin. Year Bal. [INR]", {'type': 'custom', 'value': 'balance_financial_year_inr'}),
 
+            ("Sources", {'type': 'custom', 'value': 'sources'}),
             ("Promotions", {'type': 'custom', 'value': 'promotions'}),
         ))
         return export_data
