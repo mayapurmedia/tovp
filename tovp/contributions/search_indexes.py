@@ -23,6 +23,7 @@ class PledgeIndex(ContentSearchIndexMixin, PersonSearchIndexMixin,
     promotion_type = indexes.MultiValueField(null=True, faceted=True)
 
     next_payment_date = indexes.DateTimeField(model_attr='update_next_payment_date')
+    followed_by = indexes.CharField(faceted=True)
 
     def prepare_source(self, obj):
         items = []
@@ -43,6 +44,12 @@ class PledgeIndex(ContentSearchIndexMixin, PersonSearchIndexMixin,
             except:
                 items.append('Noname')
         return items
+
+    def prepare_followed_by(self, obj):
+        if obj.followed_by:
+            return obj.followed_by.display_name
+        else:
+            return 'Nobody'
 
 
 class BaseContributionIndexMixin(indexes.SearchIndex):

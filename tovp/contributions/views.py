@@ -110,6 +110,33 @@ class PledgeDeleteView(MultiplePermissionsRequiredMixin, DeleteView):
         return item.person.get_absolute_url()
 
 
+class PledgeAssignToFollow(PermissionRequiredMixin, View):
+    permission_required = "contributions.can_follow_pledge"
+
+    def get_object(self):
+            return Pledge
+
+    def dispatch(self, request, *args, **kwargs):
+        self.pk = kwargs['pk']
+        self.pledge = Pledge.objects.get(pk=self.pk)
+        self.pledge.assign_follow_up(self.request.user)
+
+        # if this view is called from ajax return json object
+        if request.is_ajax():
+            if self.pledge.followed_by:
+                status_name = self.pledge.followed_by.display_name
+            else:
+                status_name = 'Nobody'
+            response_data = {
+                'new_status_name': 'Followed by: ' + status_name,
+                'new_status_slug': 'assigned',
+            }
+            return HttpResponse(json.dumps(response_data),
+                                content_type="application/json")
+
+        return HttpResponseRedirect(request.GET['next'])
+
+
 class ContributionListView(LoginRequiredMixin, ListView):
     model = Contribution
 

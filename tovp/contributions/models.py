@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.conf import settings
 from django.db import models
 from django.db.models import permalink
 from django.utils.translation import ugettext_lazy as _
@@ -26,6 +27,10 @@ class Pledge(TimeStampedModel, AuthStampedModel, NextPrevMixin, SourceMixin):
 
     person = models.ForeignKey(Person, verbose_name="Person", blank=True,
                                related_name='pledges')
+
+    followed_by = models.ForeignKey(settings.AUTH_USER_MODEL, null=True,
+                                    blank=True, related_name='pledges')
+
     amount = models.DecimalField(_('Amount'), max_digits=20, decimal_places=2)
     amount_paid = models.DecimalField(_('Amount Paid'), max_digits=20,
                                       default=0, decimal_places=2,
@@ -154,6 +159,14 @@ class Pledge(TimeStampedModel, AuthStampedModel, NextPrevMixin, SourceMixin):
                 not self.contributions.all().count()):
             return True
         return None
+
+    def assign_follow_up(self, user):
+        if not (self.followed_by and self.followed_by != user):
+            if self.followed_by:
+                self.followed_by = None
+            else:
+                self.followed_by = user
+            self.save()
 
     class Meta:
         permissions = (("can_delete_if_no_contributions",
@@ -570,4 +583,5 @@ class Contribution(BaseContribution):
     class Meta:
         permissions = (("can_edit_completed", "Can edit completed"),
                        ("can_change_deposit_status", "Can change deposit status"),
+                       ("can_do_follow_up", "Can do follow up"),
                        ("can_deposit", "Can mark as deposited"))

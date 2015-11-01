@@ -1,6 +1,6 @@
 {% import '_macros.html' as macros %}
 <div class="person-result">
-    <div class="deposit-status" action-url="{{ url('contributions:contribution:deposit_status_changer', pk=result.pk) }}"><span class="label label-contribution-{{ result.object.deposited_status }} current-status">{{ result.deposited_status }}</span> 
+    <div class="deposit-status" action-url="{{ url('contributions:contribution:deposit_status_changer', pk=result.pk) }}"><span class="label label-{{ result.object.deposited_status }} current-status">{{ result.deposited_status }}</span> 
 
         {% if user.has_perm('contributions.can_change_deposit_status') %}
         <a class="status-changer label label-default" href=""><i class="fa fa-refresh"></i></a>

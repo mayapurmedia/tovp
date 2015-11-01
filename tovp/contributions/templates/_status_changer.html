@@ -1,4 +1,3 @@
-{% if user.has_perm('contributions.can_change_deposit_status' )%}
 <script>
 (function($) {
     $.fn.status_changer = function(options) {
@@ -16,9 +15,9 @@
 
                 var current_status = el.find('.current-status')
                 current_status.attr('class', function(i, c) {
-                    return c.replace(/(^|\s)label-contribution-\S+/g, '');
+                    return c.replace(/(^|\s)label-\S+/g, '');
                 });
-                current_status.addClass('label-contribution-' + data['new_status_slug']);
+                current_status.addClass('label-' + data['new_status_slug']);
                 current_status.text(data['new_status_name']);
 
             });
@@ -41,6 +40,7 @@
 }(jQuery));
 </script>
 
+{% if user.has_perm('contributions.can_change_deposit_status' )%}
 <script>
 $(document).ready( function() {
     $('.deposit-status').status_changer();
@@ -48,3 +48,10 @@ $(document).ready( function() {
 </script>
 {% endif %}
 
+{% if user.has_perm('contributions.can_do_follow_up' )%}
+<script>
+$(document).ready( function() {
+    $('.follow-by-status').status_changer();
+});
+</script>
+{% endif %}

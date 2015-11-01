@@ -38,12 +38,13 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
 
     def default_facets_titles(self):
         return {
-            'content_type': 'Content Type', 'currency': 'Currency',
-            'deposited_status': 'Deposited Status', 'promotion_type': 'Promotion Type',
-            'status': 'Status', 'payment_method': 'Payment Method',
-            'interval': 'Interval', 'country': 'Country', 'yatra': 'Yatra',
-            'has_book': 'Book filled', 'has_slip': 'Slip filled',
-            'created_by': 'Created By', 'modified_by': 'Modified By',
+            'content_type': 'Content Type', 'followed_by': 'Followed By',
+            'currency': 'Currency', 'deposited_status': 'Deposited Status',
+            'promotion_type': 'Promotion Type', 'status': 'Status',
+            'payment_method': 'Payment Method', 'interval': 'Interval',
+            'country': 'Country', 'yatra': 'Yatra', 'has_book': 'Book filled',
+            'has_slip': 'Slip filled', 'created_by': 'Created By',
+            'modified_by': 'Modified By',
             'is_external': 'Non Mayapur TOVP Receipt', 'source': 'Source',
             'gifts': 'Has Gift', 'coin_given': 'Coin Given',
             'certificate_given': 'Certificate Given',
@@ -55,11 +56,11 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
                 'title': 'Test 1',
                 'has_results': None,
                 'fields': (
-                    'content_type', 'currency', 'status', 'source',
-                    'deposited_status', 'promotion_type', 'payment_method',
-                    'yatra', 'interval', 'has_book', 'has_slip', 'created_by',
-                    'modified_by', 'is_external', 'gifts', 'country',
-                    'coin_given', 'certificate_given',
+                    'content_type', 'followed_by', 'currency', 'status',
+                    'source', 'deposited_status', 'promotion_type',
+                    'payment_method', 'yatra', 'interval', 'has_book',
+                    'has_slip', 'created_by', 'modified_by', 'is_external',
+                    'gifts', 'country', 'coin_given', 'certificate_given',
                 ),
             },
         }
@@ -84,6 +85,7 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
             "gifts": None,
             "coin_given": None,
             "certificate_given": None,
+            "followed_by": None,
         }
 
     def get_template_names(self):
@@ -321,6 +323,7 @@ class FollowUpView(SearchView):
 
     def default_faceted_by_secondary(self):
         return {
+            "followed_by": None,
             "currency": None,
             "status": None,
             "source": None,

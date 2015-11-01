@@ -31,6 +31,11 @@ pledges = patterns(
         view=views.PledgeDeleteView.as_view(),
         name="delete",
     ),
+    url(
+        regex=r'^assign-to-follow/(?P<pk>\d+)/$',
+        view=views.PledgeAssignToFollow.as_view(),
+        name="assign_to_follow",
+    ),
 )
 
 contributions = patterns(
