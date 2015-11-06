@@ -64,6 +64,29 @@ class SearchForm(forms.Form):
         widget=DateWidget(attrs={'id': "date-to"},
                           usel10n=True, bootstrap_version=3))
 
+    ORDER_CHOICES = (
+        (u'modified', _('Modified')),
+        (u'created', _('Created')),
+        (u'cleared_on', _('Cleared On')),
+        (u'receipt_date', _('Receipt Date')),
+        (u'serial_number_clean', _('Serial Number')),
+    )
+
+    order = forms.ChoiceField(required=False, label='Order by',
+                              choices=ORDER_CHOICES)
+    ORDER_TYPE_CHOICES = (
+        (u'asc', _('Ascending')),
+        (u'desc', _('Descending')),
+    )
+
+    order_type = forms.ChoiceField(required=False, label='Order type',
+                              choices=ORDER_TYPE_CHOICES)
+
+    serial_clean_from = forms.CharField(required=False, label=_('Serial From'),
+                                        widget=forms.TextInput())
+    serial_clean_to = forms.CharField(required=False, label=_('Serial To'),
+                                      widget=forms.TextInput())
+
     def __init__(self, collector_pk=None, *args, **kwargs):
         self.collector_pk = None
         self.searchqueryset = kwargs.pop('searchqueryset', None)
@@ -85,7 +108,15 @@ class SearchForm(forms.Form):
         if not self.is_valid():
             return self.show_all()
 
-        sqs = self.show_all()
+        if self.cleaned_data.get('order_type') == 'desc':
+            order_type = '-'
+        else:
+            order_type = ''
+
+        if self.cleaned_data.get('order'):
+            sqs = self.searchqueryset.order_by('%s%s' % (order_type, self.cleaned_data.get('order')))
+        else:
+            sqs = self.searchqueryset.order_by('%smodified' % order_type)
 
         if self.cleaned_data.get('q'):
             # sqs = sqs.auto_query(self.cleaned_data['q'])
@@ -129,6 +160,14 @@ class SearchForm(forms.Form):
         if self.collector_pk:
             sqs = sqs.filter(**{'%s__startswith' % field_name:
                                 self.collector_pk})
+
+        field_name = 'serial_clean_from'
+        if self.cleaned_data.get(field_name):
+            sqs = sqs.filter(**{'%s__gte' % 'serial_number_clean': self.cleaned_data.get(field_name)})
+
+        field_name = 'serial_clean_to'
+        if self.cleaned_data.get(field_name):
+            sqs = sqs.filter(**{'%s__lte' % 'serial_number_clean': self.cleaned_data.get(field_name)})
 
         return sqs
 

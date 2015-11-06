@@ -300,6 +300,10 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
                               'date_type',
                               'date_from',
                               'date_to',
+                              'order',
+                              'order_type',
+                              'serial_clean_from',
+                              'serial_clean_to',
                               ]:
             if form_field_id in self.request.GET and \
                     self.request.GET[form_field_id]:

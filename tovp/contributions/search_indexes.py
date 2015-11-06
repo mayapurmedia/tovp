@@ -68,6 +68,7 @@ class BaseContributionIndexMixin(indexes.SearchIndex):
     slip_number = indexes.CharField(model_attr='slip_number')
     overwrite_name = indexes.CharField(model_attr='overwrite_name')
     overwrite_address = indexes.CharField(model_attr='overwrite_address')
+    serial_number_clean = indexes.IntegerField()
     serial_number = indexes.CharField()
     has_book = indexes.CharField(faceted=True)
     has_slip = indexes.CharField(faceted=True)
@@ -108,6 +109,11 @@ class BaseContributionIndexMixin(indexes.SearchIndex):
     def prepare_cleared_on(self, obj):
         if obj.cleared_on:
             return obj.cleared_on
+
+    def prepare_serial_number_clean(self, obj):
+        if obj.serial_year and obj.serial_number:
+            return int(obj.serial_number)
+        return None
 
     def prepare_serial_number(self, obj):
         if obj.get_serial_number():
