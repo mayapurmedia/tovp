@@ -585,3 +585,24 @@ class Contribution(BaseContribution):
                        ("can_change_deposit_status", "Can change deposit status"),
                        ("can_do_follow_up", "Can do follow up"),
                        ("can_deposit", "Can mark as deposited"))
+
+
+class FollowUp(TimeStampedModel, AuthStampedModel):
+    pledge = models.ForeignKey(Pledge, verbose_name="Pledge",
+                               related_name='follow_ups')
+
+    STATUS_CHOICES = (
+        ('wrong-contact', _('Wrong contact')),
+        ('could-not-reach', _('Could not reach')),
+        ('waiting-reply', _('Waiting for reply')),
+        ('agreed-to-pay', _('Agreed to pay')),
+        ('will-not-pay', _('Will not pay')),
+    )
+    status = models.CharField("Status", max_length=30, choices=STATUS_CHOICES)
+    note = models.TextField(_("Note"), blank=True)
+
+    @permalink
+    def get_absolute_url(self):
+        return ('contributions:follow_up:detail', None, {
+            'pledge_id': self.pledge.pk,
+            'pk': self.pk})

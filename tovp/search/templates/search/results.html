@@ -94,6 +94,8 @@
                     {% include "search/partials/model_promotion.html" %}
                 {% elif result.content_type == 'Bulk Payment' %}
                     {% include "search/partials/model_bulk_payment.html" %}
+                {% elif result.content_type == 'Follow Up' %}
+                    {% include "search/partials/model_followup.html" %}
                 {% elif result.content_type == 'Gift' %}
                     {% include "search/partials/model_gift.html" %}
                 {% else %}

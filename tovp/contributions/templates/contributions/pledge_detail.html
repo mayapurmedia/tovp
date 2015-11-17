@@ -33,6 +33,17 @@
             <a href="{{ object[field_name].get_absolute_url() }}">{{ object[field_name].full_name }}{% if object[field_name].full_name %} - {% endif %}{{ object[field_name].initiated_name}}</a>
         </div>
     </div>
+
+    {% set field_label = 'Followed by' %}
+    {% set field_name = 'followed_by' %}
+    <div class="col-xs-12 col-ms-4 col-sm-4">
+    {% if object[field_name] %}
+        {{ print_field(field_label, object.followed_by.display_name) }}
+    {% else %}
+        {{ print_field(field_label, 'Nobody') }}
+    {% endif %}
+    </div>
+
     {% set field_label = 'Source' %}
     {% set field_name = 'source' %}
     {% if object[field_name] %}
@@ -177,6 +188,29 @@
             {% endif %}
         </div>
     {% endif %}
+    
+    <div class="col-xs-12">
+        <h2>Follow Up</h2>
+        <div class="row">
+            <div class="col-xs-12">
+                {% if object.follow_ups.all() %}
+                    <ul>
+                        {% for follow_up in object.follow_ups.all() %}
+                        <li><a href="{{ follow_up.get_absolute_url() }}">{{ follow_up.created|datetimeformat('%B %-d, %Y') }} ({{ follow_up.created|timesince }} ago) by {{ follow_up.created_by.display_name }} [{{ follow_up.get_status_display() }}]</a></li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    No follow up yet.
+                {% endif %}
+            </div>
+            {% if user.has_perm('contributions.add_followup') %}
+            <div class="col-xs-12">
+                <a href="{{ url('contributions:follow_up:create', object.pk) }}" class="btn btn-lg btn-success">Add Follow Up</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
     {% include '_nextprev.html' %}
 </div>
 {% endblock %}

@@ -4,6 +4,30 @@ from django.conf.urls import patterns, include, url
 from . import views
 
 
+follow_up = patterns(
+    '',
+    url(
+        regex=r'^(?P<pledge_id>\d+)/(?P<pk>\d+)/$',
+        view=views.FollowUpDetailView.as_view(),
+        name='detail',
+    ),
+    url(
+        regex=r'^(?P<pledge_id>\d+)/create/$',
+        view=views.FollowUpCreateView.as_view(),
+        name='create',
+    ),
+    url(
+        regex=r'^(?P<pledge_id>\d+)/(?P<pk>\d+)/edit$',
+        view=views.FollowUpUpdateView.as_view(),
+        name='update',
+    ),
+    url(
+        regex=r'^delete/(?P<pk>\d+)/$',
+        view=views.FollowUpDeleteView.as_view(),
+        name="delete",
+    ),
+)
+
 pledges = patterns(
     '',
     url(
@@ -143,6 +167,7 @@ bulk_payments = patterns(
 urlpatterns = patterns(
     '',
     (r'^pledge/', include(pledges, namespace="pledge")),
+    (r'^follow-up/', include(follow_up, namespace="follow_up")),
     (r'^contribution/', include(contributions, namespace="contribution")),
     (r'^bulk_payment/', include(bulk_payments, namespace="bulk_payment")),
 )

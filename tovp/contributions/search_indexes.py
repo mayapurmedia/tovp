@@ -4,7 +4,7 @@ from ananta.search_indexes import ContentSearchIndexMixin
 from contacts.search_indexes import (PersonSearchIndexMixin,
                                      PledgePersonSearchIndexMixin)
 
-from .models import Pledge, Contribution, BulkPayment
+from .models import Pledge, FollowUp, Contribution, BulkPayment
 
 
 class PledgeIndex(ContentSearchIndexMixin, PersonSearchIndexMixin,
@@ -50,6 +50,40 @@ class PledgeIndex(ContentSearchIndexMixin, PersonSearchIndexMixin,
             return obj.followed_by.display_name
         else:
             return 'Nobody'
+
+
+class FollowUpIndex(ContentSearchIndexMixin, PledgePersonSearchIndexMixin,
+                    indexes.SearchIndex, indexes.Indexable):
+    content_name = 'Follow Up'
+    status = indexes.CharField(model_attr='get_status_display', faceted=True)
+    followed_by = indexes.CharField(faceted=True)
+    source = indexes.MultiValueField(null=True, faceted=True)
+    amount = indexes.IntegerField(model_attr='pledge__amount')
+    currency = indexes.CharField(model_attr='pledge__currency', faceted=True)
+
+    def prepare_followed_by(self, obj):
+        if obj.created_by:
+            return obj.created_by.display_name
+
+    def prepare_source(self, obj):
+        items = []
+        if obj.pledge.source:
+            source = obj.pledge.get_source_display()
+            if source not in items:
+                items.append(source)
+                if obj.pledge.source in ['jps-office', 'namahatta', 'jps-others']:
+                    items.append('JPS (All combined)')
+        for contribution in obj.pledge.contributions.all():
+            source = contribution.get_source_display()
+            if source not in items:
+                items.append(source)
+                if contribution.source in ['jps-office', 'namahatta', 'jps-others']:
+                    items.append('JPS (All combined)')
+
+        return items
+
+    def get_model(self):
+        return FollowUp
 
 
 class BaseContributionIndexMixin(indexes.SearchIndex):

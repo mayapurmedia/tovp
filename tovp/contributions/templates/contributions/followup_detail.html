@@ -1,0 +1,59 @@
+{% extends 'content-area.html' %}
+{% set page_title = object.name %}
+{% set body_class = "pledge-detail" %}
+
+{% macro print_field(label, value) -%}
+    <div class="field-label">{{ label }}</div>
+    <div class="field-value">{{ value or 'N/A' }}</div>
+{%- endmacro %}
+
+
+{% block page_content %}
+
+<div class="row">
+    {% set field_label = 'Follow Up ID' %}
+    {% set field_name = 'pk' %}
+    <div class="{% if user.has_perm('contributions.change_followup') %} col-xs-9 col-ms-10 col-sm-11{% else %}col-xs-12{% endif %}">
+        <h1>Follow Up #{{ object.pk }}</h1>
+    </div>
+    {% if user.has_perm('contacts.change_followup') %} 
+        <div class="col-xs-3 col-ms-2 col-sm-1">
+            <a href="{{ url('contributions:follow_up:update', object.pledge.pk, object.pk) }}" class="btn btn-lg btn-warning">Edit</a>
+            {% if request.user.is_staff %}
+                <a href="/admin/contributions/followup/{{ object.pk }}" class="btn btn-lg btn-warning">Admin</a>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {% set field_label = 'Donor' %}
+    {% set field_name = 'person' %}
+    <div class="col-xs-12">
+        <div class="field-label">{{ field_label }}</div>
+        <div class="field-value">
+            <a href="{{ object.pledge.person.get_absolute_url() }}">{{ object.pledge.person.full_name }}{% if object.pledge.person.full_name %} - {% endif %}{{ object.pledge.person.initiated_name}}</a>
+        </div>
+    </div>
+    {% set field_label = 'Pledge' %}
+    {% set field_name = 'pledge' %}
+    <div class="col-xs-12">
+        <div class="field-label">{{ field_label }}</div>
+        <div class="field-value">
+            <a href="{{ object[field_name].get_absolute_url() }}">{{ object[field_name] }}</a>
+        </div>
+    </div>
+    {% set field_label = 'Status' %}
+    {% set field_name = 'status' %}
+    {% if object[field_name] %}
+    <div class="col-xs-12">
+        {{ print_field(field_label, object.get_status_display()) }}
+    </div>
+    {% endif %}
+    {% set field_label = 'Note' %}
+    {% set field_name = 'note' %}
+    {% if object[field_name] %}
+    <div class="col-xs-12">
+        {{ print_field(field_label, object[field_name])}}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -4,7 +4,7 @@ from django.forms import TextInput
 
 from datetimewidget.widgets import DateWidget
 
-from .models import Pledge, Contribution, BulkPayment
+from .models import Pledge, FollowUp, Contribution, BulkPayment
 
 from contacts.models import Person
 
@@ -24,6 +24,31 @@ class PledgeForm(forms.ModelForm):
                 bootstrap_version=3
             ),
         }
+
+
+class FollowUpForm(forms.ModelForm):
+    next_payment_date = forms.DateField(
+        required=False,
+        widget=DateWidget(
+            attrs={},
+            options={'startView': 2, 'format': 'yyyy-mm-dd'},
+            bootstrap_version=3
+        ),
+        label='Next expected payment date',
+    )
+
+    def save(self, commit=True):
+        instance = super(FollowUpForm, self).save()
+
+        # if we defined new date of next payment we will save it to the pledge
+        if self.cleaned_data['next_payment_date']:
+            instance.pledge.payments_start_date = self.cleaned_data['next_payment_date']
+            instance.pledge.save()
+        return instance
+
+    class Meta:
+        model = FollowUp
+        exclude = []
 
 
 class NoInput(forms.Widget):

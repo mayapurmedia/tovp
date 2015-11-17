@@ -24,8 +24,8 @@ from promotions.models import promotions
 
 from contacts.models import Person
 
-from .forms import PledgeForm, ContributionForm, BulkPaymentForm
-from .models import Pledge, Contribution, BulkPayment
+from .forms import PledgeForm, FollowUpForm, ContributionForm, BulkPaymentForm
+from .models import Pledge, FollowUp, Contribution, BulkPayment
 
 
 class PledgeListView(LoginRequiredMixin, ListView):
@@ -135,6 +135,68 @@ class PledgeAssignToFollow(PermissionRequiredMixin, View):
                                 content_type="application/json")
 
         return HttpResponseRedirect(request.GET['next'])
+
+
+class FollowUpDetailView(LoginRequiredMixin, DetailView):
+    model = FollowUp
+
+
+class FollowUpCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    model = FollowUp
+    permission_required = "contributions.add_followup"
+    template_name = 'contributions/followup_form.html'
+    form_class = FollowUpForm
+
+    def get_initial(self):
+        initial = super(FollowUpCreateView, self).get_initial()
+        initial = initial.copy()
+        initial['pledge'] = self.kwargs.get('pledge_id')
+        return initial
+
+    def get_context_data(self, **kwargs):
+        context = super(FollowUpCreateView, self).get_context_data(**kwargs)
+        context['content_title'] = _("Add new follow up")
+        pledge = Pledge.objects.get(pk=self.kwargs.get('pledge_id'))
+        context['pledge'] = pledge
+        return context
+
+
+class FollowUpUpdateView(RevisionCommentMixin, LoginRequiredMixin,
+                         PermissionRequiredMixin, UpdateView):
+    model = FollowUp
+    permission_required = "contributions.change_followup"
+    template_name = 'contributions/followup_form.html'
+    form_class = FollowUpForm
+
+    def get_context_data(self, **kwargs):
+        context = super(FollowUpUpdateView, self).get_context_data(**kwargs)
+        context['content_title'] = _("Edit follow up")
+        pledge = Pledge.objects.get(pk=self.kwargs.get('pledge_id'))
+        context['pledge'] = pledge
+        return context
+
+
+class FollowUpDeleteView(MultiplePermissionsRequiredMixin, DeleteView):
+    model = FollowUp
+    permission_required = "contributions.delete_followup"
+    success_message = "%(pk)s was deleted successfully"
+
+    def dispatch(self, request, *args, **kwargs):
+        """
+        Check to see if the user in the request has the required
+        permission.
+        """
+
+        # Check if pledge doesn't have any contributions
+        if not self.get_object().can_delete_pledge(request.user):
+            return self.handle_no_permission(request)
+
+        return super(PledgeDeleteView, self).dispatch(
+            request, *args, **kwargs)
+
+    def get_success_url(self):
+        item = get_object_or_404(Pledge, pk=self.kwargs['pk'])
+        return item.person.get_absolute_url()
 
 
 class ContributionListView(LoginRequiredMixin, ListView):

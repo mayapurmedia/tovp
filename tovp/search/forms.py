@@ -177,8 +177,12 @@ class SearchForm(forms.Form):
 
 class FollowUpForm(SearchForm):
     def show_all(self):
+        self.searchqueryset = SearchQuerySet()
         return self.searchqueryset. \
             filter(content_type='Pledge'). \
             filter(next_payment_date__lte=datetime.now()). \
             exclude(status='Completed'). \
             order_by('next_payment_date')
+
+    def search(self):
+        return self.show_all()
