@@ -184,9 +184,21 @@ class BaseContribution(TimeStampedModel, AuthStampedModel, NextPrevMixin,
         _('Serial Number'), max_length=5, blank=True,
         help_text=_('Serial Number of this contribution for financial year.'))
 
+    # serial_number_int = models.IntegerField(
+    #     _('Serial Number Int'), null=True, blank=True, default=None,
+    #     help_text=_('Serial Number of this contribution for financial year.'))
+
     amount = models.DecimalField(_('Amount'), max_digits=20, decimal_places=2)
     currency = models.CharField(
         "Currency", max_length=6, choices=get_currency_choices(), default="INR")
+
+    foreign_amount = models.DecimalField(_('Foreign Amount'), max_digits=20,
+                                         decimal_places=2, blank=True,
+                                         null=True)
+    foreign_currency = models.CharField(
+        "Foreign Currency", max_length=6, choices=get_currency_choices(),
+        default="INR", help_text=_('Please fill if donation is coming from'
+                                   'foreign currency.'))
 
     PAYMENT_METHOD_CHOICES = (
         (u'cashl', _('Cash (Indian)')),

@@ -108,6 +108,9 @@ class BaseContributionIndexMixin(indexes.SearchIndex):
     has_slip = indexes.CharField(faceted=True)
     note = indexes.CharField(model_attr='note')
 
+    foreign_amount = indexes.IntegerField(model_attr='foreign_amount')
+    foreign_currency = indexes.CharField(model_attr='foreign_currency', faceted=True)
+
     def prepare_source(self, obj):
         items = []
         if obj.source:

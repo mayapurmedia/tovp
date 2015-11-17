@@ -112,6 +112,7 @@ class ContributionForm(forms.ModelForm):
         widgets = {
             'collector': forms.Select(attrs={'class': 'autocomplete'}),
             'amount': TextInput(attrs={'type': 'text'}),
+            'foreign_amount': TextInput(attrs={'type': 'text'}),
             'dated': DateWidget(
                 attrs={},
                 options={
