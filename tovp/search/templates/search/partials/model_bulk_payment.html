@@ -1,7 +1,10 @@
 {% import '_macros.html' as macros %}
 <div class="person-result">
     <div>{{ result.content_type }}: <a class="object-link" href="{{ result.absolute_url }}">{{ result.full_name }}{% if result.initiated_name %} - {{ result.initiated_name }}{% endif %}</a></div>
-    <div>Serial No: {{ result.serial_number }}</div>
+    <div>Serial No: {{ result.serial_number }} - {{ result.object.get_receipt_type_display() }}</div>
     <div>{{ result.amount }} {{ result.currency }} [{{ result.status }}]</div>
     <div>{{ result.payment_method }}</div>
+    {% if result.object.receipt_type == 'acknowledgement' %}
+    {{ result.object.get_deposit_status() }}
+    {% endif %}
 </div>

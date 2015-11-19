@@ -28,6 +28,13 @@
             <a href="{{ object.person.get_absolute_url() }}">{{ object.person.full_name }}{% if object.person.full_name %} - {% endif %}{{ object.person.initiated_name}}</a>
         </div>
     </div>
+    {% set field_label = 'Type' %}
+    <div class="col-xs-6">
+        <div class="field-label">{{ field_label }}</div>
+        <div class="field-value">
+            {{ object.get_receipt_type_display() }}
+        </div>
+    </div>
 
     {% set field_label = 'Serial Number' %}
     <div class="col-xs-6 col-ms-12 col-sm-4">

@@ -373,6 +373,8 @@ class BaseContribution(TimeStampedModel, AuthStampedModel, NextPrevMixin,
         field_values.append(self.currency)
         field_values.append('(%s)' % self.get_payment_method_display())
         field_values.append(self.get_status_display())
+        if self.bulk_payment:
+            field_values.append('[%s]' % self.get_deposited_status_display())
         return ' - '.join(filter(bool, field_values))
 
     def save(self, **kwargs):
@@ -413,6 +415,21 @@ class BulkPayment(BaseContribution):
             return 'BULK-TMP'
         else:
             return 'BULK-INTRA'
+
+    def get_deposit_status(self):
+        status = ''
+        deposited = 0
+        not_deposited = 0
+        for contribution in self.contributions.all():
+            if contribution.deposited_status == 'deposited':
+                deposited += 1
+            else:
+                not_deposited += 1
+            if deposited and not not_deposited:
+                status = 'success'
+            else:
+                status = 'danger'
+        return '<div class="btn btn-%s">%d of %d deposited</div>' % (status, deposited, deposited + not_deposited)
 
     @permalink
     def get_absolute_url(self):
