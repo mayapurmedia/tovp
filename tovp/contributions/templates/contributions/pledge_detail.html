@@ -135,11 +135,7 @@
 
         {% if user.has_perm('contributions.add_contribution') %}
             {% if object.assigned_promotions() %}
-                {% if object.progress <= 100 %}
-                    <a href="{{ url('contributions:contribution:create', object.person.pk, object.pk) }}" class="btn btn-lg btn-success">Add new contribution</a>
-                {% else %}
-                This pledge is fully paid, <a href="{{ url('contributions:pledge:create', object.person.pk) }}">create new pledge</a> if you want to add another contribution.
-                {% endif %}
+                <a href="{{ url('contributions:contribution:create', object.person.pk, object.pk) }}" class="btn btn-lg btn-success">Add new contribution</a>
             {% else %}
                 You need to create promotion first to be able to add contribution.
             {% endif %}
