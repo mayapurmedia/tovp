@@ -594,9 +594,15 @@ class Contribution(BaseContribution):
                     year -= 1
                 if year > 2014:
                     self.serial_year = self.generate_serial_year()
-                    self.serial_number = len(
-                        self.__class__.objects.all().
-                        filter(serial_year=self.serial_year)) + 1
+                    last_serial = 0
+                    try:
+                        last_serial = self.__class__.objects.all(). \
+                            filter(serial_year=self.serial_year). \
+                            order_by('-created')[0].serial_number
+                    except:
+                        pass
+
+                    self.serial_number = str(int(last_serial) + 1)
 
         super(Contribution, self).save()
         # if contribution pledge changed save original pledge first, so its
