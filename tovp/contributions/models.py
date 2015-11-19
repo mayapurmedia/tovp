@@ -373,8 +373,6 @@ class BaseContribution(TimeStampedModel, AuthStampedModel, NextPrevMixin,
         field_values.append(self.currency)
         field_values.append('(%s)' % self.get_payment_method_display())
         field_values.append(self.get_status_display())
-        if self.bulk_payment:
-            field_values.append('[%s]' % self.get_deposited_status_display())
         return ' - '.join(filter(bool, field_values))
 
     def save(self, **kwargs):
@@ -523,6 +521,20 @@ class Contribution(BaseContribution):
         'ready-to-deposit': 'deposited',
         'deposited': 'not-deposited',
     }
+
+    def info(self, show_name=None):
+        field_values = [
+            '#' + str(self.pk),
+        ]
+        # if show_name:
+        #     field_values.append(self.person.full_name)
+        field_values.append(str(self.amount))
+        field_values.append(self.currency)
+        field_values.append('(%s)' % self.get_payment_method_display())
+        field_values.append(self.get_status_display())
+        if self.bulk_payment:
+            field_values.append('[%s]' % self.get_deposited_status_display())
+        return ' - '.join(filter(bool, field_values))
 
     def change_deposited_status(self, user):
         next_status = self.DEPOSITED_STATUS_FLOW[self.deposited_status]
