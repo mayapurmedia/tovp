@@ -15,12 +15,16 @@ class RevisionCommentMixin(object):
 
 class SourceMixin(models.Model):
     SOURCE_CHOICES = (
+        (u'tovp-f-mayapur', _('TOVP Fundraising Mayapur')),
         (u'nityananda', _('Nityananda Tour')),
         (u'jps-office', _('JPS Office')),
         (u'namahatta', _('JPS Namahatta')),
         (u'jps-others', _('JPS Others')),
         (u'gkg-vp-2015', _('GKG Vyasa Puja 2015')),
         (u'bcs-vp-2015', _('BCS Vyasa Puja 2015')),
+        (u'vvps-vp-2015', _('Vedavyasapriya Swami Vyasa Puja 2015')),
+        (u'rns-kartik-yatra', _('RNS Kartik Yatra')),
+        (u'j-w-marriot', _('J W Marriot')),
         (u'kanjurmarg-mumbai-2015', _('Kanjurmarg Mumbai 2015')),
         (u'nvs', _('Nava Yogendra Swami')),
         (u'mso', _('MSO')),
