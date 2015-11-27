@@ -80,7 +80,7 @@ class SearchForm(forms.Form):
     )
 
     order_type = forms.ChoiceField(required=False, label='Order type',
-                              choices=ORDER_TYPE_CHOICES)
+                                   choices=ORDER_TYPE_CHOICES)
 
     serial_clean_from = forms.CharField(required=False, label=_('Serial From'),
                                         widget=forms.TextInput())
