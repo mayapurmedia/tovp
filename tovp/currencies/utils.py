@@ -9,6 +9,14 @@ def get_currency_choices():
     return choices
 
 
+def get_foreign_currency_choices():
+    choices = []
+    for currency in settings.FOREIGN_CURRENCIES:
+        choices.append((currency,
+                        settings.FOREIGN_CURRENCIES[currency]['symbol']))
+    return choices
+
+
 def get_currency_words(currency):
     if currency in settings.ENABLED_CURRENCIES:
         return settings.ENABLED_CURRENCIES[currency]['word']

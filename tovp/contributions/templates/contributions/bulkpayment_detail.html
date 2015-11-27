@@ -79,6 +79,9 @@
         <div class="field-label">{{ field_label }}</div>
         <div class="field-value">
             {{ object[field_name] }} {{ object.get_currency_display() }}
+            {% if object.foreign_amount %}
+             - from {{ object['foreign_amount'] }} {{ object.get_foreign_currency_display() }}
+            {% endif %}
         </div>
     </div>
     {% set field_label = 'Status' %}

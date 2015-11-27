@@ -13,7 +13,8 @@ from audit_log.models import AuthStampedModel
 
 from contacts.models import Person
 from ananta.models import SourceMixin, NextPrevMixin
-from currencies.utils import get_currency_choices, get_currency_words
+from currencies.utils import (get_currency_choices, get_currency_words,
+                              get_foreign_currency_choices)
 
 
 class Pledge(TimeStampedModel, AuthStampedModel, NextPrevMixin, SourceMixin):
@@ -195,8 +196,9 @@ class BaseContribution(TimeStampedModel, AuthStampedModel, NextPrevMixin,
     foreign_amount = models.DecimalField(_('Foreign Amount'), max_digits=20,
                                          decimal_places=2, blank=True,
                                          null=True)
+
     foreign_currency = models.CharField(
-        "Foreign Currency", max_length=6, choices=get_currency_choices(),
+        "Foreign Currency", max_length=6, choices=get_foreign_currency_choices(),
         default="INR", help_text=_('Please fill if donation is coming from'
                                    'foreign currency.'))
 

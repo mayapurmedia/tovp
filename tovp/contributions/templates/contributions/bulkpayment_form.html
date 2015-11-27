@@ -60,21 +60,22 @@
             <div class="col-ms-6 col-sm-6 col-lg-5 form-group{{' has-error' if form[field_name].errors }}">
                 <label class="control-label" for="id_{{ field_name }}">{{ form[field_name].label }}</label>
                 <div class="row">
-                    <div class="col-lg-8">
+                    <div class="col-lg-4">
                         {{form[field_name]|add_css('form-control')}}
                         {{ form[field_name].errors|safe }}
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-8">
                         {% set field_name = 'foreign_currency' %}
 
-                        {{form[field_name]|add_css('form-control')}}
+                        {# {{form[field_name]|add_css('form-control')}} #}
+                        {{ form[field_name]|add_css('is-selectize') }}
                         {{ form[field_name].errors|safe }}
                         {% if form[field_name].help_text %}
                         {% endif %}
                     </div>
-                        <div class="help-text col-xs-12">
-                            {{ form[field_name].help_text }}
-                        </div>
+                    <div class="help-text col-xs-12">
+                        {{ form[field_name].help_text }}
+                    </div>
                 </div>
             </div>
 
