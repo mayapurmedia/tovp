@@ -60,3 +60,5 @@ target/
 config.codekit
 
 tovp/media
+
+.idea/
