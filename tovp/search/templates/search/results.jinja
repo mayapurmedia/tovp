@@ -1,5 +1,5 @@
-{% import '_macros.html' as macros %}
-{% extends 'content-area.html' %}
+{% import '_macros.jinja' as macros %}
+{% extends 'content-area.jinja' %}
 
 {% set content_title = '' %}
 {% set body_class = "rides" %}
@@ -11,7 +11,7 @@
 
 {% block javascript_head %}
     {{ super() }}
-    {% include '_import-selectize.html' %}
+    {% include '_import-selectize.jinja' %}
 {% endblock %}
 
 {% block page_content %}
@@ -72,7 +72,7 @@
         <div class="row">
             {% if show_form %}
             <div class="col-xs-12 search-form">
-                {% include "search/results.form.html" %}
+                {% include "search/results.form.jinja" %}
             </div>
             {% endif %}
             <div class="search-info-bar col-xs-12 col-sm-12">
@@ -85,19 +85,19 @@
             {% for result in results %}
             <div class="col-xs-12">
                 {% if result.content_type == 'Contact' %}
-                    {% include "search/partials/model_contact.html" %}
+                    {% include "search/partials/model_contact.jinja" %}
                 {% elif result.content_type == 'Pledge' %}
-                    {% include "search/partials/model_pledge.html" %}
+                    {% include "search/partials/model_pledge.jinja" %}
                 {% elif result.content_type == 'Contribution' %}
-                    {% include "search/partials/model_contribution.html" %}
+                    {% include "search/partials/model_contribution.jinja" %}
                 {% elif result.content_type == 'Promotion' %}
-                    {% include "search/partials/model_promotion.html" %}
+                    {% include "search/partials/model_promotion.jinja" %}
                 {% elif result.content_type == 'Bulk Payment' %}
-                    {% include "search/partials/model_bulk_payment.html" %}
+                    {% include "search/partials/model_bulk_payment.jinja" %}
                 {% elif result.content_type == 'Follow Up' %}
-                    {% include "search/partials/model_followup.html" %}
+                    {% include "search/partials/model_followup.jinja" %}
                 {% elif result.content_type == 'Gift' %}
-                    {% include "search/partials/model_gift.html" %}
+                    {% include "search/partials/model_gift.jinja" %}
                 {% else %}
                     <div class="person-result">
                         <div>XXX {{ result.content_type }}: <a class="object-link" href="{{ result.absolute_url }}">{{ result.full_name }}{% if result.initiated_name %} - {{ result.initiated_name }}{% endif %}</a></div>
@@ -118,7 +118,7 @@
     </div>
 </div>
 
-{% include '_status_changer.html' %}
+{% include '_status_changer.jinja' %}
 
 <script>
     $('#id_collector').selectize({

@@ -1,0 +1,17 @@
+{% if pager.paginator.num_pages>1 %}
+<div class="{{ css_classes }} pagination-mini">
+    <ul class="pagination">
+        {% if pager.has_previous() %}
+        <li><a href="{{ request.get_full_path()|update_url_query({'page': pager.previous_page_number()}) }}">« Previous</a></li>
+        {% endif %}
+        <li>
+            <span class="current">
+                Page {{ pager.number }} of {{ pager.paginator.num_pages }}
+            </span>
+        </li>
+        {% if pager.has_next() %}
+          <li><a href="{{ request.get_full_path()|update_url_query({'page': pager.next_page_number()}) }}">Next »</a></li>
+        {% endif %}
+    </ul>
+</div>
+{% endif %}

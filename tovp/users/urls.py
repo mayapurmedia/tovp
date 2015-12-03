@@ -19,6 +19,7 @@ urlpatterns = patterns('',
     ),
     # URl pattern for login view
     url(r'^login/$', 'django.contrib.auth.views.login',
+        {'template_name': 'registration/login.jinja'},
         name="login"),
     # URl pattern for logout view
     url(r'^logout/$', 'django.contrib.auth.views.logout',

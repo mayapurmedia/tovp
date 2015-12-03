@@ -1,8 +1,10 @@
 # Bleeding edge Django
-django<1.8
+django<1.9
 
 # Configuration
-django-configurations
+# django-configurations
+-e git://github.com/jezdez/django-configurations.git#egg=django-configurations
+
 django-secure
 django-cache-url
 dj-database-url
@@ -27,6 +29,7 @@ pytz
 Jinja2
 jingo
 jingo-markdown
+django-jinja
 
 # django-storages is a collection of custom storage backends for Django
 # django-storages

@@ -1,4 +1,4 @@
-{% extends 'content-area.html' %}
+{% extends 'content-area.jinja' %}
 {% set body_class = "login" %}
 
 {% set content_title = "Login" %}
@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block page_content %}
-<form class="form-normal" action="" method="post">{{ csrf() }}
+<form class="form-normal" action="" method="post">{% csrf_token %}
     {% if form.errors %}
         <p class="has-error">Your username and password didn't match. Please try again.</p>
     {% endif %}

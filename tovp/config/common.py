@@ -21,6 +21,7 @@ from collections import OrderedDict
 
 
 BASE_DIR = dirname(dirname(__file__))
+BASE_URL = 'https://donate.tovp.org'
 
 
 def get_env_variable(var_name):
@@ -52,8 +53,8 @@ class Common(Configuration):
     )
 
     THIRD_PARTY_APPS = (
-        'jingo_markdown',
-        'jingo_paginator',
+        'django_jinja',
+        'jinja_paginator',
         'datetimewidget',
         'reversion',
         'reversion_compare',
@@ -179,7 +180,7 @@ class Common(Configuration):
 
     # TEMPLATE CONFIGURATION
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-context-processors
-    TEMPLATE_CONTEXT_PROCESSORS = (
+    _TEMPLATE_CONTEXT_PROCESSORS = (
         'django.contrib.auth.context_processors.auth',
         'django.core.context_processors.debug',
         'django.core.context_processors.i18n',
@@ -189,7 +190,6 @@ class Common(Configuration):
         'django.contrib.messages.context_processors.messages',
         'django.core.context_processors.request',
         'ananta.context_processors.variables',
-        # Your stuff: custom template context processers go here
     )
 
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
@@ -197,38 +197,6 @@ class Common(Configuration):
         join(BASE_DIR, 'theme/templates'),
         join(BASE_DIR, 'templates'),
     )
-
-    TEMPLATE_LOADERS = (
-        'jingo.Loader',
-        'django.template.loaders.filesystem.Loader',
-        'django.template.loaders.app_directories.Loader',
-    )
-
-    # JINJA2/JINGO CONFIGURATION
-    # Because Jinja2 is the default template loader, add any non-Jinja templated
-    # apps here:
-    JINGO_EXCLUDE_APPS = [
-        'django_admin_bootstrapped',
-        'admin',
-        # 'registration',
-        'debug_toolbar',
-        'django_extensions',
-        'haystack_panel',
-        'admin_doc',
-        'reversion',
-        'reversion-compare',
-    ]
-
-    JINJA_CONFIG = {
-        'autoescape': False,
-        'extensions': [
-            'jinja2.ext.do',
-            'jinja2.ext.with_',
-            'jinja2.ext.loopcontrols',
-            'jingo_markdown.extensions.MarkdownExtension',
-        ]
-    }
-    # END JINJA2/JINGO CONFIGURATION
 
     # STATIC FILE CONFIGURATION
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-root
@@ -280,6 +248,47 @@ class Common(Configuration):
     # SLUGLIFIER
     AUTOSLUG_SLUGIFY_FUNCTION = "slugify.slugify"
     # END SLUGLIFIER
+
+    TEMPLATES = [
+        {
+            "BACKEND": "django_jinja.backend.Jinja2",
+            "APP_DIRS": True,
+            "OPTIONS": {
+                "match_extension": ".jinja",
+                "extensions": [
+                    "jinja2.ext.do",
+                    "jinja2.ext.loopcontrols",
+                    "jinja2.ext.with_",
+                    "jinja2.ext.i18n",
+                    "jinja2.ext.autoescape",
+                    "django_jinja.builtins.extensions.CsrfExtension",
+                    "django_jinja.builtins.extensions.CacheExtension",
+                    "django_jinja.builtins.extensions.TimezoneExtension",
+                    "django_jinja.builtins.extensions.UrlsExtension",
+                    "django_jinja.builtins.extensions.StaticFilesExtension",
+                    "django_jinja.builtins.extensions.DjangoFiltersExtension",
+                    'ananta.templatetags.jinja2.core',
+                ],
+                "context_processors": _TEMPLATE_CONTEXT_PROCESSORS,
+                "constants": {
+                    "BASE_URL": BASE_URL,
+                },
+            }
+        },
+        {
+            "BACKEND": "django.template.backends.django.DjangoTemplates",
+            "DIRS": ['templates'],
+            "APP_DIRS": True,
+            "OPTIONS": {
+                "context_processors": _TEMPLATE_CONTEXT_PROCESSORS,
+                "debug": DEBUG,
+                # 'loaders': [
+                #     'django.template.loaders.filesystem.Loader',
+                #     'django.template.loaders.app_directories.Loader',
+                # ]
+            },
+        },
+    ]
 
     # LOGGING CONFIGURATION
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#logging
