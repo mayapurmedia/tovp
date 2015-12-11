@@ -34,6 +34,7 @@ class PledgeListView(LoginRequiredMixin, ListView):
 
 class PledgeDetailView(LoginRequiredMixin, DetailView):
     model = Pledge
+    template_name = 'contributions/pledge_detail.jinja'
 
     def get_context_data(self, **kwargs):
         context = super(PledgeDetailView, self).get_context_data(**kwargs)
@@ -139,6 +140,7 @@ class PledgeAssignToFollow(PermissionRequiredMixin, View):
 
 class FollowUpDetailView(LoginRequiredMixin, DetailView):
     model = FollowUp
+    template_name = 'contributions/followup_detail.jinja'
 
 
 class FollowUpCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
@@ -201,10 +203,12 @@ class FollowUpDeleteView(MultiplePermissionsRequiredMixin, DeleteView):
 
 class ContributionListView(LoginRequiredMixin, ListView):
     model = Contribution
+    template_name = 'contributions/contribution_list.jinja'
 
 
 class ContributionDetailView(LoginRequiredMixin, DetailView):
     model = Contribution
+    template_name = 'contributions/contribution_detail.jinja'
 
 
 class ContributionDonorLetterDetailView(LoginRequiredMixin, DetailView):
@@ -323,6 +327,7 @@ class ContributionDepositStatusChangeView(PermissionRequiredMixin, View):
 
 class BulkPaymentDetailView(LoginRequiredMixin, DetailView):
     model = BulkPayment
+    template_name = 'contributions/bulkpayment_detail.jinja'
 
 
 class BulkPaymentCreateView(LoginRequiredMixin, PermissionRequiredMixin,
