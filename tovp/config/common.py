@@ -268,6 +268,7 @@ class Common(Configuration):
                     "django_jinja.builtins.extensions.StaticFilesExtension",
                     "django_jinja.builtins.extensions.DjangoFiltersExtension",
                     'ananta.templatetags.jinja2.core',
+                    'attachments.templatetags.jinja2.attachments',
                 ],
                 "context_processors": _TEMPLATE_CONTEXT_PROCESSORS,
                 "constants": {
