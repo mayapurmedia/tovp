@@ -20,10 +20,12 @@ from .forms import PersonForm
 
 class PersonListView(LoginRequiredMixin, ListView):
     model = Person
+    template_name = 'contacts/person_list.jinja'
 
 
 class PersonDetailView(LoginRequiredMixin, DetailView):
     model = Person
+    template_name = 'contacts/person_detail.jinja'
 
 
 class PersonCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
