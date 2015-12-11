@@ -108,10 +108,10 @@ class SearchForm(forms.Form):
         if not self.is_valid():
             return self.show_all()
 
-        if self.cleaned_data.get('order_type') == 'desc':
-            order_type = '-'
-        else:
+        if self.cleaned_data.get('order_type') == 'asc':
             order_type = ''
+        else:
+            order_type = '-'
 
         if self.cleaned_data.get('order'):
             sqs = self.searchqueryset.order_by('%s%s' % (order_type, self.cleaned_data.get('order')))
