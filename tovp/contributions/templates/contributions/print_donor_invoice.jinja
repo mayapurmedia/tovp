@@ -1,5 +1,5 @@
-{% import 'contributions/_macros.html' as print_macros %}
-{% extends 'print-base.html' %}
+{% import 'contributions/_macros.jinja' as print_macros %}
+{% extends 'print-base.jinja' %}
 {% set body_class = "person-detail" %}
 {% set page_content = "Donor Letter" %}
 
@@ -105,11 +105,11 @@
 
 </style>
 <div class="receipt">
-    {% include 'contributions/contribution_receipt_inner.html' %}
+    {% include 'contributions/contribution_receipt_inner.jinja' %}
 </div>
 {% if not (user.signature and print_signature) %}
 <div class="receipt receipt2">
-    {% include 'contributions/contribution_receipt_inner.html' %}
+    {% include 'contributions/contribution_receipt_inner.jinja' %}
 </div>
 {% endif %}
 {% endblock %}

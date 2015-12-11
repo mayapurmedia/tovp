@@ -53,7 +53,7 @@ class PledgeDetailView(LoginRequiredMixin, DetailView):
 class PledgeCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Pledge
     permission_required = "contributions.add_pledge"
-    template_name = 'contributions/pledge_form.html'
+    template_name = 'contributions/pledge_form.jinja'
     form_class = PledgeForm
 
     def get_initial(self):
@@ -74,7 +74,7 @@ class PledgeUpdateView(RevisionCommentMixin, LoginRequiredMixin,
                        PermissionRequiredMixin, UpdateView):
     model = Pledge
     permission_required = "contributions.change_pledge"
-    template_name = 'contributions/pledge_form.html'
+    template_name = 'contributions/pledge_form.jinja'
     form_class = PledgeForm
 
     def get_context_data(self, **kwargs):
@@ -144,7 +144,7 @@ class FollowUpDetailView(LoginRequiredMixin, DetailView):
 class FollowUpCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = FollowUp
     permission_required = "contributions.add_followup"
-    template_name = 'contributions/followup_form.html'
+    template_name = 'contributions/followup_form.jinja'
     form_class = FollowUpForm
 
     def get_initial(self):
@@ -165,7 +165,7 @@ class FollowUpUpdateView(RevisionCommentMixin, LoginRequiredMixin,
                          PermissionRequiredMixin, UpdateView):
     model = FollowUp
     permission_required = "contributions.change_followup"
-    template_name = 'contributions/followup_form.html'
+    template_name = 'contributions/followup_form.jinja'
     form_class = FollowUpForm
 
     def get_context_data(self, **kwargs):
@@ -209,7 +209,7 @@ class ContributionDetailView(LoginRequiredMixin, DetailView):
 
 class ContributionDonorLetterDetailView(LoginRequiredMixin, DetailView):
     model = Contribution
-    template_name = 'contributions/print_donor_letter.html'
+    template_name = 'contributions/print_donor_letter.jinja'
 
     def get_context_data(self, **kwargs):
         context = super(ContributionDonorLetterDetailView, self). \
@@ -221,7 +221,7 @@ class ContributionDonorLetterDetailView(LoginRequiredMixin, DetailView):
 class DonorInvoiceDetailView(LoginRequiredMixin, DetailView):
     print_signature = None
     model = Contribution
-    template_name = 'contributions/print_donor_invoice.html'
+    template_name = 'contributions/print_donor_invoice.jinja'
 
     def get_context_data(self, **kwargs):
         context = super(DonorInvoiceDetailView, self).get_context_data(
@@ -234,7 +234,7 @@ class ContributionCreateView(LoginRequiredMixin, PermissionRequiredMixin,
                              CreateView):
     model = Contribution
     permission_required = "contributions.add_contribution"
-    template_name = 'contributions/contribution_form.html'
+    template_name = 'contributions/contribution_form.jinja'
     form_class = ContributionForm
 
     def get_form_kwargs(self):
@@ -261,7 +261,7 @@ class ContributionUpdateView(RevisionCommentMixin, LoginRequiredMixin,
                              PermissionRequiredMixin, UpdateView):
     model = Contribution
     permission_required = "contributions.change_contribution"
-    template_name = 'contributions/contribution_form.html'
+    template_name = 'contributions/contribution_form.jinja'
     form_class = ContributionForm
 
     def get_form_kwargs(self):
@@ -291,7 +291,7 @@ class ContributionDeleteView(PermissionRequiredMixin, DeleteView):
     model = Contribution
     permission_required = "contributions.delete_contribution"
     success_message = "%(pk)s was deleted successfully"
-    template_name = 'contributions/model_confirm_delete.html'
+    template_name = 'contributions/model_confirm_delete.jinja'
 
     def get_success_url(self):
         item = get_object_or_404(Contribution, pk=self.kwargs['pk'])
@@ -329,7 +329,7 @@ class BulkPaymentCreateView(LoginRequiredMixin, PermissionRequiredMixin,
                             CreateView):
     model = BulkPayment
     permission_required = "contributions.add_contribution"
-    template_name = 'contributions/bulkpayment_form.html'
+    template_name = 'contributions/bulkpayment_form.jinja'
     form_class = BulkPaymentForm
 
     def get_form_kwargs(self):
@@ -353,7 +353,7 @@ class BulkPaymentUpdateView(RevisionCommentMixin, LoginRequiredMixin,
                             PermissionRequiredMixin, UpdateView):
     model = BulkPayment
     permission_required = "contributions.change_bulkpayment"
-    template_name = 'contributions/bulkpayment_form.html'
+    template_name = 'contributions/bulkpayment_form.jinja'
     form_class = BulkPaymentForm
 
     def get_form_kwargs(self):
@@ -371,7 +371,7 @@ class BulkPaymentDeleteView(PermissionRequiredMixin, DeleteView):
     model = BulkPayment
     permission_required = "contributions.delete_bulkpayment"
     success_message = "%(pk)s was deleted successfully"
-    template_name = 'contributions/model_confirm_delete.html'
+    template_name = 'contributions/model_confirm_delete.jinja'
 
     def get_success_url(self):
         item = get_object_or_404(BulkPayment, pk=self.kwargs['pk'])
@@ -380,7 +380,7 @@ class BulkPaymentDeleteView(PermissionRequiredMixin, DeleteView):
 
 class BulkPaymentReceiptDetailView(LoginRequiredMixin, DetailView):
     model = BulkPayment
-    template_name = 'contributions/print_collector_invoice.html'
+    template_name = 'contributions/print_collector_invoice.jinja'
 
     def get_context_data(self, **kwargs):
         context = super(BulkPaymentReceiptDetailView, self).get_context_data(
@@ -395,7 +395,7 @@ class BulkPaymentReceiptDetailView(LoginRequiredMixin, DetailView):
 
 class BulkPaymentDonorLetterDetailView(LoginRequiredMixin, DetailView):
     model = BulkPayment
-    template_name = 'contributions/print_donor_letter.html'
+    template_name = 'contributions/print_donor_letter.jinja'
 
     def get_context_data(self, **kwargs):
         context = super(BulkPaymentDonorLetterDetailView, self). \

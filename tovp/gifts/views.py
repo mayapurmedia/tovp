@@ -26,7 +26,7 @@ class GiftDetailView(LoginRequiredMixin, DetailView):
 class GiftCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Gift
     permission_required = "gifts.add_gift"
-    template_name = 'gifts/gift_form.html'
+    template_name = 'gifts/gift_form.jinja'
     form_class = GiftForm
 
     def get_context_data(self, **kwargs):
@@ -39,7 +39,7 @@ class GiftUpdateView(RevisionCommentMixin, LoginRequiredMixin,
                      PermissionRequiredMixin, UpdateView):
     model = Gift
     permission_required = "gifts.change_gift"
-    template_name = 'gifts/gift_form.html'
+    template_name = 'gifts/gift_form.jinja'
     form_class = GiftForm
 
     def get_context_data(self, **kwargs):
@@ -50,14 +50,14 @@ class GiftUpdateView(RevisionCommentMixin, LoginRequiredMixin,
 
 class GiftGivenDetailView(LoginRequiredMixin, DetailView):
     model = GiftGiven
-    template_name = 'gifts/gift_given_detail.html'
+    template_name = 'gifts/gift_given_detail.jinja'
 
 
 class GiftGivenCreateView(LoginRequiredMixin, PermissionRequiredMixin,
                           CreateView):
     model = GiftGiven
     permission_required = "gifts.add_giftgiven"
-    template_name = 'gifts/gift_given_form.html'
+    template_name = 'gifts/gift_given_form.jinja'
     form_class = GiftGivenForm
 
     def get_initial(self):
@@ -78,7 +78,7 @@ class GiftGivenUpdateView(RevisionCommentMixin, LoginRequiredMixin,
                           PermissionRequiredMixin, UpdateView):
     model = GiftGiven
     permission_required = "gifts.change_giftgiven"
-    template_name = 'gifts/gift_given_form.html'
+    template_name = 'gifts/gift_given_form.jinja'
     form_class = GiftGivenForm
 
     def get_context_data(self, **kwargs):
@@ -91,7 +91,7 @@ class GiftGivenUpdateView(RevisionCommentMixin, LoginRequiredMixin,
 
 class GiftGivenDeleteView(PermissionRequiredMixin, DeleteView):
     permission_required = "gifts.delete_giftgiven"
-    template_name = 'promotions/confirm_delete.html'
+    template_name = 'promotions/confirm_delete.jinja'
     model = GiftGiven
 
     def get_success_url(self):

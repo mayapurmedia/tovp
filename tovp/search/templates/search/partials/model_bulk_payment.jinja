@@ -1,4 +1,4 @@
-{% import '_macros.html' as macros %}
+{% import '_macros.jinja' as macros %}
 <div class="person-result">
     <div>{{ result.content_type }}: <a class="object-link" href="{{ result.absolute_url }}">{{ result.full_name }}{% if result.initiated_name %} - {{ result.initiated_name }}{% endif %}</a></div>
     <div>Serial No: {{ result.serial_number }} - {{ result.object.get_receipt_type_display() }}</div>

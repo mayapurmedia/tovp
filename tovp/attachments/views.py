@@ -20,7 +20,7 @@ def add_url_for_obj(obj):
 
 @login_required
 def add_attachment(request, app_label, module_name, pk,
-                   template_name='attachments/add.html', extra_context={}):
+                   template_name='attachments/add.jinja', extra_context={}):
 
     model = get_model(app_label, module_name)
     if model is None:

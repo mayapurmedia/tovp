@@ -1,4 +1,4 @@
-{% extends 'content-area.html' %}
+{% extends 'content-area.jinja' %}
 {% set page_title = 'Gifts' %}
 
 {% block page_content %}
@@ -35,7 +35,7 @@
                             [
                                 <a href="{{ url('gifts:gift:update', obj.pk) }}">edit</a>
                                 |
-                                <a href="{{ url('search:index') }}">show donors</a>
+                                <a href="{{ url('search:index') }}">list of donors</a>
                             ]
                             </div>
                         </li>
@@ -45,7 +45,7 @@
         </div>
         {{ pager(request, paginated_list) }}
     {% else %}
-    <p>There are no gifts at this moment.</p>
+    <p>There are no contacts at this moment.</p>
     {% if user.has_perm('contacts.create_person') %} 
         <a href="{{ url('contacts:person:create') }}" class="btn btn-lg btn-success">Create Person</a>
     {% endif %}

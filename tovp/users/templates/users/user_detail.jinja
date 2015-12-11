@@ -1,5 +1,5 @@
-{% import '_macros.html' as macros %}
-{% extends 'content-area.html' %}
+{% import '_macros.jinja' as macros %}
+{% extends 'content-area.jinja' %}
 {% set page_title = object.display_name + "'s profile" %}
 {% set meta_description = object.about|makeplain %}
 {% set body_class = "authors" %}
@@ -11,6 +11,6 @@
     {% endif %}
 
     {% if object.about %}
-            {{ object.about|markdown() }}
+            {{ object.about }}
     {% endif %}
 {% endblock %}

@@ -17,7 +17,7 @@ from braces.views import LoginRequiredMixin, PermissionRequiredMixin
 
 class BasePromotionCreateUpdateView(LoginRequiredMixin,
                                     PermissionRequiredMixin):
-    template_name = 'promotions/promotion_form.html'
+    template_name = 'promotions/promotion_form.jinja'
     permission_required = "promotions.add_nrsimhatile"
 
     def get_form_kwargs(self):
@@ -55,7 +55,7 @@ class BasePromotionUpdateView(BasePromotionCreateUpdateView, UpdateView):
 
 class PromotionDeleteView(PermissionRequiredMixin, DeleteView):
     permission_required = "promotions.delete_nrsimhatile"
-    template_name = 'promotions/confirm_delete.html'
+    template_name = 'promotions/confirm_delete.jinja'
 
     def get_success_url(self):
         return self.get_object().pledge.get_absolute_url()
@@ -68,60 +68,60 @@ class PromotionDeleteView(PermissionRequiredMixin, DeleteView):
 
 
 class BrickCreateView(BasePromotionCreateView):
-    template_name = 'promotions/brick_form.html'
+    template_name = 'promotions/brick_form.jinja'
 
 
 class BrickUpdateView(BasePromotionUpdateView):
-    template_name = 'promotions/brick_form.html'
+    template_name = 'promotions/brick_form.jinja'
 
 
 class BrickDetailView(DetailView):
-    template_name = 'promotions/brick_detail.html'
+    template_name = 'promotions/brick_detail.jinja'
 
 
 class CoinCreateView(BasePromotionCreateView):
-    template_name = 'promotions/coin_form.html'
+    template_name = 'promotions/coin_form.jinja'
 
 
 class CoinUpdateView(BasePromotionUpdateView):
-    template_name = 'promotions/coin_form.html'
+    template_name = 'promotions/coin_form.jinja'
 
 
 class CoinDetailView(DetailView):
-    template_name = 'promotions/coin_detail.html'
+    template_name = 'promotions/coin_detail.jinja'
 
 
 class FeetCreateView(BasePromotionCreateView):
-    template_name = 'promotions/feet_form.html'
+    template_name = 'promotions/feet_form.jinja'
 
 
 class FeetUpdateView(BasePromotionUpdateView):
-    template_name = 'promotions/feet_form.html'
+    template_name = 'promotions/feet_form.jinja'
 
 
 class FeetDetailView(DetailView):
-    template_name = 'promotions/feet_detail.html'
+    template_name = 'promotions/feet_detail.jinja'
 
 
 class TrusteeCreateView(BasePromotionCreateView):
-    template_name = 'promotions/promotion_form.html'
+    template_name = 'promotions/promotion_form.jinja'
 
 
 class TrusteeUpdateView(BasePromotionUpdateView):
-    template_name = 'promotions/promotion_form.html'
+    template_name = 'promotions/promotion_form.jinja'
 
 
 class TrusteeDetailView(DetailView):
-    template_name = 'promotions/promotion_detail.html'
+    template_name = 'promotions/promotion_detail.jinja'
 
 
 class GeneralDonationCreateView(BasePromotionCreateView):
-    template_name = 'promotions/promotion_form.html'
+    template_name = 'promotions/promotion_form.jinja'
 
 
 class GeneralDonationUpdateView(BasePromotionUpdateView):
-    template_name = 'promotions/promotion_form.html'
+    template_name = 'promotions/promotion_form.jinja'
 
 
 class GeneralDonationDetailView(DetailView):
-    template_name = 'promotions/promotion_detail.html'
+    template_name = 'promotions/promotion_detail.jinja'

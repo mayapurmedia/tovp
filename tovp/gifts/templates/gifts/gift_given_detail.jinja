@@ -1,4 +1,4 @@
-{% extends 'content-area.html' %}
+{% extends 'content-area.jinja' %}
 {% set page_title = object.name %}
 {% set body_class = "person-detail" %}
 
@@ -39,7 +39,7 @@
     <div class="col-xs-6">
         <div class="field-label">{{ field_label }}:</div>
         <div class="field-value">
-            {{ object[field_name]|datetimeformat }} ({{ object[field_name]|timesince }} ago)
+            {{ object[field_name]|format_date }} ({{ object[field_name]|timesince }} ago)
         </div>
     </div>
     {% endif %}
@@ -52,7 +52,7 @@
     </div>
     {% endif %}
 
-    {% include '_nextprev.html' %}
+    {% include '_nextprev.jinja' %}
 </div>
 {% endblock %}
 

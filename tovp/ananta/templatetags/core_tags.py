@@ -1,11 +1,9 @@
 import re
-import datetime
 
 from django import template
 from urllib.parse import urlparse, parse_qs, urlunparse, urlencode
 
 from jinja2 import Markup
-from django.contrib.staticfiles.storage import staticfiles_storage
 from django.utils.html import strip_tags
 from django.utils.timesince import timesince, timeuntil
 
@@ -51,17 +49,6 @@ def update_url_query(url, dictionary):
                        parsed.fragment])
 
 
-# @register.function
-# def static(path):
-#     return staticfiles_storage.url(path)
-
-
-# @register.function
-# def now(format="%d %B %Y"):
-#     return datetime.date.today().strftime(format)
-
-
-# @register.function
 @register.tag(name="active_link_class")
 def active_link_class(request, pattern):
     if re.search(pattern, request.path):
@@ -138,6 +125,7 @@ def format_for_india(value):
     """
     return re.sub(r"(?<=\d)(?=(\d{2}){0,2}\d{3}(\d{7})*(?!\d))", ",",
                   str(value))
+
 
 @register.filter
 def num2words(value):

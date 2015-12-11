@@ -32,7 +32,7 @@
         {% if object.cleared_on %}
         <div class="col-xs-3 col-custom-2-5 item-name">Credited On:</div>
         <div class="col-xs-2 item-value">
-            {{ object.cleared_on|datetimeformat }}
+            {{ object.cleared_on|format_date }}
         </div>
         {% endif %}
     {% endif %}
@@ -45,7 +45,7 @@
         {% if object.cleared_on %}
         <div class="col-xs-2 col-custom-2-5 item-name">Transaction Date:</div>
         <div class="col-xs-3 item-value">
-            {{ object.cleared_on|datetimeformat }}
+            {{ object.cleared_on|format_date }}
         </div>
         {% endif %}
     {% endif %}
@@ -57,7 +57,7 @@
         {% if object.cleared_on %}
         <div class="col-xs-3 col-custom-2-5 item-name">Cleared On:</div>
         <div class="col-xs-2 item-value">
-            {{ object.cleared_on|datetimeformat }}
+            {{ object.cleared_on|format_date }}
         </div>
         {% endif %}
     {% endif %}
@@ -69,13 +69,13 @@
         {% if object.dated %}
         <div class="col-xs-3 col-custom-2-5 item-name">Dated:</div>
         <div class="col-xs-3 item-value">
-            {{ object.dated|datetimeformat }}
+            {{ object.dated|format_date }}
         </div>
         {% endif %}
         {% if object.cleared_on %}
         <div class="col-xs-3 col-custom-2-5 item-name">Cleared On:</div>
         <div class="col-xs-2 item-value">
-            {{ object.cleared_on|datetimeformat }}
+            {{ object.cleared_on|format_date }}
         </div>
         {% endif %}
         {% if object.bank %}

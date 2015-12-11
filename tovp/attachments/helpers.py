@@ -31,7 +31,7 @@ def attachment_form(context, request, obj):
     """
 
     if context['user'].has_perm('attachments.add_attachment'):
-        return render_to_string('attachments/add_form.html', {
+        return render_to_string('attachments/add_form.jinja', {
             'form': AttachmentForm(),
             'form_url': add_url_for_obj(obj),
             'next': context['request'].build_absolute_uri(),
@@ -56,7 +56,7 @@ def attachment_delete_link(context, attachment):
     if context['user'].has_perm('delete_foreign_attachments') \
        or (context['user'] == attachment.creator and
            context['user'].has_perm('attachments.delete_attachment')):
-        return render_to_string('attachments/add_form.html', {
+        return render_to_string('attachments/add_form.jinja', {
             'next': context['request'].build_absolute_uri(),
             'delete_url': reverse('delete_attachment',
                                   kwargs={'attachment_pk': attachment.pk})

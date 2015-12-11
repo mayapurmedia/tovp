@@ -1,9 +1,9 @@
-{% extends 'content-area.html' %}
+{% extends 'content-area.jinja' %}
 {% set content_title = 'Add attachment' %}
 {% set body_class = "person-detail" %}
 
 {% block page_content %}
-    {% include "attachments/add_form.html" %}
+    {% include "attachments/add_form.jinja" %}
 {% endblock %}
 
 

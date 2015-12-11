@@ -1,4 +1,3 @@
-import jinja2
 from jinja2 import Markup
 
 from django_jinja import library

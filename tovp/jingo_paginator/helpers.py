@@ -33,4 +33,4 @@ def pager(request, paginated_objects, css_classes=None, align='pagination-center
     Renders pagination pager
     '''
 
-    return Markup(render_to_string('jingo_paginator/pager.html', {"request": request, "pager": paginated_objects, "align": align}))
+    return Markup(render_to_string('jingo_paginator/pager.jinja', {"request": request, "pager": paginated_objects, "align": align}))

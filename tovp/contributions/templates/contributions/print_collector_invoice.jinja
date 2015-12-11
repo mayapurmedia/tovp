@@ -1,5 +1,5 @@
-{% import 'contributions/_macros.html' as print_macros %}
-{% extends 'print-base.html' %}
+{% import 'contributions/_macros.jinja' as print_macros %}
+{% extends 'print-base.jinja' %}
 {% set body_class = "person-detail" %}
 {% set page_content = "Donor Letter" %}
 
@@ -102,9 +102,6 @@
             <div class="">P.O. Sri Mayapur, Dist. Nadia, West Bengal, Pin. 741313</div>
             <div class="">Phone No.  03472 245240, 245205, Fax No. 03472 245455</div>
         </div>
-
-{% markdown %}
-{% endmarkdown %}
     </div>
 
     <div class="col-xs-12" style="margin-top: 0em;margin-bottom: 0.5em;">

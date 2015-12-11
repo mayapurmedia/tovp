@@ -1,4 +1,4 @@
-{% extends 'content-area.html' %}
+{% extends 'content-area.jinja' %}
 {% set page_title = object.name %}
 {% set body_class = "person-detail" %}
 
@@ -174,7 +174,7 @@
     {% endif %}
     </div>
 
-    {% include "attachments/_attached_files.html" %}
+    {% include "attachments/_attached_files.jinja" %}
 
     <div class="col-xs-12 next-prev-navigation">
         {% if object.prev() %}

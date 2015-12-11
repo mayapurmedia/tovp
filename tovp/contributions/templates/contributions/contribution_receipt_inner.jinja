@@ -1,4 +1,4 @@
-{% import 'contributions/_macros.html' as print_macros %}
+{% import 'contributions/_macros.jinja' as print_macros %}
 <img id="iskcon-lotus" src="{{ static('img/iskcon-lotus.png') }}"/>
 <img id="temple-silhouette" src="{{ static('img/temple-silhouette.png') }}"/>
 
@@ -12,15 +12,12 @@
             <div class="">P.O. Sri Mayapur, Dist. Nadia, West Bengal, Pin. 741313</div>
             <div class="">Phone No.  03472 245240, 245205, Fax No. 03472 245455</div>
         </div>
-
-{% markdown %}
-{% endmarkdown %}
     </div>
 
     <div class="col-xs-12" style="margin-top: 0em;margin-bottom: 0.5em;">
         <div class="row">
             <div class="col-xs-1 item-name">Date:</div>
-            <div class="col-xs-3 item-value">{{ object.receipt_date|datetimeformat }}</div>
+            <div class="col-xs-3 item-value">{{ object.receipt_date|format_date }}</div>
             <div class="col-xs-4 temporary-receipt align-center">
                 {% if object.status == 'completed' %}Permanent Receipt{% else %}{% if object.status == 'failed' %}Failed - {% endif %}Temporary Receipt{% endif %}
             </div>

@@ -1,15 +1,15 @@
-{% extends 'content-area.html' %}
+{% extends 'content-area.jinja' %}
 {% set body_class = "profiles edit-profile" %}
 
 {% block javascript_head %}
     {{ super() }}
-    {% include '_import-selectize.html' %}
+    {% include '_import-selectize.jinja' %}
 {% endblock %}
 
 {% block page_content %}
     {# <script src="{{ static('js/jquery.formset.js') }}"></script> #}
 
-    <form action="" enctype="multipart/form-data" method="post">{{ csrf() }}
+    <form action="" enctype="multipart/form-data" method="post">{% csrf_token %}
         {{ form.media }}
         {% if form.non_field_errors() %}
             <p class="tooltip error">
@@ -17,8 +17,14 @@
             </p>
         {% endif %}
 
+        {{form['person']}}
         <div class="row">
-            {% for field_name in ['name', 'description'] %}
+            <div class="col-xs-12 form-group">
+                <label class="control-label">Donor Name:</label>
+                <h2>{{ person.mixed_name }}</h2>
+            </div>
+
+            {% for field_name in ['gift', 'status', 'note'] %}
             <div class="col-xs-12 form-group{{' has-error' if form[field_name].errors }}">
                 <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
                 {{form[field_name]|add_css('form-control')}}
@@ -32,6 +38,9 @@
             {% endfor %}
         </div>
         <input class="btn btn-lg btn-success" type="submit" value="Save" /> 
+        {% if object and user.has_perm('gifts.delete_giftgiven') %}
+            <a href="{{ url('gifts:gift_given:delete', object.pk) }}" class="btn btn-large">Delete Gift Given</a>
+        {% endif %}
     </form>
 
 <script>

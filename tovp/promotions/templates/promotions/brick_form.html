@@ -1,4 +1,4 @@
-{% extends 'content-area.html' %}
+{% extends 'content-area.jinja' %}
 {% set body_class = "profiles edit-profile" %}
 
 {% block javascript_head %}
@@ -10,7 +10,7 @@
 {% block page_content %}
 
     <script src="{{ static('js/jquery.formset.js') }}"></script>
-    <form action="" enctype="multipart/form-data" method="post">{{ csrf() }}
+    <form action="" enctype="multipart/form-data" method="post">{% csrf_token %}
         <div class="row">
             {{ form.media }}
             {% if form.non_field_errors() %}

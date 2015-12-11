@@ -1,4 +1,4 @@
-{% extends 'content-area.html' %}
+{% extends 'content-area.jinja' %}
 {% set page_title = object.name %}
 {% set body_class = "person-detail" %}
 
@@ -37,7 +37,7 @@
     </div>
     {% endif %}
 
-    {% include '_nextprev.html' %}
+    {% include '_nextprev.jinja' %}
 </div>
 {% endblock %}
 

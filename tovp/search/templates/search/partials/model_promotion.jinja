@@ -1,4 +1,4 @@
-{% import '_macros.html' as macros %}
+{% import '_macros.jinja' as macros %}
 <div class="person-result">
     <div>{% if result.quantity %}{{ result.quantity}}x {% endif %}{{ result.promotion_type }}: <a class="object-link" href="{{ result.absolute_url }}">{{ result.full_name }}{% if result.initiated_name %} - {{ result.initiated_name }}{% endif %}</a> [{{ result.status }}]</div>
     {% if result.name_on_brick %}

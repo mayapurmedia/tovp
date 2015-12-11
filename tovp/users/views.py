@@ -23,6 +23,7 @@ from .models import User
 
 
 class UserDetailView(LoginRequiredMixin, DetailView):
+    template_name='users/user_detail.jinja'
     model = User
     # These next two lines tell the view to index lookups by username
     slug_field = "username"
@@ -40,7 +41,7 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
 class UserUpdateView(LoginRequiredMixin, UpdateView):
     form_class = UserUpdateForm
     model = User
-    template_name = 'users/user_update.html'
+    template_name = 'users/user_update.jinja'
 
     # send the user back to their own page after a successful update
     def get_success_url(self):

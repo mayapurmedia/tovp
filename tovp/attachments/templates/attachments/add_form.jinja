@@ -4,9 +4,7 @@
         <div class="col-xs-12 col-sm-12">
 
             <form method="post" enctype="multipart/form-data" action="{{ form_url }}" class="add-attachment">
-                {% if csrf() %}
-                {{ csrf() }}
-                {% else %}
+                {% csrf_token %}
                 <input type='hidden' name='csrfmiddlewaretoken' value='{{ csrf_cookie }}' />
                 {% endif %}
 
