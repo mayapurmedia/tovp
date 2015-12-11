@@ -42,7 +42,7 @@ class PersonUpdateView(RevisionCommentMixin, LoginRequiredMixin,
                        PermissionRequiredMixin, UpdateView):
     model = Person
     permission_required = "contacts.change_person"
-    template_name = 'contacts/person_form.html'
+    template_name = 'contacts/person_form.jinja'
     form_class = PersonForm
 
     def get_context_data(self, **kwargs):
