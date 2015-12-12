@@ -269,6 +269,7 @@ class Common(Configuration):
                     "django_jinja.builtins.extensions.DjangoFiltersExtension",
                     'ananta.templatetags.jinja2.core',
                     'attachments.templatetags.jinja2.attachments',
+                    'promotions.templatetags.jinja2.promotions',
                 ],
                 "context_processors": _TEMPLATE_CONTEXT_PROCESSORS,
                 "constants": {
