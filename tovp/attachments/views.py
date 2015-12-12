@@ -1,9 +1,8 @@
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.db.models.loading import get_model
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext
-from django.template.context import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from attachments.models import Attachment
@@ -44,8 +43,7 @@ def add_attachment(request, app_label, model_name, pk,
             'next': next,
         }
         template_context.update(extra_context)
-        return render_to_response(template_name, template_context,
-                                  RequestContext(request))
+        return render(request, template_name, template_context)
 
 
 @login_required
