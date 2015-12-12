@@ -5,17 +5,12 @@ from django.test import TestCase
 from django.http import HttpRequest
 from jinja2 import Markup
 
-from ..helpers import (now, active_link_class, format_with_commas,
-                       datetimeformat, add_css, num2words, makeplain,
-                       update_url_query)
+from ..templatetags.core_tags import (
+    active_link_class, format_with_commas, format_date, add_css, num2words,
+    makeplain, update_url_query)
 
 
 class AnantaHelpersTests(TestCase):
-    def test_now(self):
-        # testing login
-        self.assertEqual(now(), datetime.date.today().strftime("%d %B %Y"))
-        self.assertEqual(now("%Y"), datetime.date.today().strftime("%Y"))
-
     def test_active_link_class(self):
         request = HttpRequest()
         request.path = '/'
@@ -56,15 +51,15 @@ class AnantaHelpersTests(TestCase):
         self.assertEqual('$-1,234,567.5678', format_with_commas(-1234567.5678,
                                                                 '$%.4f'))
 
-    def test_datetimeformat(self):
+    def test_format_date(self):
         test_date = datetime.datetime(2001, 1, 31, 22, 10, 33)
 
         # test default filter
-        self.assertEqual('31 January 2001', datetimeformat(test_date))
+        self.assertEqual('31 January, 2001', format_date(test_date))
         # use custom filters
-        self.assertEqual('2001', datetimeformat(test_date, '%Y'))
-        self.assertEqual('2001-01-31', datetimeformat(test_date, '%Y-%m-%d'))
-        self.assertEqual('22:10:33', datetimeformat(test_date, '%H:%M:%S'))
+        self.assertEqual('2001', format_date(test_date, '%Y'))
+        self.assertEqual('2001-01-31', format_date(test_date, '%Y-%m-%d'))
+        self.assertEqual('22:10:33', format_date(test_date, '%H:%M:%S'))
 
     def test_add_css(self):
         class TestForm(forms.Form):

@@ -22,7 +22,7 @@ def add_css(field, css_class, *args, **kwargs):
 
 
 @register.filter(is_safe=True)
-def format_date(value, format='%-d %B, %y'):
+def format_date(value, format='%-d %B, %Y'):
     return value.strftime(format)
 
 

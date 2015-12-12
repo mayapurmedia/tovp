@@ -137,7 +137,7 @@
 #         )
 #
 #         # For following to work properly TEMPLATE_DEBUG has to be True if using
-#         # jingo. (more info in config/travis.py)
+#         # jingo.
 #         self.assertFormError(response, 'form', 'password2',
 #                              'Passwords do not match.')
 #

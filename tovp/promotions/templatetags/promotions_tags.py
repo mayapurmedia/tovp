@@ -1,6 +1,6 @@
 from django import template
 
-from ananta.helpers import format_with_commas, format_for_india
+from ananta.templatetags.core_tags import format_with_commas, format_for_india
 
 
 register = template.Library()
