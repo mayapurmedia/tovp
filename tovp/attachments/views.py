@@ -13,16 +13,16 @@ from attachments.forms import AttachmentForm
 def add_url_for_obj(obj):
     return reverse('add_attachment', kwargs={
         'app_label': obj._meta.app_label,
-        'module_name': obj._meta.model_name,
+        'model_name': obj._meta.model_name,
         'pk': obj.pk
     })
 
 
 @login_required
-def add_attachment(request, app_label, module_name, pk,
+def add_attachment(request, app_label, model_name, pk,
                    template_name='attachments/add.jinja', extra_context={}):
 
-    model = get_model(app_label, module_name)
+    model = get_model(app_label, model_name)
     if model is None:
         return HttpResponseRedirect(next)
     obj = get_object_or_404(model, pk=pk)
