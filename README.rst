@@ -12,8 +12,7 @@ of all donors and their pledges, contributions and assigned promotions.
 .. image:: http://img.shields.io/badge/license-MIT-green.svg
 
 
-Configuration expect you to have set these environment variables before
-running:
+These are environment variables you should have before running:
 
 - `DJANGO_CONFIGURATION` - default is `production`
 - `DATABASE_URL` - dj-database-url link to your database
