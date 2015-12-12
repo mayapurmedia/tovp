@@ -23,7 +23,7 @@ from .models import User
 
 
 class UserDetailView(LoginRequiredMixin, DetailView):
-    template_name='users/user_detail.jinja'
+    template_name = 'users/user_detail.jinja'
     model = User
     # These next two lines tell the view to index lookups by username
     slug_field = "username"
