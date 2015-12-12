@@ -75,8 +75,8 @@ class SearchForm(forms.Form):
     order = forms.ChoiceField(required=False, label='Order by',
                               choices=ORDER_CHOICES)
     ORDER_TYPE_CHOICES = (
-        (u'asc', _('Ascending')),
         (u'desc', _('Descending')),
+        (u'asc', _('Ascending')),
     )
 
     order_type = forms.ChoiceField(required=False, label='Order type',
