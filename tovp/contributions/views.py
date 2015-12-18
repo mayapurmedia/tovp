@@ -88,6 +88,7 @@ class PledgeUpdateView(RevisionCommentMixin, LoginRequiredMixin,
 
 class PledgeDeleteView(MultiplePermissionsRequiredMixin, DeleteView):
     model = Pledge
+    template_name = 'contributions/confirm_delete.jinja'
     permissions = {
         "any": ("contributions.delete_pledge", "contributions.can_delete_if_no_contributions"),
     }
