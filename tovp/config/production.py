@@ -46,7 +46,7 @@ class Production(Common):
     ALLOWED_HOSTS = ["donate.tovp.org", "nityananda.webfactional.com"]
     # END SITE CONFIGURATION
 
-    INSTALLED_APPS += ("gunicorn", )
+    # INSTALLED_APPS += ("gunicorn", )
 
     # # STORAGE CONFIGURATION
     # # See: http://django-storages.readthedocs.org/en/latest/index.html
