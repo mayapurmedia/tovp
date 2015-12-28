@@ -17,10 +17,12 @@ from .forms import GiftForm, GiftGivenForm
 
 class GiftListView(LoginRequiredMixin, ListView):
     model = Gift
+    template_name = 'gifts/gift_list.jinja'
 
 
 class GiftDetailView(LoginRequiredMixin, DetailView):
     model = Gift
+    template_name = 'gifts/gift_detail.jinja'
 
 
 class GiftCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
