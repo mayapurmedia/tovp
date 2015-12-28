@@ -22,6 +22,7 @@ class SourceMixin(models.Model):
         (u'jps-others', _('JPS Others')),
         (u'gkg-vp-2015', _('GKG Vyasa Puja 2015')),
         (u'bcs-vp-2015', _('BCS Vyasa Puja 2015')),
+        (u'neel-vasan-das', _('Neel Vasan Das')),
         (u'vvps-vp-2015', _('Vedavyasapriya Swami Vyasa Puja 2015')),
         (u'rns-kartik-yatra', _('RNS Kartik Yatra')),
         (u'j-w-marriot', _('J W Marriot')),
