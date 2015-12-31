@@ -179,7 +179,7 @@
         {% if object.cleared_on %}
         <div class="col-xs-3 item-name">Transaction Date:</div>
         <div class="col-xs-3 item-value">
-            {{ object.cleared_on|datetimeformat }}
+            {{ object.cleared_on|format_date }}
         </div>
         {% endif %}
     {% endif %}
