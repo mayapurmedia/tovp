@@ -5,7 +5,7 @@ from jinja2.ext import Extension
 
 from .core_tags import (add_css, format_date, update_url_query,
                         format_with_commas, format_for_india, num2words,
-                        makeplain, active_link_class)
+                        makeplain, active_link_class, now)
 
 
 class CoreExtension(Extension):
@@ -18,6 +18,7 @@ class CoreExtension(Extension):
         environment.filters["format_for_india"] = format_for_india
         environment.filters["num2words"] = num2words
         environment.filters["makeplain"] = makeplain
+        environment.filters["now"] = now
 
         environment.globals["active_link_class"] = active_link_class
 

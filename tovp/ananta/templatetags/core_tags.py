@@ -26,6 +26,11 @@ def format_date(value, format='%-d %B, %Y'):
     return value.strftime(format)
 
 
+@register.function
+def now(format="%d %B %Y"):
+    return datetime.date.today().strftime(format)
+
+
 @register.filter
 def update_url_query(url, dictionary):
     parsed = urlparse(url)
