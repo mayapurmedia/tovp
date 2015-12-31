@@ -21,6 +21,7 @@ class CoreExtension(Extension):
         environment.filters["now"] = now
 
         environment.globals["active_link_class"] = active_link_class
+        environment.globals["now"] = now
 
 # Nicer import name
 core = CoreExtension
