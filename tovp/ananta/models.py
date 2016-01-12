@@ -32,6 +32,11 @@ class SourceMixin(models.Model):
         (u'lm-reception', _('Life Membership Reception')),
         (u'vrindavan-booth', _('Vrindavan Booth')),
         (u'prabhupada-currency-inr', _('Prabhupada Currency INR')),
+        (u'mayapur-community', _('Mayapur Community')),
+        (u'delhi-vidyanagar-2015', _('Delhi Vidyanagar 2015')),
+        (u'pune-group-mayapur-2015', _('Pune Group Mayapur 2015')),
+        (u'bhagavata-saptaha-2015', _('Bhagavata Saptaha 2015')),
+        (u'rohini-narayani', _('Rohini (Sri Narayani Devi Dasi)')),
         (u'other', _('Other')),
     )
     source = models.CharField("Source", max_length=30, default='',
