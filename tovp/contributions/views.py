@@ -90,7 +90,8 @@ class PledgeDeleteView(MultiplePermissionsRequiredMixin, DeleteView):
     model = Pledge
     template_name = 'contributions/pledge_confirm_delete.jinja'
     permissions = {
-        "any": ("contributions.delete_pledge", "contributions.can_delete_if_no_contributions"),
+        "any": ("contributions.delete_pledge",
+                "contributions.can_delete_if_no_contributions"),
     }
     success_message = "%(pk)s was deleted successfully"
 
@@ -144,11 +145,23 @@ class FollowUpDetailView(LoginRequiredMixin, DetailView):
     template_name = 'contributions/followup_detail.jinja'
 
 
-class FollowUpCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+class FollowUpCreateView(LoginRequiredMixin, PermissionRequiredMixin,
+                         CreateView):
     model = FollowUp
     permission_required = "contributions.add_followup"
     template_name = 'contributions/followup_form.jinja'
     form_class = FollowUpForm
+
+    def get_form_kwargs(self):
+        kwargs = super(FollowUpCreateView, self).get_form_kwargs()
+        return kwargs
+
+    def get_form(self, form_class):
+        pledge = Pledge.objects.get(pk=self.kwargs.get('pledge_id'))
+        next_payment_date = '{0.year}-{0.month}-{0.day}'. \
+            format(pledge.update_next_payment_date())
+        form = FollowUpForm(next_payment_date=next_payment_date)
+        return form
 
     def get_initial(self):
         initial = super(FollowUpCreateView, self).get_initial()

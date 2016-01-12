@@ -46,6 +46,11 @@ class FollowUpForm(forms.ModelForm):
             instance.pledge.save()
         return instance
 
+    def __init__(self, next_payment_date, *args, **kwargs):
+        super(FollowUpForm, self).__init__(*args, **kwargs)
+        self.fields['next_payment_date'].initial = next_payment_date
+        pass
+
     class Meta:
         model = FollowUp
         exclude = []
