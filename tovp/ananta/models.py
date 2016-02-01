@@ -37,6 +37,7 @@ class SourceMixin(models.Model):
         (u'pune-group-mayapur-2015', _('Pune Group Mayapur 2015')),
         (u'bhagavata-saptaha-2015', _('Bhagavata Saptaha 2015')),
         (u'rohini-narayani', _('Rohini (Sri Narayani Devi Dasi)')),
+        (u'bhakti-vriksa-kolkata-2016', _('Bhakti Vriksa Kolkata 2016')),
         (u'other', _('Other')),
     )
     source = models.CharField("Source", max_length=30, default='',
