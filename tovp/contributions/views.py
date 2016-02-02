@@ -154,14 +154,11 @@ class FollowUpCreateView(LoginRequiredMixin, PermissionRequiredMixin,
 
     def get_form_kwargs(self):
         kwargs = super(FollowUpCreateView, self).get_form_kwargs()
-        return kwargs
-
-    def get_form(self, form_class):
         pledge = Pledge.objects.get(pk=self.kwargs.get('pledge_id'))
         next_payment_date = '{0.year}-{0.month}-{0.day}'. \
             format(pledge.update_next_payment_date())
-        form = FollowUpForm(next_payment_date=next_payment_date)
-        return form
+        kwargs['next_payment_date'] = next_payment_date
+        return kwargs
 
     def get_initial(self):
         initial = super(FollowUpCreateView, self).get_initial()

@@ -1,5 +1,5 @@
 {% extends 'content-area.jinja' %}
-{% set page_title = object.name %}
+{% set page_title = 'Pledge #%s' % object.pk %}
 {% set body_class = "pledge-detail" %}
 
 {% macro print_field(label, value) -%}

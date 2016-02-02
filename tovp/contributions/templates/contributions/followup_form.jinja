@@ -24,7 +24,7 @@
                 <a href="{{ pledge.get_absolute_url() }}">{{ pledge }}</a>
             </div>
         </div>
-        {{form.pledge|add_css('hide')}}
+        {{ form.pledge }}
 
         <div class="row">
             {% set field_name = 'status' %}
