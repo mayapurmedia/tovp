@@ -39,6 +39,9 @@ class SourceMixin(models.Model):
         (u'rohini-narayani', _('Rohini (Sri Narayani Devi Dasi)')),
         (u'bhakti-vriksa-kolkata-2016', _('Bhakti Vriksa Kolkata 2016')),
         (u'other', _('Other')),
+        (u'mumbai-yatra-2016', _('Mumbai Yatra 2016')),
+        (u'nigdi-2016.', _('Nigdi 2016.')),
+        (u'pune-yatra-2016', _('Pune Yatra 2016')),
     )
     source = models.CharField("Source", max_length=30, default='',
                               choices=SOURCE_CHOICES, blank=True)
