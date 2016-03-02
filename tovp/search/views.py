@@ -208,10 +208,11 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
             facets = facets.facet_counts()
 
             # ======================================
-            if self.export_csv and ('content_type' in self.request.GET):
-                if self.request.GET['content_type'] in self.exporters:
-                    exporter = self.exporters[self.request.GET['content_type']](results)
-                    return exporter.render()
+            if self.request.user.has_perm('contacts.can_export'):
+                if self.export_csv and ('content_type' in self.request.GET):
+                    if self.request.GET['content_type'] in self.exporters:
+                        exporter = self.exporters[self.request.GET['content_type']](results)
+                        return exporter.render()
             # ======================================
 
             paginator, page, results, is_paginated = self.paginate_results(results, page_size)
@@ -245,7 +246,8 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
 
         content_title = "Search"
         show_export_link = None
-        if 'content_type' in self.request.GET and self.request.GET['content_type'] in self.exporters:
+        if 'content_type' in self.request.GET and self.request.GET['content_type'] in self.exporters \
+                and self.request.user.has_perm('contacts.can_export'):
             show_export_link = True
         ctx = {
             "form": form,

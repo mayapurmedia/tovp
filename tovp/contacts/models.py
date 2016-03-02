@@ -489,3 +489,6 @@ class Person(AuthStampedModel, NextPrevMixin, TimeStampedModel):
 
     def __str__(self):
         return self.mixed_name
+
+    class Meta:
+        permissions = (("can_export", "Can export"),)
