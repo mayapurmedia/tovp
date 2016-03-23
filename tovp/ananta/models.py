@@ -23,6 +23,7 @@ class SourceMixin(models.Model):
         (u'delhi-vidyanagar-2015', _('Delhi Vidyanagar 2015')),
         (u'gkg-vp-2015', _('GKG Vyasa Puja 2015')),
         (u'ils-2016', _('ILS 2016')),
+        (u'iskcon-silicon-valley', _('ISKCON Silicon Valley (ISV)')),
         (u'j-w-marriot', _('J W Marriot')),
         (u'jps-office', _('JPS Office')),
         (u'jps-others', _('JPS Others')),
