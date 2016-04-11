@@ -1,7 +1,8 @@
 {% import 'contributions/_macros.jinja' as print_macros %}
 {% extends 'print-base.jinja' %}
 {% set body_class = "person-detail" %}
-{% set page_content = "Donor Letter" %}
+{% set page_title = 'Contribution #%d' % object.pk %}
+{% set page_content = "Receipt" %}
 
 {% macro print_field(label, value) -%}
     <div class="field-label">{{ label }}</div>
@@ -19,7 +20,7 @@
     .receipt2 {
         top: 62em;
     }
-    body { font-size: .884em; }
+    body { font-size: 1.2em; }
     .align-right { text-align: right; }
     .align-center { text-align: center; }
     .invoice-header {
@@ -94,7 +95,7 @@
     }
     .receipt .footer {
         position: absolute;
-        top: 43em;
+        top: 71em;
         width:100%;
     }
     .footer-line {
@@ -102,15 +103,18 @@
         border-top: 1px solid #000;
         padding-top: 1em;
     }
+    .main-content {
+        font-size: 1.4em;
+    }
 
 </style>
 <div class="receipt">
-    {% include 'contributions/contribution_receipt_inner.jinja' %}
+    {% include 'contributions/contribution_receipt_inner_usa.jinja' %}
 </div>
-{% if not (user.signature and print_signature) %}
-<div class="receipt receipt2">
-    {% include 'contributions/contribution_receipt_inner.jinja' %}
-</div>
-{% endif %}
+{# {% if not (user.signature and print_signature) %} #}
+{# <div class="receipt receipt2"> #}
+{#     {% include 'contributions/contribution_receipt_inner.jinja' %} #}
+{# </div> #}
+{# {% endif %} #}
 {% endblock %}
 

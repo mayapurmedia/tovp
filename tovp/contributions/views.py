@@ -8,7 +8,7 @@ from django.views.generic import View, DetailView, UpdateView, ListView
 from django.views.generic.edit import CreateView, DeleteView
 from django.utils.translation import ugettext as _
 from django.shortcuts import get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 
 # Will be used for logged in and logged out messages
 # from django.contrib import messages
@@ -236,7 +236,14 @@ class ContributionDonorLetterDetailView(LoginRequiredMixin, DetailView):
 class DonorInvoiceDetailView(LoginRequiredMixin, DetailView):
     print_signature = None
     model = Contribution
-    template_name = 'contributions/print_donor_invoice.jinja'
+
+    def get_template_names(self):
+        if self.get_object().receipt_type == 'external-receipt':
+            raise Http404
+        if self.get_object().receipt_type == 'mayapur-receipt':
+            return 'contributions/print_contribution_receipt_mayapur.jinja'
+        if self.get_object().receipt_type == 'usa-receipt':
+            return 'contributions/print_contribution_receipt_usa.jinja'
 
     def get_context_data(self, **kwargs):
         context = super(DonorInvoiceDetailView, self).get_context_data(

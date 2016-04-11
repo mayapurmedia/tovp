@@ -497,6 +497,17 @@ class Contribution(BaseContribution):
     pledge = models.ForeignKey(Pledge, verbose_name="Pledge",
                                related_name='contributions')
 
+    RECEIPT_TYPE_CHOICES = (
+        ('mayapur-receipt', _('Mayapur Receipt')),
+        ('usa-receipt', _('USA Receipt')),
+        ('external-receipt', _('External / Non Receipt')),
+    )
+
+    receipt_type = models.CharField(
+        "Receipt Type", max_length=100, choices=RECEIPT_TYPE_CHOICES,
+        blank=True,
+    )
+
     collector = models.ForeignKey(
         Person, verbose_name="Collector", blank=True, null=True,
         related_name='collector_contributions',

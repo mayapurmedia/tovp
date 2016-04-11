@@ -1,5 +1,5 @@
 {% extends 'content-area.jinja' %}
-{% set page_title = object.name %}
+{% set page_title = 'Contribution #%d' % object.pk %}
 {% set body_class = "person-detail" %}
 
 {% macro print_field(label, value) -%}
@@ -181,9 +181,20 @@
         {{ print_field(field_label, object[field_name])}}
     </div>
     {% endif %}
+
+    {% set field_label = 'Receipt Type' %}
+    {% set field_name = 'receipt_type' %}
+    {% if object[field_name] %}
     <div class="col-xs-12">
-        {% if not object.is_external %}
-            <a href="{{ url('contributions:contribution:donor_letter', object.pk) }}" target="_blank" class="btn btn-lg btn-success">Print Donor Letter</a>
+        {{ print_field(field_label, object.get_receipt_type_display()) }}
+    </div>
+    {% endif %}
+
+    <div class="col-xs-12">
+        {% if object.receipt_type != 'external-receipt' %}
+            {% if object.receipt_type == 'mayapur-receipt' %}
+                <a href="{{ url('contributions:contribution:donor_letter', object.pk) }}" target="_blank" class="btn btn-lg btn-success">Print Donor Letter</a>
+            {% endif %}
             <a href="{{ url('contributions:contribution:donor_receipt', object.pk) }}" target="_blank" class="btn btn-lg btn-success">Print Receipt</a>
         {% if user.signature %}
             <a href="{{ url('contributions:contribution:donor_receipt_with_signature', object.pk) }}" target="_blank" class="btn btn-lg btn-success">Receipt with signature</a>
