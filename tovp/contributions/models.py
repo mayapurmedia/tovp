@@ -541,6 +541,7 @@ class Contribution(BaseContribution):
         ]
         # if show_name:
         #     field_values.append(self.person.full_name)
+        field_values.append(self.receipt_date.strftime("%B %-d, %Y"))
         field_values.append(str(self.amount))
         field_values.append(self.currency)
         field_values.append('(%s)' % self.get_payment_method_display())
