@@ -656,6 +656,7 @@ class FollowUp(TimeStampedModel, AuthStampedModel):
         ('could-not-reach', _('Could not reach')),
         ('waiting-reply', _('Waiting for reply')),
         ('agreed-to-pay', _('Agreed to pay')),
+        ('see-note', _('See note')),
         ('will-not-pay', _('Will not pay')),
     )
     status = models.CharField("Status", max_length=30, choices=STATUS_CHOICES)
