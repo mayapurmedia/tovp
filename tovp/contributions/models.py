@@ -505,7 +505,7 @@ class Contribution(BaseContribution):
 
     receipt_type = models.CharField(
         "Receipt Type", max_length=100, choices=RECEIPT_TYPE_CHOICES,
-        blank=True,
+        default='mayapur-receipt',
     )
 
     collector = models.ForeignKey(

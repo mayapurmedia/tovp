@@ -71,8 +71,11 @@ class StaticField(forms.Field):
 
 
 class ContributionForm(forms.ModelForm):
-    def __init__(self, person, user=None, *args, **kwargs):
+    def __init__(self, person, request=None, user=None, *args, **kwargs):
         super(ContributionForm, self).__init__(*args, **kwargs)
+
+        if request and request.user.default_usa_receipt:
+            self.fields['receipt_type'].initial = 'usa-receipt'
 
         self.fields['pledge'].queryset = Pledge.objects.filter(
             person=person)
