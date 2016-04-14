@@ -4,8 +4,8 @@ from __future__ import absolute_import
 from jinja2.ext import Extension
 
 from .core_tags import (add_css, format_date, update_url_query,
-                        format_with_commas, format_for_india, num2words,
-                        makeplain, active_link_class, now)
+                        format_with_commas, format_for_india, format_currency,
+                        num2words, makeplain, active_link_class, now)
 
 
 class CoreExtension(Extension):
@@ -21,6 +21,7 @@ class CoreExtension(Extension):
         environment.filters["now"] = now
 
         environment.globals["active_link_class"] = active_link_class
+        environment.globals["format_currency"] = format_currency
         environment.globals["now"] = now
 
 # Nicer import name
