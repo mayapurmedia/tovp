@@ -195,7 +195,13 @@
                 {% if object.follow_ups.all() %}
                     <ul>
                         {% for follow_up in object.follow_ups.all() %}
-                        <li><a href="{{ follow_up.get_absolute_url() }}">{{ follow_up.created|format_date('%B %-d, %Y') }} ({{ follow_up.created|timesince }} ago) by {{ follow_up.created_by.display_name }} [{{ follow_up.get_status_display() }}]</a></li>
+                        <li>
+                            <a href="{{ follow_up.get_absolute_url() }}">{{ follow_up.created|format_date('%B %-d, %Y') }} ({{ follow_up.created|timesince }} ago) by {{ follow_up.created_by.display_name }} [{{ follow_up.get_status_display() }}]</a>
+
+                            {% if follow_up.note %}
+                                <div>{{ follow_up.note }}</div>
+                            {% endif %}
+                        </li>
                         {% endfor %}
                     </ul>
                 {% else %}
