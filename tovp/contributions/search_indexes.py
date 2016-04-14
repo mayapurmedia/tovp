@@ -97,6 +97,8 @@ class BaseContributionIndexMixin(indexes.SearchIndex):
     dated = indexes.DateTimeField()
     cleared_on = indexes.DateTimeField()
     source = indexes.MultiValueField(null=True, faceted=True)
+    receipt_type = indexes.CharField(model_attr='get_receipt_type_display',
+                                     faceted=True)
     status = indexes.CharField(model_attr='get_status_display', faceted=True)
     book_number = indexes.CharField(model_attr='book_number')
     slip_number = indexes.CharField(model_attr='slip_number')

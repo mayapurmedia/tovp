@@ -69,10 +69,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     signature = models.FileField('Digital Signature', blank=True,
                                  upload_to='signatures')
 
-    only_external_receipts = models.BooleanField(
-        'Non Mayapur TOVP receipt', default=False, db_index=True,
-        help_text='If checked everything user creates will have external receipt.'
-                  'was given.')
+    default_usa_receipt = models.BooleanField(
+        'USA receipt by default', default=False, db_index=True,
+        help_text='If checked USA receipt will be selected as default')
 
     objects = UserManager()
 

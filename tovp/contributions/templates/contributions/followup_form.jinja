@@ -8,6 +8,25 @@
 
 {% block page_content %}
     <form action="" enctype="multipart/form-data" method="post">{% csrf_token %}
+        {% if pledge.follow_ups.all() %}
+        <div class="row">
+            <div class="col-xs-12 form-group">
+                <label class="control-label">Previous Follow Up</label>
+                <ul>
+                    {% for follow_up in pledge.follow_ups.all() %}
+                    <li>
+                        <a href="{{ follow_up.get_absolute_url() }}">{{ follow_up.created|format_date('%B %-d, %Y') }} ({{ follow_up.created|timesince }} ago) by {{ follow_up.created_by.display_name }} [{{ follow_up.get_status_display() }}]</a>
+
+                        {% if follow_up.note %}
+                            <div>{{ follow_up.note }}</div>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% endif %}
+
         <div class="row">
             {{ form.media }}
             {% if form.non_field_errors() %}
@@ -16,8 +35,14 @@
                 </p>
             {% endif %}
             <div class="col-xs-12 form-group">
-                <label class="control-label">Donor Name:</label>
+                <label class="control-label">Donor:</label>
                 <a href="{{ pledge.person.get_absolute_url() }}">{{ pledge.person.mixed_name }}</a>
+                {% if pledge.person.country %}
+                    / {{ pledge.person.get_country_display() }}
+                {% endif %}
+                {% if pledge.person.phone_number %}
+                    / {{ pledge.person.phone_number }}
+                {% endif %}
             </div>
             <div class="col-xs-12 form-group">
                 <label class="control-label">Pledge:</label>

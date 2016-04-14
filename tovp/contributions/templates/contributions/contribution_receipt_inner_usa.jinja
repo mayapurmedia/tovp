@@ -56,7 +56,7 @@ machine, made of the material energy. O scion of Bharata, surrender unto Him
 utterly. By His grace you will attain transcendental peace and the supreme
 and eternal abode." Bhagavad-gita 18.61-62</p>
 
-<p>You have donated <ContributionLastAmount>. No goods or services were
+<p>You have donated {% if object.currency == 'USD' %}${% else %}{{ object.get_currency_display() }} {% endif %}{{ object.amount }}. No goods or services were
 provided in exchange for the donation. Your donation is fully tax deductible
 on your (USA) Federal Income Tax Return.</p>
 

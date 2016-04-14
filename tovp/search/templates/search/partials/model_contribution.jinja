@@ -1,22 +1,33 @@
 {% import '_macros.jinja' as macros %}
 <div class="person-result">
+    {% if result.object.receipt_type != 'usa-receipt' %}
     <div class="deposit-status" action-url="{{ url('contributions:contribution:deposit_status_changer', pk=result.pk) }}"><span class="label label-{{ result.object.deposited_status }} current-status">{{ result.deposited_status }}</span> 
 
         {% if user.has_perm('contributions.can_change_deposit_status') %}
         <a class="status-changer label label-default" href=""><i class="fa fa-refresh"></i></a>
         {% endif %}
     </div>
-    <div>{{ result.content_type }}: <a class="object-link" href="{{ result.absolute_url }}">{{ result.full_name }}{% if result.initiated_name %} - {{ result.initiated_name }}{% endif %}</a></div>
-    {% if result.receipt_date %}
-        <div>{{ result.receipt_date|format_date }}</div>
     {% endif %}
-    <div>Serial No: {{ result.serial_number }}</div>
-    <div>{{ result.amount }} {{ result.currency }}
+    <div><a class="object-link" href="{{ result.absolute_url }}"><strong>{{ result.content_type }}</strong>: {{ result.full_name }}{% if result.initiated_name %} - {{ result.initiated_name }}{% endif %}</a>
+    
+    
+    {% if result.receipt_date %}
+        / {{ result.receipt_date|format_date }}
+    {% endif %}
+    
+    {% if result.serial_number %}
+        / SN: {{ result.serial_number }}
+    {% endif %}
+
+    / {{ result.amount }} {{ result.currency }}
             {% if result.foreign_amount %}
              - from {{ result.foreign_amount }} {{ result.foreign_currency }}
             {% endif %}
-        [{{ result.status }}]</div>
+        [{{ result.status }}]
     <div>
+    </div>
+
+
         {{ result.payment_method }}{% if result.transaction_id %}: {{ result.transaction_id }}{% endif %}
     </div>
 </div>

@@ -30,7 +30,8 @@ class SearchForm(forms.Form):
                                     widget=forms.TextInput())
     phone_number = forms.CharField(required=False, label=_('Phone Number'),
                                    widget=forms.TextInput())
-    old_database_id = forms.CharField(required=False, label=_('Old Database Id'),
+    old_database_id = forms.CharField(required=False,
+                                      label=_('Old Database Id'),
                                       widget=forms.TextInput())
     book_number = forms.CharField(required=False, label=_('Book Number'),
                                   widget=forms.TextInput())
@@ -44,6 +45,10 @@ class SearchForm(forms.Form):
                                 widget=forms.TextInput())
     collector = forms.ChoiceField(required=False, label='Collector',
                                   choices=())
+    amount_from = forms.CharField(required=False, label=_('Amount From'),
+                                  widget=forms.TextInput())
+    amount_to = forms.CharField(required=False, label=_('Amount To'),
+                                widget=forms.TextInput())
 
     DATE_TYPE_CHOICES = (
         (u'receipt_date', _('Receipt Date')),
@@ -155,6 +160,14 @@ class SearchForm(forms.Form):
             filter_date = datetime.strptime(
                 self.cleaned_data.get(field_name), '%Y-%m-%d')
             sqs = sqs.filter(**{'%s__lte' % date_type: filter_date})
+
+        field_name = 'amount_from'
+        if self.cleaned_data.get(field_name):
+            sqs = sqs.filter(**{'amount__gte': self.cleaned_data.get(field_name)})
+
+        field_name = 'amount_to'
+        if self.cleaned_data.get(field_name):
+            sqs = sqs.filter(**{'amount__lte': self.cleaned_data.get(field_name)})
 
         field_name = 'collector'
         if self.collector_pk:

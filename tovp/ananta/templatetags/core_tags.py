@@ -132,6 +132,23 @@ def format_for_india(value):
                   str(value))
 
 
+def format_currency(amount, currency):
+    custom_format_functions = {
+        'INR': format_for_india,
+    }
+
+    output = []
+    if currency in custom_format_functions:
+        format_function = custom_format_functions[currency]
+    else:
+        format_function = format_with_commas
+
+    output.append('{amount} {currency}'.format(
+        amount=format_function(amount),
+        currency=currency))
+    return ' / '.join(output)
+
+
 @register.filter
 def num2words(value):
     return _num2words(value)

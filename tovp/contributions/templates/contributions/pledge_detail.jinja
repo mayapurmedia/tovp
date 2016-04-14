@@ -161,9 +161,12 @@
                 <h3>Eligible Promotions</h3>
                 {% for promotion in eligible_promotions %}
                 <div class="row">
-                    <div class="col-xs-12">
+                    <div class="col-xs-12 col-sm-6">
                         <a href="{{ promotion.get_create_url(object.person.pk, object.pk) }}" class="btn btn-xxmd btn-success">Add</a>
                         {{ promotion._meta.verbose_name.title() }}
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 promotion-more-required">
+                        {{ format_currency(promotion.amount[pledge.currency], pledge.currency) }}
                     </div>
                 </div>
                 {% endfor %}
@@ -192,7 +195,13 @@
                 {% if object.follow_ups.all() %}
                     <ul>
                         {% for follow_up in object.follow_ups.all() %}
-                        <li><a href="{{ follow_up.get_absolute_url() }}">{{ follow_up.created|format_date('%B %-d, %Y') }} ({{ follow_up.created|timesince }} ago) by {{ follow_up.created_by.display_name }} [{{ follow_up.get_status_display() }}]</a></li>
+                        <li>
+                            <a href="{{ follow_up.get_absolute_url() }}">{{ follow_up.created|format_date('%B %-d, %Y') }} ({{ follow_up.created|timesince }} ago) by {{ follow_up.created_by.display_name }} [{{ follow_up.get_status_display() }}]</a>
+
+                            {% if follow_up.note %}
+                                <div>{{ follow_up.note }}</div>
+                            {% endif %}
+                        </li>
                         {% endfor %}
                     </ul>
                 {% else %}

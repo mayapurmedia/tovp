@@ -209,7 +209,7 @@ class BaseContribution(TimeStampedModel, AuthStampedModel, NextPrevMixin,
         (u'ccdcsl', _('Credit/Debit Card Swipe Local')),
         (u'ccdcsf', _('Credit/Debit Card Swipe Foreign')),
         (u'neftl', _('NEFT (Indian)')),
-        (u'neftf', _('NEFT (Foreign)')),
+        (u'neftf', _('NEFT/Bank Transfer (Foreign)')),
         (u'chequel', _('Cheque (Indian)')),
         (u'chequef', _('Cheque (Foreign)')),
         (u'chequed', _('Cheque Deposit')),
@@ -429,7 +429,7 @@ class BulkPayment(BaseContribution):
                 status = 'success'
             else:
                 status = 'danger'
-        return '<div class="btn btn-%s">%d of %d deposited</div>' % (status, deposited, deposited + not_deposited)
+        return '<div class="btn btn-%s btn-xs">%d of %d deposited</div>' % (status, deposited, deposited + not_deposited)
 
     @permalink
     def get_absolute_url(self):
@@ -505,7 +505,7 @@ class Contribution(BaseContribution):
 
     receipt_type = models.CharField(
         "Receipt Type", max_length=100, choices=RECEIPT_TYPE_CHOICES,
-        blank=True,
+        default='mayapur-receipt',
     )
 
     collector = models.ForeignKey(
@@ -541,6 +541,7 @@ class Contribution(BaseContribution):
         ]
         # if show_name:
         #     field_values.append(self.person.full_name)
+        field_values.append(self.receipt_date.strftime("%B %-d, %Y"))
         field_values.append(str(self.amount))
         field_values.append(self.currency)
         field_values.append('(%s)' % self.get_payment_method_display())
@@ -656,6 +657,7 @@ class FollowUp(TimeStampedModel, AuthStampedModel):
         ('could-not-reach', _('Could not reach')),
         ('waiting-reply', _('Waiting for reply')),
         ('agreed-to-pay', _('Agreed to pay')),
+        ('see-note', _('See note')),
         ('will-not-pay', _('Will not pay')),
     )
     status = models.CharField("Status", max_length=30, choices=STATUS_CHOICES)

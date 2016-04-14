@@ -44,7 +44,7 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
             'payment_method': 'Payment Method', 'interval': 'Interval',
             'country': 'Country', 'yatra': 'Yatra', 'has_book': 'Book filled',
             'has_slip': 'Slip filled', 'created_by': 'Created By',
-            'modified_by': 'Modified By',
+            'modified_by': 'Modified By', 'receipt_type': 'Receipt Type',
             'is_external': 'Non Mayapur TOVP Receipt', 'source': 'Source',
             'gifts': 'Has Gift', 'coin_given': 'Coin Given',
             'certificate_given': 'Certificate Given',
@@ -56,8 +56,8 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
                 'title': 'Test 1',
                 'has_results': None,
                 'fields': (
-                    'content_type', 'followed_by', 'currency', 'status',
-                    'source', 'deposited_status', 'promotion_type',
+                    'content_type', 'receipt_type', 'followed_by', 'currency',
+                    'status', 'source', 'deposited_status', 'promotion_type',
                     'payment_method', 'yatra', 'interval', 'has_book',
                     'has_slip', 'created_by', 'modified_by', 'is_external',
                     'gifts', 'country', 'coin_given', 'certificate_given',
@@ -68,6 +68,7 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
     def default_faceted_by_secondary(self):
         return {
             "deposited_status": None,
+            "receipt_type": None,
             "content_type": None,
             "currency": None,
             "status": None,
@@ -302,6 +303,8 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
                               'date_type',
                               'date_from',
                               'date_to',
+                              'amount_from',
+                              'amount_to',
                               'order',
                               'order_type',
                               'serial_clean_from',
