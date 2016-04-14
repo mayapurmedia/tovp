@@ -16,8 +16,14 @@
                 </p>
             {% endif %}
             <div class="col-xs-12 form-group">
-                <label class="control-label">Donor Name:</label>
+                <label class="control-label">Donor:</label>
                 <a href="{{ pledge.person.get_absolute_url() }}">{{ pledge.person.mixed_name }}</a>
+                {% if pledge.person.country %}
+                    / {{ pledge.person.get_country_display() }}
+                {% endif %}
+                {% if pledge.person.phone_number %}
+                    / {{ pledge.person.phone_number }}
+                {% endif %}
             </div>
             <div class="col-xs-12 form-group">
                 <label class="control-label">Pledge:</label>
