@@ -303,6 +303,8 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
                               'date_type',
                               'date_from',
                               'date_to',
+                              'amount_from',
+                              'amount_to',
                               'order',
                               'order_type',
                               'serial_clean_from',
