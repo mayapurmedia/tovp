@@ -429,7 +429,7 @@ class BulkPayment(BaseContribution):
                 status = 'success'
             else:
                 status = 'danger'
-        return '<div class="btn btn-%s">%d of %d deposited</div>' % (status, deposited, deposited + not_deposited)
+        return '<div class="btn btn-%s btn-xs">%d of %d deposited</div>' % (status, deposited, deposited + not_deposited)
 
     @permalink
     def get_absolute_url(self):
