@@ -584,10 +584,10 @@ class Contribution(BaseContribution):
             msg = _("This contribution has already serial number generated, "
                     "You cannot add book and slip numbers anymore.")
             raise exceptions.ValidationError({'book_number': [msg]})
-        if self._serial_number and self.is_external:
+        if self._serial_number and self.receipt_type == 'external-receipt':
             msg = _("This contribution has already serial number generated, "
                     "You cannot set is as external anymore.")
-            raise exceptions.ValidationError({'is_external': [msg]})
+            raise exceptions.ValidationError({'receipt_type': [msg]})
 
     @permalink
     def get_absolute_url(self):
@@ -598,9 +598,9 @@ class Contribution(BaseContribution):
     def save(self, **kwargs):
         # set controbution to external if bulk payment is official receipt type
         if self.bulk_payment and self.bulk_payment.receipt_type == 'official':
-            self.is_external = True
+            self.receipt_type = 'external-receipt'
 
-        if not (self.is_external or self.book_number or self.serial_number):
+        if not (self.receipt_type != 'external-receipt' or self.book_number or self.serial_number):
             if self.receipt_date:
                 date = self.receipt_date
                 year = date.year
