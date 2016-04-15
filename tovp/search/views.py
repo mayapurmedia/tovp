@@ -203,7 +203,7 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
             # adds secondary facets
             for filter_item in faceted_by_secondary.keys():
                 # facets = results.facet("make", order='term').facet("model", order='term').facet("variant", order='term').facet("air_intake", order='term').facet_counts()
-                facets = facets.facet(filter_item, order='term')
+                facets = facets.facet(filter_item, order='term', size=200)
                 # narrow_facets
 
             facets = facets.facet_counts()
