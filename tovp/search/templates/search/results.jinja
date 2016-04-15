@@ -49,13 +49,16 @@
             {% for field in narrow_facets[topic].fields %}
             {% set values=facets['fields'][field] %}
             {% if values %}
+
             <div class="col-xs-6 col-ms-4 col-sm-12">
-                <h3>{{ facets_titles[field] }}</h3>
-                <ul class="refine-filters">
-                    {% for item in values %}
-                    <li><a class="refine-filter" href="{{ request.get_full_path()|update_url_query({field: item.0, 'page': None}) }}">{{ item.0 }} ({{ item.1 }})</a></li>
-                    {% endfor %}
-                </ul>
+                <h3><a class="accordion-toggle  {{ '' if field in ['content_type', 'receipt_type'] else 'collapsed' }}" data-toggle="collapse" href="#collapse-{{ field }}" aria-expanded="false" aria-controls="collapse-{{ field }}">{{ facets_titles[field] }} <i class="fa fa-caret-down facet-collapse-icon"></i></a></h3>
+                <div class="collapse {{ 'in' if field in ['content_type', 'receipt_type'] else '' }}" id="collapse-{{ field }}">
+                    <ul class="refine-filters">
+                        {% for item in values %}
+                        <li><a class="refine-filter" href="{{ request.get_full_path()|update_url_query({field: item.0, 'page': None}) }}">{{ item.0 }} ({{ item.1 }})</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
             {% endif %}
             {% endfor %}

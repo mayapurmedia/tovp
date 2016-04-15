@@ -45,8 +45,7 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
             'country': 'Country', 'yatra': 'Yatra', 'has_book': 'Book filled',
             'has_slip': 'Slip filled', 'created_by': 'Created By',
             'modified_by': 'Modified By', 'receipt_type': 'Receipt Type',
-            'is_external': 'Non Mayapur TOVP Receipt', 'source': 'Source',
-            'gifts': 'Has Gift', 'coin_given': 'Coin Given',
+            'source': 'Source', 'gifts': 'Has Gift', 'coin_given': 'Coin Given',
             'certificate_given': 'Certificate Given',
         }
 
@@ -59,7 +58,7 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
                     'content_type', 'receipt_type', 'followed_by', 'currency',
                     'status', 'source', 'deposited_status', 'promotion_type',
                     'payment_method', 'yatra', 'interval', 'has_book',
-                    'has_slip', 'created_by', 'modified_by', 'is_external',
+                    'has_slip', 'created_by', 'modified_by',
                     'gifts', 'country', 'coin_given', 'certificate_given',
                 ),
             },
