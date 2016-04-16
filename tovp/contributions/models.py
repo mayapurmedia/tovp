@@ -600,7 +600,8 @@ class Contribution(BaseContribution):
         if self.bulk_payment and self.bulk_payment.receipt_type == 'official':
             self.receipt_type = 'external-receipt'
 
-        if not (self.receipt_type != 'external-receipt' or self.book_number or self.serial_number):
+        if (self.receipt_type == 'mayapur-receipt'
+                and not (self.book_number or self.serial_number)):
             if self.receipt_date:
                 date = self.receipt_date
                 year = date.year
