@@ -86,9 +86,24 @@ contributions = patterns(
         name='create',
     ),
     url(
-        regex=r'^(?P<person_id>\d+)/(?P<pk>\d+)/edit$',
+        regex=r'^(?P<person_id>\d+)/(?P<pk>\d+)/edit/$',
         view=views.ContributionUpdateView.as_view(),
         name='update',
+    ),
+    url(
+        regex=r'^(?P<person_id>\d+)/(?P<pk>\d+)/confirm-move/$',
+        view=views.ContributionConfirmMoveView.as_view(),
+        name='confirm_move',
+    ),
+    url(
+        regex=r'^(?P<person_id>\d+)/(?P<pk>\d+)/move/$',
+        view=views.ContributionMoveView.as_view(),
+        name='move',
+    ),
+    url(
+        regex=r'^(?P<person_id>\d+)/(?P<pk>\d+)/move/$',
+        view=views.ContributionUpdateView.as_view(),
+        name='move',
     ),
     url(
         regex=r'^print/(?P<pk>\d+)/donor$',
