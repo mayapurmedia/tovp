@@ -7,8 +7,9 @@ import json
 from django.views.generic import View, DetailView, UpdateView, ListView
 from django.views.generic.edit import CreateView, DeleteView
 from django.utils.translation import ugettext as _
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.contrib import messages
 
 # Will be used for logged in and logged out messages
 # from django.contrib import messages
@@ -220,6 +221,59 @@ class ContributionListView(LoginRequiredMixin, ListView):
 class ContributionDetailView(LoginRequiredMixin, DetailView):
     model = Contribution
     template_name = 'contributions/contribution_detail.jinja'
+
+
+class ContributionConfirmMoveView(LoginRequiredMixin, View):
+    template_name = 'contributions/contribution_move.jinja'
+
+    def post(self, request, *args, **kwargs):
+        obj = Contribution.objects.get(pk=kwargs['pk'])
+        new_pledge = Pledge.objects.get(pk=request.POST['new_pledge'])
+
+        return render(
+            request,
+            self.template_name,
+            {
+                'object': obj,
+                'new_pledge': new_pledge,
+            }
+        )
+
+
+class ContributionMoveView(LoginRequiredMixin, PermissionRequiredMixin, View):
+    permission_required = "contributions.can_move_contribution"
+
+    def post(self, request, *args, **kwargs):
+        obj = Contribution.objects.get(pk=kwargs['pk'])
+        old_pledge = obj.pledge
+        new_pledge = Pledge.objects.get(pk=request.POST['new_pledge'])
+        if not obj.overwrite_name:
+            if obj.pledge.person.name:
+                obj.overwrite_name = obj.pledge.person.name
+            else:
+                obj.overwrite_name = obj.pledge.person.initiated_name
+
+        if not obj.overwrite_address:
+            address = ''
+            for line in obj.pledge.person.full_address():
+                if address:
+                    address += ', '
+                address += line
+            obj.overwrite_address = address
+
+        if not obj.overwrite_pan_card:
+            obj.overwrite_pan_card = obj.pledge.person.pan_card_number
+
+        obj.pledge = new_pledge
+        obj.save()
+
+        messages.success(
+            request,
+            "You have moved contribution from pledge #%d under pledge #%d" % (
+                old_pledge.pk, new_pledge.pk),
+            fail_silently=True)
+
+        return redirect(obj)
 
 
 class ContributionDonorLetterDetailView(LoginRequiredMixin, DetailView):

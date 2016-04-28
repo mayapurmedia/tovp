@@ -646,7 +646,8 @@ class Contribution(BaseContribution):
         permissions = (("can_edit_completed", "Can edit completed"),
                        ("can_change_deposit_status", "Can change deposit status"),
                        ("can_do_follow_up", "Can do follow up"),
-                       ("can_deposit", "Can mark as deposited"))
+                       ("can_deposit", "Can mark as deposited"),
+                       ("can_move_contribution", "Can move contribution"))
 
 
 class FollowUp(TimeStampedModel, AuthStampedModel):

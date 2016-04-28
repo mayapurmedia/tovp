@@ -11,17 +11,23 @@
 {% block page_content %}
 
 <div class="row">
-    <div class="{% if user.has_perm('contributions.change_contribution') %} col-xs-9 col-ms-10 col-sm-11{% else %}col-xs-12{% endif %}">
+    <div class="col-xs-12">
         <h1>Contribution #{{ object.pk }}</h1>
     </div>
-    {% if user.has_perm('contacts.change_person') %} 
-        <div class="col-xs-3 col-ms-2 col-sm-1">
-            <a href="{{ url('contributions:contribution:update', object.pledge.person.pk, object.pk) }}" class="btn btn-lg btn-warning">Edit</a>
-            {% if request.user.is_staff %}
-                <a target="_blank" href="/admin/contributions/contribution/{{ object.pk }}/history/" class="btn btn-lg btn-warning">History</a>
-            {% endif %}
-        </div>
-    {% endif %}
+
+    <div class="col-xs-12 text-center">
+    New pledge: #{{ new_pledge.pk }} {{ new_pledge.person }}, {{ new_pledge.info() }}
+    <h3>Are you sure you want to move contribution?</h3>
+    </div>
+
+    <div class="col-xs-12 text-center" style="margin-bottom: 2em;">
+<form action="{{ url('contributions:contribution:move', object.pledge.person.pk, object.pk) }}" enctype="multipart/form-data" method="post">{% csrf_token %}
+    <input class="form-control" id="id_new_pledge" maxlength="20" name="new_pledge" type="hidden" value="{{ new_pledge.pk }}">
+    <input class="btn btn-lg btn-success" type="submit" value="Yes, move Contribution" />
+    <a href="{{ url('contributions:contribution:detail', object.pledge.person.pk, object.pk) }}" class="btn btn-lg btn-danger">No, cancel operation</a>
+</form>
+
+    </div>
 
     {% if object.collector %}
     {% set field_label = 'Collector' %}
@@ -182,51 +188,8 @@
     </div>
     {% endif %}
 
-    {% set field_label = 'Receipt Type' %}
-    {% set field_name = 'receipt_type' %}
-    {% if object[field_name] %}
-    <div class="col-xs-12">
-        {{ print_field(field_label, object.get_receipt_type_display()) }}
-    </div>
-    {% endif %}
-
-    <div class="col-xs-12">
-        {% if object.receipt_type != 'external-receipt' %}
-            {% if object.receipt_type == 'mayapur-receipt' %}
-                <a href="{{ url('contributions:contribution:donor_letter', object.pk) }}" target="_blank" class="btn btn-lg btn-success">Print Donor Letter</a>
-            {% endif %}
-            <a href="{{ url('contributions:contribution:donor_receipt', object.pk) }}" target="_blank" class="btn btn-lg btn-success">Print Receipt</a>
-        {% if user.signature %}
-            <a href="{{ url('contributions:contribution:donor_receipt_with_signature', object.pk) }}" target="_blank" class="btn btn-lg btn-success">Receipt with signature</a>
-        {% endif %}
-        {% else %}
-            This is external contribution for which we cannot print receipt as it was issued by somebody else.
-        {% endif %}
-    </div>
-
-    {% include "attachments/_attached_files.jinja" %}
-
-    {% if user.has_perm('contributions.can_move_contribution') %}
-    <div class="col-xs-12 col-ms-8 col-sm-8">
-        <h2>Move contribution under different pledge</h2>
-<form action="{{ url('contributions:contribution:confirm_move', object.pledge.person.pk, object.pk) }}" enctype="multipart/form-data" method="post">{% csrf_token %}
-    <input class="form-control" id="id_new_pledge" maxlength="20" name="new_pledge" type="text">
-    <div class="help-text">Enter record id of new pledge.</div>
-    <input class="btn btn-lg btn-success" type="submit" value="Move Contribution" /> 
-</form>
-    </div>
-    {% endif %}
-
-    <div class="col-xs-12 next-prev-navigation">
-        {% if object.prev() %}
-        <a href="{{ object.prev().get_absolute_url() }}" class="btn btn-warning float-left">&laquo; Previous</a>
-        {% endif %}
-        {% if object.next() %}
-        <a href="{{ object.next().get_absolute_url() }}" class="btn btn-warning float-right">Next &raquo;</a>
-        {% endif %}
-    </div>
 </div>
 
-{% endblock %}
 
+{% endblock %}
 
