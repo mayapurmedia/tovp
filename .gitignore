@@ -62,3 +62,4 @@ config.codekit
 tovp/media
 
 .idea/
+node_modules
