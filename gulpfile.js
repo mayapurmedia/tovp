@@ -11,8 +11,8 @@ var gulp  = require('gulp'),
     gutil = require('gulp-util');
 
 
-gulp.task('less', function () {
-  return gulp.src('./tovp/theme/less/style.less')
+gulp.task('less_database', function () {
+  return gulp.src('./tovp/theme/less/database/style.less')
     .pipe(less({
       paths: [ path.join(__dirname, 'less', 'includes') ]
     }))
@@ -24,7 +24,24 @@ gulp.task('less', function () {
     }))
     .pipe(autoprefixer())
     .pipe(cssnano())
-    .pipe(gulp.dest('./tovp/theme/static/css'))
+    .pipe(gulp.dest('./tovp/theme/static/database/css'))
+    .pipe(notify("LESS Compiled Successfully :)"));
+});
+
+gulp.task('less_public', function () {
+  return gulp.src('./tovp/theme/less/public/style.less')
+    .pipe(less({
+      paths: [ path.join(__dirname, 'less', 'includes') ]
+    }))
+    .on('error', function() {
+      this.emit('end');
+    })
+    .on("error", notify.onError(function(error) {
+      return "Failed to Compile LESS: " + error.message;
+    }))
+    .pipe(autoprefixer())
+    .pipe(cssnano())
+    .pipe(gulp.dest('./tovp/theme/static/public/css'))
     .pipe(notify("LESS Compiled Successfully :)"));
 });
 
@@ -42,7 +59,8 @@ gulp.task('less', function () {
 
 // Gulp Watch Task
 gulp.task('watch', function () {
-   gulp.watch('./tovp/theme/less/*.*', ['less']);
+   gulp.watch('./tovp/theme/less/database/*.*', ['less_database']);
+   gulp.watch('./tovp/theme/less/public/*.*', ['less_public']);
 });
 
 // Gulp Default Task
