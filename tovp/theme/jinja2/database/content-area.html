@@ -1,0 +1,14 @@
+
+{% if sidebar %}
+    {% extends 'database/col-2.html' %}
+{% else %}
+    {% extends 'database/col-1.html' %}
+{% endif %}
+
+{% block content_area %}
+    {% if content_title %}
+        <h1 class="content-title">{{ content_title|e }}{% block content_title_after %}{% endblock %}</h1>
+    {% endif %}
+    {% block page_content %}{% endblock %}
+{% endblock content_area %}
+

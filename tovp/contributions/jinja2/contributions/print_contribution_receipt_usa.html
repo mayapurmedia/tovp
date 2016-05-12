@@ -1,0 +1,120 @@
+{% import 'contributions/_macros.html' as print_macros %}
+{% extends 'print-base.html' %}
+{% set body_class = "person-detail" %}
+{% set page_title = 'Contribution #%d' % object.pk %}
+{% set page_content = "Receipt" %}
+
+{% macro print_field(label, value) -%}
+    <div class="field-label">{{ label }}</div>
+    <div class="field-value">{{ value or 'N/A' }}</div>
+{%- endmacro %}
+
+
+{% block page_content %}
+<style>
+    .receipt {
+        position: absolute;
+        top: 2em;
+        width: 96%;
+    }
+    .receipt2 {
+        top: 62em;
+    }
+    body { font-size: 1.2em; }
+    .align-right { text-align: right; }
+    .align-center { text-align: center; }
+    .invoice-header {
+        margin-bottom: 2em;
+    }
+    .heading {
+        font-size: 2.1em;
+    }
+    .uppercase {
+        text-transform: uppercase;
+    }
+    .receipt .signature {
+        position: absolute;
+        top: 40.5em;
+        left: 15em;
+        width:100%;
+    }
+    .signature img {
+      width: 212px;
+    }
+    .itg-stamp {
+        float: right;
+        right: 0;
+        width: 340px;
+        text-align: center;
+        font-size: .85em;
+    }
+    .itg-stamp .box {
+        padding: .5em;
+        border: 1px solid #000;
+        margin-bottom: .5em;
+    }
+    .receipt #iskcon-lotus {
+        width:80px;
+        position: absolute;
+        top: 4em;
+    }
+    .receipt #temple-silhouette {
+        width:90px;
+        position: absolute;
+        right: 3.5em;
+        top: 4em;
+    }
+    .founder-acarya {
+        margin-bottom: .8em;
+    }
+    .temporary-receipt {
+        font-weight: 700;
+        font-family: 'PT Sans', sans-serif;
+        margin-top: -.3em;
+        font-size: 1.5em;
+    }
+    .item {
+        margin-bottom: .4em;
+    }
+    .item-name, .item-value {
+        font-size: 1.4em;
+        margin-bottom: .4em;
+    }
+    .item-name {
+        font-size: 1.3em;
+    }
+    .item-name {
+        color: #888;
+    }
+    .item-value {
+        font-weight: 700;
+        font-family: 'PT Sans', sans-serif;
+    }
+    .col-custom-2-5 {
+        width:20%
+    }
+    .receipt .footer {
+        position: absolute;
+        top: 71em;
+        width:100%;
+    }
+    .footer-line {
+        margin-top: 1em;
+        border-top: 1px solid #000;
+        padding-top: 1em;
+    }
+    .main-content {
+        font-size: 1.4em;
+    }
+
+</style>
+<div class="receipt">
+    {% include 'contributions/contribution_receipt_inner_usa.html' %}
+</div>
+{# {% if not (request.user.signature and print_signature) %} #}
+{# <div class="receipt receipt2"> #}
+{#     {% include 'contributions/contribution_receipt_inner.html' %} #}
+{# </div> #}
+{# {% endif %} #}
+{% endblock %}
+

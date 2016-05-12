@@ -1,0 +1,54 @@
+{% import 'database/_macros.html' as macros %}
+{% extends 'database/content-area.html' %}
+{% set page_title = 'Gifts' %}
+
+{% block page_content %}
+<div class="row">
+    <div class="{% if request.user.has_perm('gifts.change_gift') %} col-xs-9 col-ms-10 col-sm-10{% else %}col-xs-12{% endif %}">
+        <h1 class="content-title">List of gifts</h1>
+    </div>
+    {% if request.user.has_perm('gifts.add_gift') %}
+        <div class="col-xs-3 col-ms-2 col-sm-2 text-right">
+            <a href="{{ url('gifts:gift:create') }}" class="btn btn-lg btn-success">Add new gift</a>
+        </div>
+    {% endif %}
+</div>
+    {# Paginate objects list and set result as paginated_list #}
+    {% set paginated_list = paginate_list(request, object_list, 100) %}
+    {# Print pager for pagination #}
+    {# Go through objects and print them #}
+    {% if paginated_list %}
+    <div class="{% if request.user.has_perm('gifts.change_gift') %} col-xs-9 col-ms-10 col-sm-11{% else %}col-xs-12{% endif %}">
+    </div>
+    {% if request.user.has_perm('gifts.change_gift') %}
+        <div class="col-xs-3 col-ms-2 col-sm-1">
+        </div>
+    {% endif %}
+
+    
+        <div class="row">
+            <div class="col-xs-12">
+                <ul class="with-lines">
+                    {% for obj in paginated_list %}
+                        <li>
+                            <a href="{{ obj.get_absolute_url() }}">{{ obj.name }}</a>
+                            <div class="pull-right">
+                            [
+                                <a href="{{ url('gifts:gift:update', obj.pk) }}">edit</a>
+                                |
+                                <a href="{{ url('search:index') }}">show donors</a>
+                            ]
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {{ pager(request, paginated_list) }}
+    {% else %}
+    <p>There are no gifts at this moment.</p>
+    {% if request.user.has_perm('contacts.create_person') %}
+        <a href="{{ url('contacts:person:create') }}" class="btn btn-lg btn-success">Create Person</a>
+    {% endif %}
+    {% endif %}
+{% endblock %}

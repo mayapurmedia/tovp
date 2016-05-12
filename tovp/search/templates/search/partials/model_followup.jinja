@@ -1,5 +1,0 @@
-{% import 'database/_macros.jinja' as macros %}
-<div class="person-result">
-    <a class="object-link" href="{{ result.absolute_url }}"><strong>{{ result.content_type }}</strong>: {{ result.full_name }}{% if result.initiated_name %} - {{ result.initiated_name }}{% endif %} - {{ result.amount }} {{ result.currency }}</a>
-    {% if result.source %} / Source: {% for source in result.source %}{{ ', ' if not loop.first else ''}}{{ source }}{% endfor %}{% endif %}
-</div>

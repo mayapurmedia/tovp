@@ -181,15 +181,20 @@ class Common(Configuration):
     # TEMPLATE CONFIGURATION
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-context-processors
     _TEMPLATE_CONTEXT_PROCESSORS = (
+        'django.template.context_processors.debug',
+        'django.template.context_processors.request',
         'django.contrib.auth.context_processors.auth',
-        'django.core.context_processors.debug',
-        'django.core.context_processors.i18n',
-        'django.core.context_processors.media',
-        'django.core.context_processors.static',
-        'django.core.context_processors.tz',
         'django.contrib.messages.context_processors.messages',
-        'django.core.context_processors.request',
-        'ananta.context_processors.variables',
+        # 'django.contrib.auth.context_processors.auth',
+        # 'django.core.context_processors.debug',
+        # 'django.core.context_processors.i18n',
+        # 'django.core.context_processors.media',
+        # 'django.core.context_processors.static',
+        # 'django.core.context_processors.tz',
+        # 'django.contrib.messages.context_processors.messages',
+        # 'django.core.context_processors.request',
+        'core.context_processors.variables',
+        # # Your stuff: custom template context processers go here
     )
 
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
@@ -251,43 +256,38 @@ class Common(Configuration):
 
     TEMPLATES = [
         {
-            "BACKEND": "django_jinja.backend.Jinja2",
-            "APP_DIRS": True,
-            "OPTIONS": {
-                "match_extension": ".jinja",
-                "extensions": [
-                    "jinja2.ext.do",
-                    "jinja2.ext.loopcontrols",
-                    "jinja2.ext.with_",
-                    "jinja2.ext.i18n",
-                    "jinja2.ext.autoescape",
-                    "django_jinja.builtins.extensions.CsrfExtension",
-                    "django_jinja.builtins.extensions.CacheExtension",
-                    "django_jinja.builtins.extensions.TimezoneExtension",
-                    "django_jinja.builtins.extensions.UrlsExtension",
-                    "django_jinja.builtins.extensions.StaticFilesExtension",
-                    "django_jinja.builtins.extensions.DjangoFiltersExtension",
-                    'ananta.templatetags.jinja2.core',
-                    'attachments.templatetags.jinja2.attachments',
-                    'promotions.templatetags.jinja2.promotions',
+            'BACKEND': 'django.template.backends.jinja2.Jinja2',
+            "DIRS": ['jinja2'],
+            # 'DIRS': [
+            #     os.path.join(PROJECT_DIR, 'jinja2'),
+            # ],
+            'APP_DIRS': True,
+            'OPTIONS': {
+                'extensions': [
+                    'ananta.jinja2tags.core',
+                    # 'ananta.jinja2tags.pagination',
+                    'promotions.jinja2tags.core',
+                    'attachments.jinja2tags.core',
+                    'jinja_paginator.jinja2tags.core',
                 ],
-                "context_processors": _TEMPLATE_CONTEXT_PROCESSORS,
-                "constants": {
-                    "BASE_URL": BASE_URL,
-                },
-            }
+                'environment': 'ananta.jinja2.environment',
+                # 'core.context_processors.variables',
+            },
         },
         {
-            "BACKEND": "django.template.backends.django.DjangoTemplates",
+            'BACKEND': 'django.template.backends.django.DjangoTemplates',
             "DIRS": ['templates'],
-            "APP_DIRS": True,
-            "OPTIONS": {
-                "context_processors": _TEMPLATE_CONTEXT_PROCESSORS,
-                "debug": DEBUG,
-                # 'loaders': [
-                #     'django.template.loaders.filesystem.Loader',
-                #     'django.template.loaders.app_directories.Loader',
-                # ]
+            # 'DIRS': [
+            #     os.path.join(PROJECT_DIR, 'templates'),
+            # ],
+            'APP_DIRS': True,
+            'OPTIONS': {
+                'context_processors': [
+                    'django.template.context_processors.debug',
+                    'django.template.context_processors.request',
+                    'django.contrib.auth.context_processors.auth',
+                    'django.contrib.messages.context_processors.messages',
+                ],
             },
         },
     ]

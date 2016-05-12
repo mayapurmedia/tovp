@@ -162,7 +162,7 @@ bulk_payments = patterns(
     url(
         regex=r'^print/(?P<pk>\d+)/acknowledgement/(?P<signature>0|1)/$',
         view=views.BulkPaymentReceiptDetailView.as_view(
-            template_name='contributions/print_acknowledgement.jinja',
+            template_name='contributions/print_acknowledgement.html',
         ),
         name='print_acknowledgement',
     ),

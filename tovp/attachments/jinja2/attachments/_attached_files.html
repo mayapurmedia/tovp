@@ -1,0 +1,24 @@
+<div class="col-xs-12">
+    <div class="row">
+        <div class="col-xs-12">
+            <h2>Attached Files</h2>
+            {% set attachments = get_attachments_for(object) %}
+            {% if attachments.count() %}
+            <ul>
+            {% for attachment in attachments %}
+                <li>
+                    <a href="{{ attachment.attachment_file.url }}">{{ attachment.get_attachment_type_display() }}</a>
+                    {% if attachment.description %}
+                        :: {{ attachment.description}}
+                    {% endif %}
+                </li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+
+            {% if request.user.has_perm('contributions.add_pledge') %}
+                <a href="{{ get_add_attachments_url_for(object) }}" class="btn btn-lg btn-success">Attach file</a>
+            {% endif %}
+        </div>
+    </div>
+</div>

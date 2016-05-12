@@ -89,7 +89,7 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
         }
 
     def get_template_names(self):
-        return ["search/results.jinja"]
+        return ["search/results.html"]
 
     def get_searchqueryset(self):
         return self.searchqueryset

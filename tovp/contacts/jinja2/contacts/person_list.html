@@ -1,0 +1,24 @@
+{% extends 'database/content-area.html' %}
+{% block title %}Profiles{% endblock %}
+
+{% block page_content %}
+    {# Paginate objects list and set result as paginated_list #}
+    {% set paginated_list = paginate_list(request, object_list, 100) %}
+    {# Print pager for pagination #}
+    {# Go through objects and print them #}
+    {% if paginated_list %}
+        <div class="row">
+        {% for obj in paginated_list %}
+            <div class="col-xs-12">
+                <a href="{{ obj.get_absolute_url() }}">{{ obj.full_name }}{{' ('+obj.initiated_name+')' if obj.initiated_name}}</a>
+            </div>
+        {% endfor %}
+        </div>
+        {{ pager(request, paginated_list) }}
+    {% else %}
+    <p>There are no contacts at this moment.</p>
+    {% if request.user.has_perm('contacts.create_person') %}
+        <a href="{{ url('contacts:person:create') }}" class="btn btn-lg btn-success">Create Person</a>
+    {% endif %}
+    {% endif %}
+{% endblock %}

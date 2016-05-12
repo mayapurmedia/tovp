@@ -1,0 +1,191 @@
+{% extends 'database/content-area.html' %}
+{% set page_title = object.name %}
+{% set body_class = "person-detail" %}
+
+{% macro print_field(label, value) -%}
+    <div class="field-label">{{ label }}</div>
+    <div class="field-value">{{ value or 'N/A' }}</div>
+{%- endmacro %}
+
+
+{% block page_content %}
+
+<div class="row">
+    <div class="{% if request.user.has_perm('contributions.change_bulkpayment') %} col-xs-9 col-ms-10 col-sm-11{% else %}col-xs-12{% endif %}">
+        <h1>Bulk Payment #{{ object.pk }}</h1>
+    </div>
+    {% if request.user.has_perm('contacts.change_person') %}
+        <div class="col-xs-3 col-ms-2 col-sm-1">
+            <a href="{{ url('contributions:bulk_payment:update', object.person.pk, object.pk) }}" class="btn btn-lg btn-warning">Edit</a>
+        </div>
+    {% endif %}
+
+    {% set field_label = 'Collector' %}
+    {% set field_name = 'person' %}
+    <div class="col-xs-12 col-md-6">
+        <div class="field-label">{{ field_label }}</div>
+        <div class="field-value">
+            <a href="{{ object.person.get_absolute_url() }}">{{ object.person.full_name }}{% if object.person.full_name %} - {% endif %}{{ object.person.initiated_name}}</a>
+        </div>
+    </div>
+    {% set field_label = 'Type' %}
+    <div class="col-xs-6">
+        <div class="field-label">{{ field_label }}</div>
+        <div class="field-value">
+            {{ object.get_receipt_type_display() }}
+        </div>
+    </div>
+
+    {% set field_label = 'Serial Number' %}
+    <div class="col-xs-6 col-ms-12 col-sm-4">
+        <div class="field-label">{{ field_label }}</div>
+        <div class="field-value">
+            {{ object.get_serial_number() }}
+        </div>
+    </div>
+    {% set field_label = 'Source' %}
+    {% set field_name = 'source' %}
+    {% if object[field_name] %}
+    <div class="col-xs-12 col-ms-4 col-sm-4">
+        {{ print_field(field_label, object.get_source_display()) }}
+    </div>
+    {% endif %}
+
+    {% if object.book_number %}
+    {% set field_label = 'Book Number' %}
+    {% set field_name = 'book_number' %}
+    <div class="col-xs-6 col-ms-6 col-sm-4">
+        <div class="field-label">{{ field_label }}</div>
+        <div class="field-value">
+            {{ object[field_name] }}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if object.slip_number %}
+    {% set field_label = 'Slip Number' %}
+    {% set field_name = 'slip_number' %}
+    <div class="col-xs-6 col-ms-6 col-sm-4">
+        <div class="field-label">{{ field_label }}</div>
+        <div class="field-value">
+            {{ object[field_name] }}
+        </div>
+    </div>
+    {% endif %}
+
+    {% set field_label = 'Amount' %}
+    {% set field_name = 'amount' %}
+    <div class="col-xs-12 col-ms-8 col-sm-8">
+        <div class="field-label">{{ field_label }}</div>
+        <div class="field-value">
+            {{ object[field_name] }} {{ object.get_currency_display() }}
+            {% if object.foreign_amount %}
+             - from {{ object['foreign_amount'] }} {{ object.get_foreign_currency_display() }}
+            {% endif %}
+        </div>
+    </div>
+    {% set field_label = 'Status' %}
+    {% set field_name = 'status' %}
+    {% if object[field_name] %}
+    <div class="col-xs-12 col-ms-4 col-sm-4">
+        {{ print_field(field_label, object.get_status_display()) }}
+    </div>
+    {% endif %}
+    {% set field_label = 'Dated' %}
+    {% set field_name = 'dated' %}
+    {% if object[field_name] %}
+    <div class="col-xs-12 col-ms-4 col-sm-4">
+        {{ print_field(field_label, object[field_name])}}
+    </div>
+    {% endif %}
+    {% set field_label = 'Receipt Date' %}
+    {% set field_name = 'receipt_date' %}
+    {% if object[field_name] %}
+    <div class="col-xs-12 col-ms-4 col-sm-4">
+        {{ print_field(field_label, object[field_name])}}
+    </div>
+    {% endif %}
+    {% set field_label = 'Cleared On' %}
+    {% set field_name = 'cleared_on' %}
+    {% if object[field_name] %}
+    <div class="col-xs-12 col-ms-4 col-sm-4">
+        {{ print_field(field_label, object[field_name])}}
+    </div>
+    {% endif %}
+    {% set field_label = 'Payment Method' %}
+    {% set field_name = 'payment_method' %}
+    <div class="col-xs-12 col-sm-6">
+        {{ print_field(field_label, object.get_payment_method_display()) }}
+    </div>
+    {% set field_label = 'Transaction ID' %}
+    {% set field_name = 'transaction_id' %}
+    {% if object[field_name] %}
+    <div class="col-xs-12">
+        {{ print_field(field_label, object[field_name])}}
+    </div>
+    {% endif %}
+    {% set field_label = 'Overwrite Name' %}
+    {% set field_name = 'overwrite_name' %}
+    {% if object[field_name] %}
+    <div class="col-xs-12 col-sm-4">
+        {{ print_field(field_label, object[field_name]) }}
+    </div>
+    {% endif %}
+    {% set field_label = 'Overwrite Address' %}
+    {% set field_name = 'overwrite_address' %}
+    {% if object[field_name] %}
+    <div class="col-xs-12 col-sm-8">
+        {{ print_field(field_label, object[field_name]) }}
+    </div>
+    {% endif %}
+    {% set field_label = 'Note' %}
+    {% set field_name = 'note' %}
+    {% if object[field_name] %}
+    <div class="col-xs-12">
+        {{ print_field(field_label, object[field_name])}}
+    </div>
+    {% endif %}
+    <div class="col-xs-12">
+        {% if object.receipt_type == 'official' %}
+            <a href="{{ url('contributions:bulk_payment:print_receipt', object.pk, 0) }}" target="_blank" class="btn btn-lg btn-success">Print Receipt</a>
+            {% if request.user.signature %}
+                <a href="{{ url('contributions:bulk_payment:print_receipt', object.pk, 1) }}" target="_blank" class="btn btn-lg btn-success">Receipt with signature</a>
+            {% endif %}
+        {% else %}
+            <a href="{{ url('contributions:bulk_payment:print_acknowledgement', object.pk, 0) }}" target="_blank" class="btn btn-lg btn-success">Print Acknowledgement</a>
+            {% if request.user.signature %}
+            <a href="{{ url('contributions:bulk_payment:print_acknowledgement', object.pk, 1) }}" target="_blank" class="btn btn-lg btn-success">Acknowledgement with signature</a>
+            {% endif %}
+        {% endif %}
+            <a href="{{ url('contributions:bulk_payment:donor_letter', object.pk) }}" target="_blank" class="btn btn-lg btn-success">Print Donor Letter</a>
+    </div>
+
+
+    <div class="col-xs-12">
+    <h2>Associated Contributions</h2>
+    {% if object.contributions.all() %}
+    {% for contribution in object.contributions.all() %}
+    <div class="col-xs-12">
+        <a href="{{ contribution.get_absolute_url() }}">{{ contribution.info() }}</a>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p>There are currently no contributions.</p>
+    {% endif %}
+    </div>
+
+    {% include "attachments/_attached_files.html" %}
+
+    <div class="col-xs-12 next-prev-navigation">
+        {% if object.prev() %}
+        <a href="{{ object.prev().get_absolute_url() }}" class="btn btn-warning float-left">&laquo; Previous</a>
+        {% endif %}
+        {% if object.next() %}
+        <a href="{{ object.next().get_absolute_url() }}" class="btn btn-warning float-right">Next &raquo;</a>
+        {% endif %}
+    </div>
+</div>
+
+
+{% endblock %}
+
