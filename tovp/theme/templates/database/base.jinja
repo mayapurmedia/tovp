@@ -1,4 +1,4 @@
-{% import '_macros.jinja' as macros %}
+{% import 'database/_macros.jinja' as macros %}
 <!doctype html>
 <html>
 <head>
@@ -8,13 +8,13 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link href="{{ static("css/style.css") }}" rel="stylesheet">
-  {% include '_icons.jinja' %}
+  <link href="{{ static("database/css/style.css") }}" rel="stylesheet">
+  {% include 'shared/_icons.jinja' %}
   {% block javascript_head %}{% endblock %}
 </head>
 <body unresolved touch-action="auto">
-{% include '_google_analytics.jinja' %}
-{% include '_navigation.jinja' %}
+{% include 'database/_google_analytics.jinja' %}
+{% include 'database/_navigation.jinja' %}
     <div class="container main-content">
 
         {% if messages %}
@@ -34,7 +34,7 @@
         {% block base_content %}
         {% endblock %}
     </div>
-{% include 'footer.jinja' %}
+{% include 'database/footer.jinja' %}
 
 {# Headroom.js for top menu #}
 <script type="text/javascript"  src="//cdnjs.cloudflare.com/ajax/libs/headroom/0.7.0/headroom.min.js"></script>

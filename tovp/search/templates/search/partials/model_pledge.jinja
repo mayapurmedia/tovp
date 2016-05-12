@@ -1,4 +1,4 @@
-{% import '_macros.jinja' as macros %}
+{% import 'database/_macros.jinja' as macros %}
 <div class="person-result">
     <div class="follow-by-status" action-url="{{ url('contributions:pledge:assign_to_follow', pk=result.pk) }}"><span class="label label-{{ 'assigned' if result.followed_by != 'Nobody' else 'not-assigned' }} current-status">Followed by: {{ result.followed_by }}</span>
         {% if user.has_perm('contributions.can_do_follow_up') %}

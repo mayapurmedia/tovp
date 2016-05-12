@@ -1,9 +1,9 @@
-{% extends 'content-area.jinja' %}
+{% extends 'database/content-area.jinja' %}
 {% set body_class = "profiles edit-profile" %}
 
 {% block javascript_head %}
     {{ super() }}
-    {% include '_import-selectize.jinja' %}
+    {% include 'database/_import-selectize.jinja' %}
 {% endblock %}
 
 {% block page_content %}

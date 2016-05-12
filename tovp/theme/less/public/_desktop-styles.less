@@ -1,0 +1,89 @@
+// ==========================================================================
+// Desktop Custom Styles
+// ==========================================================================
+
+body {
+    // padding-top: 140px;
+}
+
+// Header
+.header {
+  // background: transparent;
+  // opacity: .9;
+  padding-bottom: 12px;
+}
+.header-inner {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.logo {
+    margin-top: .25em;
+    margin-bottom: .1em;
+}
+
+// Hamburger Button (hide for tablet and above)
+.navigation-toggle-label { .none; }
+.navigation {
+  max-height: none;
+  opacity: 1;
+}
+
+// Navigation
+.navigation {
+  .right;
+  margin-top: .55em;
+  clear: none;
+}
+
+// Navigation Menu
+.navigation-menu {
+  .list-inline;
+  .inline-block;
+  .navigation-item {
+    .inline-block;
+    margin: 0 .6em;
+    &:last-child {
+        margin-right: 0;
+    }
+    & > a {
+      .h5;
+      .no-margin;
+      color: @color-3;
+      text-transform: uppercase;
+      // padding: 50px 2px 0 2px;
+      .relative;
+      font-weight: @font-400;
+      .font-size(13);
+      // &:before {
+      //   .transition(0.1s);
+      //   width: 0px;
+      //   height: 14px;
+      //   background: @white;
+      //   content: "";
+      //   .block;
+      //   top: 0;
+      //   left: 50%;
+      //   .absolute;
+      // }
+      &:hover, &.active {
+        color: darken(@color-3, 15%);
+        &:before {
+          left: 0;
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+// === Typography
+.r-title {
+    h1 {
+        .font-700;
+        font-size: 2.6em;
+        line-height: 1.2em;
+        margin-top: .8em;
+        margin-bottom: .8em;
+    }
+}
+

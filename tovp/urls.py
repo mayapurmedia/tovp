@@ -15,19 +15,20 @@ admin.autodiscover()
 
 urlpatterns = patterns(
     '',
-    url(r'', include("search.urls", namespace="search")),
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
 
     # User management
     url(r'^users/', include("users.urls", namespace="users")),
 
-    # Your stuff: custom urls go here
-    url(r'^contacts/', include("contacts.urls", namespace="contacts")),
-    url(r'^promotions/', include("promotions.urls", namespace="promotions")),
-    url(r'^gifts/', include("gifts.urls", namespace="gifts")),
-    url(r'^contributions/', include("contributions.urls",
-                                    namespace="contributions")),
+    url(r'^database/', include("search.urls", namespace="search")),
+    url(r'^database/contacts/', include("contacts.urls", namespace="contacts")),
+    url(r'^database/promotions/', include("promotions.urls",
+                                          namespace="promotions")),
+    url(r'^database/gifts/', include("gifts.urls", namespace="gifts")),
+    url(r'^database/contributions/', include("contributions.urls",
+                                             namespace="contributions")),
+
     url(r'^hijack/', include('hijack.urls')),
     (r'^attachments/', include('attachments.urls')),
     (r'^ajax_select/lookups/', include(ajax_select_urls)),

@@ -1,13 +1,13 @@
-{% extends 'content-area.jinja' %}
+{% extends 'database/content-area.jinja' %}
 {% set body_class = "profiles edit-profile" %}
 
 {% block javascript_head %}
     {{ super() }}
-    {% include '_import-selectize.jinja' %}
+    {% include 'database/_import-selectize.jinja' %}
 {% endblock %}
 
 {% block page_content %}
-    <script src="{{ static('js/jquery.formset.js') }}"></script>
+    <script src="{{ static('database/js/jquery.formset.js') }}"></script>
     <form action="" enctype="multipart/form-data" method="post">{% csrf_token %}
         <div class="row">
         {{ form.media }}

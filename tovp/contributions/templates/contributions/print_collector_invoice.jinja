@@ -1,5 +1,5 @@
 {% import 'contributions/_macros.jinja' as print_macros %}
-{% extends 'print-base.jinja' %}
+{% extends 'database/print-base.jinja' %}
 {% set body_class = "person-detail" %}
 {% set page_content = "Donor Letter" %}
 
@@ -90,7 +90,7 @@
     }
 
 </style>
-<img id="iskcon-lotus" src="{{ static('img/iskcon-lotus.png') }}"/>
+<img id="iskcon-lotus" src="{{ static('database/img/iskcon-lotus.png') }}"/>
 
 <div class="row">
     <div class="col-xs-12 invoice-header">

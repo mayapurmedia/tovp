@@ -1,5 +1,5 @@
-{% import '_macros.jinja' as macros %}
-{% extends 'content-area.jinja' %}
+{% import 'database/_macros.jinja' as macros %}
+{% extends 'database/content-area.jinja' %}
 
 {% set content_title = '' %}
 {% set body_class = "rides" %}
@@ -11,7 +11,7 @@
 
 {% block javascript_head %}
     {{ super() }}
-    {% include '_import-selectize.jinja' %}
+    {% include 'database/_import-selectize.jinja' %}
 {% endblock %}
 
 {% block page_content %}
