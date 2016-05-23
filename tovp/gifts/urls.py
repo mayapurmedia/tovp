@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 
 from . import views
 
 
-gift = patterns(
-    '',
+gift = [
     url(
         regex=r'^$',
         view=views.GiftListView.as_view(),
@@ -29,10 +28,9 @@ gift = patterns(
         view=views.GiftUpdateView.as_view(),
         name='update',
     ),
-)
+]
 
-gift_given = patterns(
-    '',
+gift_given = [
     # URL pattern for the GiftDetailView
     url(
         regex=r'^(?P<pk>\d+)/$',
@@ -56,10 +54,9 @@ gift_given = patterns(
         view=views.GiftGivenDeleteView.as_view(),
         name="delete",
     ),
-)
+]
 
-urlpatterns = patterns(
-    '',
-    (r'^gift/', include(gift, namespace="gift")),
-    (r'^gift_given/', include(gift_given, namespace="gift_given")),
-)
+urlpatterns = [
+    url(r'^gift/', include(gift, namespace="gift")),
+    url(r'^gift_given/', include(gift_given, namespace="gift_given")),
+]

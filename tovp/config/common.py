@@ -74,6 +74,8 @@ class Common(Configuration):
         'search',
         'theme',
         'attachments',
+        'donate',
+        'donor_list',
         # Your stuff: custom apps go here
     )
 
@@ -108,10 +110,6 @@ class Common(Configuration):
     # DEBUG
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#debug
     DEBUG = values.BooleanValue(False)
-
-    # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-debug
-    TEMPLATE_DEBUG = DEBUG
-    # END DEBUG
 
     # SECRET CONFIGURATION
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
@@ -195,12 +193,6 @@ class Common(Configuration):
         # 'django.core.context_processors.request',
         'core.context_processors.variables',
         # # Your stuff: custom template context processers go here
-    )
-
-    # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
-    TEMPLATE_DIRS = (
-        join(BASE_DIR, 'theme/templates'),
-        join(BASE_DIR, 'templates'),
     )
 
     # STATIC FILE CONFIGURATION
@@ -338,7 +330,7 @@ class Common(Configuration):
     HAYSTACK_SIGNAL_PROCESSOR = 'search.signals.RelatedRealtimeSignalProcessor'
     HAYSTACK_DEFAULT_OPERATOR = 'AND'
 
-    SHOW_HIJACKUSER_IN_ADMIN = False
+    HIJACK_DISPLAY_ADMIN_BUTTON = False
     HIJACK_LOGIN_REDIRECT_URL = "/"
 
     AJAX_LOOKUP_CHANNELS = {

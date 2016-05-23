@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
-from django.conf.urls import patterns, url
+from django.conf.urls import url
+from django.contrib.auth import views as auth_views
 
 from . import views
 
 
-urlpatterns = patterns('',
+urlpatterns = [
     # URL pattern for the UserListView  # noqa
     url(
         regex=r'^$',
@@ -18,11 +19,11 @@ urlpatterns = patterns('',
         name='redirect'
     ),
     # URl pattern for login view
-    url(r'^login/$', 'django.contrib.auth.views.login',
+    url(r'^login/$', auth_views.login,
         {'template_name': 'registration/login.html'},
         name="login"),
     # URl pattern for logout view
-    url(r'^logout/$', 'django.contrib.auth.views.logout',
+    url(r'^logout/$', auth_views.logout,
         {'next_page': '/'}, name="logout"),
     # URL pattern for the UserDetailView
     url(
@@ -37,19 +38,19 @@ urlpatterns = patterns('',
         name='update'
     ),
     url(r'^password/reset/$',
-        'django.contrib.auth.views.password_reset',
+        auth_views.password_reset,
         {
             'post_reset_redirect': '/users/password/reset/done/',
         },
         name="password_reset"),
-    (r'^password/reset/done/$',
-        'django.contrib.auth.views.password_reset_done'),
+    url(r'^password/reset/done/$',
+        auth_views.password_reset_done),
     url(
         regex=r'^password/reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/$',
-        view='django.contrib.auth.views.password_reset_confirm',
+        view=auth_views.password_reset_confirm,
         kwargs={'post_reset_redirect': '/users/password/done/'},
         name='password_reset_confirm',
     ),
-    (r'^password/done/$',
-        'django.contrib.auth.views.password_reset_complete'),
-)
+    url(r'^password/done/$',
+        auth_views.password_reset_complete),
+]
