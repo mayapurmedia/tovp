@@ -1,0 +1,188 @@
+{% if filter_form.as_p() or True %}
+<form method="get" action=".">
+        {{ form.media }}
+        {% if form_error %}
+            <p class="tooltip error">
+                {{ form_error|safe }}
+            </p>
+        {% endif %}
+
+        <div class="row">
+            {% for field_name in ['mixed_name', 'q'] %}
+            <div class="col-ms-12 col-sm-12 form-group{{' has-error' if form[field_name].errors }}">
+                <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
+
+                {{form[field_name]|add_css('form-control')}}
+                {% if form[field_name].help_text %}
+                {{ form[field_name].errors|safe }}
+                    <div class="help-text">
+                        {{ form[field_name].help_text }}
+                    </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            {% for field_name in ['initiated_name', 'first_name', 'last_name'] %}
+            <div class="col-ms-6 col-sm-4 form-group{{' has-error' if form[field_name].errors }}">
+                <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
+
+                {{form[field_name]|add_css('form-control')}}
+                {% if form[field_name].help_text %}
+                {{ form[field_name].errors|safe }}
+                    <div class="help-text">
+                        {{ form[field_name].help_text }}
+                    </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            {% for field_name in ['email'] %}
+            <div class="col-ms-6 col-sm-4 form-group{{' has-error' if form[field_name].errors }}">
+                <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
+
+                {{form[field_name]|add_css('form-control')}}
+                {% if form[field_name].help_text %}
+                {{ form[field_name].errors|safe }}
+                    <div class="help-text">
+                        {{ form[field_name].help_text }}
+                    </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            {% for field_name in ['pan_card_number', 'phone_number', 'serial_number'] %}
+            <div class="col-ms-6 col-sm-4 form-group{{' has-error' if form[field_name].errors }}">
+                <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
+
+                {{form[field_name]|add_css('form-control')}}
+                {% if form[field_name].help_text %}
+                {{ form[field_name].errors|safe }}
+                    <div class="help-text">
+                        {{ form[field_name].help_text }}
+                    </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            {% for field_name in ['record_id'] %}
+            <div class="col-ms-6 col-sm-4 form-group{{' has-error' if form[field_name].errors }}">
+                <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
+
+                {{form[field_name]|add_css('form-control')}}
+                {% if form[field_name].help_text %}
+                {{ form[field_name].errors|safe }}
+                    <div class="help-text">
+                        {{ form[field_name].help_text }}
+                    </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            {% for field_name in ['transaction_id', 'old_database_id'] %}
+            <div class="col-ms-6 col-sm-4 form-group{{' has-error' if form[field_name].errors }}">
+                <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
+
+                {{form[field_name]|add_css('form-control')}}
+                {% if form[field_name].help_text %}
+                {{ form[field_name].errors|safe }}
+                    <div class="help-text">
+                        {{ form[field_name].help_text }}
+                    </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            {% for field_name in ['book_number'] %}
+            <div class="col-ms-6 col-sm-4 form-group{{' has-error' if form[field_name].errors }}">
+                <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
+
+                {{form[field_name]|add_css('form-control')}}
+                {% if form[field_name].help_text %}
+                {{ form[field_name].errors|safe }}
+                    <div class="help-text">
+                        {{ form[field_name].help_text }}
+                    </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            {% for field_name in ['slip_number'] %}
+            <div class="col-ms-6 col-sm-4 form-group{{' has-error' if form[field_name].errors }}">
+                <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
+
+                {{form[field_name]|add_css('form-control')}}
+                {% if form[field_name].help_text %}
+                {{ form[field_name].errors|safe }}
+                    <div class="help-text">
+                        {{ form[field_name].help_text }}
+                    </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            {% for field_name in ['postcode', 'collector'] %}
+            <div class="col-ms-6 col-sm-4 form-group{{' has-error' if form[field_name].errors }}">
+                <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
+                {{form[field_name]|add_css('form-control')}}
+                {% if form[field_name].help_text %}
+                {{ form[field_name].errors|safe }}
+                    <div class="help-text">
+                        {{ form[field_name].help_text }}
+                    </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        <div class="row">
+            {% for field_name in ['date_type', 'date_from', 'date_to'] %}
+            <div class="col-ms-6 col-sm-4 form-group{{' has-error' if form[field_name].errors }}">
+                <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
+                {{form[field_name]|add_css('form-control')}}
+                {% if form[field_name].help_text %}
+                {{ form[field_name].errors|safe }}
+                    <div class="help-text">
+                        {{ form[field_name].help_text }}
+                    </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        <div class="row">
+            {% for field_name in ['order', 'order_type', 'serial_clean_from', 'serial_clean_to'] %}
+            <div class="col-ms-6 col-sm-3 form-group{{' has-error' if form[field_name].errors }}">
+                <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
+                {{form[field_name]|add_css('form-control')}}
+                {% if form[field_name].help_text %}
+                {{ form[field_name].errors|safe }}
+                    <div class="help-text">
+                        {{ form[field_name].help_text }}
+                    </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        <div class="row">
+            {% for field_name in ['amount_from', 'amount_to'] %}
+            <div class="col-ms-6 col-sm-4 form-group{{' has-error' if form[field_name].errors }}">
+                <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
+                {{form[field_name]|add_css('form-control')}}
+                {% if form[field_name].help_text %}
+                {{ form[field_name].errors|safe }}
+                    <div class="help-text">
+                        {{ form[field_name].help_text }}
+                    </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 submit-wrapper">
+                <input class="submit-filter btn btn-lg btn-success" type="submit" value="Search">
+                {% if show_export_link %}
+                <input class="submit-filter btn btn-lg btn-success" type="submit" name="export_csv" value="Export CSV">
+                {% endif %}
+            </div>
+        </div>
+
+    {% for field in faceted_by_secondary %}
+        {% if faceted_by_secondary[field] %}
+            <input type="hidden" name="{{ field }}" value="{{ faceted_by_secondary[field] }}">
+        {% endif %}
+    {% endfor %}
+
+</form>
+{% endif %}
+

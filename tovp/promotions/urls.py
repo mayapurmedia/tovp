@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 
 from . import views
 from .models import (NrsimhaTile, GoldenBrick, GuruParamparaBrick,
@@ -13,11 +13,9 @@ from .forms import (NrsimhaTileForm, GoldenBrickForm, GuruParamparaBrickForm,
                     RadharaniCoinForm, SquareFeetForm, SquareMeterForm,
                     TrusteeForm, GeneralDonationForm)
 
-urlpatterns = patterns(
-    '',
-    (r'^nrsimha_tile/', include(
-        patterns(
-            '',
+urlpatterns = [
+    url(r'^nrsimha_tile/', include(
+        [
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
                 view=views.BrickCreateView.as_view(
@@ -48,10 +46,9 @@ urlpatterns = patterns(
                 ),
                 name='delete'
             ),
-        ), namespace="nrsimha_tile")),
-    (r'^golden_brick/', include(
-        patterns(
-            '',
+        ], namespace="nrsimha_tile")),
+    url(r'^golden_brick/', include(
+        [
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
                 view=views.BrickCreateView.as_view(
@@ -82,10 +79,9 @@ urlpatterns = patterns(
                 ),
                 name='delete'
             ),
-        ), namespace="golden_brick")),
-    (r'^guru_parampara_brick/', include(
-        patterns(
-            '',
+        ], namespace="golden_brick")),
+    url(r'^guru_parampara_brick/', include(
+        [
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
                 view=views.BrickCreateView.as_view(
@@ -116,10 +112,9 @@ urlpatterns = patterns(
                 ),
                 name='delete'
             ),
-        ), namespace="guru_parampara_brick")),
-    (r'^radha_madhava_brick/', include(
-        patterns(
-            '',
+        ], namespace="guru_parampara_brick")),
+    url(r'^radha_madhava_brick/', include(
+        [
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
                 view=views.BrickCreateView.as_view(
@@ -150,10 +145,9 @@ urlpatterns = patterns(
                 ),
                 name='delete'
             ),
-        ), namespace="radha_madhava_brick")),
-    (r'^srivas_coin/', include(
-        patterns(
-            '',
+        ], namespace="radha_madhava_brick")),
+    url(r'^srivas_coin/', include(
+        [
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
                 view=views.CoinCreateView.as_view(
@@ -184,10 +178,9 @@ urlpatterns = patterns(
                 ),
                 name='delete'
             ),
-        ), namespace="Srivas_Coin")),
-    (r'^gadadhar_coin/', include(
-        patterns(
-            '',
+        ], namespace="Srivas_Coin")),
+    url(r'^gadadhar_coin/', include(
+        [
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
                 view=views.CoinCreateView.as_view(
@@ -218,10 +211,9 @@ urlpatterns = patterns(
                 ),
                 name='delete'
             ),
-        ), namespace="Gadadhar_Coin")),
-    (r'^advaita_coin/', include(
-        patterns(
-            '',
+        ], namespace="Gadadhar_Coin")),
+    url(r'^advaita_coin/', include(
+        [
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
                 view=views.CoinCreateView.as_view(
@@ -252,10 +244,9 @@ urlpatterns = patterns(
                 ),
                 name='delete'
             ),
-        ), namespace="Advaita_Coin")),
-    (r'^gold_coin/', include(
-        patterns(
-            '',
+        ], namespace="Advaita_Coin")),
+    url(r'^gold_coin/', include(
+        [
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
                 view=views.CoinCreateView.as_view(
@@ -286,10 +277,9 @@ urlpatterns = patterns(
                 ),
                 name='delete'
             ),
-        ), namespace="Nityananda_Coin")),
-    (r'^platinum_coin/', include(
-        patterns(
-            '',
+        ], namespace="Nityananda_Coin")),
+    url(r'^platinum_coin/', include(
+        [
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
                 view=views.CoinCreateView.as_view(
@@ -320,10 +310,9 @@ urlpatterns = patterns(
                 ),
                 name='delete'
             ),
-        ), namespace="Caitanya_Coin")),
-    (r'^radharani_coin/', include(
-        patterns(
-            '',
+        ], namespace="Caitanya_Coin")),
+    url(r'^radharani_coin/', include(
+        [
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
                 view=views.CoinCreateView.as_view(
@@ -354,10 +343,9 @@ urlpatterns = patterns(
                 ),
                 name='delete'
             ),
-        ), namespace="Radharani_Coin")),
-    (r'^square_feet/', include(
-        patterns(
-            '',
+        ], namespace="Radharani_Coin")),
+    url(r'^square_feet/', include(
+        [
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
                 view=views.FeetCreateView.as_view(
@@ -388,10 +376,9 @@ urlpatterns = patterns(
                 ),
                 name='delete'
             ),
-        ), namespace="square_feet")),
-    (r'^square_meter/', include(
-        patterns(
-            '',
+        ], namespace="square_feet")),
+    url(r'^square_meter/', include(
+        [
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
                 view=views.FeetCreateView.as_view(
@@ -422,10 +409,9 @@ urlpatterns = patterns(
                 ),
                 name='delete'
             ),
-        ), namespace="square_meter")),
-    (r'^trustee/', include(
-        patterns(
-            '',
+        ], namespace="square_meter")),
+    url(r'^trustee/', include(
+        [
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
                 view=views.TrusteeCreateView.as_view(
@@ -456,10 +442,9 @@ urlpatterns = patterns(
                 ),
                 name='delete'
             ),
-        ), namespace="trustee")),
-    (r'^general_donation/', include(
-        patterns(
-            '',
+        ], namespace="trustee")),
+    url(r'^general_donation/', include(
+        [
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
                 view=views.GeneralDonationCreateView.as_view(
@@ -490,5 +475,5 @@ urlpatterns = patterns(
                 ),
                 name='delete'
             ),
-        ), namespace="general_donation")),
-)
+        ], namespace="general_donation")),
+]

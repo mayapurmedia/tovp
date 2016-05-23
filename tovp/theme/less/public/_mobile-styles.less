@@ -1,0 +1,221 @@
+// ==========================================================================
+// Mobile Custom Styles
+// ==========================================================================
+
+html {
+    background: @background-color-3;
+    background-image: url(../img/tovp-bg.jpg);
+    height: 100%;
+}
+
+a {
+    text-decoration: none;
+    &:hover {
+        text-decoration: underline;
+    }
+}
+.main-content {
+    padding-top: 5em;
+}
+// Img
+img { max-width: 100%; }
+
+.headroom {
+    z-index: 10;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+.headroom--unpinned {
+top: -140px;
+    .transition(.3s);
+}
+.headroom--pinned {
+top: 0;
+    .transition(.3s);
+}
+
+
+// Super Top
+.header-super-top {
+    padding: .25em 0;
+    background: @background-color-1;
+    border-bottom: 1px solid darken(@background-color-1, 11%);
+    .text-right;
+}
+
+// Header
+.header {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-bottom: 12px;
+  // background: @background-color-2;
+  // border-bottom: 1px solid darken(@background-color-1, 11%);
+}
+
+// Logo
+.logo {
+  .inline-block;
+  .left;
+  .font-400;
+  opacity: 1;
+  text-decoration: none;
+  &:hover {
+      text-decoration: none;
+  }
+  font-size: 1.3em;
+  color: @color-3;
+  text-transform: uppercase;
+  &:hover { opacity: .8; }
+  line-height: 1.5em;
+  // margin-top: .4em;
+  margin-top: .25em;
+  margin-bottom: .1em;
+}
+
+// Hamburger Button for Mobile
+.navigation-toggle-label {
+  .font-size(16);
+  line-height: normal;
+  .no-border;
+  .font-700;
+  .uppercase;
+  .block;
+  .right;
+  .relative;
+  height: 20px;
+  width: 25px;
+  background: transparent;
+  // margin-top: 5px;
+  margin-top: .58em;
+  // margin-right: 10px;
+  color: @color-3;
+  cursor: pointer;
+  &:before, &:after, .navigation-toggle-label-inner:before {
+    content: "";
+    width: 25px;
+    height: 4px;
+    background: @color-3;
+    .inline-block;
+    .absolute;
+    top: 1px;
+    left: 0;
+    .transition(.5s);
+  }
+  &:after {
+    -webkit-transform: translate3d(0, 7px, 0);
+    transform: translate3d(0, 7px, 0);
+  }
+  .navigation-toggle-label-inner:before {
+    -webkit-transform: translate3d(0, 14px, 0);
+    transform: translate3d(0, 14px, 0);
+  }
+}
+// Hamburger Button - Active
+.navigation-toggle-checkbox[type=checkbox]:checked + .navigation-toggle-label {
+  &:before {
+    -webkit-transform: translate3d(0, 6px, 0) rotate(-225deg);
+    transform: translate3d(0, 6px, 0) rotate(-225deg);
+  }
+  &:after { opacity: 0; }
+  .navigation-toggle-label-inner:before {
+    -webkit-transform: translate3d(0, 6px, 0) rotate(45deg);
+    transform: translate3d(0, 6px, 0) rotate(45deg);
+  }
+}
+
+// Navigation
+.navigation { clear: both; }
+
+.navigation {
+  .transition;
+  opacity: 0;
+  max-height: 1px;
+  overflow: hidden;
+}
+.dolphin-checked + .navigation-toggle-label + .navigation,
+.navigation-visible,
+.navigation-toggle-checkbox[type=checkbox]:checked  + .navigation-toggle-label + .navigation {
+  opacity: 1;
+  max-height: 400px;
+}
+
+
+// Navigation Menu
+.navigation-menu {
+  .list-unstyled;
+  .navigation-item {
+    .block;
+    .text-left;
+    margin-top: 10px;
+    & > a {
+      .h4;
+      .no-margin;
+      .block;
+      color: @color-3;
+      text-decoration: none;
+      .relative;
+      &:hover, &.active { color: @gold; }
+    }
+  }
+}
+
+span.menu-label {
+    margin-left: -4em;
+    // margin-top: 0.1em;
+    // display: block;
+    .none;
+}
+
+p {
+.text-justify;
+
+}
+
+.super-top-item {
+    padding-left: 1em;
+    line-height: 2em;
+}
+.mmenu-dropdown-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.footer {
+    .text-center;
+    font-size: .8em;
+}
+
+.content-box {
+    background: #f8f8f8;
+    .rounded(3px);
+    //font-size: 5em;
+    //line-height: 5em;
+    // .opacity(.8);
+}
+.donor-list {
+  padding: 1em 0;
+  background-color: rgba(255,255,255, 1);
+
+}
+
+.donor-item {
+  margin: 0 0 1em;
+  padding-right: 15px;
+  .inner {
+    .left;
+    //margin: 0 15px 0 0;
+    //background-color: rgba(255,255,255, .9);
+    min-height:3em;
+  }
+}
+.promotion-icon {
+  width: 3em;
+  .left;
+  margin-right: 1em;
+}
+
+@import "_typography";
+
+

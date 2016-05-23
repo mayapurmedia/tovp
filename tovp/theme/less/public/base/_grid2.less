@@ -1,0 +1,42 @@
+// ==========================================================================
+// Base – Mobile-First Grid
+// ==========================================================================
+
+// Tablet Container
+@media only screen and (min-width: @breakpoint-tablet) {
+  .container, .container-full { width: auto; }
+  .container-tablet {
+    width: auto;
+  }
+  .container-full-tablet {
+    width: auto;
+  }
+}
+// Desktop Container
+@media only screen and (min-width: @breakpoint-desktop) {
+  .container, .container-full { width: auto; }
+  .container-desktop {
+    width: auto;
+  }
+  .container-full-desktop {
+    width: auto;
+  }
+}
+// HD Container
+@media only screen and (min-width: @breakpoint-hd) {
+  .container, .container-full { width: @container-hd; }
+  .container-hd {
+    width: @container-hd;
+    padding-left: @grid-gutter-hd;
+    padding-right: @grid-gutter-hd;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .container-full-hd {
+    width: @container-hd;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}

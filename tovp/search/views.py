@@ -30,6 +30,7 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
     paginator_class = Paginator
     search_key = 'general_search'
     search_form_used = None
+    template_name = "search/results.html"
 
     exporters = {'Contact': ContactExport,
                  'Contribution': ContributionExport,
@@ -89,7 +90,7 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
         }
 
     def get_template_names(self):
-        return ["search/results.jinja"]
+        return self.template_name
 
     def get_searchqueryset(self):
         return self.searchqueryset

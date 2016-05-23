@@ -3,7 +3,7 @@ from datetime import datetime
 
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.contenttypes import generic
+from django.contrib.contenttypes.fields import GenericForeignKey
 from django.utils.translation import ugettext_lazy as _
 
 from model_utils.models import TimeStampedModel
@@ -31,7 +31,7 @@ class Attachment(TimeStampedModel, AuthStampedModel):
 
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
-    content_object = generic.GenericForeignKey('content_type', 'object_id')
+    content_object = GenericForeignKey('content_type', 'object_id')
     attachment_file = models.FileField('attachment', upload_to=attachment_upload)
     description = models.CharField(max_length=255, blank=True)
 

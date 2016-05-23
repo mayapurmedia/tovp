@@ -20,18 +20,18 @@ from .forms import PersonForm
 
 class PersonListView(LoginRequiredMixin, ListView):
     model = Person
-    template_name = 'contacts/person_list.jinja'
+    template_name = 'contacts/person_list.html'
 
 
 class PersonDetailView(LoginRequiredMixin, DetailView):
     model = Person
-    template_name = 'contacts/person_detail.jinja'
+    template_name = 'contacts/person_detail.html'
 
 
 class PersonCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Person
     permission_required = "contacts.add_person"
-    template_name = 'contacts/person_form.jinja'
+    template_name = 'contacts/person_form.html'
     form_class = PersonForm
 
     def get_context_data(self, **kwargs):
@@ -44,7 +44,7 @@ class PersonUpdateView(RevisionCommentMixin, LoginRequiredMixin,
                        PermissionRequiredMixin, UpdateView):
     model = Person
     permission_required = "contacts.change_person"
-    template_name = 'contacts/person_form.jinja'
+    template_name = 'contacts/person_form.html'
     form_class = PersonForm
 
     def get_context_data(self, **kwargs):

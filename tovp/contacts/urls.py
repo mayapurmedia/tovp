@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 
 from . import views
 
 
-person = patterns(
-    '',
+person = [
     # URL pattern for the PersonDetailView
     url(
         regex=r'^(?P<pk>\d+)/$',
@@ -29,15 +28,14 @@ person = patterns(
         view=views.person_ajax_search,
         name='ajax'
     ),
-)
+]
 
-urlpatterns = patterns(
-    '',
-    (r'^person/', include(person, namespace="person")),
+urlpatterns = [
+    url(r'^person/', include(person, namespace="person")),
     # URL pattern for the PersonListView
     url(
         regex=r'^$',
         view=views.PersonListView.as_view(),
         name='index'
     ),
-)
+]

@@ -1,0 +1,67 @@
+{% import 'database/_macros.html' as macros %}
+{% extends 'public/base.html' %}
+
+{% set content_title = '' %}
+{% set body_class = "rides" %}
+{% set center_bottom_banner = True %}
+
+{% block og_type %}article{% endblock %}
+
+{% block main_content_class %}{% if main_content_class %} {{ main_content_class }}{% endif %}{% endblock %}
+
+{% block javascript_head %}
+    {{ super() }}
+    {% include 'database/_import-selectize.html' %}
+{% endblock %}
+
+{% block page_content %}
+<div class="main-content container-full clear">
+    <div class="col-12 col-12-desktop">
+        <h1>List of donors</h1>
+        <div class="content-boxixxx donor-list clear">
+            <div class="search-results-area">
+                    {% if show_form %}
+                    <div class="col-12 search-form clear">
+                        {% include "donor_list/results.form.html" %}
+                    </div>
+                    {% endif %}
+                    <div class="col-12 no-padding clear">
+                        {% for result in results %}
+                            <div class="col-12 col-6-desktop col-6-hd xno-padding donor-item">
+                                    {% if result.promotion_type == 'Radha Madhava Brick' %}
+                                        <img src="{{ static("img/promotions/brick-rm.jpg") }}" class="promotion-icon"/>
+                                    {% elif result.promotion_type == 'Nrsimha Tile' %}
+                                        <img src="{{ static("img/promotions/brick-nd.jpg") }}" class="promotion-icon"/>
+                                    {% elif result.promotion_type == 'Golden Brick' %}
+                                        <img src="{{ static("img/promotions/brick-5tattva.jpg") }}" class="promotion-icon"/>
+                                    {% elif result.promotion_type == 'Square Feet' %}
+                                        <img src="{{ static("img/promotions/square-feet.jpg") }}" class="promotion-icon"/>
+                                    {% elif result.promotion_type in ['Srivas Coin', 'Nityananda Coin', 'Gadadhar Coin'] %}
+                                        <img src="{{ static("img/promotions/coin-silver.jpg") }}" class="promotion-icon"/>
+                                    {% elif result.promotion_type in ['Caitanya Coin'] %}
+                                        <img src="{{ static("img/promotions/coin-caitanya.jpg") }}" class="promotion-icon"/>
+                                    {% else %}
+                                        <img src="{{ static("img/promotions/coin-caitanya.jpg") }}" class="promotion-icon"/>
+{#                                        XXX={{ result.promotion_type }}<br />#}
+                                    {% endif %}
+                                    {% if result.initiated_name %}
+                                        {{ result.initiated_name }}
+                                    {% else %}
+                                        {{ result.full_name }}
+                                    {% endif %}
+                                    {% if result.name_on_brick %}
+                                        ({{ result.name_on_brick  }})
+                                    {% endif %}
+                            </div>
+                        {% else %}
+                        <p>No results found.</p>
+                        {% endfor %}
+                    </div>
+                    {% if is_paginated %}
+                    {{ macros.mini_paginator(request, paginator, page) }}
+                    {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

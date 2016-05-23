@@ -1,0 +1,15 @@
+{% import 'database/_macros.html' as macros %}
+<div class="person-result">
+    <div><a class="object-link" href="{{ result.absolute_url }}"><strong>{{ result.content_type }}</strong>: {{ result.full_name }}{% if result.initiated_name %} - {{ result.initiated_name }}{% endif %}</a>
+    
+    / {{ result.amount }} {{ result.currency }} [{{ result.status }}]
+    
+    {% if result.serial_number %}
+        / Serial No: {{ result.serial_number }}
+    {% endif %}
+    </div>
+    <div>{{ result.payment_method }}</div>
+    {% if result.object.receipt_type == 'acknowledgement' %}
+    {{ result.object.get_deposit_status()|safe }}
+    {% endif %}
+</div>

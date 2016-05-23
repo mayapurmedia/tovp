@@ -1,10 +1,10 @@
-from django.contrib.contenttypes import generic
+from django.contrib.contenttypes.admin import GenericStackedInline
 from django.contrib import admin
 from reversion_compare.admin import CompareVersionAdmin
 from .models import Attachment
 
 
-class AttachmentInlines(generic.GenericStackedInline):
+class AttachmentInlines(GenericStackedInline):
     model = Attachment
     extra = 1
 

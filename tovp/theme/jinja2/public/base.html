@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Temple of the Vedic Planetarium</title>
+
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
+  <meta name="theme-color" content="#F7C723">
+    {% include 'shared/_icons.html' %}
+
+  <link rel="stylesheet" href="{{ static("public/js/vendor/mmenu/jquery.mmenu.all.css") }}">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+  <link rel="stylesheet" href="{{ static("public/css/style.css") }}">
+
+  <script src="{{ static('public/js/vendor/jquery-3.0.0-beta1.min.js') }}"></script>
+  <script src="{{ static('public/js/vendor/webfontloader-1.6.24.js') }}"></script>
+  {# <script src="{{ static('public/js/vendor/headroom-0.8.0.min.js') }}"></script>
+    #}
+  <script src="{{ static('public/js/vendor/mmenu/jquery.mmenu.all.min.js') }}"></script>
+  <script src="{{ static('public/js/default.js') }}"></script>
+  <script>
+        WebFont.load({
+            google: {
+                families: ['Crimson Text:400italic', 'Open Sans:300,400']
+            }
+        });
+  </script>
+</head>
+<body>
+
+<!-- === Google Analytics === -->
+<div id="header" class="xheadroom xheader--fixed">
+    <div class="header">
+        <div class="container clear">
+            <a class="logo" href="#">Temple of the Vedic Planetarium</a>
+            <input type="checkbox" id="navigation-toggle-checkbox" name="navigation-toggle-checkbox" class="navigation-toggle-checkbox sr">
+            <label for="navigation-toggle-checkbox" class="navigation-toggle-label" onclick>
+                <span class="navigation-toggle-label-inner">
+                    <span class="sr">Navigation</span>
+                    <span class="menu-label">Menu</span>
+                </span>
+            </label>
+            <div id="main-navigation" class="navigation">
+                <ul class="navigation-menu">
+                    <!-- <li class="navigation-item"><a href="#reviews">&lt; Back to Main Site</a></li> -->
+                    <li class="navigation-item"><a href="{{ url('donate:donate') }}">Home</a></li>
+                    <li class="navigation-item"><a href="#">Donate</a></li>
+                    <li class="navigation-item"><a href="{{ url('donor_list:index') }}">Donor List</a></li>
+                    <li class="navigation-item"><a href="#">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block page_content %}
+
+{% endblock %}
+
+
+<div class="footer">
+Project of the International Society for Krsna Consciousness<br />
+Founder-Ācārya His Divine Grace A.C. Bhaktivedanta Swami  Prabhupāda
+</div>
+
+{#
+<script>
+(function() {
+    var header = document.querySelector(".headroom");
+    if(window.location.hash) {
+      header.classList.add("headroom--unpinned");
+    }
+
+    new Headroom(header, {
+        tolerance: {
+          down : 10,
+          up : 20
+        },
+        offset : 205,
+        classes: {
+          initial: "slide",
+          pinned: "headroom--pinned",
+          unpinned: "headroom--unpinned"
+        }
+    }).init();
+
+}());
+</script>
+#}
+
+<script type="text/javascript">
+   $(document).ready(function() {
+       $(".navigation-toggle-checkbox").on("click", function() {
+           if ($(this)[0].checked) {
+                $('#main-navigation').addClass('navigation-visible');
+           }
+           else {
+                $('#main-navigation').removeClass('navigation-visible');
+           }
+       });
+
+      $("#language-menu").mmenu({
+         // dropdown: true
+        offCanvas: {
+            "zposition": "front",
+            "position": "right",
+            //"blockUI": false
+        },
+        "navbar": {
+            "title": "Select language"
+        },
+        searchfield: true,
+        extensions: ["pagedim-black"]
+      });
+   });
+</script>
+
+</body>
+</html>

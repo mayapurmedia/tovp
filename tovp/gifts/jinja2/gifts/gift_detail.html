@@ -1,0 +1,43 @@
+{% extends 'database/content-area.html' %}
+{% set page_title = object.name %}
+{% set body_class = "person-detail" %}
+
+{% macro print_field(label, value) -%}
+    <div class="field-label">{{ label }}</div>
+    <div class="field-value">{{ value or 'N/A' }}</div>
+{%- endmacro %}
+
+{% block page_content %}
+<div class="row">
+    <div class="{% if request.user.has_perm('gifts.change_gift') %} col-xs-9 col-ms-10 col-sm-11{% else %}col-xs-12{% endif %}">
+        <h1>{{ object.name }}</h1>
+    </div>
+    {% if request.user.has_perm('gifts.change_gift') %}
+        <div class="col-xs-3 col-ms-2 col-sm-1">
+            <a href="{{ url('gifts:gift:update', object.pk) }}" class="btn btn-lg btn-warning">Edit</a>
+        </div>
+    {% endif %}
+
+    {% set field_label = 'Description' %}
+    {% set field_name = 'description' %}
+    {% if object[field_name] %}
+    <div class="col-xs-12">
+        {{ print_field(field_label, object[field_name])}}
+    </div>
+    {% endif %}
+
+    {% set field_label = 'Yatra' %}
+    {% set field_name = 'yatra' %}
+    {% if object[field_name] %}
+    <div class="col-xs-12">
+        <div class="field-label">{{ field_label }}</div>
+        <div class="field-value">
+            {{ object.get_yatra_display() }}
+        </div>
+    </div>
+    {% endif %}
+
+    {% include '_nextprev.html' %}
+</div>
+{% endblock %}
+

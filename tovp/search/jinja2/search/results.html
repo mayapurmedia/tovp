@@ -1,0 +1,143 @@
+{% import 'database/_macros.html' as macros %}
+{% extends 'database/content-area.html' %}
+
+{% set content_title = '' %}
+{% set body_class = "rides" %}
+{% set center_bottom_banner = True %}
+
+{% block og_type %}article{% endblock %}
+
+{% block main_content_class %}{% if main_content_class %} {{ main_content_class }}{% endif %}{% endblock %}
+
+{% block javascript_head %}
+    {{ super() }}
+    {% include 'database/_import-selectize.html' %}
+{% endblock %}
+
+{% block page_content %}
+<div class="row">
+    <div class="search-filters col-xs-12 col-sm-3">
+        <div class="row">
+            {% if show_selected_filters or search_form_used %}
+            <div class="col-xs-12">
+                {% if show_selected_filters %}
+                <h3>You have selected</h3>
+                {% endif %}
+                <ul class="selected-filters">
+                    {% for field in faceted_by_primary %}
+                    {% if faceted_by_primary[field] %}
+                    <li><a class="remove-filter" href="{{ request.get_full_path()|update_url_query({field:None,'page':None}) }}"><span class="icon fa fa-times"></span> {{ facets_titles[field] }} :: {{ faceted_by_primary[field] }}</a></li>
+                    {% endif %}
+                    {% endfor %}
+                    {% for field in faceted_by_secondary %}
+                    {% if faceted_by_secondary[field] %}
+                    <li><a class="remove-filter" href="{{ request.get_full_path()|update_url_query({field:None,'page':None}) }}"><span class="icon fa fa-times"></span> {{ facets_titles[field] }} :: {{ faceted_by_secondary[field] }}</a></li>
+                    {% endif %}
+                    {% endfor %}
+                    {% if (show_selected_filters > 1) or search_form_used %}
+                    <li class="clear-all-filters"><a href="{{ url('search:index') }}"><span class="icon fa fa-times"></span> Clear all filters</a></li>
+                    {% endif %} 
+                </ul>
+            </div>
+            {% endif %}{# --------------------END search-filters #}
+            {% if facets.fields %}
+            {% if show_secondary_filters %}
+
+            {% for topic in narrow_facets %}
+            {% if narrow_facets[topic].has_results %}
+
+            {% for field in narrow_facets[topic].fields %}
+            {% set values=facets['fields'][field] %}
+            {% if values %}
+
+            <div class="col-xs-6 col-ms-4 col-sm-12">
+                <h3><a class="accordion-toggle  {{ '' if field in ['content_type', 'receipt_type'] else 'collapsed' }}" data-toggle="collapse" href="#collapse-{{ field }}" aria-expanded="false" aria-controls="collapse-{{ field }}">{{ facets_titles[field] }} <i class="fa fa-caret-down facet-collapse-icon"></i></a></h3>
+                <div class="collapse {{ 'in' if field in ['content_type', 'receipt_type'] else '' }}" id="collapse-{{ field }}">
+                    <ul class="refine-filters">
+                        {% for item in values %}
+                        <li><a class="refine-filter" href="{{ request.get_full_path()|update_url_query({field: item.0, 'page': None}) }}">{{ item.0 }} ({{ item.1 }})</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+
+
+            {% endif %}
+            {% endfor %}
+
+            {% endif %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="search-results-area col-xs-12 col-sm-9">
+        <div class="row">
+            {% if show_form %}
+            <div class="col-xs-12 search-form">
+                {% include "search/results.form.html" %}
+            </div>
+            {% endif %}
+            <div class="search-info-bar col-xs-12 col-sm-12">
+                {% if total_results_count == page.paginator.count %}
+                <span class="results-count">Showing {{ page.paginator.count|format_with_commas }} results.</span>
+                {% else %}
+                <span class="results-count">Showing {{ page.paginator.count|format_with_commas }} matching results out of {{ total_results_count |format_with_commas }}.</span>
+                {% endif %}
+            </div>
+            {% for result in results %}
+            <div class="col-xs-12">
+                {% if result.content_type == 'Contact' %}
+                    {% include "search/partials/model_contact.html" %}
+                {% elif result.content_type == 'Pledge' %}
+                    {% include "search/partials/model_pledge.html" %}
+                {% elif result.content_type == 'Contribution' %}
+                    {% include "search/partials/model_contribution.html" %}
+                {% elif result.content_type == 'Promotion' %}
+                    {% include "search/partials/model_promotion.html" %}
+                {% elif result.content_type == 'Bulk Payment' %}
+                    {% include "search/partials/model_bulk_payment.html" %}
+                {% elif result.content_type == 'Follow Up' %}
+                    {% include "search/partials/model_followup.html" %}
+                {% elif result.content_type == 'Gift' %}
+                    {% include "search/partials/model_gift.html" %}
+                {% else %}
+                    <div class="person-result">
+                        <div>XXX {{ result.content_type }}: <a class="object-link" href="{{ result.absolute_url }}">{{ result.full_name }}{% if result.initiated_name %} - {{ result.initiated_name }}{% endif %}</a></div>
+                        {% if result.initiated_name %}
+                        <div><a class="object-link" href="{{ result.absolute_url }}"></a></div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+            {% else %}
+            <p>No results found.</p>
+            {% endfor %}
+
+            {% if is_paginated %}
+            {{ macros.mini_paginator(request, paginator, page) }}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% include '_status_changer.html' %}
+
+<script>
+    $('#id_collector').selectize({
+        load: function(query, callback) {
+            if (!query.length) return callback();
+            $.ajax({
+                url: '{{ url('contacts:person:ajax') }}',
+                type: 'GET',
+                data: {q: query},
+                error: function() { callback(); },
+                success: function(res) {
+                    callback(res.content);
+                }
+            });
+        }
+    });
+</script>
+
+{% endblock %}

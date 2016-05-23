@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
-from django.db.models.loading import get_model
+from django.apps import apps
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext
 from django.contrib.auth.decorators import login_required
@@ -19,9 +19,9 @@ def add_url_for_obj(obj):
 
 @login_required
 def add_attachment(request, app_label, model_name, pk,
-                   template_name='attachments/add.jinja', extra_context={}):
+                   template_name='attachments/add.html', extra_context={}):
 
-    model = get_model(app_label, model_name)
+    model = apps.get_model(app_label, model_name)
     if model is None:
         return HttpResponseRedirect(next)
     obj = get_object_or_404(model, pk=pk)

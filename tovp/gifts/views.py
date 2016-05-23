@@ -17,18 +17,18 @@ from .forms import GiftForm, GiftGivenForm
 
 class GiftListView(LoginRequiredMixin, ListView):
     model = Gift
-    template_name = 'gifts/gift_list.jinja'
+    template_name = 'gifts/gift_list.html'
 
 
 class GiftDetailView(LoginRequiredMixin, DetailView):
     model = Gift
-    template_name = 'gifts/gift_detail.jinja'
+    template_name = 'gifts/gift_detail.html'
 
 
 class GiftCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Gift
     permission_required = "gifts.add_gift"
-    template_name = 'gifts/gift_form.jinja'
+    template_name = 'gifts/gift_form.html'
     form_class = GiftForm
 
     def get_context_data(self, **kwargs):
@@ -41,7 +41,7 @@ class GiftUpdateView(RevisionCommentMixin, LoginRequiredMixin,
                      PermissionRequiredMixin, UpdateView):
     model = Gift
     permission_required = "gifts.change_gift"
-    template_name = 'gifts/gift_form.jinja'
+    template_name = 'gifts/gift_form.html'
     form_class = GiftForm
 
     def get_context_data(self, **kwargs):
@@ -52,14 +52,14 @@ class GiftUpdateView(RevisionCommentMixin, LoginRequiredMixin,
 
 class GiftGivenDetailView(LoginRequiredMixin, DetailView):
     model = GiftGiven
-    template_name = 'gifts/gift_given_detail.jinja'
+    template_name = 'gifts/gift_given_detail.html'
 
 
 class GiftGivenCreateView(LoginRequiredMixin, PermissionRequiredMixin,
                           CreateView):
     model = GiftGiven
     permission_required = "gifts.add_giftgiven"
-    template_name = 'gifts/gift_given_form.jinja'
+    template_name = 'gifts/gift_given_form.html'
     form_class = GiftGivenForm
 
     def get_initial(self):
@@ -80,7 +80,7 @@ class GiftGivenUpdateView(RevisionCommentMixin, LoginRequiredMixin,
                           PermissionRequiredMixin, UpdateView):
     model = GiftGiven
     permission_required = "gifts.change_giftgiven"
-    template_name = 'gifts/gift_given_form.jinja'
+    template_name = 'gifts/gift_given_form.html'
     form_class = GiftGivenForm
 
     def get_context_data(self, **kwargs):
@@ -93,7 +93,7 @@ class GiftGivenUpdateView(RevisionCommentMixin, LoginRequiredMixin,
 
 class GiftGivenDeleteView(PermissionRequiredMixin, DeleteView):
     permission_required = "gifts.delete_giftgiven"
-    template_name = 'promotions/confirm_delete.jinja'
+    template_name = 'promotions/confirm_delete.html'
     model = GiftGiven
 
     def get_success_url(self):

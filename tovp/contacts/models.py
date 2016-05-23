@@ -6,7 +6,8 @@ from django.db import models
 from django.db.models import permalink
 from django.utils.translation import ugettext_lazy as _, pgettext_lazy as __
 from django.core import exceptions
-from django.db.models.loading import get_model
+from django.apps import apps
+
 from django.core.validators import RegexValidator
 
 from django_countries.fields import CountryField
@@ -459,7 +460,7 @@ class Person(AuthStampedModel, NextPrevMixin, TimeStampedModel):
             today = datetime.datetime.now()
             current_financial_year = get_financial_year(today)
 
-            Pledge = get_model(app_label='contributions', model_name='Pledge')
+            Pledge = apps.get_model(app_label='contributions', model_name='Pledge')
             for pledge in Pledge.objects.all().filter(person=self):
                 ballance[pledge.currency]['pledged'] += pledge.amount
                 ballance[pledge.currency]['paid'] += pledge.amount_paid or 0

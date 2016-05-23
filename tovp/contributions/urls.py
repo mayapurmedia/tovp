@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 
 from . import views
 
 
-follow_up = patterns(
-    '',
+follow_up = [
     url(
         regex=r'^(?P<pledge_id>\d+)/(?P<pk>\d+)/$',
         view=views.FollowUpDetailView.as_view(),
@@ -26,10 +25,9 @@ follow_up = patterns(
         view=views.FollowUpDeleteView.as_view(),
         name="delete",
     ),
-)
+]
 
-pledges = patterns(
-    '',
+pledges = [
     url(
         regex=r'^$',
         view=views.PledgeListView.as_view(),
@@ -60,10 +58,9 @@ pledges = patterns(
         view=views.PledgeAssignToFollow.as_view(),
         name="assign_to_follow",
     ),
-)
+]
 
-contributions = patterns(
-    '',
+contributions = [
     url(
         regex=r'^$',
         view=views.ContributionListView.as_view(),
@@ -130,10 +127,9 @@ contributions = patterns(
         view=views.ContributionDepositStatusChangeView.as_view(),
         name="deposit_status_changer",
     ),
-)
+]
 
-bulk_payments = patterns(
-    '',
+bulk_payments = [
     url(
         regex=r'^(?P<person_id>\d+)/(?P<pk>\d+)/$',
         view=views.BulkPaymentDetailView.as_view(),
@@ -162,7 +158,7 @@ bulk_payments = patterns(
     url(
         regex=r'^print/(?P<pk>\d+)/acknowledgement/(?P<signature>0|1)/$',
         view=views.BulkPaymentReceiptDetailView.as_view(
-            template_name='contributions/print_acknowledgement.jinja',
+            template_name='contributions/print_acknowledgement.html',
         ),
         name='print_acknowledgement',
     ),
@@ -176,13 +172,12 @@ bulk_payments = patterns(
         view=views.bulk_payment_ajax_search,
         name='ajax'
     ),
-)
+]
 
 
-urlpatterns = patterns(
-    '',
-    (r'^pledge/', include(pledges, namespace="pledge")),
-    (r'^follow-up/', include(follow_up, namespace="follow_up")),
-    (r'^contribution/', include(contributions, namespace="contribution")),
-    (r'^bulk_payment/', include(bulk_payments, namespace="bulk_payment")),
-)
+urlpatterns = [
+    url(r'^pledge/', include(pledges, namespace="pledge")),
+    url(r'^follow-up/', include(follow_up, namespace="follow_up")),
+    url(r'^contribution/', include(contributions, namespace="contribution")),
+    url(r'^bulk_payment/', include(bulk_payments, namespace="bulk_payment")),
+]

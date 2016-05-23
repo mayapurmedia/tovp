@@ -1,7 +1,0 @@
-{% import '_macros.jinja' as macros %}
-<div class="person-result">
-    <a class="object-link" href="{{ result.absolute_url }}"><strong>{{ result.content_type }}</strong>: {{ result.full_name }}{% if result.initiated_name %} - {{ result.initiated_name }}{% endif %}</a>
-    {% if result.country %}
-    / {{ result.country }}
-    {% endif %}
-</div>

@@ -1,0 +1,16 @@
+{% import '_macros.html' as macros %}
+{% extends 'database/content-area.html' %}
+{% set page_title = object.display_name + "'s profile" %}
+{% set meta_description = object.about|makeplain %}
+{% set body_class = "authors" %}
+
+{% block page_content %}
+<h1>{{ object.display_name }}</h1>
+    {% if request.user == object %}
+        <a class="title-link" href="{{ url('users:update') }}">(edit)</a>
+    {% endif %}
+
+    {% if object.about %}
+            {{ object.about }}
+    {% endif %}
+{% endblock %}

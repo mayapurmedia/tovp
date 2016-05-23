@@ -1,12 +1,14 @@
 from jinja2 import Markup
 
-from django_jinja import library
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.template.loader import render_to_string
+from django import template
+
+register = template.Library()
 
 
-@library.global_function
-def paginate_list(request, object_list, items_per_page=8):
+@register.simple_tag(takes_context=True)
+def paginate_list(context, request, object_list, items_per_page=8):
     '''
     Returns paginated list
     '''
@@ -26,10 +28,10 @@ def paginate_list(request, object_list, items_per_page=8):
     return items
 
 
-@library.global_function
-def pager(request, paginated_objects, css_classes='text-align-center'):
+@register.simple_tag(takes_context=True)
+def pager(context, request, paginated_objects, css_classes='text-align-center'):
     '''
     Renders pagination pager
     '''
 
-    return Markup(render_to_string('jinja_paginator/pager.jinja', {"request": request, "pager": paginated_objects, "css_classes": css_classes}))
+    return Markup(render_to_string('jinja_paginator/pager.html', {"request": request, "pager": paginated_objects, "css_classes": css_classes}))

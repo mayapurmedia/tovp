@@ -1,0 +1,214 @@
+{% extends 'database/content-area.html' %}
+{% set body_class = "profiles edit-profile" %}
+
+{% block javascript_head %}
+    {{ super() }}
+    {% include 'database/_import-selectize.html' %}
+{% endblock %}
+
+{% block page_content %}
+    {# <script src="{{ static('js/jquery.formset.js') }}"></script> #}
+
+    <form action="" enctype="multipart/form-data" method="post">{{ csrf_input }}
+        {{ form.media }}
+        {% if form.non_field_errors() %}
+            <p class="tooltip error">
+                {{ form.non_field_errors() }}
+            </p>
+        {% endif %}
+
+        <div class="row">
+            {% set field_name = 'old_database_id' %}
+            <div class="col-xs-12 form-group{{' has-error' if form[field_name].errors }}">
+                {{ form[field_name].errors|safe }}
+                {{form[field_name]|add_css('form-control')}}
+            </div>
+        </div>
+
+        <div class="row">
+            {% set field_name = 'title' %}
+            <div class="col-ms-6 col-sm-4 form-group{{' has-error' if form[field_name].errors }}">
+                <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
+                {{ form[field_name].errors|safe }}
+                {{form[field_name]|add_css('form-control')}}
+                {% if form[field_name].help_text %}
+                    <div class="help-text">
+                        {{ form[field_name].help_text }}
+                    </div>
+                {% endif %}
+            </div>
+            {% set field_name = 'initiated_name' %}
+            <div class="col-xs-12 col-sm-8 form-group{{' has-error' if form[field_name].errors }}">
+                <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
+                {{form[field_name]|add_css('form-control')}}
+                {% if form[field_name].help_text %}
+                {{ form[field_name].errors|safe }}
+                    <div class="help-text">
+                        {{ form[field_name].help_text }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            {% for field_name in ['first_name', 'middle_name', 'last_name'] %}
+            <div class="col-sm-4 form-group{{' has-error' if form[field_name].errors }}">
+                <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
+                {{form[field_name]|add_css('form-control')}}
+                {% if form[field_name].help_text %}
+                {{ form[field_name].errors|safe }}
+                    <div class="help-text">
+                        {{ form[field_name].help_text }}
+                    </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        <div class="row">
+        </div>
+        <div class="row">
+            {% set field_name = 'email' %}
+            <div class="col-xs-12 col-ms-6 col-sm-6 form-group{{' has-error' if form[field_name].errors }}">
+                <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
+                {{ form[field_name].errors|safe }}
+                {{form[field_name]|add_css('form-control')}}
+                {% if form[field_name].help_text %}
+                    <div class="help-text">
+                        {{ form[field_name].help_text }}
+                    </div>
+                {% endif %}
+            </div>
+            {% set field_name = 'phone_number' %}
+            <div class="col-xs-12 col-ms-6 col-sm-6 form-group{{' has-error' if form[field_name].errors }}">
+                <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
+                {{ form[field_name].errors|safe }}
+                {{form[field_name]|add_css('form-control')}}
+                {% if form[field_name].help_text %}
+                    <div class="help-text">
+                        {{ form[field_name].help_text }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <h3>Address</h3>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-8">
+                <div class="row">
+                    {% for field_name in ['address'] %}
+                        <div class="col-sm-12 form-group{{' has-error' if form[field_name].errors }}">
+                            <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
+                            {{form[field_name]|add_css('form-control')}}
+                            {{ form[field_name].errors|safe }}
+                            {% if form[field_name].help_text %}
+                                <div class="help-text">
+                                    {{ form[field_name].help_text }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    {% for field_name in ['city', 'postcode'] %}
+                        <div class="col-sm-6 form-group{{' has-error' if form[field_name].errors }}">
+                            <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
+                            {{form[field_name]|add_css('form-control')}}
+                            {{ form[field_name].errors|safe }}
+                            {% if form[field_name].help_text %}
+                                <div class="help-text">
+                                    {{ form[field_name].help_text }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    {% set field_name = 'country' %}
+                    <div class="col-xs-12 col-ms-6 col-sm-6 form-group{{' has-error' if form[field_name].errors }}">
+                        <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
+                        {{ form[field_name]|add_css('is-selectize') }}
+                        {{ form[field_name].errors|safe }}
+                        {% if form[field_name].help_text %}
+                            <div class="help-text">
+                                {{ form[field_name].help_text }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    {% set field_name = 'state' %}
+                    <div class="col-xs-12 col-ms-6 col-sm-6 form-group{{' has-error' if form[field_name].errors }}">
+                        <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
+                        {{form[field_name]|add_css('form-control')}}
+                        {{ form[field_name].errors|safe }}
+                        {% if form[field_name].help_text %}
+                            <div class="help-text">
+                                {{ form[field_name].help_text }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                {% set field_name = 'temple' %}
+                <div class="col-xs-12 col-ms-12 col-sm-12 form-group{{' has-error' if form[field_name].errors }}">
+                    <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
+                    {{form[field_name]|add_css('form-control')}}
+                    {{ form[field_name].errors|safe }}
+                    {% if form[field_name].help_text %}
+                    <div class="help-text">
+                        {{ form[field_name].help_text }}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                {% set field_name = 'yatra' %}
+                <div class="col-xs-12 col-ms-12 col-sm-12 form-group{{' has-error' if form[field_name].errors }}">
+                    <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
+                    {{form[field_name]|add_css('form-control')}}
+                    {{ form[field_name].errors|safe }}
+                    {% if form[field_name].help_text %}
+                    <div class="help-text">
+                        {{ form[field_name].help_text }}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            {% set field_name = 'pan_card_number' %}
+            <div class="col-xs-12 col-sm-8 form-group{{' has-error' if form[field_name].errors }}">
+                <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
+                {{form[field_name]|add_css('form-control')}}
+                {{ form[field_name].errors|safe }}
+                {% if form[field_name].help_text %}
+                    <div class="help-text">
+                        {{ form[field_name].help_text }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            {% set field_name = 'note' %}
+            <div class="col-xs-12 form-group{{' has-error' if form[field_name].errors }}">
+                <label class="control-label" for="inputSuccess1">{{ form[field_name].label }}</label>
+                {{form[field_name]|add_css('form-control')}}
+                {{ form[field_name].errors|safe }}
+                {% if form[field_name].help_text %}
+                    <div class="help-text">
+                        {{ form[field_name].help_text }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <input class="btn btn-lg btn-success" type="submit" value="Save" /> 
+    </form>
+
+<script>
+    // Disables 'enter' key to submit form
+    function checkEnter(e){
+        e = e || event;
+        var txtArea = /textarea/i.test((e.target || e.srcElement).tagName);
+        return txtArea || (e.keyCode || e.which || e.charCode || 0) !== 13;
+    }
+    document.querySelector('form').onkeypress = checkEnter;
+</script>
+<script>
+    $('.is-selectize').selectize()
+</script>
+{% endblock %}
+
