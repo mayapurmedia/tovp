@@ -1,5 +1,5 @@
 # Bleeding edge Django
-django<1.9
+django<1.10
 
 # Configuration
 # django-configurations
@@ -51,7 +51,8 @@ diff-match-patch
 
 # Search
 elasticsearch==1.6.0
-django-haystack
+# django-haystack
+-e git://github.com/django-haystack/django-haystack.git#egg=django-haystack
 
 # Django-hijack allows superusers to hijack (=login as) and work on behalf of 
 # other users without knowing their credentials.

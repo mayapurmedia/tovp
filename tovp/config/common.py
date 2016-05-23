@@ -59,6 +59,7 @@ class Common(Configuration):
         'reversion',
         'reversion_compare',
         'haystack',
+        'compat',
         'hijack',
         # 'django_extensions',
     )
@@ -332,6 +333,7 @@ class Common(Configuration):
 
     HIJACK_DISPLAY_ADMIN_BUTTON = False
     HIJACK_LOGIN_REDIRECT_URL = "/"
+    HIJACK_LOGOUT_REDIRECT_URL = '/admin/auth/user/'
 
     AJAX_LOOKUP_CHANNELS = {
         'person': ('contacts.lookups', 'PersonLookup'),
