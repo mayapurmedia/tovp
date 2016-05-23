@@ -4,7 +4,7 @@
 
 html {
     background: @background-color-3;
-    background-image: url(img/tovp-bg.jpg);
+    background-image: url(../img/tovp-bg.jpg);
     height: 100%;
 }
 
@@ -15,7 +15,7 @@ a {
     }
 }
 .main-content {
-    padding-top: 145px;
+    padding-top: 5em;
 }
 // Img
 img { max-width: 100%; }
@@ -190,14 +190,32 @@ p {
 .content-box {
     background: #f8f8f8;
     .rounded(3px);
-    font-size: 5em;
-    line-height: 5em;
+    //font-size: 5em;
+    //line-height: 5em;
     // .opacity(.8);
 }
 .donor-list {
-padding: 1em;
+  padding: 1em 0;
+  background-color: rgba(255,255,255, 1);
+
 }
 
+.donor-item {
+  margin: 0 0 1em;
+  padding-right: 15px;
+  .inner {
+    .left;
+    //margin: 0 15px 0 0;
+    //background-color: rgba(255,255,255, .9);
+    min-height:3em;
+  }
+}
+.promotion-icon {
+  width: 3em;
+  .left;
+  margin-right: 1em;
+}
 
 @import "_typography";
+
 

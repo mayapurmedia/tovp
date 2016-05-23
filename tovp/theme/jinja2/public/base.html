@@ -8,21 +8,19 @@
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
   <meta name="theme-color" content="#F7C723">
-  <link rel="shortcut icon" href="img/favicon.png">
-  <link rel="apple-touch-icon" sizes="57x57" href="img/apple-touch-icon.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png">
+    {% include 'shared/_icons.html' %}
 
-  <link rel="stylesheet" href="js/vendor/mmenu/jquery.mmenu.all.css">
+  <link rel="stylesheet" href="{{ static("public/js/vendor/mmenu/jquery.mmenu.all.css") }}">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="{{ static("public/css/style.css") }}">
 
-  <script src="js/vendor/jquery-3.0.0-beta1.min.js"></script>
-  <script src="js/vendor/webfontloader-1.6.24.js"></script>
-  <script src="js/vendor/headroom-0.8.0.min.js"></script>
-  <script src="js/vendor/mmenu/jquery.mmenu.all.min.js"></script>
-  <script src="js/default.js"></script>
+  <script src="{{ static('public/js/vendor/jquery-3.0.0-beta1.min.js') }}"></script>
+  <script src="{{ static('public/js/vendor/webfontloader-1.6.24.js') }}"></script>
+  {# <script src="{{ static('public/js/vendor/headroom-0.8.0.min.js') }}"></script>
+    #}
+  <script src="{{ static('public/js/vendor/mmenu/jquery.mmenu.all.min.js') }}"></script>
+  <script src="{{ static('public/js/default.js') }}"></script>
   <script>
         WebFont.load({
             google: {
@@ -34,7 +32,7 @@
 <body>
 
 <!-- === Google Analytics === -->
-<div id="header" class="headroom header--fixed">
+<div id="header" class="xheadroom xheader--fixed">
     <div class="header">
         <div class="container clear">
             <a class="logo" href="#">Temple of the Vedic Planetarium</a>
@@ -48,55 +46,27 @@
             <div id="main-navigation" class="navigation">
                 <ul class="navigation-menu">
                     <!-- <li class="navigation-item"><a href="#reviews">&lt; Back to Main Site</a></li> -->
-                    <li class="navigation-item"><a href="#about">Home</a></li>
-                    <li class="navigation-item"><a href="#ingredients">Donate</a></li>
-                    <li class="navigation-item"><a href="#menu">Donor List</a></li>
-                    <li class="navigation-item"><a href="#reviews">Contact</a></li>
+                    <li class="navigation-item"><a href="{{ url('donate:donate') }}">Home</a></li>
+                    <li class="navigation-item"><a href="#">Donate</a></li>
+                    <li class="navigation-item"><a href="{{ url('donor_list:index') }}">Donor List</a></li>
+                    <li class="navigation-item"><a href="#">Contact</a></li>
                 </ul>
             </div>
         </div>
     </div>
 </div>
 
+{% block page_content %}
 
-<div class="main-content container-full clear">
-    <div class="col-12 col-12-desktop">
-        <h3>
-            Let's finish what we started<br />
-            Make donation for TOVP
-        </h3>
-        <div class="content-box donor-list clear">
-            <div class="col-6-tablet col-4-desktop">
-                Hare Krishna<br />
-            </div>
-            <div class="col-6-tablet col-4-desktop">
-                Hare Krishna<br />
-            </div>
-            <div class="col-6-tablet col-4-desktop">
-                Hare Krishna<br />
-            </div>
-            <div class="col-6-tablet col-4-desktop">
-                Hare Krishna<br />
-            </div>
-            <div class="col-6-tablet col-4-desktop">
-                Hare Krishna<br />
-            </div>
-            <div class="col-6-tablet col-4-desktop">
-                Hare Krishna<br />
-            </div>
-            <div class="col-6-tablet col-4-desktop">
-                Hare Krishna<br />
-            </div>
-        </div>
-    </div>
-</div>
+{% endblock %}
+
 
 <div class="footer">
 Project of the International Society for Krsna Consciousness<br />
 Founder-Ācārya His Divine Grace A.C. Bhaktivedanta Swami  Prabhupāda
 </div>
 
-
+{#
 <script>
 (function() {
     var header = document.querySelector(".headroom");
@@ -119,6 +89,7 @@ Founder-Ācārya His Divine Grace A.C. Bhaktivedanta Swami  Prabhupāda
 
 }());
 </script>
+#}
 
 <script type="text/javascript">
    $(document).ready(function() {

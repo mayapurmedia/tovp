@@ -1,5 +1,5 @@
 {% macro mini_paginator(request, paginator, page) -%}
-        <div class="pager pagination-centered pagination-mini col-xs-12">
+        <div class="pager pagination-centered pagination-mini col-xs-12 col-12 clear">
           <ul>
             {% if page.has_previous() %}
                 <li><a href="{{ request.get_full_path()|update_url_query({"page": page.previous_page_number()}) }}">«</a></li>
