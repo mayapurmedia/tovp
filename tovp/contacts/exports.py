@@ -39,7 +39,7 @@ class ContactExport(BaseExport):
             try:
                 promotions.append(promotion._meta.verbose_name.title())
             except:
-                promotions.appen('*Noname*')
+                promotions.append('*Noname*')
         return ",".join(promotions)
 
     def get_balance_total_usd(self):
