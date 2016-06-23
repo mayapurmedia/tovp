@@ -16,6 +16,7 @@ class RevisionCommentMixin(object):
 class SourceMixin(models.Model):
     SOURCE_CHOICES = (
         (u'tovp-f-mayapur', _('TOVP Fundraising Mayapur')),
+        (u'tovp-exhibits', _('TOVP Exhibits')),
         (u'bcs-vp-2015', _('BCS Vyasa Puja 2015')),
         (u'bhagavata-saptaha-2015', _('Bhagavata Saptaha 2015')),
         (u'bhakti-vriksa-kolkata-2016', _('Bhakti Vriksa Kolkata 2016')),
