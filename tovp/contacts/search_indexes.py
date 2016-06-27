@@ -29,6 +29,21 @@ class PersonIndex(ContentSearchIndexMixin, indexes.SearchIndex,
     gifts = indexes.MultiValueField(null=True, faceted=True)
     promotion_type = indexes.MultiValueField(null=True, faceted=True)
 
+    balance_total_usd = indexes.IntegerField()
+    balance_year_usd = indexes.IntegerField()
+    balance_financial_year_usd = indexes.IntegerField()
+
+    balance_total_usd = indexes.IntegerField()
+    balance_year_usd = indexes.IntegerField()
+    balance_financial_year_usd = indexes.IntegerField()
+
+    balance_total_inr = indexes.IntegerField()
+    balance_year_inr = indexes.IntegerField()
+    balance_financial_year_inr = indexes.IntegerField()
+
+    sources = indexes.CharField(null=True)
+    promotions = indexes.CharField(null=True)
+
     def prepare_gifts(self, obj):
         items = []
         if obj.gifts.count():
@@ -55,6 +70,49 @@ class PersonIndex(ContentSearchIndexMixin, indexes.SearchIndex,
             return obj.get_yatra_display()
         else:
             return 'None'
+
+    def prepare_sources(self, obj):
+        items = []
+        for pledge in obj.pledges.all():
+            if (pledge.get_source_display()) and (pledge.get_source_display() not in items):
+                items.append(pledge.get_source_display())
+            for contribution in pledge.contributions.all():
+                if (contribution.get_source_display()) and (contribution.get_source_display() not in items):
+                    items.append(pledge.get_source_display())
+        return ",".join(items)
+
+    def prepare_promotions(self, obj):
+        promotions = []
+        for promotion in obj.assigned_promotions():
+            try:
+                promotions.append(promotion._meta.verbose_name.title())
+            except:
+                promotions.append('*Noname*')
+        return ",".join(promotions)
+
+    def prepare_balance_total_usd(self, obj):
+        balance = obj.get_ballance()
+        return balance['USD']['paid']
+
+    def prepare_balance_total_inr(self, obj):
+        balance = obj.get_ballance()
+        return balance['INR']['paid']
+
+    def prepare_balance_year_usd(self, obj):
+        balance = obj.get_ballance()
+        return balance['USD']['donated_year']
+
+    def prepare_balance_year_inr(self, obj):
+        balance = obj.get_ballance()
+        return balance['INR']['donated_year']
+
+    def prepare_balance_financial_year_usd(self, obj):
+        balance = obj.get_ballance()
+        return balance['USD']['donated_financial_year']
+
+    def prepare_balance_financial_year_inr(self, obj):
+        balance = obj.get_ballance()
+        return balance['INR']['donated_financial_year']
 
     def get_model(self):
         return Person

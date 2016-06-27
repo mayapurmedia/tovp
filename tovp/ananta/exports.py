@@ -10,8 +10,10 @@ class BaseExport(object):
         self.results = results
         super(BaseExport, self).__init__(*args, **kwargs)
 
-    def get_value(self, value):
-        return attrgetter(value)(self.obj)
+    def get_value(self, value, obj=None):
+        if not obj:
+            obj = self.result.object
+        return attrgetter(value)(obj)
 
     def generate_header(self):
         header = []
@@ -24,6 +26,8 @@ class BaseExport(object):
         for key in self.export_data():
             value = ''
             row_info = self.export_data()[key]
+            if row_info['type'] == 'result':
+                value = self.get_value(row_info['value'], self.result)
             if row_info['type'] == 'value':
                 value = self.get_value(row_info['value'])
             if row_info['type'] == 'function':
@@ -44,6 +48,7 @@ class BaseExport(object):
         writer.writerow(self.generate_header())
 
         for result in self.results:
-            self.obj = result.object
+            print(result.pk)
+            self.result = result
             writer.writerow(self.generate_row())
         return response

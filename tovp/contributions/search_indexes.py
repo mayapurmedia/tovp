@@ -24,6 +24,10 @@ class PledgeIndex(ContentSearchIndexMixin, PersonSearchIndexMixin,
 
     next_payment_date = indexes.DateTimeField(model_attr='update_next_payment_date')
     followed_by = indexes.CharField(faceted=True)
+    progress = indexes.CharField()
+
+    def prepare_progress(self, obj):
+        return "{progress:.2f}%".format(progress=obj.progress)
 
     def prepare_source(self, obj):
         items = []
@@ -168,6 +172,24 @@ class ContributionIndex(BaseContributionIndexMixin,
     is_external = indexes.CharField(faceted=True)
     promotion_type = indexes.MultiValueField(null=True, faceted=True)
     collector = indexes.MultiValueField(null=True)
+    pan_card_number = indexes.CharField()
+    address = indexes.CharField()
+
+    def prepare_address(self, obj):
+        address = ''
+        if obj.overwrite_address:
+            address = obj.overwrite_address
+        elif obj.pledge.person.pan_card_number:
+            address = obj.pledge.person.address
+        return address
+
+    def prepare_pan_card_number(self, obj):
+        pan_card_number = ''
+        if obj.overwrite_pan_card:
+            pan_card_number = obj.overwrite_pan_card
+        elif obj.pledge.person.pan_card_number:
+            pan_card_number = obj.pledge.person.pan_card_number
+        return pan_card_number
 
     def prepare_collector(self, obj):
         items = []

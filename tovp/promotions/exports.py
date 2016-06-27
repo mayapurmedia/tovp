@@ -8,7 +8,7 @@ class PromotionExport(BaseExport):
         return str(self.obj._meta.verbose_name.title())
 
     def get_name(self):
-        obj = self.obj
+        obj = self.result.object
         name = ''
         if obj.pledge.person.name:
             name = obj.pledge.person.name
@@ -17,14 +17,14 @@ class PromotionExport(BaseExport):
         return name
 
     def get_address(self):
-        obj = self.obj
+        obj = self.result.object
         address = ''
         if obj.pledge.person.address:
             address = obj.pledge.person.address
         return address
 
     def get_progress(self):
-        obj = self.obj
+        obj = self.result.object
         return "{progress:.2f}%".format(progress=obj.pledge.progress)
 
     def export_data(self):
