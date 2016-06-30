@@ -153,7 +153,7 @@ class Pledge(TimeStampedModel, AuthStampedModel, NextPrevMixin, SourceMixin):
             amount=self.amount, currency=self.get_currency_display(),
             progress=self.progress)
 
-    def can_delete_pledge(self, user):
+    def can_user_delete(self, user):
         if user.has_perm('contributions.delete_pledge'):
             return True
         if (user.has_perm('contributions.can_delete_if_no_contributions') and

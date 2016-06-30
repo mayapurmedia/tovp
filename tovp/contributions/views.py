@@ -103,7 +103,7 @@ class PledgeDeleteView(MultiplePermissionsRequiredMixin, DeleteView):
         """
 
         # Check if pledge doesn't have any contributions
-        if not self.get_object().can_delete_pledge(request.user):
+        if not self.get_object().can_user_delete(request.user):
             return self.handle_no_permission(request)
 
         return super(PledgeDeleteView, self).dispatch(
@@ -194,23 +194,6 @@ class FollowUpDeleteView(MultiplePermissionsRequiredMixin, DeleteView):
     model = FollowUp
     permission_required = "contributions.delete_followup"
     success_message = "%(pk)s was deleted successfully"
-
-    def dispatch(self, request, *args, **kwargs):
-        """
-        Check to see if the user in the request has the required
-        permission.
-        """
-
-        # Check if pledge doesn't have any contributions
-        if not self.get_object().can_delete_pledge(request.user):
-            return self.handle_no_permission(request)
-
-        return super(PledgeDeleteView, self).dispatch(
-            request, *args, **kwargs)
-
-    def get_success_url(self):
-        item = get_object_or_404(Pledge, pk=self.kwargs['pk'])
-        return item.person.get_absolute_url()
 
 
 class ContributionListView(LoginRequiredMixin, ListView):

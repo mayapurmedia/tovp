@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # view imports
 from django.views.generic import DetailView, UpdateView, ListView
-from django.views.generic.edit import CreateView
-
+from django.views.generic.edit import CreateView, DeleteView
+from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from django_ajax.decorators import ajax
 
@@ -10,7 +10,8 @@ from django_ajax.decorators import ajax
 # from django.contrib import messages
 
 # Only authenticated users can access views using this.
-from braces.views import LoginRequiredMixin, PermissionRequiredMixin
+from braces.views import (LoginRequiredMixin, PermissionRequiredMixin,
+                          MultiplePermissionsRequiredMixin)
 from haystack.query import SearchQuerySet
 from ananta.models import RevisionCommentMixin
 
@@ -51,6 +52,32 @@ class PersonUpdateView(RevisionCommentMixin, LoginRequiredMixin,
         context = super(PersonUpdateView, self).get_context_data(**kwargs)
         context['content_title'] = _("Edit contact")
         return context
+
+
+class PersonDeleteView(MultiplePermissionsRequiredMixin, DeleteView):
+    model = Person
+    template_name = 'contacts/person_confirm_delete.html'
+    permissions = {
+        "any": ("contacts.delete_person",
+                "contacts.can_delete_if_no_contributions"),
+    }
+    success_message = "%(pk)s was deleted successfully"
+
+    def dispatch(self, request, *args, **kwargs):
+        """
+        Check to see if the user in the request has the required
+        permission.
+        """
+
+        # Check if pledge doesn't have any contributions
+        if not self.get_object().can_user_delete(request.user):
+            return self.handle_no_permission(request)
+
+        return super(PersonDeleteView, self).dispatch(
+            request, *args, **kwargs)
+
+    def get_success_url(self):
+        return reverse('search:index')
 
 
 @ajax

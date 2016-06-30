@@ -196,6 +196,9 @@
             </div>
         </div>
         <input class="btn btn-lg btn-success" type="submit" value="Save" /> 
+        {% if object and object.can_user_delete(request.user) %}
+            <a href="{{ url('contacts:person:delete', object.pk) }}" class="btn btn-large">Delete Contact</a>
+        {% endif %}
     </form>
 
 <script>

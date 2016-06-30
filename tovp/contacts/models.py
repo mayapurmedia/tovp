@@ -488,8 +488,22 @@ class Person(AuthStampedModel, NextPrevMixin, TimeStampedModel):
             self.cache_ballance = ballance
         return self.cache_ballance
 
+    def can_user_delete(self, user):
+        if user.has_perm('contacts.delete_person'):
+            return True
+        if user.has_perm('contacts.can_delete_if_no_contributions'):
+            for pledge in self.pledges.all():
+                # if person have any contribution it is not possible to delete
+                if pledge.contributions.all().count():
+                    return None
+            return True
+        return None
+
     def __str__(self):
         return self.mixed_name
 
     class Meta:
-        permissions = (("can_export", "Can export"),)
+        permissions = (
+            ("can_export", "Can export"),
+            ("can_delete_if_no_contributions", "Can delete if no contributions"),
+        )

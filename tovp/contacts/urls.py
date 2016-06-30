@@ -24,6 +24,11 @@ person = [
         name='update',
     ),
     url(
+        regex=r'^delete/(?P<pk>\d+)/$',
+        view=views.PersonDeleteView.as_view(),
+        name="delete",
+    ),
+    url(
         regex=r'^ajax/$',
         view=views.person_ajax_search,
         name='ajax'

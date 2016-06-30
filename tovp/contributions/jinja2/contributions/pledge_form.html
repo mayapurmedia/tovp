@@ -91,7 +91,7 @@
             </div>
         </div>
         <input class="btn btn-lg btn-success" type="submit" value="Save" />
-        {% if object and object.can_delete_pledge(request.user) %}
+        {% if object and object.can_user_delete(request.user) %}
             <a href="{{ url('contributions:pledge:delete', object.pk) }}" class="btn btn-large">Delete Pledge</a>
         {% endif %}
     </form>
