@@ -205,8 +205,8 @@ _TEMPLATE_CONTEXT_PROCESSORS = (
 # STATIC_ROOT = join(os.path.dirname(BASE_DIR), 'staticfiles')
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
-STATIC_URL = os.environ.get('STATIC_URL', '/static/')
-STATIC_ROOT = os.environ.get('STATIC_ROOT', '')
+STATIC_URL = os.environ.get('DJANGO_STATIC_URL', '/static/')
+STATIC_ROOT = os.environ.get('DJANGO_STATIC_ROOT', '')
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = (
@@ -222,8 +222,8 @@ STATICFILES_FINDERS = (
 
 # MEDIA CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-root
-MEDIA_ROOT = os.environ.get('MEDIA_ROOT', join(BASE_DIR, 'media'))
-MEDIA_URL = os.environ.get('MEDIA_URL', '/media/')
+MEDIA_ROOT = os.environ.get('DJANGO_MEDIA_ROOT', join(BASE_DIR, 'media'))
+MEDIA_URL = os.environ.get('DJANGO_MEDIA_URL', '/media/')
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-url
 # END MEDIA CONFIGURATION
 
