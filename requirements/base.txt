@@ -41,7 +41,7 @@ python-dateutil
 django-audit-log
 
 # Add support for reversions of models
-django-reversion
+django-reversion<2
 django-reversion-compare
 diff-match-patch
 
