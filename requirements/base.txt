@@ -1,10 +1,6 @@
 # Bleeding edge Django
 django<1.10
 
-# Configuration
-# django-configurations
--e git://github.com/jezdez/django-configurations.git#egg=django-configurations
-
 django-secure
 django-cache-url
 dj-database-url
