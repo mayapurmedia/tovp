@@ -51,7 +51,6 @@ DJANGO_APPS = (
 )
 
 THIRD_PARTY_APPS = (
-    'django_jinja',
     'jinja_paginator',
     'datetimewidget',
     'reversion',
@@ -246,10 +245,6 @@ AUTH_USER_MODEL = "users.User"
 LOGIN_REDIRECT_URL = "users:redirect"
 LOGIN_URL = "users:login"
 # # END Custom user app defaults
-
-# SLUGLIFIER
-AUTOSLUG_SLUGIFY_FUNCTION = "slugify.slugify"
-# END SLUGLIFIER
 
 TEMPLATES = [
     {

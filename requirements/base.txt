@@ -1,5 +1,5 @@
 # Bleeding edge Django
-django<1.10
+django
 
 django-secure
 django-cache-url
@@ -14,25 +14,10 @@ django-model-utils
 # For the persistance stores
 psycopg2
 
-# Unicode slugification
-unicode-slugify
-django-autoslug
-
-# Time zones support
-pytz
-
 # Jinja2
 Jinja2
-jingo
-jingo-markdown
-django-jinja
 
-# django-storages is a collection of custom storage backends for Django
-# django-storages
-
-# Your custom requirements go here
 num2words
-
 django_countries
 django-datetime-widget
 python-dateutil
@@ -41,7 +26,7 @@ python-dateutil
 django-audit-log
 
 # Add support for reversions of models
-django-reversion<2
+django-reversion
 django-reversion-compare
 diff-match-patch
 
