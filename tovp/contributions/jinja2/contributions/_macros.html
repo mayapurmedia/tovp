@@ -61,6 +61,14 @@
         </div>
         {% endif %}
     {% endif %}
+    {% if object.payment_method in ['axis'] %}
+        {% if object.cleared_on %}
+        <div class="col-xs-3 col-custom-2-5 item-name">Cleared On:</div>
+        <div class="col-xs-2 item-value">
+            {{ object.cleared_on|format_date }}
+        </div>
+        {% endif %}
+    {% endif %}
     {% if object.payment_method in ['chequel', 'chequef'] %}
         <div class="col-xs-3 col-custom-2-5 item-name">Cheque No.:</div>
         <div class="col-xs-2 item-value">
