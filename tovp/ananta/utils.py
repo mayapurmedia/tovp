@@ -2,7 +2,7 @@ from django.utils.text import get_text_list
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext as _
 
-from reversion.revisions import revision_context_manager
+from reversion import set_comment
 
 
 def revision_set_comment(form, formsets=None):
@@ -33,5 +33,5 @@ def revision_set_comment(form, formsets=None):
                     % {'name': force_text(deleted_object._meta.verbose_name),
                        'object': force_text(deleted_object)})
     change_message = ' '.join(change_message)
-    revision_context_manager.set_comment(
+    set_comment(
         change_message or _('No fields changed.'))

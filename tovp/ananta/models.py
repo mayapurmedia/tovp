@@ -1,10 +1,11 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from reversion.views import RevisionMixin
 
 from .utils import revision_set_comment
 
 
-class RevisionCommentMixin(object):
+class RevisionCommentMixin(RevisionMixin):
     def form_valid(self, form):
         revision_set_comment(form)
         return super(RevisionCommentMixin, self).form_valid(form)
