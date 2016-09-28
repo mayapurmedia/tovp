@@ -1,0 +1,222 @@
+/*custom font*/
+@import url(http://fonts.googleapis.com/css?family=Montserrat);
+
+
+/*form styles*/
+#donate-widget {
+        margin-top: 2em;
+	text-align: center;
+        min-height:28em;
+        margin-bottom: 2em;
+}
+#donate-widget fieldset {
+	background: white;
+	border: 0 none;
+	border-radius: 3px;
+	box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+	padding: 20px 30px;
+	
+	// {# box-sizing: border-box; #}
+	// {# width: 80%; #}
+	// {# margin: 0 10%; #}
+	
+	/*stacking fieldsets above each other*/
+	// {# position: absolute; #}
+}
+/*Hide all except first fieldset*/
+#donate-widget fieldset:not(:first-of-type) {
+	display: none;
+}
+/*inputs*/
+#donate-widget input, #donate-widget textarea {
+	padding: 15px;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	margin-bottom: 10px;
+	width: 100%;
+	box-sizing: border-box;
+	font-family: montserrat;
+	color: #2C3E50;
+	font-size: 13px;
+}
+#donate-widget .other input {
+    width: 90%;
+}
+/*buttons*/
+#donate-widget .action-button {
+	width: 100px;
+	background: #27AE60;
+	font-weight: bold;
+	color: white;
+	border: 0 none;
+	border-radius: 1px;
+	cursor: pointer;
+	padding: 10px 5px;
+	margin: 10px 5px;
+}
+#donate-widget .action-button:hover, #donate-widget .action-button:focus {
+	box-shadow: 0 0 0 2px white, 0 0 0 3px #27AE60;
+}
+/*headings*/
+.fs-title {
+	font-size: 15px;
+	text-transform: uppercase;
+	color: #2C3E50;
+	margin-bottom: 10px;
+}
+.fs-subtitle {
+	font-weight: normal;
+	font-size: 13px;
+	color: #666;
+	margin-bottom: 20px;
+}
+// /*progressbar*/
+// #progressbar {
+// 	margin-bottom: 30px;
+// 	overflow: hidden;
+// 	/*CSS counters to number the steps*/
+// 	counter-reset: step;
+// }
+// #progressbar li {
+// 	list-style-type: none;
+// 	color: white;
+// 	text-transform: uppercase;
+// 	font-size: 9px;
+// 	width: 33.33%;
+// 	float: left;
+// 	position: relative;
+// }
+// #progressbar li:before {
+// 	content: counter(step);
+// 	counter-increment: step;
+// 	width: 20px;
+// 	line-height: 20px;
+// 	display: block;
+// 	font-size: 10px;
+// 	color: #333;
+// 	background: white;
+// 	border-radius: 3px;
+// 	margin: 0 auto 5px auto;
+// }
+// /*progressbar connectors*/
+// #progressbar li:after {
+// 	content: '';
+// 	width: 100%;
+// 	height: 2px;
+// 	background: white;
+// 	position: absolute;
+// 	left: -50%;
+// 	top: 9px;
+// 	z-index: -1; /*put it behind the numbers*/
+// }
+// #progressbar li:first-child:after {
+// 	/*connector not needed before the first step*/
+// 	content: none; 
+// }
+// /*marking active/completed steps green*/
+// /*The number of the step and the connector before it = green*/
+// #progressbar li.active:before,  #progressbar li.active:after{
+// 	background: #27AE60;
+// 	color: white;
+// }
+
+
+fieldset.amount ul.radios {
+     padding: 0;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.btn {
+    display: inline-block;
+    margin-bottom: 0;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    color: #333;
+    background-color: #e1e3e8;
+    background-repeat: repeat-x;
+}
+.btn, .btn:active, .btn:link, .btn:visited {
+    border-radius: 20pt;
+    -webkit-transition: all .25s ease;
+    background-image: none;
+    border: 0 transparent;
+    box-shadow: none;
+    font-weight: 500;
+    padding: .5em 1.5em;
+    text-shadow: none;
+    transition: color .2s,background-color .2s;
+}
+ul.radios label.btn {
+    box-sizing: border-box;
+    line-height: 2em;
+    padding: 4px 12px;
+    text-align: left;
+    width: 100%;
+    border-radius: 3px;
+    border: 1px solid #C9CDD4;
+    color: #666;
+}
+ul.radios.single-candidate li label.btn {
+    padding-right: 0;
+    padding-left: 0;
+    text-align: center;
+    white-space: nowrap;
+    font-size: 1.5em;
+}
+#cf_container input:focus:not(.no-stretch), #cf_container input:not(.no-stretch) {
+    box-shadow: none;
+    outline: 0;
+    border: 1px solid #ACAEB0;
+    border-radius: 3px;
+    background-color: transparent;
+    background-color: rgba(255,255,255,.8);
+    height: 3em;
+    padding-left: 1rem;
+}
+
+
+#cf_container input[type=radio], #cf_container input[type=checkbox] {
+    width: auto;
+}
+ul.radios.single-candidate li input[type=radio] {
+    display: none;
+}
+ul.radios input[type=radio], ul.radios input[type=checkbox] {
+    margin: -2px 2px 0 0;
+    font-size: 1.5em;
+}
+.clearfix input, .clearfix select, .clearfix textarea {
+    margin-bottom: 0;
+}
+.form-horizontal .help-inline, .form-horizontal .input-append, .form-horizontal .input-prepend, .form-horizontal .uneditable-input, .form-horizontal input, .form-horizontal select, .form-horizontal textarea, .form-inline .help-inline, .form-inline .input-append, .form-inline .input-prepend, .form-inline .uneditable-input, .form-inline input, .form-inline select, .form-inline textarea, .form-search .help-inline, .form-search .input-append, .form-search .input-prepend, .form-search .uneditable-input, .form-search input, .form-search select, .form-search textarea {
+    display: inline-block;
+    margin-bottom: 0;
+    vertical-align: middle;
+}
+input[type=button], input[type=file], input[type=image], input[type=reset], input[type=submit], input[type=radio], input[type=checkbox] {
+    width: auto;
+}
+input[type=radio], input[type=checkbox] {
+    margin: 4px 0 0;
+    line-height: normal;
+}
+button, input[type=button], input[type=reset], input[type=submit], input[type=radio], input[type=checkbox], label, select {
+    cursor: pointer;
+}
+
+ul.radios label.btn.selected, ul.radios label.btn.selected:hover,
+ul.radios label:hover {
+    background-color: #009CDE;
+    border-color: #BFE6FB;
+    color: #FFF;
+}
+
+ul.radios {
+    list-style: none;
+}
+

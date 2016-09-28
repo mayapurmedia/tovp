@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,19 +9,21 @@
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
   <meta name="theme-color" content="#F7C723">
-    {% include 'shared/_icons.html' %}
+  <link rel="shortcut icon" href="{% static 'shared/img/favicon.png' %}">
+  <link rel="apple-touch-icon" sizes="57x57" href="{% static 'shared/img/apple-touch-icon.png' %}">
+  <link rel="apple-touch-icon" sizes="72x72" href="{% static 'shared/img/apple-touch-icon-72x72.png' %}">
+  <link rel="apple-touch-icon" sizes="114x114" href="{% static 'shared/img/apple-touch-icon-114x114.png' %}">
 
-  <link rel="stylesheet" href="{{ static("public/js/vendor/mmenu/jquery.mmenu.all.css") }}">
+  <link rel="stylesheet" href="{% static "public/js/vendor/mmenu/jquery.mmenu.all.css" %}">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
-  <link rel="stylesheet" href="{{ static("public/css/style.css") }}">
+  <link rel="stylesheet" href="{% static "public/css/style.css" %}">
 
-  <script src="{{ static('public/js/vendor/jquery-3.0.0-beta1.min.js') }}"></script>
-  <script src="{{ static('public/js/vendor/webfontloader-1.6.24.js') }}"></script>
-  {# <script src="{{ static('public/js/vendor/headroom-0.8.0.min.js') }}"></script>
-    #}
-  <script src="{{ static('public/js/vendor/mmenu/jquery.mmenu.all.min.js') }}"></script>
-  <script src="{{ static('public/js/default.js') }}"></script>
+  <script src="{% static 'public/js/vendor/jquery-3.0.0-beta1.min.js' %}"></script>
+  <script src="{% static 'public/js/vendor/webfontloader-1.6.24.js' %}"></script>
+  {# <script src="{% static 'public/js/vendor/headroom-0.8.0.min.js' %}"></script> #}
+  <script src="{% static 'public/js/vendor/mmenu/jquery.mmenu.all.min.js' %}"></script>
+  <script src="{% static 'public/js/default.js' %}"></script>
   <script>
         WebFont.load({
             google: {
@@ -46,50 +49,46 @@
             <div id="main-navigation" class="navigation">
                 <ul class="navigation-menu">
                     <!-- <li class="navigation-item"><a href="#reviews">&lt; Back to Main Site</a></li> -->
-                    <li class="navigation-item"><a href="{{ url('donate:donate') }}">Home</a></li>
+                    <li class="navigation-item"><a href="{% url 'donate:donate' %}">Home</a></li>
                     <li class="navigation-item"><a href="#">Donate</a></li>
-                    <li class="navigation-item"><a href="{{ url('donor_list:index') }}">Donor List</a></li>
+                    <li class="navigation-item"><a href="{% url 'donor_list:index' %}">Donor List</a></li>
                     <li class="navigation-item"><a href="#">Contact</a></li>
                 </ul>
             </div>
         </div>
     </div>
 </div>
-
 {% block page_content %}
 
 {% endblock %}
 
-
-<div class="footer">
+<div class="clear col-12 footer">
 Project of the International Society for Krsna Consciousness<br />
 Founder-Ācārya His Divine Grace A.C. Bhaktivedanta Swami  Prabhupāda
 </div>
 
-{#
-<script>
-(function() {
-    var header = document.querySelector(".headroom");
-    if(window.location.hash) {
-      header.classList.add("headroom--unpinned");
-    }
+{# <script> #}
+{# (function() { #}
+{#     var header = document.querySelector(".headroom"); #}
+{#     if(window.location.hash) { #}
+{#       header.classList.add("headroom--unpinned"); #}
+{#     } #}
 
-    new Headroom(header, {
-        tolerance: {
-          down : 10,
-          up : 20
-        },
-        offset : 205,
-        classes: {
-          initial: "slide",
-          pinned: "headroom--pinned",
-          unpinned: "headroom--unpinned"
-        }
-    }).init();
+{#     new Headroom(header, { #}
+{#         tolerance: { #}
+{#           down : 10, #}
+{#           up : 20 #}
+{#         }, #}
+{#         offset : 205, #}
+{#         classes: { #}
+{#           initial: "slide", #}
+{#           pinned: "headroom--pinned", #}
+{#           unpinned: "headroom--unpinned" #}
+{#         } #}
+{#     }).init(); #}
 
-}());
-</script>
-#}
+{# }()); #}
+{# </script> #}
 
 <script type="text/javascript">
    $(document).ready(function() {
