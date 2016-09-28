@@ -1,129 +1,6 @@
 {% extends 'public/base.html' %}
 
 {% block page_content %}
-<style>
-/*custom font*/
-@import url(http://fonts.googleapis.com/css?family=Montserrat);
-
-
-/*form styles*/
-#msform {
-        margin-top: 2em;
-	text-align: center;
-        min-height:28em;
-}
-#msform fieldset {
-	background: white;
-	border: 0 none;
-	border-radius: 3px;
-	box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
-	padding: 20px 30px;
-	
-	{# box-sizing: border-box; #}
-	{# width: 80%; #}
-	{# margin: 0 10%; #}
-	
-	/*stacking fieldsets above each other*/
-	{# position: absolute; #}
-}
-/*Hide all except first fieldset*/
-#msform fieldset:not(:first-of-type) {
-	display: none;
-}
-/*inputs*/
-#msform input, #msform textarea {
-	padding: 15px;
-	border: 1px solid #ccc;
-	border-radius: 3px;
-	margin-bottom: 10px;
-	width: 100%;
-	box-sizing: border-box;
-	font-family: montserrat;
-	color: #2C3E50;
-	font-size: 13px;
-}
-/*buttons*/
-#msform .action-button {
-	width: 100px;
-	background: #27AE60;
-	font-weight: bold;
-	color: white;
-	border: 0 none;
-	border-radius: 1px;
-	cursor: pointer;
-	padding: 10px 5px;
-	margin: 10px 5px;
-}
-#msform .action-button:hover, #msform .action-button:focus {
-	box-shadow: 0 0 0 2px white, 0 0 0 3px #27AE60;
-}
-/*headings*/
-.fs-title {
-	font-size: 15px;
-	text-transform: uppercase;
-	color: #2C3E50;
-	margin-bottom: 10px;
-}
-.fs-subtitle {
-	font-weight: normal;
-	font-size: 13px;
-	color: #666;
-	margin-bottom: 20px;
-}
-/*progressbar*/
-#progressbar {
-	margin-bottom: 30px;
-	overflow: hidden;
-	/*CSS counters to number the steps*/
-	counter-reset: step;
-}
-#progressbar li {
-	list-style-type: none;
-	color: white;
-	text-transform: uppercase;
-	font-size: 9px;
-	width: 33.33%;
-	float: left;
-	position: relative;
-}
-#progressbar li:before {
-	content: counter(step);
-	counter-increment: step;
-	width: 20px;
-	line-height: 20px;
-	display: block;
-	font-size: 10px;
-	color: #333;
-	background: white;
-	border-radius: 3px;
-	margin: 0 auto 5px auto;
-}
-/*progressbar connectors*/
-#progressbar li:after {
-	content: '';
-	width: 100%;
-	height: 2px;
-	background: white;
-	position: absolute;
-	left: -50%;
-	top: 9px;
-	z-index: -1; /*put it behind the numbers*/
-}
-#progressbar li:first-child:after {
-	/*connector not needed before the first step*/
-	content: none; 
-}
-/*marking active/completed steps green*/
-/*The number of the step and the connector before it = green*/
-#progressbar li.active:before,  #progressbar li.active:after{
-	background: #27AE60;
-	color: white;
-}
-
-
-</style>
-
-
 
 <div class="main-content container-full clear">
     <div class="col-12 col-7-desktop clear">
@@ -135,7 +12,7 @@
 
 {#             <div class="clear col-12"> #}
                 <!-- multistep form -->
-                <form id="msform" class="col-12 clear">
+                <form id="donate-widget" class="col-12 clear">
                     {# <!-- progressbar --> #}
                     {# <ul id="progressbar"> #}
                         {# 	<li class="active">Contribution amount</li> #}
@@ -143,16 +20,41 @@
                         {# 	<li>Payment information</li> #}
                         {# </ul> #}
                     <!-- fieldsets -->
-                    <fieldset>
+                    <fieldset class="amount">
                         <h2 class="fs-title">Choose your contribution</h2>
                         <h3 class="fs-subtitle">Step 1 of 3</h3>
-                        <button class="next action-button amount-button">$50</button>
-                        <button class="next action-button amount-button">$100</button>
-                        <button class="next action-button amount-button">$250</button>
-                        <button class="next action-button amount-button">$500</button>
-                        <button class="next action-button amount-button">$1000</button>
-                        <input type="button" name="next" class="next action-button" value="Next" />
+
+<ul class="amount-radios container-full row radios single-candidate clearfix" id="entity-33432" data-entity-id="33432" data-display-name="Organizing for Action" data-spread-target="true" data-limit="10000000">
+    <li class="col-4">
+      <label for="amount_1500" class="btn">
+        <input type="radio" name="contribution[lineitems_attributes][0][amount]" autocomplete="off" class="radio-button" id="amount_1500" value="1500">
+        $15
+      </label>
+    </li>
+    <li class="col-4">
+      <label for="amount_50000" class="btn">
+        <input type="radio" name="contribution[lineitems_attributes][0][amount]" autocomplete="off" class="radio-button" id="amount_50000" value="50000">
+        $500
+      </label>
+    </li>
+    <li class="col-4">
+      <label for="amount_100000" class="btn">
+        <input type="radio" name="contribution[lineitems_attributes][0][amount]" autocomplete="off" class="radio-button" id="amount_100000" value="100000">
+        $1,000
+      </label>
+    </li>
+
+  <li>
+    <label for="contribution_lineitems_attributes_0_amount_other" class="btn other">
+      <input type="radio" name="contribution[lineitems_attributes][0][amount]" autocomplete="off" class="other-button" value="other">
+      $<input type="text" name="contribution[lineitems_attributes][0][amount_other]" class="other-amount other-text input-mini no-stretch" autocomplete="off" id="contribution_lineitems_attributes_0_amount_other_text">
+    </label>
+  </li>
+</ul>
+
+                        <input type="button" name="next" class="next amount-next action-button" value="Next" />
                     </fieldset>
+
                     <fieldset>
                         <h2 class="fs-title">Personal details</h2>
                         <h3 class="fs-subtitle">Step 2 of 3</h3>
@@ -185,20 +87,19 @@ var current_fs, next_fs, previous_fs; //fieldsets
 var left, opacity, scale; //fieldset properties which we will animate
 var animating; //flag to prevent quick multi-click glitches
 
+
 $(".next").click(function(){
-        console.log('1111111111111')
 	if(animating) return false;
 	animating = true;
-	
-        console.log('2222222222222')
+
 	current_fs = $(this).parent();
 	next_fs = $(this).parent().next();
-	
+
 	//activate next step on progressbar using the index of next_fs
 	$("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
-	
+
 	//show the next fieldset
-	next_fs.show(); 
+	next_fs.show();
 	//hide the current fieldset with style
 	current_fs.animate({opacity: 0}, {
 		step: function(now, mx) {
@@ -212,12 +113,12 @@ $(".next").click(function(){
 			// current_fs.css({'transform': 'scale('+scale+')'});
 			next_fs.css({'opacity': opacity});
 			//next_fs.css({'left': left, 'opacity': opacity});
-		}, 
-		duration: 0, 
+		},
+		duration: 0,
 		complete: function(){
 			current_fs.hide();
 			animating = false;
-		}, 
+		},
 		//this comes from the custom easing plugin
 		easing: 'easeInQuad'
 	});
@@ -227,15 +128,15 @@ $(".next").click(function(){
 $(".previous").click(function(){
 	if(animating) return false;
 	animating = true;
-	
+
 	current_fs = $(this).parent();
 	previous_fs = $(this).parent().prev();
-	
+
 	//de-activate current step on progressbar
 	$("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
-	
+
 	//show the previous fieldset
-	previous_fs.show(); 
+	previous_fs.show();
 	//hide the current fieldset with style
 	current_fs.animate({opacity: 0}, {
 		step: function(now, mx) {
@@ -249,12 +150,12 @@ $(".previous").click(function(){
 			// current_fs.css({'left': left});
 			previous_fs.css({'opacity': opacity});
 			// previous_fs.css({'transform': 'scale('+scale+')', 'opacity': opacity});
-		}, 
+		},
 		duration: 0,
 		complete: function(){
 			current_fs.hide();
 			animating = false;
-		}, 
+		},
 		//this comes from the custom easing plugin
 		easing: 'easeInQuad'
 		// easing: 'easeInOutBack'
@@ -265,9 +166,10 @@ $(".submit").click(function(){
 	return false;
 })
 
+$(".amount-radios input").click(function() {
+        $(".amount-next").click();
+})
 
 </script>
 
 {% endblock %}
-
-
