@@ -25,26 +25,35 @@ class BasePromotion(AuthStampedModel, TimeStampedModel):
 
     @classmethod
     def get_create_url(cls, person_id, pledge_id):
-        promotion_slug = cls._meta.verbose_name.replace(' ', '_')
+        promotion_slug = cls.get_promotion_slug()
         return reverse('promotions:%s:create' % promotion_slug, None,
                        kwargs={'person_id': person_id, 'pledge_id': pledge_id})
 
+    @classmethod
+    def get_promotion_slug(cls):
+        return cls._meta.verbose_name.replace(' ', '_').lower()
+
+    @classmethod
+    def get_donate_url(cls):
+        promotion_slug = cls.get_promotion_slug()
+        return reverse('donate:%s' % promotion_slug)
+
     def get_absolute_url(self):
-        promotion_slug = self._meta.verbose_name.replace(' ', '_')
+        promotion_slug = cls.get_promotion_slug()
         return reverse('promotions:%s:detail' % promotion_slug, None,
                        kwargs={'person_id': self.pledge.person.pk,
                                'pledge_id': self.pledge.pk,
                                'pk': self.pk})
 
     def get_update_url(self):
-        promotion_slug = self._meta.verbose_name.replace(' ', '_')
+        promotion_slug = self.get_promotion_slug()
         return reverse('promotions:%s:update' % promotion_slug, None,
                        kwargs={'person_id': self.pledge.person.pk,
                                'pledge_id': self.pledge.pk,
                                'pk': self.pk})
 
     def get_delete_url(self):
-        promotion_slug = self._meta.verbose_name.replace(' ', '_')
+        promotion_slug = self.get_promotion_slug()
         return reverse('promotions:%s:delete' % promotion_slug, None,
                        kwargs={'person_id': self.pledge.person.pk,
                                'pledge_id': self.pledge.pk,
@@ -53,6 +62,9 @@ class BasePromotion(AuthStampedModel, TimeStampedModel):
     def __str__(self):
         return '{promotion_title}'.format(
             promotion_title=self._meta.verbose_name.title())
+
+    def meta(self):
+        return self._meta
 
     class Meta:
         abstract = True
@@ -126,6 +138,9 @@ class NrsimhaTile(BaseBrick):
         'GBP': 800,
     }
 
+    class Meta:
+        verbose_name = 'Nrsimha Tile'
+
 
 class GoldenBrick(BaseBrick):
     amount = {
@@ -137,6 +152,8 @@ class GoldenBrick(BaseBrick):
         'GBP': 1300,
     }
 
+    class Meta:
+        verbose_name = 'Golden Brick'
 
 class GuruParamparaBrick(BaseBrick):
     amount = {
@@ -159,6 +176,8 @@ class RadhaMadhavaBrick(BaseBrick):
         'GBP': 2200,
     }
 
+    class Meta:
+        verbose_name = 'Radha Madhava Brick'
 
 class SilverCoin(BaseCoin):
     amount = {
@@ -306,6 +325,9 @@ class GeneralDonation(BasePromotion):
         'EUR': 1,
         'GBP': 1,
     }
+
+    class Meta:
+        verbose_name = 'General Donation'
 
 
 promotions = [NrsimhaTile, GoldenBrick, GuruParamparaBrick, RadhaMadhavaBrick,

@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="{% block html_class %}{% endblock %}">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,11 +17,10 @@
   <link rel="stylesheet" href="{% static "public/js/vendor/mmenu/jquery.mmenu.all.css" %}">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
-  <link rel="stylesheet" href="{% static "public/css/style.css" %}">
+  <link rel="stylesheet" href="{% static "public/css/styles.css" %}">
 
   <script src="{% static 'public/js/vendor/jquery-3.0.0-beta1.min.js' %}"></script>
   <script src="{% static 'public/js/vendor/webfontloader-1.6.24.js' %}"></script>
-  {# <script src="{% static 'public/js/vendor/headroom-0.8.0.min.js' %}"></script> #}
   <script src="{% static 'public/js/vendor/mmenu/jquery.mmenu.all.min.js' %}"></script>
   <script src="{% static 'public/js/default.js' %}"></script>
   <script>
@@ -32,10 +31,10 @@
         });
   </script>
 </head>
-<body>
+<body class="{% block body_class %}{% endblock %}">
 
 <!-- === Google Analytics === -->
-<div id="header" class="xheadroom xheader--fixed">
+<div id="header">
     <div class="header">
         <div class="container clear">
             <a class="logo" href="#">Temple of the Vedic Planetarium</a>
@@ -59,36 +58,12 @@
     </div>
 </div>
 {% block page_content %}
-
 {% endblock %}
 
 <div class="clear col-12 footer">
 Project of the International Society for Krsna Consciousness<br />
 Founder-Ācārya His Divine Grace A.C. Bhaktivedanta Swami  Prabhupāda
 </div>
-
-{# <script> #}
-{# (function() { #}
-{#     var header = document.querySelector(".headroom"); #}
-{#     if(window.location.hash) { #}
-{#       header.classList.add("headroom--unpinned"); #}
-{#     } #}
-
-{#     new Headroom(header, { #}
-{#         tolerance: { #}
-{#           down : 10, #}
-{#           up : 20 #}
-{#         }, #}
-{#         offset : 205, #}
-{#         classes: { #}
-{#           initial: "slide", #}
-{#           pinned: "headroom--pinned", #}
-{#           unpinned: "headroom--unpinned" #}
-{#         } #}
-{#     }).init(); #}
-
-{# }()); #}
-{# </script> #}
 
 <script type="text/javascript">
    $(document).ready(function() {
@@ -100,20 +75,6 @@ Founder-Ācārya His Divine Grace A.C. Bhaktivedanta Swami  Prabhupāda
                 $('#main-navigation').removeClass('navigation-visible');
            }
        });
-
-      $("#language-menu").mmenu({
-         // dropdown: true
-        offCanvas: {
-            "zposition": "front",
-            "position": "right",
-            //"blockUI": false
-        },
-        "navbar": {
-            "title": "Select language"
-        },
-        searchfield: true,
-        extensions: ["pagedim-black"]
-      });
    });
 </script>
 

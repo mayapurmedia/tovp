@@ -1,0 +1,24 @@
+// ==========================================================================
+// Tablet Custom Styles
+// ==========================================================================
+
+.inline-above-mobile {
+    display: inline;
+}
+
+body {
+    background: none;
+    background-repeat: no-repeat;
+    background-position: center top;
+    height: 100%;
+    width: 100%;
+}
+body.bg-tovp {
+    background-image: url(../img/tovp-bg-tovp.jpg);
+}
+body.bg-nrsimha {
+    background-image: url(../img/tovp-bg-nrsimha.jpg);
+}
+body.bg-caitanya {
+    background-image: url(../img/tovp-bg-caitanya.jpg);
+}
