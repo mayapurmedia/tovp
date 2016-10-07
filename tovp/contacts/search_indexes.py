@@ -4,6 +4,257 @@ from ananta.search_indexes import ContentSearchIndexMixin
 
 from .models import Person
 
+COUNTRIES_TO_ZONES = {
+    'AF': 'Asia',
+    'AX': 'Others',
+    'AL': 'Others',
+    'DZ': 'Others',
+    'AS': 'Others',
+    'AD': 'Others',
+    'AO': 'Others',
+    'AI': 'Others',
+    'AQ': 'Others',
+    'AG': 'Others',
+    'AR': 'Others',
+    'AM': 'Others',
+    'AW': 'Others',
+    'AU': 'Australia',
+    'AT': 'Europe',
+    'AZ': 'Others',
+    'BS': 'Others',
+    'BH': 'Middle East',
+    'BD': 'Others',
+    'BB': 'Others',
+    'BY': 'Europe',
+    'BE': 'Europe',
+    'BZ': 'Others',
+    'BJ': 'Others',
+    'BM': 'Others',
+    'BT': 'Others',
+    'BO': 'Others',
+    'BQ': 'Others',
+    'BA': 'Europe',
+    'BW': 'Others',
+    'BV': 'Others',
+    'BR': 'Others',
+    'IO': 'Others',
+    'BN': 'Others',
+    'BG': 'Europe',
+    'BF': 'Others',
+    'BI': 'Others',
+    'CV': 'Others',
+    'KH': 'Others',
+    'CM': 'Others',
+    'CA': 'Canada',
+    'KY': 'Others',
+    'CF': 'Others',
+    'TD': 'Others',
+    'CL': 'Others',
+    'CN': 'Others',
+    'CX': 'Others',
+    'CC': 'Others',
+    'CO': 'Others',
+    'KM': 'Others',
+    'CD': 'Others',
+    'CG': 'Others',
+    'CK': 'Others',
+    'CR': 'Others',
+    'CI': 'Others',
+    'HR': 'Europe',
+    'CU': 'Others',
+    'CW': 'Others',
+    'CY': 'Europe',
+    'CZ': 'Europe',
+    'DK': 'Europe',
+    'DJ': 'Others',
+    'DM': 'Others',
+    'DO': 'Others',
+    'EC': 'Others',
+    'EG': 'Others',
+    'SV': 'Others',
+    'GQ': 'Others',
+    'ER': 'Others',
+    'EE': 'Europe',
+    'ET': 'Others',
+    'FK': 'Others',
+    'FO': 'Others',
+    'FJ': 'Asia',
+    'FI': 'Europe',
+    'FR': 'Europe',
+    'GF': 'Others',
+    'PF': 'Others',
+    'TF': 'Others',
+    'GA': 'Others',
+    'GM': 'Others',
+    'GE': 'Others',
+    'DE': 'Europe',
+    'GH': 'Others',
+    'GI': 'Others',
+    'GR': 'Europe',
+    'GL': 'Others',
+    'GD': 'Others',
+    'GP': 'Others',
+    'GU': 'Others',
+    'GT': 'Others',
+    'GG': 'Others',
+    'GN': 'Others',
+    'GW': 'Others',
+    'GY': 'Others',
+    'HT': 'Others',
+    'HM': 'Others',
+    'VA': 'Others',
+    'HN': 'Others',
+    'HK': 'Others',
+    'HU': 'Europe',
+    'IS': 'Europe',
+    'IN': 'Others',
+    'ID': 'Asia',
+    'IR': 'Others',
+    'IQ': 'Others',
+    'IE': 'Europe',
+    'IM': 'Others',
+    'IL': 'Others',
+    'IT': 'Europe',
+    'JM': 'Others',
+    'JP': 'Others',
+    'JE': 'Others',
+    'JO': 'Others',
+    'KZ': 'Russia',
+    'KE': 'Others',
+    'KI': 'Others',
+    'KP': 'Asia',
+    'KR': 'Asia',
+    'KW': 'Middle East',
+    'KG': 'Others',
+    'LA': 'Others',
+    'LV': 'Europe',
+    'LB': 'Others',
+    'LS': 'Others',
+    'LR': 'Others',
+    'LY': 'Others',
+    'LI': 'Europe',
+    'LT': 'Europe',
+    'LU': 'Europe',
+    'MO': 'Others',
+    'MK': 'Europe',
+    'MG': 'Others',
+    'MW': 'Others',
+    'MY': 'Asia',
+    'MV': 'Others',
+    'ML': 'Others',
+    'MT': 'Europe',
+    'MH': 'Others',
+    'MQ': 'Others',
+    'MR': 'Others',
+    'MU': 'Others',
+    'YT': 'Others',
+    'MX': 'Others',
+    'FM': 'Others',
+    'MD': 'Europe',
+    'MC': 'Europe',
+    'MN': 'Others',
+    'ME': 'Europe',
+    'MS': 'Others',
+    'MA': 'Others',
+    'MZ': 'Others',
+    'MM': 'Others',
+    'NA': 'Others',
+    'NR': 'Others',
+    'NP': 'Others',
+    'NL': 'Europe',
+    'NC': 'Others',
+    'NZ': 'Others',
+    'NI': 'Others',
+    'NE': 'Others',
+    'NG': 'Others',
+    'NU': 'Others',
+    'NF': 'Others',
+    'MP': 'Others',
+    'NO': 'Europe',
+    'OM': 'Others',
+    'PK': 'Others',
+    'PW': 'Others',
+    'PS': 'Others',
+    'PA': 'Others',
+    'PG': 'Others',
+    'PY': 'Others',
+    'PE': 'Others',
+    'PH': 'Others',
+    'PN': 'Others',
+    'PL': 'Europe',
+    'PT': 'Europe',
+    'PR': 'Others',
+    'QA': 'Middle East',
+    'RE': 'Others',
+    'RO': 'Europe',
+    'RU': 'Russia',
+    'RW': 'Others',
+    'BL': 'Others',
+    'SH': 'Others',
+    'KN': 'Others',
+    'LC': 'Others',
+    'MF': 'Others',
+    'PM': 'Others',
+    'VC': 'Others',
+    'WS': 'Others',
+    'SM': 'Europe',
+    'ST': 'Others',
+    'SA': 'Others',
+    'SN': 'Others',
+    'RS': 'Europe',
+    'SC': 'Others',
+    'SL': 'Others',
+    'SG': 'Asia',
+    'SX': 'Others',
+    'SK': 'Europe',
+    'SI': 'Europe',
+    'SB': 'Others',
+    'SO': 'Others',
+    'ZA': 'South Africa',
+    'GS': 'Others',
+    'SS': 'Others',
+    'ES': 'Europe',
+    'LK': 'Others',
+    'SD': 'Others',
+    'SR': 'Others',
+    'SJ': 'Others',
+    'SZ': 'Others',
+    'SE': 'Europe',
+    'CH': 'Europe',
+    'SY': 'Others',
+    'TW': 'Others',
+    'TJ': 'Others',
+    'TZ': 'Others',
+    'TH': 'Asia',
+    'TL': 'Others',
+    'TG': 'Others',
+    'TK': 'Others',
+    'TO': 'Others',
+    'TT': 'Others',
+    'TN': 'Others',
+    'TR': 'Others',
+    'TM': 'Others',
+    'TC': 'Others',
+    'TV': 'Others',
+    'UG': 'Others',
+    'UA': 'Russia',
+    'AE': 'Others',
+    'GB': 'UK',
+    'UM': 'Others',
+    'US': 'USA',
+    'UY': 'Others',
+    'UZ': 'Others',
+    'VU': 'Others',
+    'VE': 'Others',
+    'VN': 'Others',
+    'VG': 'Others',
+    'VI': 'Others',
+    'WF': 'Others',
+    'EH': 'Others',
+    'YE': 'Middle East',
+    'ZM': 'Others',
+    'ZW': 'Others',
+}
 
 class PersonIndex(ContentSearchIndexMixin, indexes.SearchIndex,
                   indexes.Indexable):
@@ -23,6 +274,7 @@ class PersonIndex(ContentSearchIndexMixin, indexes.SearchIndex,
     state = indexes.CharField(model_attr='state')
     old_database_id = indexes.CharField(model_attr='old_database_id', null=True)
     country = indexes.CharField(model_attr='get_country_display', faceted=True)
+    zone = indexes.CharField(faceted=True)
     postcode = indexes.CharField(model_attr='postcode')
     pan_card_number = indexes.CharField(model_attr='pan_card_number', null=True)
     note = indexes.CharField(model_attr='note')
@@ -70,6 +322,12 @@ class PersonIndex(ContentSearchIndexMixin, indexes.SearchIndex,
             return obj.get_yatra_display()
         else:
             return 'None'
+
+    def prepare_zone(self, obj):
+        if obj.country in COUNTRIES_TO_ZONES:
+            return COUNTRIES_TO_ZONES[obj.country]
+        else:
+            return 'No Zone'
 
     def prepare_sources(self, obj):
         items = []
@@ -137,6 +395,7 @@ class PersonSearchIndexMixin(indexes.SearchIndex):
     city = indexes.CharField(model_attr='person__city')
     state = indexes.CharField(model_attr='person__state')
     country = indexes.CharField(model_attr='person__get_country_display', faceted=True)
+    zone = indexes.CharField(faceted=True)
     postcode = indexes.CharField(model_attr='person__postcode')
     pan_card_number = indexes.CharField(model_attr='person__pan_card_number')
 
@@ -150,6 +409,12 @@ class PersonSearchIndexMixin(indexes.SearchIndex):
             return obj.person.get_yatra_display()
         else:
             return 'None'
+
+    def prepare_zone(self, obj):
+        if obj.person.country in COUNTRIES_TO_ZONES:
+            return COUNTRIES_TO_ZONES[obj.person.country]
+        else:
+            return 'No Zone'
 
 
 class PledgePersonSearchIndexMixin(indexes.SearchIndex):
@@ -167,6 +432,7 @@ class PledgePersonSearchIndexMixin(indexes.SearchIndex):
     city = indexes.CharField(model_attr='pledge__person__city')
     state = indexes.CharField(model_attr='pledge__person__state')
     country = indexes.CharField(model_attr='pledge__person__get_country_display', faceted=True)
+    zone = indexes.CharField(faceted=True)
     postcode = indexes.CharField(model_attr='pledge__person__postcode')
     pan_card_number = indexes.CharField(model_attr='pledge__person__pan_card_number')
 
@@ -180,3 +446,9 @@ class PledgePersonSearchIndexMixin(indexes.SearchIndex):
             return obj.pledge.person.get_yatra_display()
         else:
             return 'None'
+
+    def prepare_zone(self, obj):
+        if obj.pledge.person.country in COUNTRIES_TO_ZONES:
+            return COUNTRIES_TO_ZONES[obj.pledge.person.country]
+        else:
+            return 'No Zone'
