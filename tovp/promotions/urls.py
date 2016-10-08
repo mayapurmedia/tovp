@@ -178,7 +178,7 @@ urlpatterns = [
                 ),
                 name='delete'
             ),
-        ], namespace="Srivas_Coin")),
+        ], namespace="srivas_coin")),
     url(r'^gadadhar_coin/', include(
         [
             url(
@@ -211,7 +211,7 @@ urlpatterns = [
                 ),
                 name='delete'
             ),
-        ], namespace="Gadadhar_Coin")),
+        ], namespace="gadadhar_coin")),
     url(r'^advaita_coin/', include(
         [
             url(
@@ -244,7 +244,7 @@ urlpatterns = [
                 ),
                 name='delete'
             ),
-        ], namespace="Advaita_Coin")),
+        ], namespace="advaita_coin")),
     url(r'^gold_coin/', include(
         [
             url(
@@ -277,7 +277,7 @@ urlpatterns = [
                 ),
                 name='delete'
             ),
-        ], namespace="Nityananda_Coin")),
+        ], namespace="nityananda_coin")),
     url(r'^platinum_coin/', include(
         [
             url(
@@ -310,7 +310,7 @@ urlpatterns = [
                 ),
                 name='delete'
             ),
-        ], namespace="Caitanya_Coin")),
+        ], namespace="caitanya_coin")),
     url(r'^radharani_coin/', include(
         [
             url(
@@ -343,7 +343,7 @@ urlpatterns = [
                 ),
                 name='delete'
             ),
-        ], namespace="Radharani_Coin")),
+        ], namespace="radharani_coin")),
     url(r'^square_feet/', include(
         [
             url(
