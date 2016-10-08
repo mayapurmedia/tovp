@@ -39,7 +39,7 @@ class BasePromotion(AuthStampedModel, TimeStampedModel):
         return reverse('donate:%s' % promotion_slug)
 
     def get_absolute_url(self):
-        promotion_slug = cls.get_promotion_slug()
+        promotion_slug = self.get_promotion_slug()
         return reverse('promotions:%s:detail' % promotion_slug, None,
                        kwargs={'person_id': self.pledge.person.pk,
                                'pledge_id': self.pledge.pk,
