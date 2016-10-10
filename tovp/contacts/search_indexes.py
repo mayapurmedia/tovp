@@ -107,7 +107,7 @@ COUNTRIES_TO_ZONES = {
     'HK': 'Others',
     'HU': 'Europe',
     'IS': 'Europe',
-    'IN': 'Others',
+    'IN': 'India',
     'ID': 'Asia',
     'IR': 'Others',
     'IQ': 'Others',
