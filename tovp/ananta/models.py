@@ -36,6 +36,8 @@ class SourceMixin(models.Model):
         (u'mso', _('MSO')),
         (u'mumbai-yatra-2016', _('Mumbai Yatra 2016')),
         (u'namahatta', _('JPS Namahatta')),
+        (u'botswana-2016', _('Botswana 2016')),
+        (u'south-afrika-2016', _('South Afrika 2016')),
         (u'neel-vasan-das', _('Neel Vasan Das')),
         (u'nigdi-2016.', _('Nigdi 2016.')),
         (u'nityananda', _('Nityananda Tour')),
