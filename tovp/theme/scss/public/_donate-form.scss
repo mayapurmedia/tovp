@@ -2,6 +2,7 @@
 
 #donate-widget {
     margin-top: 2em;
+    color: black;
     text-align: center;
     min-height:28em;
     margin-bottom: 2em;
@@ -28,6 +29,11 @@
         color: #2C3E50;
         font-size: 16px;
     }
+    input.error,
+    textarea.error {
+        border: 1px solid red;
+    }
+
     input.other-amount {
     }
     .other input {
@@ -86,7 +92,6 @@
         text-shadow: none;
         transition: color .2s,background-color .2s;
     }
-
     .radios label.amount-btn {
         box-sizing: border-box;
         line-height: 2em;
@@ -162,8 +167,6 @@ input[type=button], input[type=file], input[type=image], input[type=reset], inpu
     width: auto;
 }
 
-
-
 .btn {
     text-align: center;
     //vertical-align: middle;
@@ -188,3 +191,41 @@ input[type=button], input[type=file], input[type=image], input[type=reset], inpu
     transition: color .2s,background-color .2s;
 }
 
+#amount-summary .edit-link {
+  a {
+      color: #44afc3;
+  }
+}
+
+.region-select {
+}
+.region-link {
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    color: #666;
+    background-color: #e1e3e8;
+    border: 1px solid #c9cdd4;
+    display: block;
+    //background: white;
+    border-radius: 4px;
+    padding: 1em .2em;
+    margin-bottom: 1em;
+    .currency-wrapper {
+        font-size: 1.5em;
+        margin: 0 0 .8em;
+    }
+    .region-wrapper {
+        font-size: 1em;
+    }
+  span {
+      display: block;
+  }
+    &:hover {
+        background-color: lighten(#009cde, 2%);
+        border-color: darken(#009cde, 6%);
+        color: #fff;
+        text-decoration: none;
+        //box-shadow: 0 0 10px 1px rgba(83, 233, 255, 0.8);
+    }
+}

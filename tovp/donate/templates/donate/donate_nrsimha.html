@@ -1,6 +1,6 @@
 {% extends 'public/base.html' %}
 
-{% block body_class %}bg-nrsimha{% endblock %}
+{% block body_class %}bg-{{ promotion.get_promotion_slug }}{% endblock %}
 
 {% block page_content %}
 <div class="main-content container clear">
@@ -18,48 +18,26 @@
             <form id="donate-widget" method="get" action=".">
 
                 <!-- fieldsets -->
-                <fieldset>
+                <fieldset id="fs-amount-grid">
                     <h2 class="fs-title">Choose your contribution</h2>
                     <h3 class="fs-subtitle">Step 1 of 3</h3>
                     <div class="row amount-radios radios">
+                        {% for amount_item in amount_grid %}
                         <div class="col-4">
-                            <label for="amount-2500" class="amount-btn">
-                                <input type="radio" name="amount" autocomplete="off" class="radio-button" id="amount-2500" value="2500">
-                                <span class="multi">1×</span> <span>$2,500</span>
+                            <label for="amount-{{ forloop.counter }}" class="amount-btn {{ amount_item.default|yesno:'selected,' }}">
+                                <input type="radio" name="amount" data-amount={{ amount_item.amount }} data-summary="{{ currency.sign }}{{ amount_item.amount }} {% if amount_item.months > 1 %}for {{ amount_item.months }} months{% endif %}" autocomplete="off" class="radio-button" id="amount-{{ forloop.counter }}" value="{{ forloop.counter }}" {{ amount_item.default|yesno:'checked,' }}>
+                                <span class="multi">{{ amount_item.months }}×</span> <span> {{ currency.sign }}{{ amount_item.amount }}</span>
                             </label>
                         </div>
-                        <div class="col-4">
-                            <label for="amount-1250" class="amount-btn">
-                                <input type="radio" name="amount" autocomplete="off" class="radio-button" id="amount-1250" value="1250">
-                                <span class="multi">2×</span> <span>$1,250</span>
-                            </label>
-                        </div>
-                        <div class="col-4">
-                            <label for="amount-500" class="amount-btn">
-                                <input type="radio" name="amount" autocomplete="off" class="radio-button" id="amount-500" value="500">
-                                <span class="multi">5×</span> <span>$500</span>
-                            </label>
-                        </div>
-                        <div class="col-4">
-                            <label for="amount-210" class="amount-btn">
-                                <input type="radio" name="amount" autocomplete="off" class="radio-button" id="amount-210" value="210">
-                                <span class="multi">12×</span> <span>$210</span>
-                            </label>
-                        </div>
-                        <div class="col-4">
-                            <label for="amount-108" class="amount-btn">
-                                <input type="radio" name="amount" autocomplete="off" class="radio-button" id="amount-108" value="108">
-                                <span class="multi">24×</span> <span>$108</span>
-                            </label>
-                        </div>
+                        {% endfor %}
                         <div class="col-4">
                             <label for="amount_other" class="amount-btn other">
-                                <input type="radio" name="amount" autocomplete="off" class="other-button" value="other">
-                                $ <input type="text" name="amount_other_value" class="other-amount other-text input-mini no-stretch" autocomplete="off" id="contribution_lineitems_attributes_0_amount_other_text">
+                                <input type="radio" name="amount" autocomplete="off" class="other-button" id="amount-other" value="0">
+                                $ <input type="number" name="amount-other-value" min="20" data-currency="{{ currency.sign }}" class="other-amount other-text input-mini no-stretch" autocomplete="off" id="amount-other-value">
                             </label>
                         </div>
                     </div>
-                    <input type="button" name="next" class="next amount-next action-button" value="Next" />
+                    <input type="button" id="fs-amount-grid-next" name="next" class="next amount-next action-button" value="Next" />
                 </fieldset>
 
                 <fieldset>
@@ -78,10 +56,24 @@
                 <fieldset>
                     <h2 class="fs-title">Payment information</h2>
                     <h3 class="fs-subtitle">Step 3 of 3</h3>
-                    <input type="text" name="cc-number" placeholder="Credit Card Number" />
-                    <input type="text" name="expiration" placeholder="Expiration" />
-                    <input type="button" name="previous" class="previous action-button" value="Previous" />
-                    <input type="submit" name="submit" class="submit action-button" value="Finish" />
+
+                    <div id="amount-summary"><span></span><a class="edit-link" href="">[edit]</a></div>
+
+                    <h2>Stripe link</h2>
+
+  <div class="stripe-button-container">
+  <script
+    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+    data-key="pk_test_6pRNASCoBOKtIshFeQd4XMUh"
+    data-amount="999"
+    data-name="Stripe.com"
+    data-description="Widget"
+    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+    data-locale="auto"
+    data-zip-code="true"
+    data-notrack>
+  </script>
+  </div>
                 </fieldset>
             </form>
         </div>
@@ -100,32 +92,103 @@ var current_fs, next_fs, previous_fs; //fieldsets
 var left, opacity, scale; //fieldset properties which we will animate
 var animating; //flag to prevent quick multi-click glitches
 
-
 $(".next").click(function(){
-	if(animating) return false;
+    current_fs = $(this).parent();
+    next_fs = $(this).parent().next();
+
+    var validated = false;
+    var fs_id = current_fs.attr('id');
+    var summary = '';
+
+    if (fs_id == 'fs-amount-grid') {
+        if ($(".amount-btn.other").hasClass("selected") == true) {
+            if ($('input[name=amount-other-value]').val()) {
+                validated = true;
+                summary = $('input[name=amount-other-value]').val();
+                $('input[name=amount-other-value]').removeClass('error');
+
+                summary = $('#amount-other-value').data('currency') + summary + ' for ' + Math.ceil($('#amount-1').data('amount')/summary) + ' months ';
+            }
+            else {
+                $('input[name=amount_other_value]').addClass('error');
+                $('input[name=amount_other_value]').focus();
+            }
+        }
+        else {
+            console.log('wwwwwwwwwwwwwwwwww');
+            validated = true;
+            summary = $('input[name=amount]:checked').data("summary")
+        }
+        $('#amount-summary span').text('Donation of ' + summary);
+    }
+    else {
+        validated = true;
+    }
+
+    if (!validated) {
+    }
+    else {
+        if(animating) return false;
+        animating = true;
+
+        //activate next step on progressbar using the index of next_fs
+        $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+
+        //show the next fieldset
+        next_fs.show();
+        //hide the current fieldset with style
+        current_fs.animate({opacity: 0}, {
+            step: function(now, mx) {
+                //as the opacity of current_fs reduces to 0 - stored in "now"
+                //1. scale current_fs down to 80%
+                scale = 1 - (1 - now) * 0.2;
+                //2. bring next_fs from the right(50%)
+                left = (now * 50)+"%";
+                //3. increase opacity of next_fs to 1 as it moves in
+                opacity = 1 - now;
+                // current_fs.css({'transform': 'scale('+scale+')'});
+                next_fs.css({'opacity': opacity});
+                //next_fs.css({'left': left, 'opacity': opacity});
+            },
+            duration: 0,
+            complete: function(){
+                current_fs.hide();
+                animating = false;
+            },
+            //this comes from the custom easing plugin
+            easing: 'easeInQuad'
+        });
+        return false;
+    }
+
+});
+
+$("#amount-summary .edit-link a").click(function(){
+    console.log('weeeeeeeeeee edit link');
+    	if(animating) return false;
 	animating = true;
 
-	current_fs = $(this).parent();
-	next_fs = $(this).parent().next();
+	current_fs = $(this).parent().parent().parent();
+    previous_fs = $('fieldset#fs-amount-grid');
 
-	//activate next step on progressbar using the index of next_fs
-	$("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
 
-	//show the next fieldset
-	next_fs.show();
+	//de-activate current step on progressbar
+	$("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
+
+	previous_fs.show();
 	//hide the current fieldset with style
 	current_fs.animate({opacity: 0}, {
 		step: function(now, mx) {
 			//as the opacity of current_fs reduces to 0 - stored in "now"
-			//1. scale current_fs down to 80%
-			scale = 1 - (1 - now) * 0.2;
-			//2. bring next_fs from the right(50%)
-			left = (now * 50)+"%";
-			//3. increase opacity of next_fs to 1 as it moves in
+			//1. scale previous_fs from 80% to 100%
+			scale = 0.8 + (1 - now) * 0.2;
+			//2. take current_fs to the right(50%) - from 0%
+			left = ((1-now) * 50)+"%";
+			//3. increase opacity of previous_fs to 1 as it moves in
 			opacity = 1 - now;
-			// current_fs.css({'transform': 'scale('+scale+')'});
-			next_fs.css({'opacity': opacity});
-			//next_fs.css({'left': left, 'opacity': opacity});
+			// current_fs.css({'left': left});
+			previous_fs.css({'opacity': opacity});
+			// previous_fs.css({'transform': 'scale('+scale+')', 'opacity': opacity});
 		},
 		duration: 0,
 		complete: function(){
@@ -134,15 +197,18 @@ $(".next").click(function(){
 		},
 		//this comes from the custom easing plugin
 		easing: 'easeInQuad'
+		// easing: 'easeInOutBack'
 	});
-        return false;
+    return false;
 });
+
 
 $(".previous").click(function(){
 	if(animating) return false;
 	animating = true;
 
 	current_fs = $(this).parent();
+
 	previous_fs = $(this).parent().prev();
 
 	//de-activate current step on progressbar
@@ -180,11 +246,14 @@ $(".submit").click(function(){
 })
 
 $(".amount-radios input").click(function() {
-        $('.amount-radios .amount-btn.selected').removeClass('selected');
-        $(this).parent().toggleClass('selected');
-        if ($(this).hasClass('other-amount') != true) {
-            $(".amount-next").click();
-        }
+    $('.amount-radios .amount-btn.selected').removeClass('selected');
+    $(this).parent().toggleClass('selected');
+    $('input[name=amount_other_value]').removeClass('error');
+
+    if ($(this).hasClass('other-amount') != true) {
+        $(".amount-next").click();
+    }
+
 })
 
 </script>

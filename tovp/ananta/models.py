@@ -48,7 +48,8 @@ class SourceMixin(models.Model):
         (u'pune-yatra-2016', _('Pune Yatra 2016')),
         (u'rns-kartik-yatra', _('RNS Kartik Yatra')),
         (u'rohini-narayani', _('Rohini (Sri Narayani Devi Dasi)')),
-        (u'vrindavan-booth', _('Vrindavan Booth')),
+        (u'vrindavan-booth', _('Vrindavan Booth 2015')),
+        (u'vrindavan-booth-2016', _('Vrindavan Booth 2016')),
         (u'vvps-vp-2015', _('Vedavyasapriya Swami Vyasa Puja 2015')),
     )
     source = models.CharField("Source", max_length=30, default='',

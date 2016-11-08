@@ -3,30 +3,39 @@
 {% block body_class %}bg-tovp{% endblock %}
 {% block page_content %}
     <div class="main-content container clear">
-        <div class="row">
-            <div class="col-12 col-7-desktop">
-                <h3>
-                    Let's finish what we started<br />
-                    Make donation for TOVP
-                </h3>
-            </div>
+    <div class="row">
+        <div class="col-12 col-7-desktop">
+            <h3>
+                Let's finish what we started<br />
+                Make donation for TOVP
+            </h3>
+        </div>
 
-            <div class="clear col-12 col-8-m col-6-l">
-                <div class="content-box col-12">
-                    {% for promotion in promotions %}
-                        xxxxxxxxx
-                        <a class="btn" href="{{ promotion.get_donate_url }}">
-                        {{ promotion.meta.verbose_name }}
-                            x{{ promotion__get_donate_url }}x
-                        ₹ {{ promotion.amount.INR }}
-                        $ {{ promotion.amount.USD }}
-                        £ {{ promotion.amount.GBP }}
-                        </a>
-                        <br/>
-                    {% endfor %}
-                </div>
-            </div>
+        <div class="clear col-12 col-8-m col-6-l">
 
+            <!-- multistep form -->
+            <div id="donate-widget">
+
+                <!-- fieldsets -->
+                <fieldset id="fs-amount-grid">
+                    <h2 class="fs-title">Choose your contribution</h2>
+                    {#                    <h3 class="fs-subtitle">Step 1 of 3</h3>#}
+                    <div class="row amount-radios radios">
+                        {% for promotion in promotions %}
+                            <div class="col-6">
+                                <a class="region-link" href="{% url 'donate:select_region' promotion.get_promotion_slug %} {{ promotion.get_donate_url }}">
+                                    <span>{{ promotion.meta.verbose_name }}</span>
+                                    <em>
+                                        ${{ promotion.amount.USD }} /
+                                        ₹{{ promotion.amount.INR }}
+                                    </em>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </fieldset>
+            </div>
         </div>
     </div>
+</div>
 {% endblock %}

@@ -8,7 +8,8 @@ html {
   background-image: url(../img/tovp-bg.jpg);
 }
 body {
-    background: none;
+  background: none;
+  color: white;
 }
 a {
     text-decoration: none;
@@ -25,6 +26,7 @@ img { max-width: 100%; }
 // Super Top
 .header-super-top {
     padding: .25em 0;
+
     background: $background-color-1;
     border-bottom: 1px solid darken($background-color-1, 11%);
     text-align: right;
@@ -197,4 +199,11 @@ p {
     width: 3em;
     float: left;
     margin-right: 1em;
+}
+
+.promotion-link {
+  border: 1px solid #888;
+  display: block;
+  padding: 1em;
+  height: 90px;
 }

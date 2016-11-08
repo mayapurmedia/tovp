@@ -14,7 +14,7 @@ from .forms import (NrsimhaTileForm, GoldenBrickForm, GuruParamparaBrickForm,
                     TrusteeForm, GeneralDonationForm)
 
 urlpatterns = [
-    url(r'^nrsimha_tile/', include(
+    url(r'^nrsimha-tile/', include(
         [
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
@@ -46,8 +46,8 @@ urlpatterns = [
                 ),
                 name='delete'
             ),
-        ], namespace="nrsimha_tile")),
-    url(r'^golden_brick/', include(
+        ], namespace="nrsimha-tile")),
+    url(r'^golden-brick/', include(
         [
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
@@ -79,8 +79,8 @@ urlpatterns = [
                 ),
                 name='delete'
             ),
-        ], namespace="golden_brick")),
-    url(r'^guru_parampara_brick/', include(
+        ], namespace="golden-brick")),
+    url(r'^guru-parampara-brick/', include(
         [
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
@@ -112,8 +112,8 @@ urlpatterns = [
                 ),
                 name='delete'
             ),
-        ], namespace="guru_parampara_brick")),
-    url(r'^radha_madhava_brick/', include(
+        ], namespace="guru-parampara-brick")),
+    url(r'^radha-madhava-brick/', include(
         [
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
@@ -145,8 +145,8 @@ urlpatterns = [
                 ),
                 name='delete'
             ),
-        ], namespace="radha_madhava_brick")),
-    url(r'^srivas_coin/', include(
+        ], namespace="radha-madhava-brick")),
+    url(r'^srivas-coin/', include(
         [
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
@@ -178,8 +178,8 @@ urlpatterns = [
                 ),
                 name='delete'
             ),
-        ], namespace="srivas_coin")),
-    url(r'^gadadhar_coin/', include(
+        ], namespace="srivas-coin")),
+    url(r'^gadadhar-coin/', include(
         [
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
@@ -211,8 +211,8 @@ urlpatterns = [
                 ),
                 name='delete'
             ),
-        ], namespace="gadadhar_coin")),
-    url(r'^advaita_coin/', include(
+        ], namespace="gadadhar-coin")),
+    url(r'^advaita-coin/', include(
         [
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
@@ -244,8 +244,8 @@ urlpatterns = [
                 ),
                 name='delete'
             ),
-        ], namespace="advaita_coin")),
-    url(r'^gold_coin/', include(
+        ], namespace="advaita-coin")),
+    url(r'^gold-coin/', include(
         [
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
@@ -277,8 +277,8 @@ urlpatterns = [
                 ),
                 name='delete'
             ),
-        ], namespace="nityananda_coin")),
-    url(r'^platinum_coin/', include(
+        ], namespace="nityananda-coin")),
+    url(r'^platinum-coin/', include(
         [
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
@@ -310,8 +310,8 @@ urlpatterns = [
                 ),
                 name='delete'
             ),
-        ], namespace="caitanya_coin")),
-    url(r'^radharani_coin/', include(
+        ], namespace="caitanya-coin")),
+    url(r'^radharani-coin/', include(
         [
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
@@ -343,8 +343,8 @@ urlpatterns = [
                 ),
                 name='delete'
             ),
-        ], namespace="radharani_coin")),
-    url(r'^square_feet/', include(
+        ], namespace="radharani-coin")),
+    url(r'^square-feet/', include(
         [
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
@@ -376,8 +376,8 @@ urlpatterns = [
                 ),
                 name='delete'
             ),
-        ], namespace="square_feet")),
-    url(r'^square_meter/', include(
+        ], namespace="square-feet")),
+    url(r'^square-meter/', include(
         [
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
@@ -409,7 +409,7 @@ urlpatterns = [
                 ),
                 name='delete'
             ),
-        ], namespace="square_meter")),
+        ], namespace="square-meter")),
     url(r'^trustee/', include(
         [
             url(
@@ -443,7 +443,7 @@ urlpatterns = [
                 name='delete'
             ),
         ], namespace="trustee")),
-    url(r'^general_donation/', include(
+    url(r'^general-donation/', include(
         [
             url(
                 regex=r'^(?P<person_id>\d+)/(?P<pledge_id>\d+)/create/$',
@@ -475,5 +475,5 @@ urlpatterns = [
                 ),
                 name='delete'
             ),
-        ], namespace="general_donation")),
+        ], namespace="general-donation")),
 ]

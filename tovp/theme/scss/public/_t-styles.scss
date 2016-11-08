@@ -13,12 +13,16 @@ body {
     height: 100%;
     width: 100%;
 }
+body.bg-general-donation,
 body.bg-tovp {
     background-image: url(../img/tovp-bg-tovp.jpg);
 }
-body.bg-nrsimha {
+body.bg-nrsimha-tile {
     background-image: url(../img/tovp-bg-nrsimha.jpg);
 }
-body.bg-caitanya {
+body.bg-golden-brick {
     background-image: url(../img/tovp-bg-caitanya.jpg);
+}
+body.bg-radha-madhava-brick {
+    background-image: url(../img/tovp-bg-radharani.jpg);
 }

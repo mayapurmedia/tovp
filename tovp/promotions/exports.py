@@ -5,7 +5,7 @@ from ananta.exports import BaseExport
 
 class PromotionExport(BaseExport):
     def get_promotion_name(self):
-        return str(self.obj._meta.verbose_name.title())
+        return str(self.result.object._meta.verbose_name.title())
 
     def get_name(self):
         obj = self.result.object
