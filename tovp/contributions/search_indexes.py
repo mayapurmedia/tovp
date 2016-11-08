@@ -10,7 +10,7 @@ from .models import Pledge, FollowUp, Contribution, BulkPayment
 class PledgeIndex(ContentSearchIndexMixin, PersonSearchIndexMixin,
                   indexes.SearchIndex, indexes.Indexable):
     content_name = 'Pledge'
-    amount = indexes.IntegerField(model_attr='amount')
+    amount = indexes.IntegerField()
     amount_paid = indexes.IntegerField(model_attr='amount_paid')
     currency = indexes.CharField(model_attr='currency', faceted=True)
     source = indexes.MultiValueField(null=True, faceted=True)
@@ -26,8 +26,17 @@ class PledgeIndex(ContentSearchIndexMixin, PersonSearchIndexMixin,
     followed_by = indexes.CharField(faceted=True)
     progress = indexes.CharField()
 
+    def prepare_amount(self, obj):
+        """ Return amount_paid for zero pledges. """
+        if not obj.amount:
+            return obj.amount_paid
+        return obj.amount
+
     def prepare_progress(self, obj):
-        return "{progress:.2f}%".format(progress=obj.progress)
+        progress = obj.progress
+        if not obj.amount:
+            progress = 100
+        return "{progress:.2f}%".format(progress=progress)
 
     def prepare_source(self, obj):
         items = []

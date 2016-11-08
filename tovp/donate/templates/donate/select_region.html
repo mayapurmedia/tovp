@@ -1,0 +1,53 @@
+{% extends 'public/base.html' %}
+
+{% block body_class %}bg-{{ promotion.get_promotion_slug }}{% endblock %}
+{% block page_content %}
+<div class="main-content container clear">
+    <div class="row">
+        <div class="col-12 col-7-desktop">
+            <h3>
+                Let's finish what we started<br />
+                Make donation for TOVP
+            </h3>
+        </div>
+
+        <div class="clear col-12 col-8-m col-6-l">
+
+            <!-- multistep form -->
+            <div id="donate-widget">
+
+                <!-- fieldsets -->
+                <fieldset id="fs-amount-grid">
+                    <h2 class="fs-title">Choose currency and region</h2>
+                    {#                    <h3 class="fs-subtitle">Step 1 of 3</h3>#}
+                    <div class="row amount-radios radios">
+                        <div class="col-4">
+                            <a class="region-link" href="{{ promotion.get_donate_url }}india">
+                                <div class="currency-wrapper">₹</div>
+                                <div class="region-wrapper">India</div>
+                            </a>
+                        </div>
+                        <div class="col-4">
+                            <a class="region-link" href="{{ promotion.get_donate_url }}uk">
+                                <div class="currency-wrapper">£</div>
+                                <div class="region-wrapper">United Kingdom</div>
+                            </a>
+                        </div>
+                        <div class="col-4">
+                            <a class="region-link" href="{{ promotion.get_donate_url }}international">
+                                <div class="currency-wrapper">$</div>
+                                <div class="region-wrapper">USA & All Others</div>
+                            </a>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}

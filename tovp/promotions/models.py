@@ -31,12 +31,12 @@ class BasePromotion(AuthStampedModel, TimeStampedModel):
 
     @classmethod
     def get_promotion_slug(cls):
-        return cls._meta.verbose_name.replace(' ', '_').lower()
+        return cls._meta.verbose_name.replace(' ', '-').lower()
 
     @classmethod
-    def get_donate_url(cls):
+    def get_donate_url(cls, region):
         promotion_slug = cls.get_promotion_slug()
-        return reverse('donate:%s' % promotion_slug)
+        return reverse('donate:%s' % promotion_slug, args=[region])
 
     def get_absolute_url(self):
         promotion_slug = self.get_promotion_slug()
@@ -137,6 +137,29 @@ class NrsimhaTile(BaseBrick):
         'EUR': 1000,
         'GBP': 800,
     }
+    amount_grid = {
+        'INR': (
+            {'months': 1, 'amount': 51000, 'default': True},
+            {'months': 2, 'amount': 25500},
+            {'months': 5, 'amount': 10200},
+            {'months': 12, 'amount': 4300},
+            {'months': 24, 'amount': 2150},
+        ),
+        'USD': (
+            {'months': 1, 'amount': 1000, 'default': True},
+            {'months': 2, 'amount': 500},
+            {'months': 5, 'amount': 200},
+            {'months': 12, 'amount': 84},
+            {'months': 24, 'amount': 42},
+        ),
+        'GBP': (
+            {'months': 1, 'amount': 800, 'default': True},
+            {'months': 2, 'amount': 400},
+            {'months': 5, 'amount': 160},
+            {'months': 12, 'amount': 70},
+            {'months': 24, 'amount': 35},
+        ),
+    }
 
     class Meta:
         verbose_name = 'Nrsimha Tile'
@@ -150,6 +173,29 @@ class GoldenBrick(BaseBrick):
         'CAD': 1600,
         'EUR': 1500,
         'GBP': 1300,
+    }
+    amount_grid = {
+        'INR': (
+            {'months': 1, 'amount': 100000, 'default': True},
+            {'months': 2, 'amount': 50000},
+            {'months': 5, 'amount': 20000},
+            {'months': 12, 'amount': 8500},
+            {'months': 24, 'amount': 4750},
+        ),
+        'USD': (
+            {'months': 1, 'amount': 1600, 'default': True},
+            {'months': 2, 'amount': 800},
+            {'months': 5, 'amount': 320},
+            {'months': 12, 'amount': 140},
+            {'months': 24, 'amount': 70},
+        ),
+        'GBP': (
+            {'months': 1, 'amount': 1300, 'default': True},
+            {'months': 2, 'amount': 400},
+            {'months': 5, 'amount': 260},
+            {'months': 12, 'amount': 110},
+            {'months': 24, 'amount': 55},
+        ),
     }
 
     class Meta:
@@ -174,6 +220,30 @@ class RadhaMadhavaBrick(BaseBrick):
         'CAD': 2500,
         'EUR': 2400,
         'GBP': 2200,
+    }
+    amount_grid = {
+        'INR': (
+            {'months': 1, 'amount': 150000, 'default': True},
+            {'months': 2, 'amount': 75000},
+            {'months': 5, 'amount': 30000},
+            {'months': 12, 'amount': 12500},
+            {'months': 24, 'amount': 6750},
+        ),
+        'USD': (
+            {'months': 1, 'amount': 2500, 'default': True},
+            {'months': 2, 'amount': 1250},
+            {'months': 5, 'amount': 500},
+            {'months': 12, 'amount': 210},
+            {'months': 24, 'amount': 108},
+            {'months': 50, 'amount': 50},
+        ),
+        'GBP': (
+            {'months': 1, 'amount': 2200, 'default': True},
+            {'months': 2, 'amount': 1100},
+            {'months': 5, 'amount': 440},
+            {'months': 12, 'amount': 190},
+            {'months': 24, 'amount': 95},
+        ),
     }
 
     class Meta:
@@ -324,6 +394,29 @@ class GeneralDonation(BasePromotion):
         'CAD': 1,
         'EUR': 1,
         'GBP': 1,
+    }
+    amount_grid = {
+        'INR': (
+            {'months': 1, 'amount': 100000, 'default': True},
+            {'months': 2, 'amount': 200000},
+            {'months': 5, 'amount': 20000},
+            {'months': 12, 'amount': 8500},
+            {'months': 24, 'amount': 4750},
+        ),
+        'USD': (
+            {'months': 1, 'amount': 1600, 'default': True},
+            {'months': 2, 'amount': 800},
+            {'months': 5, 'amount': 320},
+            {'months': 12, 'amount': 140},
+            {'months': 24, 'amount': 70},
+        ),
+        'GBP': (
+            {'months': 1, 'amount': 1300, 'default': True},
+            {'months': 2, 'amount': 400},
+            {'months': 5, 'amount': 260},
+            {'months': 12, 'amount': 110},
+            {'months': 24, 'amount': 55},
+        ),
     }
 
     class Meta:
