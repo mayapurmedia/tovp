@@ -48,6 +48,7 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
             'modified_by': 'Modified By', 'receipt_type': 'Receipt Type',
             'source': 'Source', 'gifts': 'Has Gift', 'coin_given': 'Coin Given',
             'certificate_given': 'Certificate Given',
+            'brick_status': 'Brick Status',
         }
 
     def default_narrow_facets(self):
@@ -59,7 +60,7 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
                     'content_type', 'receipt_type', 'followed_by', 'currency',
                     'status', 'source', 'deposited_status', 'promotion_type',
                     'payment_method', 'yatra', 'interval', 'has_book',
-                    'has_slip', 'created_by', 'modified_by',
+                    'has_slip', 'created_by', 'modified_by', 'brick_status',
                     'gifts', 'country', 'zone', 'coin_given', 'certificate_given',
                 ),
             },
@@ -84,6 +85,7 @@ class SearchView(LoginRequiredMixin, TemplateResponseMixin, FormMixin, View):
             "created_by": None,
             "modified_by": None,
             "is_external": None,
+            "brick_status": None,
             "gifts": None,
             "coin_given": None,
             "certificate_given": None,

@@ -27,6 +27,9 @@ class PromotionExport(BaseExport):
         obj = self.result.object
         return "{progress:.2f}%".format(progress=obj.pledge.progress)
 
+    def get_name_on_brick(self):
+        return self.result.name_on_brick
+
     def export_data(self):
         export_data = OrderedDict((
             ("Record ID", {'type': 'value', 'value': 'pk'}),
@@ -40,5 +43,6 @@ class PromotionExport(BaseExport):
             ("Phone Number", {'type': 'value', 'value': 'pledge.person.phone_number'}),
             ("Address", {'type': 'custom', 'value': 'address'}),
             ("Percent Paid", {'type': 'custom', 'value': 'progress'}),
+            ("Brick Name", {'type': 'custom', 'value': 'name_on_brick'}),
         ))
         return export_data

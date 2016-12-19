@@ -18,7 +18,7 @@ class PromotionIndexMixin(ContentSearchIndexMixin, PledgePersonSearchIndexMixin,
         template_name='search/indexes/promotions/brick_text.txt')
 
     status = indexes.CharField(model_attr='pledge__get_status_display', faceted=True)
-    absolute_url = indexes.CharField(model_attr='pledge__person__get_absolute_url')
+    absolute_url = indexes.CharField(model_attr='get_absolute_url')
     source = indexes.MultiValueField(null=True, faceted=True)
 
     def get_model(self):
@@ -50,6 +50,7 @@ class BrickIndex(PromotionIndexMixin):
     name_on_brick = indexes.CharField(model_attr='name_on_brick')
     coin_given = indexes.CharField(faceted=True)
     certificate_given = indexes.CharField(faceted=True)
+    brick_status = indexes.CharField(model_attr='get_brick_status_display', faceted=True)
 
     def prepare_coin_given(self, obj):
         if not obj.coin_given:
