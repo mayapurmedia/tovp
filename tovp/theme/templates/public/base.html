@@ -14,22 +14,20 @@
   <link rel="apple-touch-icon" sizes="72x72" href="{% static 'shared/img/apple-touch-icon-72x72.png' %}">
   <link rel="apple-touch-icon" sizes="114x114" href="{% static 'shared/img/apple-touch-icon-114x114.png' %}">
 
-  <link rel="stylesheet" href="{% static "public/js/vendor/mmenu/jquery.mmenu.all.css" %}">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
   <link rel="stylesheet" href="{% static "public/css/styles.css" %}">
 
   <script src="{% static 'public/js/vendor/jquery-3.0.0-beta1.min.js' %}"></script>
   <script src="{% static 'public/js/vendor/webfontloader-1.6.24.js' %}"></script>
-  <script src="{% static 'public/js/vendor/mmenu/jquery.mmenu.all.min.js' %}"></script>
   <script src="{% static 'public/js/default.js' %}"></script>
-  <script>
-        WebFont.load({
-            google: {
-                families: ['Crimson Text:400italic', 'Open Sans:300,400']
-            }
-        });
-  </script>
+{#  <script>#}
+{#        WebFont.load({#}
+{#            google: {#}
+{#                families: ['Open Sans:300,400']#}
+{#            }#}
+{#        });#}
+{#  </script>#}
 </head>
 <body class="{% block body_class %}{% endblock %}">
 

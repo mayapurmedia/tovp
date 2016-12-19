@@ -12,11 +12,11 @@
             </h3>
         </div>
 
-        <div class="clear col-12 col-8-m col-6-l">
+        <div class="clear col-12 col-9-m col-7-l">
 
             <!-- multistep form -->
-            <form id="donate-widget" method="get" action=".">
-
+            <form id="donate-widget" method="post" action="{% url 'donate:save_form' promotion.get_promotion_slug 'uk' %}">
+                {% csrf_token %}
                 <!-- fieldsets -->
                 <fieldset id="fs-amount-grid">
                     <h2 class="fs-title">Choose your contribution</h2>
@@ -26,12 +26,12 @@
                         <div class="col-4">
                             <label for="amount-{{ forloop.counter }}" class="amount-btn {{ amount_item.default|yesno:'selected,' }}">
                                 <input type="radio" name="amount" data-amount={{ amount_item.amount }} data-summary="{{ currency.sign }}{{ amount_item.amount }} {% if amount_item.months > 1 %}for {{ amount_item.months }} months{% endif %}" autocomplete="off" class="radio-button" id="amount-{{ forloop.counter }}" value="{{ forloop.counter }}" {{ amount_item.default|yesno:'checked,' }}>
-                                <span class="multi">{{ amount_item.months }}×</span> <span> {{ currency.sign }}{{ amount_item.amount }}</span>
+                                 <span>{{ currency.sign }}{{ amount_item.amount }}</span><br/> <span class="multi">in {{ amount_item.months }} monthly installment</span>
                             </label>
                         </div>
                         {% endfor %}
-                        <div class="col-4">
-                            <label for="amount_other" class="amount-btn other">
+                        <div class="col-6">
+                            <label for="amount-other" class="amount-btn otherx">
                                 <input type="radio" name="amount" autocomplete="off" class="other-button" id="amount-other" value="0">
                                 $ <input type="number" name="amount-other-value" min="20" data-currency="{{ currency.sign }}" class="other-amount other-text input-mini no-stretch" autocomplete="off" id="amount-other-value">
                             </label>
@@ -40,14 +40,15 @@
                     <input type="button" id="fs-amount-grid-next" name="next" class="next amount-next action-button" value="Next" />
                 </fieldset>
 
-                <fieldset>
+                <fieldset id="fs-personal-details">
                     <h2 class="fs-title">Personal details</h2>
                     <h3 class="fs-subtitle">Step 2 of 3</h3>
-                    <input type="text" name="first-name" placeholder="First Name" />
-                    <input type="text" name="last-name" placeholder="Last Name" />
+                    <input required type="text" name="first-name" placeholder="First Name" />
+                    <input required type="text" name="last-name" placeholder="Last Name" />
                     <input type="text" name="initiated-name" placeholder="Initiated Name" />
-                    <input type="email" name="email" placeholder="Email" />
+                    <input type="email" required name="email" placeholder="Email" />
                     <input type="text" name="phone" placeholder="Phone" />
+                    {#<input type="text" name="pan" placeholder="PAN Card Number" pattern="[A-Za-z]{5}\d{4}[A-Za-z]{1}" title="Fill PAN number in correct format or leave empty."/>#}
                     <textarea name="address" placeholder="Address"></textarea>
                     <input type="button" name="previous" class="previous action-button" value="Previous" />
                     <input type="button" name="next" class="next action-button" value="Next" />
@@ -59,21 +60,23 @@
 
                     <div id="amount-summary"><span></span><a class="edit-link" href="">[edit]</a></div>
 
-                    <h2>Stripe link</h2>
+                    <input type="button" name="previous" class="previous action-button" value="Edit" />
+                    <input type="submit" name="save" class="action-button" value="Continue to payment method" />
 
-  <div class="stripe-button-container">
-  <script
-    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-    data-key="pk_test_6pRNASCoBOKtIshFeQd4XMUh"
-    data-amount="999"
-    data-name="Stripe.com"
-    data-description="Widget"
-    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-    data-locale="auto"
-    data-zip-code="true"
-    data-notrack>
-  </script>
-  </div>
+
+{#  <div class="stripe-button-container">#}
+{#  <script#}
+{#    src="https://checkout.stripe.com/checkout.js" class="stripe-button"#}
+{#    data-key="pk_test_6pRNASCoBOKtIshFeQd4XMUh"#}
+{#    data-amount="999"#}
+{#    data-name="Stripe.com"#}
+{#    data-description="Widget"#}
+{#    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"#}
+{#    data-locale="auto"#}
+{#    data-zip-code="true"#}
+{#    data-notrack>#}
+{#  </script>#}
+{#  </div>#}
                 </fieldset>
             </form>
         </div>
@@ -101,6 +104,7 @@ $(".next").click(function(){
     var summary = '';
 
     if (fs_id == 'fs-amount-grid') {
+
         if ($(".amount-btn.other").hasClass("selected") == true) {
             if ($('input[name=amount-other-value]').val()) {
                 validated = true;
@@ -115,11 +119,32 @@ $(".next").click(function(){
             }
         }
         else {
-            console.log('wwwwwwwwwwwwwwwwww');
             validated = true;
             summary = $('input[name=amount]:checked').data("summary")
         }
         $('#amount-summary span').text('Donation of ' + summary);
+    }
+    else if (fs_id== 'fs-personal-details') {
+        var $form = $('#donate-widget');
+        console.log($('input[name=initiated-name]').val());
+        if ($('input[name=initiated-name]').val()) {
+            $('input[name=first-name]').removeAttr('required');
+            $('input[name=last-name]').removeAttr('required');
+            console.log('xxx1111');
+        }
+        else {
+            $('input[name=first-name]').attr('required', 'true');
+            $('input[name=last-name]').attr('required', 'true');
+            console.log('zzzz222');
+        }
+        if (!$form[0].checkValidity()) {
+            // If the form is invalid, submit it. The form won't actually submit;
+            // this will just cause the browser to display the native HTML5 error messages.
+            $form.find(':submit').click()
+        }
+        else {
+            validated = true;
+        }
     }
     else {
         validated = true;
@@ -252,6 +277,10 @@ $(".amount-radios input").click(function() {
 
     if ($(this).hasClass('other-amount') != true) {
         $(".amount-next").click();
+    }
+    else {
+        console.log('xxx');
+        $('input#amount-other').attr('checked', true);
     }
 
 })
