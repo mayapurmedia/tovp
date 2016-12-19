@@ -5,7 +5,7 @@ from ananta.exports import BaseExport
 
 class PromotionExport(BaseExport):
     def get_promotion_name(self):
-        return str(self.obj._meta.verbose_name.title())
+        return str(self.result.object._meta.verbose_name.title())
 
     def get_name(self):
         obj = self.result.object
@@ -27,6 +27,9 @@ class PromotionExport(BaseExport):
         obj = self.result.object
         return "{progress:.2f}%".format(progress=obj.pledge.progress)
 
+    def get_name_on_brick(self):
+        return self.result.name_on_brick
+
     def export_data(self):
         export_data = OrderedDict((
             ("Record ID", {'type': 'value', 'value': 'pk'}),
@@ -40,5 +43,6 @@ class PromotionExport(BaseExport):
             ("Phone Number", {'type': 'value', 'value': 'pledge.person.phone_number'}),
             ("Address", {'type': 'custom', 'value': 'address'}),
             ("Percent Paid", {'type': 'custom', 'value': 'progress'}),
+            ("Brick Name", {'type': 'custom', 'value': 'name_on_brick'}),
         ))
         return export_data

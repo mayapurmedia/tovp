@@ -97,9 +97,9 @@ class BaseBrick(CertificateGivenMixin, CoinGivenMixin, BasePromotion):
                     "characters."))
 
     BRICK_STATUS_CHOICES = (
-        ('need_to_send', _('Need to send to DC')),
-        ('name_given', _('Name given to DC')),
-        ('brick_made', _('Brick is made')),
+        ('need_to_send', _('Need to produce')),
+        ('name_given', _('In production')),
+        ('brick_made', _('Finished')),
     )
     brick_status = models.CharField("Brick Status", max_length=100,
                                     default='need_to_send',
