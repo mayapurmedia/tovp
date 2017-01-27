@@ -28,7 +28,7 @@ class PledgeExport(BaseExport):
             ("City", {'type': 'result', 'value': 'city'}),
             ("ZIP code", {'type': 'result', 'value': 'postcode'}),
             ("State", {'type': 'result', 'value': 'state'}),
-            ("Country", {'type': 'result', 'value': 'name'}),
+            ("Country", {'type': 'result', 'value': 'country'}),
             ("Amount", {'type': 'result', 'value': 'amount'}),
             ("Amount Paid", {'type': 'result', 'value': 'amount_paid'}),
             ("Currency", {'type': 'result', 'value': 'currency'}),
