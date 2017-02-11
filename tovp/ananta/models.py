@@ -16,8 +16,11 @@ class RevisionCommentMixin(RevisionMixin):
 
 class SourceMixin(models.Model):
     SOURCE_CHOICES = (
+        (u'ahmedabad-1', _('Ahmedabad 1')),
+        (u'ahmedabad-2', _('Ahmedabad 2')),
         (u'tovp-f-mayapur', _('TOVP Fundraising Mayapur')),
         (u'tovp-exhibits', _('TOVP Exhibits')),
+        (u'baroda', _('Baroda')),
         (u'bcs-vp-2015', _('BCS Vyasa Puja 2015')),
         (u'bhagavata-saptaha-2015', _('Bhagavata Saptaha 2015')),
         (u'bhakti-vriksa-kolkata-2016', _('Bhakti Vriksa Kolkata 2016')),
@@ -48,6 +51,9 @@ class SourceMixin(models.Model):
         (u'pune-yatra-2016', _('Pune Yatra 2016')),
         (u'rns-kartik-yatra', _('RNS Kartik Yatra')),
         (u'rohini-narayani', _('Rohini (Sri Narayani Devi Dasi)')),
+        (u'surat-1', _('Surat 1')),
+        (u'surat-2', _('Surat 2')),
+        (u'vallabha-vidyanagar', _('Vallabha Vidyanagar')),
         (u'vrindavan-booth', _('Vrindavan Booth 2015')),
         (u'vrindavan-booth-2016', _('Vrindavan Booth 2016')),
         (u'vvps-vp-2015', _('Vedavyasapriya Swami Vyasa Puja 2015')),
