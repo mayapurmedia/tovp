@@ -33,6 +33,7 @@ class SourceMixin(models.Model):
         (u'j-w-marriot', _('J W Marriot')),
         (u'jps-office', _('JPS Office')),
         (u'jps-others', _('JPS Others')),
+        (u'kolkata-nityananda-yatra-2017', _('Kolkata Nityananda Yatra 2017')),
         (u'kanjurmarg-mumbai-2015', _('Kanjurmarg Mumbai 2015')),
         (u'lm-reception', _('Life Membership Reception')),
         (u'mayapur-community', _('Mayapur Community')),
