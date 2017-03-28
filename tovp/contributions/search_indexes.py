@@ -233,6 +233,24 @@ class BulkPaymentIndex(BaseContributionIndexMixin, ContentSearchIndexMixin,
                        indexes.Indexable):
     content_name = 'Bulk Payment'
     receipt_type = indexes.CharField(faceted=True)
+    deposited_status = indexes.CharField(faceted=True)
+
+    def prepare_deposited_status(self, obj):
+        if obj.payment_method not in ['cashl', 'cashf']:
+            return ''
+
+        deposited = 0
+        not_deposited = 0
+        # could be done with filter for deposited_status == 'deposited' only
+        for contribution in obj.contributions.all():
+            if contribution.deposited_status == 'deposited':
+                deposited += 1
+            else:
+                not_deposited += 1
+        if not_deposited:
+            return 'Not deposited'
+        else:
+            return 'Deposited'
 
     def get_model(self):
         return BulkPayment

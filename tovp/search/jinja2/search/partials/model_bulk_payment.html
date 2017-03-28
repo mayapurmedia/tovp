@@ -12,4 +12,5 @@
     {% if result.object.receipt_type == 'acknowledgement' %}
     {{ result.object.get_deposit_status()|safe }}
     {% endif %}
+    {{ result.deposited_status }}
 </div>
