@@ -579,6 +579,12 @@ class Contribution(BaseContribution):
         else:
             self._original_pledge = None
 
+    def reindex_related(self):
+        related = []
+        if self.bulk_payment:
+            related.append(self.bulk_payment)
+        return related
+
     def ensure_serial_number_not_generated(self):
         if self._serial_number and self.book_number:
             msg = _("This contribution has already serial number generated, "
