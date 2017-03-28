@@ -14,6 +14,7 @@
     <div class="{% if request.user.has_perm('contributions.change_contribution') %} col-xs-9 col-ms-10 col-sm-11{% else %}col-xs-12{% endif %}">
         <h1>Contribution #{{ object.pk }}</h1>
     </div>
+
     {% if request.user.has_perm('contacts.change_person') %}
         <div class="col-xs-3 col-ms-2 col-sm-1">
             <a href="{{ url('contributions:contribution:update', object.pledge.person.pk, object.pk) }}" class="btn btn-lg btn-warning">Edit</a>
@@ -181,12 +182,24 @@
         {{ print_field(field_label, object[field_name])}}
     </div>
     {% endif %}
-
     {% set field_label = 'Receipt Type' %}
     {% set field_name = 'receipt_type' %}
     {% if object[field_name] %}
     <div class="col-xs-12">
         {{ print_field(field_label, object.get_receipt_type_display()) }}
+    </div>
+    {% endif %}
+
+    {% if request.user.has_perm('contributions.can_change_deposit_status') %}
+    <div class="col-xs-12">
+        <div class="field-label">Deposited status</div>
+        <div class="field-value">
+            {% if contribution.receipt_type != 'usa-receipt' %}
+            <div class="deposit-status" action-url="{{ url('contributions:contribution:deposit_status_changer', pk=contribution.pk) }}"><span class="label label-{{ contribution.deposited_status }} current-status">{{ contribution.deposited_status }}</span>
+                <a class="status-changer label label-default" href=""><i class="fa fa-refresh"></i></a>
+            </div>
+            {% endif %}
+        </div>
     </div>
     {% endif %}
 
@@ -226,6 +239,8 @@
         {% endif %}
     </div>
 </div>
+
+{% include '_status_changer.html' %}
 
 {% endblock %}
 
