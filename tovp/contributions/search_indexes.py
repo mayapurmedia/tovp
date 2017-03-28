@@ -237,7 +237,7 @@ class BulkPaymentIndex(BaseContributionIndexMixin, ContentSearchIndexMixin,
 
     def prepare_deposited_status(self, obj):
         if obj.payment_method not in ['cashl', 'cashf']:
-            return ''
+            return
 
         deposited = 0
         not_deposited = 0
