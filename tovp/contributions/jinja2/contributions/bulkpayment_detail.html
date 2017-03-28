@@ -165,9 +165,18 @@
     <h2>Associated Contributions</h2>
     {% if object.contributions.all() %}
     {% for contribution in object.contributions.all() %}
-    <div class="col-xs-12">
-        <a href="{{ contribution.get_absolute_url() }}">{{ contribution.info() }}</a>
-    </div>
+
+        <div class="col-xs-12">
+            {% if contribution.receipt_type != 'usa-receipt' %}
+            <div class="deposit-status" action-url="{{ url('contributions:contribution:deposit_status_changer', pk=contribution.pk) }}"><span class="label label-{{ contribution.deposited_status }} current-status">{{ contribution.deposited_status }}</span>
+                {% if request.user.has_perm('contributions.can_change_deposit_status') %}
+                <a class="status-changer label label-default" href=""><i class="fa fa-refresh"></i></a>
+                {% endif %}
+            </div>
+            {% endif %}
+            <a href="{{ contribution.get_absolute_url() }}">{{ contribution.info() }}</a>
+        </div>
+
     {% endfor %}
     {% else %}
     <p>There are currently no contributions.</p>
@@ -186,6 +195,7 @@
     </div>
 </div>
 
+{% include '_status_changer.html' %}
 
 {% endblock %}
 
