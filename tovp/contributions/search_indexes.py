@@ -51,7 +51,7 @@ class PledgeIndex(ContentSearchIndexMixin, PersonSearchIndexMixin,
 
     def prepare_promotion_type(self, obj):
         items = []
-        for promotion in obj.assigned_promotions():
+        for promotion in obj.assigned_promotions:
             try:
                 items.append(promotion._meta.verbose_name.title())
             except:
@@ -220,7 +220,7 @@ class ContributionIndex(BaseContributionIndexMixin,
 
     def prepare_promotion_type(self, obj):
         items = []
-        for promotion in obj.pledge.assigned_promotions():
+        for promotion in obj.pledge.assigned_promotions:
             try:
                 items.append(promotion._meta.verbose_name.title())
             except:

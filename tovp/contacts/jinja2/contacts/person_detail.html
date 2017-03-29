@@ -168,10 +168,10 @@
                 <div class="row">
                     <div class="col-xs-6">
                         <h2>Promotions</h2>
-                        {% if object.assigned_promotions() %}
+                        {% if object.assigned_promotions %}
                             <h3>Awarded Promotions</h3>
                             <ul>
-                            {% for promotion in object.assigned_promotions() %}
+                            {% for promotion in object.assigned_promotions %}
                                 <li><a href="{{ promotion.get_absolute_url() }}">[{{ promotion.pledge.status }}] {{ promotion }}</a></li>
                             {% endfor %}
                             </ul>

@@ -1,10 +1,11 @@
 from datetime import datetime
 
 from django.conf import settings
+from django.core import exceptions
 from django.db import models
 from django.db.models import permalink
 from django.utils.translation import ugettext_lazy as _
-from django.core import exceptions
+from django.utils.functional import cached_property
 
 from model_utils.fields import MonitorField
 from model_utils.models import TimeStampedModel
@@ -76,20 +77,18 @@ class Pledge(TimeStampedModel, AuthStampedModel, NextPrevMixin, SourceMixin):
         help_text=_('Date of next expected payment.'),
     )
 
-    cache_assigned_promotions = None
-
+    @cached_property
     def assigned_promotions(self):
         """
         Returns all promotions (e.g. Golden Brick, Silver Coin) for person
         """
-        if not self.cache_assigned_promotions:
-            from promotions.models import promotions
-            assigned_promotions = []
-            for promotion_class in promotions:
-                for promotion in promotion_class.objects.all(). \
-                        filter(pledge=self):
-                    assigned_promotions.append(promotion)
-            self.cache_assigned_promotions = assigned_promotions
+        from promotions.models import promotions
+        assigned_promotions = []
+        for promotion_class in promotions:
+            for promotion in promotion_class.objects.all(). \
+                    filter(pledge=self):
+                assigned_promotions.append(promotion)
+        self.cache_assigned_promotions = assigned_promotions
         return self.cache_assigned_promotions
 
     @property

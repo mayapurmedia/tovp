@@ -5,6 +5,7 @@ from django.conf import settings
 from django.db import models
 from django.db.models import permalink
 from django.utils.translation import ugettext_lazy as _, pgettext_lazy as __
+from django.utils.functional import cached_property
 from django.core import exceptions
 from django.apps import apps
 
@@ -405,20 +406,18 @@ class Person(AuthStampedModel, NextPrevMixin, TimeStampedModel):
                 filter(pledge__person=self)
         return self.cache_contributions
 
-    cache_assigned_promotions = None
-
+    @cached_property
     def assigned_promotions(self):
         """
         Returns all promotions (e.g. Golden Brick, Silver Coin) for person
         """
-        if not self.cache_assigned_promotions:
-            from promotions.models import promotions
-            assigned_promotions = []
-            for promotion_class in promotions:
-                for promotion in promotion_class.objects.all(). \
-                        filter(pledge__person=self):
-                    assigned_promotions.append(promotion)
-            self.cache_assigned_promotions = assigned_promotions
+        from promotions.models import promotions
+        assigned_promotions = []
+        for promotion_class in promotions:
+            for promotion in promotion_class.objects.all(). \
+                    filter(pledge__person=self):
+                assigned_promotions.append(promotion)
+        self.cache_assigned_promotions = assigned_promotions
         return self.cache_assigned_promotions
 
     has_ballance = None
@@ -473,7 +472,7 @@ class Person(AuthStampedModel, NextPrevMixin, TimeStampedModel):
                         if contribution.generate_serial_year() == current_financial_year:
                             ballance[pledge.currency]['donated_financial_year'] += contribution.amount
 
-            for promotion in self.assigned_promotions():
+            for promotion in self.assigned_promotions:
                 currency = promotion.pledge.currency
                 if hasattr(promotion, 'quantity'):
                     ballance[currency]['used'] += \

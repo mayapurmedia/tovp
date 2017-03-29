@@ -305,7 +305,7 @@ class PersonIndex(ContentSearchIndexMixin, indexes.SearchIndex,
 
     def prepare_promotion_type(self, obj):
         items = []
-        for promotion in obj.assigned_promotions():
+        for promotion in obj.assigned_promotions:
             try:
                 items.append(promotion._meta.verbose_name.title())
             except:
@@ -341,7 +341,7 @@ class PersonIndex(ContentSearchIndexMixin, indexes.SearchIndex,
 
     def prepare_promotions(self, obj):
         promotions = []
-        for promotion in obj.assigned_promotions():
+        for promotion in obj.assigned_promotions:
             try:
                 promotions.append(promotion._meta.verbose_name.title())
             except:
