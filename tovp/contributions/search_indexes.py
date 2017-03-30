@@ -136,7 +136,7 @@ class BaseContributionIndexMixin(indexes.SearchIndex):
             source = obj.pledge.source.name
             if source not in items:
                 items.append(source)
-                if obj.source.name in ['jps-office', 'namahatta', 'jps-others']:
+                if source in ['jps-office', 'namahatta', 'jps-others']:
                     items.append('JPS (All combined)')
         return items
 
