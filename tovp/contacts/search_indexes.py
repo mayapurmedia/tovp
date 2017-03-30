@@ -332,11 +332,11 @@ class PersonIndex(ContentSearchIndexMixin, indexes.SearchIndex,
     def prepare_sources(self, obj):
         items = []
         for pledge in obj.pledges.all():
-            if (pledge.get_source_display()) and (pledge.get_source_display() not in items):
-                items.append(pledge.get_source_display())
+            if pledge.source and pledge.source.name and (pledge.source.name not in items):
+                items.append(pledge.source.name)
             for contribution in pledge.contributions.all():
-                if (contribution.get_source_display()) and (contribution.get_source_display() not in items):
-                    items.append(pledge.get_source_display())
+                if contribution.source and contribution.source.name and (contribution.source.name not in items):
+                    items.append(pledge.source.name)
         return ",".join(items)
 
     def prepare_promotions(self, obj):

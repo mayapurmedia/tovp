@@ -30,11 +30,11 @@ class PromotionIndexMixin(ContentSearchIndexMixin, PledgePersonSearchIndexMixin,
     def prepare_source(self, obj):
         items = []
         if getattr(obj, 'pledge', None) and obj.pledge.source:
-            source = obj.pledge.get_source_display()
+            source = obj.pledge.source.name
             if source not in items:
                 items.append(source)
-                if obj.pledge.source in ['jps-office', 'namahatta',
-                                         'jps-others']:
+                if obj.pledge.source.name in ['jps-office', 'namahatta',
+                                              'jps-others']:
                     items.append('JPS (All combined)')
         return items
 

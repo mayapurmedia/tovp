@@ -41,8 +41,8 @@ class PledgeIndex(ContentSearchIndexMixin, PersonSearchIndexMixin,
     def prepare_source(self, obj):
         items = []
         if obj.source:
-            items.append(obj.get_source_display())
-            if obj.source in ['jps-office', 'namahatta', 'jps-others']:
+            items.append(obj.source.name)
+            if obj.source.name in ['jps-office', 'namahatta', 'jps-others']:
                 items.append('JPS (All combined)')
         return items
 
@@ -81,13 +81,13 @@ class FollowUpIndex(ContentSearchIndexMixin, PledgePersonSearchIndexMixin,
     def prepare_source(self, obj):
         items = []
         if obj.pledge.source:
-            source = obj.pledge.get_source_display()
+            source = obj.pledge.source.name
             if source not in items:
                 items.append(source)
                 if obj.pledge.source in ['jps-office', 'namahatta', 'jps-others']:
                     items.append('JPS (All combined)')
         for contribution in obj.pledge.contributions.all():
-            source = contribution.get_source_display()
+            source = contribution.source.name
             if source not in items:
                 items.append(source)
                 if contribution.source in ['jps-office', 'namahatta', 'jps-others']:
@@ -129,14 +129,14 @@ class BaseContributionIndexMixin(indexes.SearchIndex):
     def prepare_source(self, obj):
         items = []
         if obj.source:
-            items.append(obj.get_source_display())
+            items.append(obj.source.name)
             if obj.source in ['jps-office', 'namahatta', 'jps-others']:
                 items.append('JPS (All combined)')
         if getattr(obj, 'pledge', None) and obj.pledge.source:
-            source = obj.pledge.get_source_display()
+            source = obj.pledge.source.name
             if source not in items:
                 items.append(source)
-                if obj.source in ['jps-office', 'namahatta', 'jps-others']:
+                if obj.source.name in ['jps-office', 'namahatta', 'jps-others']:
                     items.append('JPS (All combined)')
         return items
 
