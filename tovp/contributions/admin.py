@@ -1,7 +1,7 @@
 from django.contrib import admin
 from reversion_compare.admin import CompareVersionAdmin
 
-from .models import Pledge, BulkPayment, Contribution
+from .models import Source, Pledge, BulkPayment, Contribution
 
 
 class PledgeModelAdmin(CompareVersionAdmin):
@@ -19,6 +19,7 @@ class ContributionModelAdmin(CompareVersionAdmin):
         model = Contribution
 
 
+admin.site.register(Source)
 admin.site.register(BulkPayment, BulkPaymentModelAdmin)
 admin.site.register(Pledge, PledgeModelAdmin)
 admin.site.register(Contribution, ContributionModelAdmin)

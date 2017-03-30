@@ -18,6 +18,16 @@ from currencies.utils import (get_currency_choices, get_currency_words,
                               get_foreign_currency_choices)
 
 
+class Source(models.Model):
+    name = models.CharField("Name", max_length=255)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['name']
+
+
 class Pledge(TimeStampedModel, AuthStampedModel, NextPrevMixin, SourceMixin):
     """
     Through Pledge model you can keep track of all its contributions and

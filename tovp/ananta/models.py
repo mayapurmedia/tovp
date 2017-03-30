@@ -59,8 +59,8 @@ class SourceMixin(models.Model):
         (u'vrindavan-booth-2016', _('Vrindavan Booth 2016')),
         (u'vvps-vp-2015', _('Vedavyasapriya Swami Vyasa Puja 2015')),
     )
-    source = models.CharField("Source", max_length=30, default='',
-                              choices=SOURCE_CHOICES, blank=True)
+    source_old = models.CharField("Source", max_length=30, default='',
+                                  choices=SOURCE_CHOICES, blank=True)
 
     class Meta:
         abstract = True
