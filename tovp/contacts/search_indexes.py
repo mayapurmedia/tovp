@@ -332,11 +332,15 @@ class PersonIndex(ContentSearchIndexMixin, indexes.SearchIndex,
     def prepare_sources(self, obj):
         items = []
         for pledge in obj.pledges.all():
-            if pledge.source and pledge.source.name and (pledge.source.name not in items):
-                items.append(pledge.source.name)
-            for contribution in pledge.contributions.all():
-                if contribution.source and contribution.source.name and (contribution.source.name not in items):
+            # without the next if-clause elasticsearch tries to index pledges w/o a source, throwing fatal errors.
+            # TODO: assign some default source to pledges that have none.
+            if pledge.source:
+                if pledge.source and pledge.source.name and (pledge.source.name not in items):
                     items.append(pledge.source.name)
+                for contribution in pledge.contributions.all():
+                    if contribution.source:
+                        if contribution.source and contribution.source.name and (contribution.source.name not in items):
+                            items.append(pledge.source.name)
         return ",".join(items)
 
     def prepare_promotions(self, obj):

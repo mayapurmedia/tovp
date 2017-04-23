@@ -80,6 +80,8 @@ class FollowUpIndex(ContentSearchIndexMixin, PledgePersonSearchIndexMixin,
 
     def prepare_source(self, obj):
         items = []
+        # without the next if-clause elasticsearch tries to index pledges w/o a source, throwing fatal errors.
+        # TODO: assign some default source to pledges that have none.
         if obj.pledge.source:
             source = obj.pledge.source.name
             if source not in items:
@@ -87,11 +89,12 @@ class FollowUpIndex(ContentSearchIndexMixin, PledgePersonSearchIndexMixin,
                 if obj.pledge.source in ['jps-office', 'namahatta', 'jps-others']:
                     items.append('JPS (All combined)')
         for contribution in obj.pledge.contributions.all():
-            source = contribution.source.name
-            if source not in items:
-                items.append(source)
-                if contribution.source in ['jps-office', 'namahatta', 'jps-others']:
-                    items.append('JPS (All combined)')
+            if contribution.source:
+                source = contribution.source.name
+                if source not in items:
+                    items.append(source)
+                    if contribution.source in ['jps-office', 'namahatta', 'jps-others']:
+                        items.append('JPS (All combined)')
 
         return items
 
