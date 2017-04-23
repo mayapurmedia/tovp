@@ -296,6 +296,7 @@ class BaseContributionMixin(TimeStampedModel, AuthStampedModel, NextPrevMixin,
     Mixin to define base fields which can be shared for Contributions and 
     BulkPayments.
     """
+    tmp_serial = None
     # fields to save serial number for contributions for which are not from
     # the books/slips and we should generate receipt for
     serial_year = models.CharField(
@@ -522,7 +523,7 @@ class BaseContributionMixin(TimeStampedModel, AuthStampedModel, NextPrevMixin,
             else:
                 self.receipt_date = datetime.now()
 
-        if self._serial_year:
+        if self._serial_year and not self.tmp_serial:
             self.serial_year = self._serial_year
             self.serial_number = self._serial_number
 
