@@ -63,3 +63,7 @@ tovp/media
 
 .idea/
 node_modules
+
+venv/
+.directory
+
