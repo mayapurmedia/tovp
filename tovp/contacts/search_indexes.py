@@ -401,7 +401,8 @@ class PersonSearchIndexMixin(indexes.SearchIndex):
     country = indexes.CharField(model_attr='person__get_country_display', faceted=True)
     zone = indexes.CharField(faceted=True)
     postcode = indexes.CharField(model_attr='person__postcode')
-    pan_card_number = indexes.CharField(model_attr='person__pan_card_number')
+    # added 'null=True' to the attribures of pan_card_number to allow person's w/o PAN
+    pan_card_number = indexes.CharField(model_attr='person__pan_card_number', null=True)
 
     def prepare_mixed_name(self, obj):
         return obj.person.join_fields(
@@ -438,7 +439,8 @@ class PledgePersonSearchIndexMixin(indexes.SearchIndex):
     country = indexes.CharField(model_attr='pledge__person__get_country_display', faceted=True)
     zone = indexes.CharField(faceted=True)
     postcode = indexes.CharField(model_attr='pledge__person__postcode')
-    pan_card_number = indexes.CharField(model_attr='pledge__person__pan_card_number')
+    # added 'null=True' to the attribures of pan_card_number to allow person's w/o PAN
+    pan_card_number = indexes.CharField(model_attr='pledge__person__pan_card_number', null=True)
 
     def prepare_mixed_name(self, obj):
         return obj.pledge.person.join_fields(
