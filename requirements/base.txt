@@ -35,7 +35,7 @@ elasticsearch==1.6.0
 # django-haystack
 -e git://github.com/django-haystack/django-haystack.git#egg=django-haystack
 
-# Django-hijack allows superusers to hijack (=login as) and work on behalf of 
+# Django-hijack allows superusers to hijack (=login as) and work on behalf of
 # other users without knowing their credentials.
 django-hijack
 
@@ -44,3 +44,6 @@ django-ajax-selects
 
 # New theme for admin
 django-flat-theme
+
+# found missing (phani):
+markdown
