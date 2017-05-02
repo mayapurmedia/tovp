@@ -125,12 +125,36 @@ FIXTURE_DIRS = (
 
 # EMAIL CONFIGURATION
 EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND', 'django.core.mail.backends.smtp.EmailBackend')
+
+# collecting SMTP server var's from OS env. (postactivate):
+def get_smtp_vars():
+    try:
+        smtp_vars = os.environ.get('DJANGO_SMTP_VARS')
+        smtp_vars = smtp_vars.split( '|' )
+        return smtp_vars
+    except:
+        smtp_vars = ''
+        return smtp_vars
+    
+smtp_vars = get_smtp_vars()
+
+if len( smtp_vars ) == 6:
+    EMAIL_HOST = smtp_vars[0]
+    EMAIL_HOST_USER = smtp_vars[1]
+    EMAIL_HOST_PASSWORD = smtp_vars[2]
+    EMAIL_PORT = smtp_vars[3]
+    SERVER_EMAIL = smtp_vars[4]
+    DEFAULT_FROM_EMAIL = smtp_vars[5]
+    
+    EMAIL_USE_SSL = True
+    
 # END EMAIL CONFIGURATION
 
 # MANAGER CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = (
     ("""Prahlad Nrsimha Das (Petr Vacha) - Mayapur Media""", 'pnd@mayapurmedia.com'),
+    ("""phanisvara das""", 'phani00@gmail.com'),
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#managers
