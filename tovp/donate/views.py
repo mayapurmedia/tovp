@@ -27,7 +27,7 @@ import os
 # the variable ENABLED_PROMOTIONS that was previously supplied by the (sort-of)
 # constant by that name.
 
-def EnabledPromotions():
+def enabled_promotions():
     try:
         promo = os.environ.get('SHOW_PROMO')
         if promo == 'show':
@@ -60,7 +60,7 @@ class SelectRegionView(TemplateView):
     template_name = "donate/select_region.html"
 
     def get_context_data(self, **kwargs):
-        ENABLED_PROMOTIONS = EnabledPromotions()
+        ENABLED_PROMOTIONS = enabled_promotions()
         context = super(SelectRegionView, self).get_context_data(**kwargs)
         context['promotion'] = ENABLED_PROMOTIONS[kwargs['promotion_slug']]
         return context
@@ -70,7 +70,7 @@ class DonateView(TemplateView):
     template_name = "donate/donate.html"
 
     def get_context_data(self, **kwargs):
-        ENABLED_PROMOTIONS = EnabledPromotions()
+        ENABLED_PROMOTIONS = enabled_promotions()
         context = super(DonateView, self).get_context_data(**kwargs)
         context['promotions'] = [ENABLED_PROMOTIONS[item] for item in ENABLED_PROMOTIONS]
         return context
