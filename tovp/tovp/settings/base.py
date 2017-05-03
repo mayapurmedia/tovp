@@ -19,9 +19,10 @@ import dj_database_url
 import django_cache_url
 from collections import OrderedDict
 
-
 BASE_DIR = dirname(dirname(__file__))
-BASE_URL = 'https://donate.tovp.org'
+
+# TODO: this should be moved to postactivate too:
+BASE_URL = 'https://tovp-donations.org'
 
 
 def get_env_variable(var_name):
@@ -138,7 +139,7 @@ def get_smtp_vars():
     
 smtp_vars = get_smtp_vars()
 
-if len( smtp_vars ) == 6:
+if len(smtp_vars) == 6:
     EMAIL_HOST = smtp_vars[0]
     EMAIL_HOST_USER = smtp_vars[1]
     EMAIL_HOST_PASSWORD = smtp_vars[2]
@@ -153,7 +154,8 @@ if len( smtp_vars ) == 6:
 # MANAGER CONFIGURATION
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#admins
 ADMINS = (
-    ("""Prahlad Nrsimha Das (Petr Vacha) - Mayapur Media""", 'pnd@mayapurmedia.com'),
+    # removed on his request:
+    #("""Prahlad Nrsimha Das (Petr Vacha) - Mayapur Media""", 'pnd@mayapurmedia.com'),
     ("""phanisvara das""", 'phani00@gmail.com'),
 )
 
@@ -192,7 +194,10 @@ TIME_ZONE = 'Asia/Kolkata'
 LANGUAGE_CODE = 'en-us'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#site-id
-SITE_ID = 1
+
+# doesn't seem to do much at present, but should probably go to postactivate as well.
+# changed to '2' after adding the new BASE_URL to ~/admin/sites
+SITE_ID = 2
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#use-i18n
 USE_I18N = True
@@ -340,7 +345,7 @@ LOGGING = {
 }
 # END LOGGING CONFIGURATION
 
-ABSOLUTE_DOMAIN = '//donate.tovp.org'
+ABSOLUTE_DOMAIN = '//tovp-donations.org'
 
 # Your common stuff: Below this line define 3rd party library settings
 HAYSTACK_CONNECTIONS = {
