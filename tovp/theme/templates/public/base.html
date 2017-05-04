@@ -14,6 +14,8 @@
   <link rel="apple-touch-icon" sizes="72x72" href="{% static 'shared/img/apple-touch-icon-72x72.png' %}">
   <link rel="apple-touch-icon" sizes="114x114" href="{% static 'shared/img/apple-touch-icon-114x114.png' %}">
 
+	<link href="https://unpkg.com/basscss@8.0.2/css/basscss.min.css" rel="stylesheet">
+
   <link rel="stylesheet" href="{% static "public/js/vendor/mmenu/jquery.mmenu.all.css" %}">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
@@ -37,7 +39,9 @@
 <div id="header">
     <div class="header">
         <div class="container clear">
-            <a class="logo" href="/">Temple of the Vedic Planetarium</a>
+			<h1>
+            	<a class="logo" href="/">Temple of the Vedic Planetarium</a>
+			</h1>
             <input type="checkbox" id="navigation-toggle-checkbox" name="navigation-toggle-checkbox" class="navigation-toggle-checkbox sr">
             <label for="navigation-toggle-checkbox" class="navigation-toggle-label" onclick>
                 <span class="navigation-toggle-label-inner">
@@ -57,6 +61,18 @@
         </div>
     </div>
 </div>
+
+<div class="row">
+	<div class="col-2 col-1-desktop">&nbsp;</div>
+	<div class="col-9 col-5-desktop">
+    	<h2 class="subhead">
+        	Let's finish what we started:<br />
+        	Make a donation to the ToVP !
+    	</h2>
+	</div>
+	<div class="col-1 col-1-desktop">&nbsp;</div>
+<div>
+
 {% block page_content %}
 {% endblock %}
 

@@ -90,4 +90,3 @@ gulp.task('default', ['watch']);
 // gulp.task('build', function() {
 //   runSequence('movecss', 'imagemin', 'jsmin', 'inlinesource');
 // });
-

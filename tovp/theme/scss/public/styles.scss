@@ -55,3 +55,18 @@
 //     width: $container-xl;
 //   }
 // }
+
+// front page items; fine tuning:
+div#header h1 {
+	margin-top: 12px;
+	font-size: 1.5em;
+}
+div#header a.logo:hover {
+	color: silver;
+}
+h2.subhead {
+	margin-top: 8px;
+	color: silver;
+	font-weight: 500;
+	font-size: 1.4em;
+}
