@@ -185,17 +185,10 @@ class SearchForm(forms.Form):
         return sqs
 
     def show_all(self):
-        return self.searchqueryset.order_by('-modified')
-
-
-class FollowUpForm(SearchForm):
-    def show_all(self):
         self.searchqueryset = SearchQuerySet()
         return self.searchqueryset. \
-            filter(content_type='Pledge'). \
-            filter(next_payment_date__lte=datetime.now()). \
-            exclude(status='Completed'). \
-            order_by('next_payment_date')
+            filter(content_type='Promotion'). \
+            order_by('-modified')
 
     def search(self):
         return self.show_all()

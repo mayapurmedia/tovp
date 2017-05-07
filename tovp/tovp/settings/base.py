@@ -40,7 +40,7 @@ DJANGO_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.sites',
+    # 'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
@@ -136,7 +136,7 @@ def get_smtp_vars():
     except:
         smtp_vars = ''
         return smtp_vars
-    
+
 smtp_vars = get_smtp_vars()
 
 if len(smtp_vars) == 6:
@@ -146,9 +146,9 @@ if len(smtp_vars) == 6:
     EMAIL_PORT = smtp_vars[3]
     SERVER_EMAIL = smtp_vars[4]
     DEFAULT_FROM_EMAIL = smtp_vars[5]
-    
+
     EMAIL_USE_SSL = True
-    
+
 # END EMAIL CONFIGURATION
 
 # MANAGER CONFIGURATION

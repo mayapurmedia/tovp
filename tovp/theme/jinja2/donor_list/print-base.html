@@ -1,0 +1,27 @@
+{% import 'database/_macros.html' as macros %}
+<!doctype html>
+<html>
+<head>
+  <title>{% if page_title %}{{ page_title|e }}{% else %}{{ content_title|e }}{% endif %}</title>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=no">
+  <link href='https://fonts.googleapis.com/css?family=Raleway:300,500' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <style type="text/css">
+    body {
+        font-family: 'Raleway', sans-serif;
+        font-weight: 300;
+    }
+    @page {
+        margin: 0.5cm;
+    }
+  </style>
+</head>
+<body unresolved touch-action="auto">
+    <div class="container-fluid main-content">
+        {% block page_content %}
+        {% endblock %}
+    </div>
+    </body>
+</html>
+
