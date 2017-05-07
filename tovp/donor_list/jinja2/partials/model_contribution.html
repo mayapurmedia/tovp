@@ -1,6 +1,7 @@
 {% import 'database/_macros.html' as macros %}
 <div class="person-result">
     <div><strong>{{ result.content_type }}</strong>: {{ result.full_name }}{% if result.initiated_name %} - {{ result.initiated_name }}{% endif %}
+
     / {{ result.amount }} {{ result.currency }}
             {% if result.foreign_amount %}
              - from {{ result.foreign_amount }} {{ result.foreign_currency }}

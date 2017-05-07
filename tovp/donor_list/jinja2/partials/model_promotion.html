@@ -1,6 +1,6 @@
 {% import 'database/_macros.html' as macros %}
 <div class="person-result">
-    <div><strong>{% if result.quantity %}{{ result.quantity}}x {% endif %}{{ result.promotion_type }}</strong>: {{ result.full_name }}{% if result.initiated_name %} - {{ result.initiated_name }}{% endif %} [{{ result.status }}]</div>
+    <div><a class="object-link" href="{{ result.absolute_url }}"><strong>{% if result.quantity %}{{ result.quantity}}x {% endif %}{{ result.promotion_type }}</strong>: {{ result.full_name }}{% if result.initiated_name %} - {{ result.initiated_name }}{% endif %}</a> [{{ result.status }}]</div>
     {% if result.name_on_brick %}
         <div>Name on brick: {{ result.name_on_brick }}</div>
     {% endif %}
