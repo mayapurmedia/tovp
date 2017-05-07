@@ -15,40 +15,6 @@ class SearchForm(forms.Form):
     #                                   required=False, initial=True)
     mixed_name = forms.CharField(required=False, label=_('Mixed Name'),
                                  widget=forms.TextInput())
-    first_name = forms.CharField(required=False, label=_('First Name'),
-                                 widget=forms.TextInput())
-    last_name = forms.CharField(required=False, label=_('Last Name'),
-                                widget=forms.TextInput())
-    initiated_name = forms.CharField(required=False, label=_('Initiated Name'),
-                                     widget=forms.TextInput())
-    email = forms.CharField(required=False, label=_('Email'),
-                            widget=forms.TextInput())
-    pan_card_number = forms.CharField(required=False,
-                                      label=_('Pan Card Number'),
-                                      widget=forms.TextInput())
-    serial_number = forms.CharField(required=False, label=_('Serial Number'),
-                                    widget=forms.TextInput())
-    phone_number = forms.CharField(required=False, label=_('Phone Number'),
-                                   widget=forms.TextInput())
-    old_database_id = forms.CharField(required=False,
-                                      label=_('Old Database Id'),
-                                      widget=forms.TextInput())
-    book_number = forms.CharField(required=False, label=_('Book Number'),
-                                  widget=forms.TextInput())
-    postcode = forms.CharField(required=False, label=_('Post Code'),
-                               widget=forms.TextInput())
-    slip_number = forms.CharField(required=False, label=_('Slip Number'),
-                                  widget=forms.TextInput())
-    transaction_id = forms.CharField(required=False, label=_('Transaction ID'),
-                                     widget=forms.TextInput())
-    record_id = forms.CharField(required=False, label=_('Record ID'),
-                                widget=forms.TextInput())
-    collector = forms.ChoiceField(required=False, label='Collector',
-                                  choices=())
-    amount_from = forms.CharField(required=False, label=_('Amount From'),
-                                  widget=forms.TextInput())
-    amount_to = forms.CharField(required=False, label=_('Amount To'),
-                                widget=forms.TextInput())
 
     DATE_TYPE_CHOICES = (
         (u'receipt_date', _('Receipt Date')),

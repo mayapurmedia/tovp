@@ -63,16 +63,7 @@ class DonorList(TemplateResponseMixin, FormMixin, View):
 
     def default_facets_titles(self):
         return {
-            'content_type': 'Content Type', 'followed_by': 'Followed By',
-            'currency': 'Currency', 'deposited_status': 'Deposited Status',
-            'promotion_type': 'Promotion Type', 'status': 'Status',
-            'payment_method': 'Payment Method', 'interval': 'Interval',
-            'country': 'Country', 'zone': 'Zone', 'yatra': 'Yatra',
-            'has_book': 'Book filled', 'has_slip': 'Slip filled', 'created_by': 'Created By',
-            'modified_by': 'Modified By', 'receipt_type': 'Receipt Type',
-            'source': 'Source', 'gifts': 'Has Gift', 'coin_given': 'Coin Given',
-            'certificate_given': 'Certificate Given',
-            'brick_status': 'Brick Status',
+            'promotion_type': 'Promotion Type',
         }
 
     def default_narrow_facets(self):
@@ -81,39 +72,15 @@ class DonorList(TemplateResponseMixin, FormMixin, View):
                 'title': 'Test 1',
                 'has_results': None,
                 'fields': (
-                    'content_type', 'receipt_type', 'followed_by', 'currency',
-                    'status', 'source', 'deposited_status', 'promotion_type',
-                    'payment_method', 'yatra', 'interval', 'has_book',
-                    'has_slip', 'created_by', 'modified_by', 'brick_status',
-                    'gifts', 'country', 'zone', 'coin_given', 'certificate_given',
+					'promotion_type',
                 ),
             },
         }
 
     def default_faceted_by_secondary(self):
         return {
-            "deposited_status": None,
-            "receipt_type": None,
-            "content_type": None,
-            "currency": None,
-            "status": None,
-            "payment_method": None,
-            "source": None,
-            "yatra": None,
-            "interval": None,
-            "country": None,
-            "zone": None,
             "promotion_type": None,
-            "has_book": None,
-            "has_slip": None,
-            "created_by": None,
-            "modified_by": None,
             "is_external": None,
-            "brick_status": None,
-            "gifts": None,
-            "coin_given": None,
-            "certificate_given": None,
-            "followed_by": None,
         }
 
     def get_template_names(self):
@@ -173,7 +140,7 @@ class DonorList(TemplateResponseMixin, FormMixin, View):
         """
         kwargs = {
             "initial": self.get_initial(),
-            "searchqueryset": self.get_searchqueryset(),
+            "searchqueryset": self.get_searchqueryset().exclude(amount_paid=0),
             "load_all": self.get_load_all(),
         }
         if "q" in self.request.GET:

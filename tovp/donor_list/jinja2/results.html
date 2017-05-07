@@ -1,7 +1,7 @@
 {% import 'database/_macros.html' as macros %}
-{% extends 'database/content-area.html' %}
+{% extends 'content-area.html' %}
 
-{% set content_title = '' %}
+{% set content_title = 'Donor List' %}
 {% set body_class = "search-results" %}
 {% set center_bottom_banner = True %}
 
@@ -38,28 +38,30 @@
                 </ul>
             </div>
             {% endif %}{# --------------------END search-filters #}
-            {% if facets.fields %}
-            {% if show_secondary_filters %}
 
-            {% for topic in narrow_facets %}
-            {% if narrow_facets[topic].has_results %}
+			{% if facets.fields %}
+            	{% if show_secondary_filters %}
 
-            {% for field in narrow_facets[topic].fields %}
-            {% set values=facets['fields'][field] %}
-            {% if values %}
+            		{% for topic in narrow_facets %}
+            			{% if narrow_facets[topic].has_results %}
 
-            <div class="col-xs-6 col-ms-4 col-sm-12">
-                <h3><a class="accordion-toggle  {{ '' if field in ['content_type', 'receipt_type'] else 'collapsed' }}" data-toggle="collapse" href="#collapse-{{ field }}" aria-expanded="false" aria-controls="collapse-{{ field }}">{{ facets_titles[field] }} <i class="fa fa-caret-down facet-collapse-icon"></i></a></h3>
-                <div class="collapse {{ 'in' if field in ['content_type', 'receipt_type'] else '' }}" id="collapse-{{ field }}">
-                    <ul class="refine-filters">
-                        {% for item in values %}
-                        <li><a class="refine-filter" href="{{ request.get_full_path()|update_url_query({field: item.0, 'page': None}) }}">{{ item.0 }} ({{ item.1 }})</a></li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-            {% endif %}
-            {% endfor %}
+            				{% for field in narrow_facets[topic].fields %}
+            					{% set values=facets['fields'][field] %}
+            					{% if values %}
+
+            						<div class="col-xs-6 col-ms-4 col-sm-12">
+                						<h3><a class="accordion-toggle  {{ '' if field in ['content_type', 'receipt_type'] else 'collapsed' }}" data-toggle="collapse" href="#collapse-{{ field }}" aria-expanded="false" aria-controls="collapse-{{ field }}">{{ facets_titles[field] }} <i class="fa fa-caret-down facet-collapse-icon"></i></a></h3>
+                						<div class="collapse {{ 'in' if field in ['content_type', 'receipt_type'] else '' }}" id="collapse-{{ field }}">
+                    						<ul class="refine-filters">
+                        					{% for item in values %}
+                        						<li><a class="refine-filter" href="{{ request.get_full_path()|update_url_query({field: item.0, 'page': None}) }}">{{ item.0 }} ({{ item.1 }})</a></li>
+                        					{% endfor %}
+                    						</ul>
+                						</div>
+            						</div>
+
+								{% endif %}
+            				{% endfor %}
 
 
             {% endif %}
@@ -70,7 +72,6 @@
         </div>
     </div>
     <div class="search-results-area col-xs-12 col-sm-9">
-		<h3>hare krsna</h3>
         <div class="row">
             {% if show_form %}
             <div class="col-xs-12 search-form">
@@ -87,22 +88,18 @@
             {% for result in results %}
             <div class="col-xs-12">
                 {% if result.content_type == 'Contact' %}
-                    {% include "search/partials/model_contact.html" %}
+                    {% include "partials/model_contact.html" %}
                 {% elif result.content_type == 'Pledge' %}
-                    {% include "search/partials/model_pledge.html" %}
+                    {% include "partials/model_pledge.html" %}
                 {% elif result.content_type == 'Contribution' %}
-                    {% include "search/partials/model_contribution.html" %}
+                    {% include "partials/model_contribution.html" %}
                 {% elif result.content_type == 'Promotion' %}
-                    {% include "search/partials/model_promotion.html" %}
+                    {% include "partials/model_promotion.html" %}
                 {% elif result.content_type == 'Bulk Payment' %}
-                    {% include "search/partials/model_bulk_payment.html" %}
-                {% elif result.content_type == 'Follow Up' %}
-                    {% include "search/partials/model_followup.html" %}
-                {% elif result.content_type == 'Gift' %}
-                    {% include "search/partials/model_gift.html" %}
+                    {% include "partials/model_bulk_payment.html" %}
                 {% else %}
                     <div class="person-result">
-                        <div>XXX {{ result.content_type }}: <a class="object-link" href="{{ result.absolute_url }}">{{ result.full_name }}{% if result.initiated_name %} - {{ result.initiated_name }}{% endif %}</a></div>
+                        <div>{{ result.content_type }}: <a class="object-link" href="{{ result.absolute_url }}">{{ result.full_name }}{% if result.initiated_name %} - {{ result.initiated_name }}{% endif %}</a></div>
                         {% if result.initiated_name %}
                         <div><a class="object-link" href="{{ result.absolute_url }}"></a></div>
                         {% endif %}
