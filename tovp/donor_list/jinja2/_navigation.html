@@ -1,27 +1,29 @@
 <header id="header" class="header header--fixed hide-from-print" role="banner">
 <div class="navbar navbar-main-menu navbar-default xnavbar-inverse navbar-static-top" role="navigation">
     <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-menu .navbar-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="/">ToVP-Donations</a>
-      </div>
-      <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-			  <li class="{{ active_link_class(request, "^/$") }}"><a href="/">Home</a></li>
-			  <li class="{{ active_link_class(request, "^/$") }}"><a href="{{ url('donor_list:index') }}">Donor List</a></li>
-			  <li class="{{ active_link_class(request, "^/$") }}"><a href="https://ToVP.org" target="_blank">ToVP.org</a></li>
-              {% if request.user.is_authenticated() %}
-                  <li><a href="{{ url('users:logout') }}">Logout ({{ request.user }})</a></li>
-              {% endif %}
-              {# <li class="{{ active_link_class(request, "^/search/") }}"><a href="/">Search</a></li> #}
-          </ul>
-      </div><!--/.nav-collapse -->
-  </div>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-menu .navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">ToVP-Donations</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="{{ active_link_class(request, "^/$") }}"><a href="/">Home</a></li>
+                <li class="{{ active_link_class(request, "^/$") }}"><a href="{{ url('donor_list:index') }}">Donor List</a></li>
+                {% if request.user.is_authenticated() %}
+                    <li><a href="/database">Database</a></li>
+                {% endif %}
+                {% if request.user.is_authenticated() %}
+                    <li><a href="{{ url('users:logout') }}">Logout ({{ request.user }})</a></li>
+                {% endif %}
+                <li class="{{ active_link_class(request, "^/$") }}"><a href="https://ToVP.org" target="_blank">ToVP.org</a></li>
+        </ul>
+    </div><!--/.nav-collapse -->
+    </div>
 </div>
 
 </header>

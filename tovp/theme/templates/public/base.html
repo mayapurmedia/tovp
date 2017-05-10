@@ -52,10 +52,18 @@
             <div id="main-navigation" class="navigation">
                 <ul class="navigation-menu">
                     <!-- <li class="navigation-item"><a href="#reviews">&lt; Back to Main Site</a></li> -->
-                    <li class="navigation-item"><a href="{% url 'donate:donate' %}">Home</a></li>
-                    <li class="navigation-item"><a href="#">Donate</a></li>
+                    {# <li class="navigation-item"><a href="{% url 'donate:donate' %}">Home</a></li>#}
+                    {# <li class="navigation-item"><a href="#">Donate</a></li>#}
+
                     <li class="navigation-item"><a href="{% url 'donor_list:index' %}">Donor List</a></li>
-                    <li class="navigation-item"><a href="#">Contact</a></li>
+                    {% if user.is_authenticated %}
+                        <li class="navigation-item"><a href="/database">Database</a></li>
+                    {% endif %}
+                    {% if user.is_authenticated %}
+                        <li class="navigation-item"><a href="/users/logout">Logout</a></li>
+                    {% endif %}
+                    <li class="navigation-item"><a href="#">Contact Us</a></li>
+                    <li class="navigation-item"><a href="https://tovp.org" target="_blank">ToVP.org</a></li>
                 </ul>
             </div>
         </div>
@@ -77,8 +85,8 @@
 {% endblock %}
 
 <div class="clear col-12 footer">
-Project of the International Society for Krsna Consciousness<br />
-Founder-Ācārya His Divine Grace A.C. Bhaktivedanta Swami  Prabhupāda
+    Project of the International Society for Kṛṣṇa Consciousness<br />
+	Founder-Ācārya: His Divine Grace A.C. Bhaktivedanta Swami Prabhupāda
 </div>
 
 <script type="text/javascript">
